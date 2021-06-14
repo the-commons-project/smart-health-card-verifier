@@ -1,5 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "name": "health-card-verifier-mobile",
+  "version": "0.1.0",
+  "description": "SMART Health Card Verifier mobile application",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -21,5 +24,15 @@
     "@types/react-native": "~0.63.2",
     "typescript": "~4.0.0"
   },
+  "keywords": [
+    "ssi"
+  ],
+  "author": "Roman Brazhnyk <roman.b@affinidi.com>",
+  "contributors": [
+    "Glenn Gore <glenn.g@affinidi.com>",
+    "Kishore Bhatia <kishore@affinidi.com>",
+    "Shankar K. Pillai <shankar.k@affinidi.com>",
+    "Kah Seng Lim <kahseng.l@affinidi.com>",
+  ],
   "private": true
 }
