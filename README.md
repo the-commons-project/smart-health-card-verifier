@@ -43,3 +43,7 @@ As alternative you can run application for the desired environment by specifying
 ```bash
    npm run web
 ```
+
+### Run application on iOS and Android device
+Follow the documentation in this [link](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and)
+at section **2. Expo Go app for iOS and Android** to install Expo Go app and run the application on your phone.
