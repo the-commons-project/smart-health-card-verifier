@@ -4,6 +4,9 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 import { Props } from '../../types'
 import AppClickableImage from '../components/customImage'
 
+import { validateCard } from '../validate'
+import { getIssuerData } from '../getIssuerData'
+
 const images = {
   'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
 }
@@ -11,6 +14,8 @@ const images = {
 const ScanQRPage = ({ navigation }: Props) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
+  const [validationResult, setValidationResult] = useState(false)
+  const [issuerData, setIssuerData] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -19,14 +24,22 @@ const ScanQRPage = ({ navigation }: Props) => {
     })()
   }, [])
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true)
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`)
+
+    const validationResult = await validateCard([data])
+    const issuerData = await getIssuerData()
+
+    console.log({ validationResult, issuerData })
+
+    setValidationResult(validationResult)
+    setIssuerData(issuerData)
   }
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>
   }
+
   if (hasPermission === false) {
     return <Text>No access to camera</Text>
   }
