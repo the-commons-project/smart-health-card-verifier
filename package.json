@@ -1,8 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "name": "health-card-verifier-mobile",
-  "version": "0.1.0",
-  "description": "SMART Health Card Verifier mobile application",
+  "version": "0.1.1",
+  "description": "SMART Health Card Verifier",
   "scripts": {
     "start": "expo r -c",
     "android": "expo start --android",
@@ -13,9 +13,11 @@
   "dependencies": {
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "ajv": "^8.6.0",
     "expo": "~41.0.1",
     "expo-barcode-scanner": "~10.1.2",
     "expo-status-bar": "~1.0.4",
+    "pako": "^2.0.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
@@ -24,12 +26,14 @@
     "react-native-gesture-handler": "~1.10.2",
     "react-native-screens": "~3.0.0",
     "react-native-safe-area-context": "3.2.0",
-    "@react-native-community/masked-view": "0.1.10"
+    "@react-native-community/masked-view": "0.1.10",
+    "react-native-jose": "git+https://github.com/hellojoko/react-native-jose.git"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "invariant": "^2.2.4",
     "typescript": "~4.0.0"
   },
   "keywords": [

@@ -30,8 +30,8 @@ const WelcomePage = ({ navigation }: Props) => {
           <Text style={styles.subTitle}> Verify SMART® Health Card QR code in a safe and privacy-preserving way </Text>
           <AppButton
             title="Scan vaccination record"
-            // onPress={() => navigation.navigate('ScanQR')}
-            onPress={() => navigation.navigate('VerificationResult')}
+            onPress={() => navigation.navigate('ScanQR')}
+            // onPress={() => navigation.navigate('VerificationResult')}
             backgroundColor="#255DCB"
           />
           <Text style={styles.linkText} onPress={() => Linking.openURL('https://docs.google.com/document/d/1wtHEZH8i5pD8zw5M-kHUy1hpKNb_fUSb3pobSNliXX0/edit?ts=60c75c53#')}>
