@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Text, View, Image, Button, StyleSheet } from "react-native"
+import React from 'react'
+import { Text, View, SafeAreaView, ScrollView, StyleSheet, Platform } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
@@ -11,23 +11,30 @@ const images = {
   'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
 }
 
-const VerificationResultPage = ({ navigation }: Props) => {
+const VerificationResultPage = ({ route, navigation }: Props) => {
+  const data = route.params
+  const { validationResult } = data
+
   return (
     <View style={styles.flexContainer}>
       <View style={styles.backButtonContainer}>
         <AppClickableImage
+          styles={styles.leftCaretImage}
           source={images.leftCaret}
-          onPress={() => navigation.navigate('Welcome')}
+          onPress={() => navigation.navigate('ScanQR')}
         />
-        <Text style={styles.backButtonText} onPress={() => navigation.navigate('Welcome')}> Verification result </Text>
+        <Text style={[styles.backButtonText, {fontFamily: 'Poppins_700Bold'}]} onPress={() => navigation.navigate('ScanQR')}> Verification result </Text>
       </View>
-      <ResultBanner />
-      <ResultRecord />
+      <ScrollView>
+        <ResultBanner validationResult={validationResult}/>
+        {validationResult.isValid &&
+          <ResultRecord data={data} />
+        }
+      </ScrollView>
       <AppButton
-        title="Scan next health card"
-        // onPress={() => navigation.navigate('ScanQR')}
-        onPress={() => navigation.navigate('Welcome')}
-        backgroundColor="#255DCB"
+        title='Scan next vaccination record'
+        onPress={() => navigation.navigate('ScanQR')}
+        backgroundColor='#255DCB'
       />
     </View>
   )
@@ -36,24 +43,26 @@ const VerificationResultPage = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   flexContainer: {
     flex: 1,
-    paddingTop: 10,
     paddingBottom: 30,
-    paddingLeft: 10,
-    paddingRight: 10,
-    justifyContent: "space-between",
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'space-between',
+    backgroundColor: '#F3F6FF',
   },
   backButtonContainer: {
+    paddingTop: '15%',
     flexDirection: 'row',
-    alignItems: "center",
+    alignItems: 'center',
   },
   backButtonText: {
     paddingLeft: 10,
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
     fontSize: 20,
     lineHeight: 30,
     color: '#255DCB',
+  },
+  leftCaretImage: {
+    width: 12,
+    height: 19,
   },
 })
 

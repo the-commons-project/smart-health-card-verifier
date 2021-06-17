@@ -8,8 +8,9 @@ export const validate = async (qr: string[]): Promise<any> => {
 
   const isJwsExtracted = !!jwsString
 
-  if (!jwsString) {
+  if (!isJwsExtracted) {
     console.log('ERROR: JWS was not extracted')
+    return undefined
   }
 
   return jws.validate(jwsString)

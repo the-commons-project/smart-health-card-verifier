@@ -39,7 +39,7 @@ export function validateSchema(schema: AnySchemaObject, data: FhirBundle | JWS |
 
           // · Schema: {"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"resourceType"},"message":"must have required property 'resourceType'"}
           case "required":
-            return `Schema: ${err.instancePath} requires property ${err.params.missingProperty as string})`
+            return `Schema: ${err.instancePath} requires property ${err.params.missingProperty as string}`
 
           // · Schema: {"instancePath":"","schemaPath":"#/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"resourceType1"},"message":"must NOT have additional properties"}
           case "additionalProperties":

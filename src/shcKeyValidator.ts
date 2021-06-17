@@ -181,8 +181,8 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
     // check cert chain if present, if so, validate it
     const ecPubKey = key as EcPublicJWK
 
+    // TODO: refactor. For now SKIP cert chain check
     if (ecPubKey.x5c) {
-      console.log('TODO: refactor. For now SKIP cert chain check')
     //   const certFields = validateX5c(ecPubKey.x5c, log)
     //   if (certFields) {
     //     const checkKeyValue = (v: 'x' | 'y') => {

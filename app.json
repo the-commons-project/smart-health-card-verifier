@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "HealthCardVerifierMobile",
-    "slug": "HealthCardVerifierMobile",
-    "version": "1.0.0",
+    "name": "SHC Verifier",
+    "slug": "SHCVerifier",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/iconSHC.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashSHC.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,13 +21,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptiveSHC.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "SMART Health Card Verifier mobile application"
+    "description": "SMART Health Card Verifier"
   }
 }

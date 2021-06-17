@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Animated, Easing, Platform } from 'react-native'
+import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import { Props } from '../../types'
 import AppClickableImage from '../components/customImage'
+import NotificationOverlay from '../components/notificationOverlay'
 
-import { validateCard } from '../validate'
-import { getIssuerData } from '../getIssuerData'
+import { validate } from '../qr'
 
 const images = {
   'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
+  'loading': require('../../assets/img/error/loading.png'),
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
-  const [hasPermission, setHasPermission] = useState(null)
+  const [hasPermission, setHasPermission] = useState(true)
   const [scanned, setScanned] = useState(false)
-  const [validationResult, setValidationResult] = useState(false)
-  const [issuerData, setIssuerData] = useState(false)
+  const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
+
+  const spin = spinAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  })
 
   useEffect(() => {
     (async () => {
@@ -24,40 +30,79 @@ const ScanQRPage = ({ navigation }: Props) => {
     })()
   }, [])
 
+  if(scanned) {
+    Animated.loop(
+      Animated.timing(spinAnimation, {
+        toValue: 1,
+        duration: 1000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    ).start()
+  }
+
   const handleBarCodeScanned = async ({ type, data }) => {
-    setScanned(true)
+    let validationResult = {}
+    try {
+      setScanned(true)
 
-    const validationResult = await validateCard([data])
-    const issuerData = await getIssuerData()
+      validationResult = await validate([data])
 
-    console.log({ validationResult, issuerData })
+      if (!validationResult || validationResult.isValid === 'false') {
+        setScanned(false)
+        navigation.navigate('Error')
+        return
+      }
 
-    setValidationResult(validationResult)
-    setIssuerData(issuerData)
+      setScanned(false)
+      navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
+    } catch (error) {
+      setScanned(false)
+
+      if (error.toString() === 'Error: Failed to download issuer JWK set') {
+        validationResult.isValid = false
+
+        navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
+        return
+      }
+
+      navigation.navigate('Error')
+    }
   }
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>
-  }
+  const { isInternetReachable } = useNetInfo()
 
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>
-  }
+  const showCamera = hasPermission && isInternetReachable && !scanned
 
   return (
     <View style={styles.container}>
-      <View style={styles.backButtonContainer}>
-        <AppClickableImage
-          styles={styles.imageStyling}
-          source={images.leftCaret}
-          onPress={() => navigation.navigate('Welcome')}
-        />
-      </View>
       <View style={styles.scannerContainer}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
+        {!hasPermission &&
+          <NotificationOverlay overlayState={true} type={'noCameraAccess'}/>
+        }
+
+        {!isInternetReachable &&
+          <NotificationOverlay overlayState={true} type={'noInternetConnection'}/>
+        }
+
+        {scanned &&
+          <Animated.Image style={[styles.spinner, {transform: [{rotate: spin}]}]} source={images.loading} />
+        }
+
+        {showCamera &&
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+          >
+            <View style={styles.backButtonContainer}>
+              <AppClickableImage
+                styles={styles.leftCaretImage}
+                source={images.leftCaret}
+                onPress={() => navigation.navigate('Welcome')}
+              />
+            </View>
+          </BarCodeScanner>
+        }
       </View>
     </View>
   )
@@ -69,19 +114,24 @@ const styles = StyleSheet.create({
   },
   scannerContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F3F6FF',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  imageStyling: {
-    // backgroundColor: '#000',
+    maxHeight: '100%',
   },
   backButtonContainer: {
+    marginTop: '15%',
     height: 40,
-    width: '100%',
-    paddingLeft: 10,
-    paddingTop: 10,
-    backgroundColor: '#fff',
+    paddingLeft: 20,
+    paddingTop: 20,
+  },
+  spinner: {
+    maxHeight: 55,
+    maxWidth: 55,
+  },
+  leftCaretImage: {
+    width: 12,
+    height: 19,
   },
 })
 

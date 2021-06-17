@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Text, View, Image, Button, StyleSheet } from "react-native"
+import React from 'react'
+import { Text, View, Image, StyleSheet, Platform } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import { Props } from '../../types'
@@ -14,20 +14,20 @@ const ErrorPage = ({ navigation }: Props) => {
     <View style={styles.flexContainer}>
       <View style={styles.backButtonContainer}>
         <AppClickableImage
+          styles={styles.leftCaretImage}
           source={images.leftCaret}
-          onPress={() => navigation.navigate('Welcome')}
+          onPress={() => navigation.navigate('ScanQR')}
         />
-        <Text style={styles.backButtonText} onPress={() => navigation.navigate('Welcome')}> Unsupported QR </Text>
+        <Text style={[styles.backButtonText, {fontFamily: 'Poppins_700Bold'}]} onPress={() => navigation.navigate('ScanQR')}> Unsupported QR </Text>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={images.qrError} />
-        <Text style={styles.message}> Unfortunately we currently only support SMART Health Card QR codes </Text>
+        <Image style={styles.imageStyle} source={images.qrError} />
+        <Text style={[styles.message, {fontFamily: 'OpenSans_600SemiBold'}]}> Only valid vaccine SMART Health Cards are currently supported </Text>
       </View>
       <AppButton
-        title="Scan next health card"
-        // onPress={() => navigation.navigate('ScanQR')}
-        onPress={() => navigation.navigate('Welcome')}
-        backgroundColor="#255DCB"
+        title='Scan next vaccination record'
+        onPress={() => navigation.navigate('ScanQR')}
+        backgroundColor='#255DCB'
       />
     </View>
   )
@@ -36,24 +36,33 @@ const ErrorPage = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   flexContainer: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: '15%',
     paddingBottom: 30,
-    paddingLeft: 10,
-    paddingRight: 10,
-    justifyContent: "space-between",
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'space-between',
+    backgroundColor: '#F3F6FF',
   },
   imageContainer: {
     padding: 20,
-    alignItems: "center",
+    alignItems: 'center',
+  },
+  imageStyle: {
+    height: 105,
+    width: 107,
+    resizeMode: 'contain',
+  },
+  leftCaretImage: {
+    width: 12,
+    height: 19,
   },
   backButtonContainer: {
     flexDirection: 'row',
-    alignItems: "center",
+    alignItems: 'center',
   },
   message: {
     paddingTop: 65,
     textAlign: 'center',
-    fontFamily: 'Open Sans',
     fontStyle: 'normal',
     fontWeight: '600',
     fontSize: 18,
@@ -62,7 +71,6 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     paddingLeft: 10,
-    fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 'bold',
     fontSize: 20,

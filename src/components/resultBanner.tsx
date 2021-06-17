@@ -1,9 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native'
-
-type ResultBannerVariables = {
-  content?: any
-}
 
 const images = {
   'warning': require('../../assets/img/verificationresult/warning.png'),
@@ -13,73 +9,61 @@ const images = {
   'cross': require('../../assets/img/verificationresult/cross.png'),
 }
 
-const ResultBanner = ({ content } : ResultBannerVariables) => {
-  const [bannerState, setBannerState] = useState({
-    icon: images.success,
-    text: 'Verified',
-    color: 'green',
-    validityText: 'Valid SMART® Health Card',
-    validityIcon: images.tick,
-    verifiedIssuerText: 'Issuer verified',
-    verifiedIssuerIcon: images.tick,
-    subBorderColor: '',
-  })
+const ResultBanner = ({validationResult}) => {
+  let icon = images.success
+  let text = 'Verified'
+  let color = '#158E00' // green
+  let validityText = 'Valid SMART® Health Card'
+  let validityIcon = images.tick
+  let validityColor = '#0E6B23' // green
+  let verifiedIssuerText = 'Issuer verified'
+  let verifiedIssuerIcon = images.tick
+  let verifiedColor = '#0E6B23' // green
 
-  const conditionParser = ({content}: any) => {
-    switch(content) {
-      case 'notVerified':
-        setBannerState({
-          icon: images.fail,
-          text: 'Not Verified',
-          color: 'red',
-          validityText: 'This SMART Health Card cannot be verified. It may have been corrupted.',
-          validityIcon: '',
-          verifiedIssuerText: '',
-          verifiedIssuerIcon: '',
-          subBorderColor: 'red',
-        })
-        break
-      case 'partlyVerified':
-        setBannerState({
-          icon: images.warning,
-          text: 'Partially Verified',
-          color: 'orange',
-          validityText: 'Valid SMART® Health Card',
-          validityIcon: images.tick,
-          verifiedIssuerText: 'Issuer not verified',
-          verifiedIssuerIcon: images.cross,
-          subBorderColor: '',
-        })
-        break
-      default:
-        setBannerState({
-          icon: images.success,
-          text: 'Verified',
-          color: 'green',
-          validityText: 'Valid SMART® Health Card',
-          validityIcon: images.tick,
-          verifiedIssuerText: 'Issuer verified',
-          verifiedIssuerIcon: images.tick,
-          subBorderColor: '',
-        })
-    }
+  const isDocumentValid = validationResult.isValid === true
+
+  if (!isDocumentValid) {
+    icon = images.fail
+    text = 'Not Verified'
+    color = '#C33E38' //red
+    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted.'
+    validityColor = '#C33E38' // red
+  }
+
+  const isIssuerRecognized = !! validationResult?.issuerData?.name
+
+  if (isDocumentValid && !isIssuerRecognized) {
+    icon = images.warning
+    text = 'Partially Verified'
+    color = '#EA6300' // orange
+    verifiedIssuerText = 'Issuer not recognized'
+    verifiedIssuerIcon = images.cross
+    verifiedColor = '#CE471C' // orange
   }
 
   return (
     <View>
-      <View style={styles.bannerContainer}>
-        <Image style={styles.bannerImage} source={bannerState.icon} />
-        <Text style={styles.bannerText}>{bannerState.text}</Text>
+      <View style={[styles.bannerContainer, { backgroundColor: color }]}>
+        <Image style={styles.bannerImage} source={icon} />
+        <Text style={[styles.bannerText, {fontFamily: 'Poppins_600SemiBold'}]}>{text}</Text>
       </View>
-      <View style={styles.subBannerContainer}>
-        <View style={styles.flexRowContainer}>
-          <Image source={bannerState.validityIcon} />
-          <Text style={styles.subBannerText}>{bannerState.validityText}</Text>
-        </View>
-        <View style={styles.flexRowContainer}>
-          <Image source={bannerState.verifiedIssuerIcon} />
-          <Text style={styles.subBannerText}>{bannerState.verifiedIssuerText}</Text>
-        </View>
+      <View style={[styles.subBannerContainer, {borderColor: color}]}>
+        {!isDocumentValid ?
+          <View style={styles.flexRowContainer}>
+            <Text style={[styles.subBannerText, {fontFamily: 'Poppins_600SemiBold', color: validityColor}]}>{validityText}</Text>
+          </View>
+          :
+          <View>
+            <View style={styles.flexRowContainer}>
+              <Image style={styles.subIcon} source={validityIcon} />
+              <Text style={[styles.subBannerText, {fontFamily: 'Poppins_600SemiBold', color: validityColor}]}>{validityText}</Text>
+            </View>
+            <View style={styles.flexRowContainer}>
+              <Image style={styles.subIcon} source={verifiedIssuerIcon} />
+              <Text style={[styles.subBannerText, {fontFamily: 'Poppins_600SemiBold', color: verifiedColor}]}>{verifiedIssuerText}</Text>
+            </View>
+          </View>
+        }
       </View>
     </View>
   )
@@ -88,45 +72,51 @@ const ResultBanner = ({ content } : ResultBannerVariables) => {
 const styles = StyleSheet.create({
   bannerContainer: {
     backgroundColor: '#67AC5B',
-    borderRadius: 4,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
     width: '100%',
     height: 56,
     flexDirection: 'row',
-    marginTop: 8,
+    marginTop: 16,
   },
   bannerImage: {
-    paddingTop: 14,
-    paddingBottom: 12,
-    paddingLeft: 16,
-    paddingRight: 16,
+    marginTop: 7,
+    marginLeft: 16,
+    marginRight: 16,
+    height: 40,
+    width: 40,
   },
   bannerText: {
     fontSize: 22,
     color: '#FFFFFF',
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
     lineHeight: 33,
-    fontWeight: '600',
     alignSelf: 'center',
   },
   subBannerContainer: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 4,
+    borderColor: '#000',
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
     width: '100%',
     height: 74,
     flexDirection: 'column',
     paddingTop: 8,
     paddingLeft: 16,
+    paddingRight: 16,
   },
   subBannerText: {
     fontSize: 14,
     color: '#67AC5B',
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
     lineHeight: 21,
-    fontWeight: '600',
     alignSelf: 'center',
     paddingLeft: 10,
+    paddingTop: 3,
+  },
+  subIcon: {
+    width: 9,
+    height: 7,
   },
   flexRowContainer: {
     flexDirection: 'row',

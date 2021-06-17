@@ -11,6 +11,8 @@ import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
 
 import { getPatientDataFromFhir } from './getPatiendDataFromFhir'
 import { getVaccinationDataFromFhir } from './getVaccinationDataFromFhir'
+import { getIssuerFromFhir } from './getIssuerFromFhir'
+import { getIssuerData } from './getIssuerData'
 
 export const JwsValidationOptions = {
   skipJwksDownload: false,
@@ -19,7 +21,7 @@ export const JwsValidationOptions = {
 
 const MAX_JWS_SINGLE_CHUNK_LENGTH = 1195
 
-export async function validate(jws, index = ''): Promise<any> {
+export async function validate(jws): Promise<any> {
   if (jws.trim() !== jws) {
     console.log(`JWS has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
     jws = jws.trim()
@@ -222,12 +224,15 @@ export async function validate(jws, index = ''): Promise<any> {
   }
 
   const patientData = getPatientDataFromFhir(payload)
-  const vaccinationData = getVaccinationDataFromFhir(payload)
+  const vaccinationData = await getVaccinationDataFromFhir(payload)
+  const issuer = getIssuerFromFhir(payload)
+  const issuerData = await getIssuerData(issuer)
 
   const isValid = await verifyJws(jws, headerJson['kid'])
 
   const document = {
     isValid,
+    issuerData,
     patientData,
     vaccinationData,
   }
@@ -235,14 +240,24 @@ export async function validate(jws, index = ''): Promise<any> {
   return document
 }
 
+async function fetchWithTimeout(url, options, timeout, timeoutError) {
+  return Promise.race([
+    fetch(url, options),
+
+    new Promise((_, reject) => setTimeout(() => reject(new Error(timeoutError)), timeout))
+  ])
+}
 
 async function downloadAndImportKey(issuerURL: string): Promise<keys.KeySet | undefined> {
-
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
+  const timeoutError = 'Failed to download issuer JWK set'
+  const timeout = JwsValidationOptions.jwksDownloadTimeOut
+
   try {
-    const responseRaw = await fetch(jwkURL, { headers: { Origin: requestedOrigin }, timeout: JwsValidationOptions.jwksDownloadTimeOut })
+    // TODO: Weird way for timeout, if just a value it won't work
+    const responseRaw = await fetchWithTimeout(jwkURL, { headers: { Origin: requestedOrigin }}, timeout, timeoutError)
     const keySet = await responseRaw.json()
 
     // we expect a CORS response header consistent with the requested origin (either allow all '*' or the specific origin)
@@ -269,7 +284,9 @@ async function downloadAndImportKey(issuerURL: string): Promise<keys.KeySet | un
     }
   } catch (err) {
     console.log("Failed to download issuer JWK set: " + (err as Error).toString(), ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR)
-    return undefined
+    // return undefined
+
+    throw new Error(timeoutError)
   }
 }
 

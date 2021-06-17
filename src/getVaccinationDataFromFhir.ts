@@ -1,8 +1,9 @@
 import { formatDateToUSLocaleWithPaddingZero } from './utils'
+import { getCovidVaccineNameByCode } from './getCovidVaccineNameByCode'
 
 const cvxCodes = ['207', '208', '210', '211', '212']
 
-export const getVaccinationDataFromFhir = (credential: any): any => {
+export const getVaccinationDataFromFhir = async (credential: any): any => {
   const vaccinationData = []
 
   const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
@@ -32,6 +33,8 @@ export const getVaccinationDataFromFhir = (credential: any): any => {
       console.log(`Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(',')}).`)
     }
 
+    const vaccineName = await getCovidVaccineNameByCode(code)
+
     const vaccinator = performer[0]?.actor?.display || ''
 
     const isVaccineShotDone = status === 'completed'
@@ -48,6 +51,7 @@ export const getVaccinationDataFromFhir = (credential: any): any => {
         dose,
         lotNumber,
         vaccinator,
+        vaccineName,
         vaccinationDate,
       })
     }

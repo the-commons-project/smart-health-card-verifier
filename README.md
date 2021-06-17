@@ -1,75 +1,58 @@
-# SMART Health Card Verifier mobile application
+# SMART Health Card Verifier
 
-## Pre-requisites
+TODO: What is it capable of? What problem does it solve? KYC
 
-1. Install XCode iOS tools
+## Prerequisites
 
-2. Install global dependencies
+**Node v14.17.X** (LTS)
 
-```bash
-   npm install -g expo-cli
-```
+## Environment Setup
 
-## Installation and publishing
-
-### Clone repository
+#### Install `expo-cli` as a global dependency
 
 ```bash
-   git clone git@gitlab.com:st-experiments/health-card-verifier-mobile.git
+  npm install -g expo-cli
 ```
 
-### Install dependencies
+#### Clone the repository
 
 ```bash
-   npm install
+  git clone git@gitlab.com:st-experiments/health-card-verifier-mobile.git
 ```
 
-### Run application locally
+#### Install project required dependencies
 
 ```bash
-   npm start
+  npm install
 ```
 
-As alternative you can run application for the desired environment by specifying the client:
+#### Set up _Expo Go_ on your mobile phone
+Instructions are found [here](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and).
+
+## Run application locally
 
 ```bash
-   npm run android
+  npm start
 ```
 
-```bash
-   npm run ios
-```
+You will see a user interface launch on your browser with a generated QR code.<br />
+Scan the generated QR code using your mobile device and it should direct you to the `Expo Go` application.
 
-```bash
-   npm run web
-```
+## Tests
 
-You will see a user interface launched at your localhost in the browser. You may choose to,
-- Run on Android device/emulator
-- Run on iOS simulator
-- Run in web browser
-- Scan QR using mobile and run the application on your mobile
+TODO: Any ?
 
-### Run application on your iOS or Android device
-Follow the documentation in this [link](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and)
-at section **2. Expo Go app for iOS and Android** to install Expo Go app and run the application on your phone.
+## Distribution to internal testers, deploy and testing
 
+- [iOS](https://devcenter.bitrise.io/deploy/ios-deploy/ios-deploy-index/)
+- [Android](https://devcenter.bitrise.io/deploy/android-deploy/android-deployment-index/)
 
-### Run application on an Android emulator
-1. Install [Android Studio](https://developer.android.com/studio)
+Also do virtual device testing across multiple versions using cloud-tests.
 
-2. Once installed,
-- go to File > settings > SDK Settings. 
-- Search for "sdk", click on Appearance & Behavior > System Settings > Android SDK. 
-- Ensure that Android SDK 6.0 (Marshmallow) to Android 11.0 (R) are installed. 
+## Publish application with Bitrise
 
-3. Install Android emulator - [Genymotion](https://www.genymotion.com/download/)
+TODO:
 
-4. Run Genymotion application. 
-- Click on Genymotion > settings > ADB. 
-- Click on "Use custom Android SDK tools", browse to the path for Android SDK. 
-- SDK path for windows, C:/Users/<username>/AppData/Local/Android/Sdk. SDK path for iOS, /Users/<username>/Library/Android/sdk. 
-- Create a device (Google Pixel 3 for example)
+## Bug reports
 
-5. Click on "Run on Android device/emulator" on your localhost in the browser.
-
+TODO:

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native'
 
 type AppButtonVariables = {
   onPress?: any
@@ -7,19 +7,26 @@ type AppButtonVariables = {
   backgroundColor?: any
 }
 
-const AppButton = ({ onPress, title, backgroundColor } : AppButtonVariables) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={[
-      styles.appButtonContainer,
-      backgroundColor && { backgroundColor }
-    ]}
-  >
-    <Text style={styles.appButtonText}>
-      {title}
-    </Text>
-  </TouchableOpacity>
-);
+const images = {
+  'barcodeScanner': require('../../assets/img/error/barcode-scanner.png'),
+}
+
+const AppButton = ({ onPress, title, backgroundColor } : AppButtonVariables) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.appButtonContainer,
+        backgroundColor && { backgroundColor }
+      ]}
+    >
+      <Text style={[styles.appButtonText, {fontFamily: 'Poppins_600SemiBold'}]}>
+        {title}
+      </Text>
+      <Image style={styles.appButtonImage} source={images.barcodeScanner} />
+    </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
   appButtonContainer: {
@@ -27,17 +34,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#009688',
     borderRadius: 10,
     paddingVertical: 14,
-    paddingHorizontal: 60
+    paddingHorizontal: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   appButtonText: {
     fontSize: 18,
     color: '#FFFFFF',
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    lineHeight: 27,
-    fontWeight: '600',
     alignSelf: 'center',
-    textTransform: 'uppercase'
+    marginRight: 10,
+  },
+  appButtonImage: {
+    maxHeight: 26,
+    maxWidth: 26,
   }
 })
 
