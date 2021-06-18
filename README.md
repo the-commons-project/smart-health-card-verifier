@@ -4,7 +4,7 @@ TODO: What is it capable of? What problem does it solve? KYC
 
 ## Prerequisites
 
-**Node v14.17.X** (LTS)
+Node v14.17.X (LTS)
 
 ## Environment Setup
 
@@ -40,7 +40,7 @@ Scan the generated QR code using your mobile device and it should direct you to 
 
 ## Tests
 
-TODO: Any ?
+TODO: Add tests
 
 ## Distribution to internal testers, deploy and testing
 
@@ -51,8 +51,18 @@ Also do virtual device testing across multiple versions using cloud-tests.
 
 ## Publish application with Bitrise
 
-TODO:
+Application is published to App Store and Google Play as a part of CI/CD
+on merge to `main` branch.
 
-## Bug reports
+## How to Contribute
 
-TODO:
+1. [Clone repo](#clone-the-repository) and create a new branch:
+```bash
+  $ git checkout https://gitlab.com/st-experiments/health-card-verifier-mobile.git -b name_for_new_branch
+```
+2. Make changes and test
+3. Submit Merge Request with comprehensive description of changes
+
+## License
+
+Apache License

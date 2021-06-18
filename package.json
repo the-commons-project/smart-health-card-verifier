@@ -45,6 +45,7 @@
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@types/react-native-table-component": "^1.2.0",
     "invariant": "^2.2.4",
     "typescript": "~4.0.0"
   },

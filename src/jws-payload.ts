@@ -63,7 +63,13 @@ export function validate(jwsPayloadText: string): any {
     return
   }
 
-  const fhirBundleText = JSON.stringify(jwsPayload.vc.credentialSubject.fhirBundle);
+  const fhirBundleJson = jwsPayload.vc.credentialSubject.fhirBundle
+  const fhirBundleText = JSON.stringify(fhirBundleJson);
+
+  const isVaccineBundle = fhirBundleJson?.entry[1]?.resource?.resourceType === 'Immunization'
+  if (!isVaccineBundle) {
+    throw ErrorCode.NOT_VACCINE_BUNDLE
+  }
 
   return fhirBundle.validate(fhirBundleText)
 }

@@ -37,5 +37,8 @@ export enum ErrorCode {
   INVALID_KEY_UNKNOWN,
 
   // config errors
-  OPENSSL_NOT_AVAILABLE = 300
+  OPENSSL_NOT_AVAILABLE = 300,
+
+  // Custom error
+  NOT_VACCINE_BUNDLE
 }

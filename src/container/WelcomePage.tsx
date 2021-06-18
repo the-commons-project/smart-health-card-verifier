@@ -54,11 +54,17 @@ const WelcomePage = ({ navigation }: Props) => {
             backgroundColor='#255DCB'
           />
           <View style={styles.learnMoreContainer}>
-            <Text style={[styles.text, {fontFamily: 'Poppins_600SemiBold'}]}>Learn more about us </Text>
             <Text
               style={[styles.text, styles.link, {fontFamily: 'Poppins_600SemiBold'}]}
-              onPress={() => Linking.openURL('https://docs.google.com/document/d/1wtHEZH8i5pD8zw5M-kHUy1hpKNb_fUSb3pobSNliXX0/edit?ts=60c75c53#')}>
-              here
+              onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')}>
+              How to verify SMART® Health Cards
+            </Text>
+          </View>
+          <View style={styles.aboutUsContainer}>
+            <Text
+              style={[styles.text, styles.link, {fontFamily: 'Poppins_600SemiBold'}]}
+              onPress={() => Linking.openURL('https://thecommonsproject.org/about-verifier')}>
+              About us
             </Text>
           </View>
         </View>
@@ -81,8 +87,10 @@ const styles = StyleSheet.create({
   },
   learnMoreContainer: {
     flexDirection: 'row',
-    paddingBottom: 30,
     paddingTop: 17,
+  },
+  aboutUsContainer: {
+    paddingBottom: 20,
   },
   textContainer: {
     justifyContent: 'flex-start',
