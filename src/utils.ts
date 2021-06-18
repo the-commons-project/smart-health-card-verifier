@@ -21,6 +21,21 @@ export const formatDateToUSLocaleWithPaddingZero = (birthDate: string): string =
   return dateOfBirth
 }
 
+export const formatVaccinationDate = (dateRaw: string): string => {
+  const date = new Date(dateRaw)
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+  // TODO: find better way
+  const day = ('0' + date.getDate()).slice(-2)
+  // const month = date.toLocaleString('en-us', { month: 'short' })
+  const month = monthNames[date.getMonth()]
+  const year = date.getFullYear()
+
+  const vaccinationDate = `${day} ${month} ${year}`
+
+  return vaccinationDate
+}
+
 export function inflatePayload(verificationResult): Buffer {
   // keep typescript happy by extending object with a 'zip' property
   const header = verificationResult.header as {zip: string }
@@ -30,7 +45,7 @@ export function inflatePayload(verificationResult): Buffer {
     try {
       payload = Buffer.from(pako.inflateRaw(payload))
     } catch (error) {
-      throw new Error("Inflate Failed : " + (error as Error).message)
+      throw new Error('Inflate Failed : ' + (error as Error).message)
     }
   }
 

@@ -22,7 +22,7 @@ const ErrorPage = ({ navigation }: Props) => {
       </View>
       <View style={styles.imageContainer}>
         <Image style={styles.imageStyle} source={images.qrError} />
-        <Text style={[styles.message, {fontFamily: 'OpenSans_600SemiBold'}]}> Only valid vaccine SMART Health Cards are currently supported </Text>
+        <Text style={[styles.message, {fontFamily: 'OpenSans_600SemiBold'}]}> Only valid vaccine SMART® Health Cards are currently supported </Text>
       </View>
       <AppButton
         title='Scan next vaccination record'

@@ -52,6 +52,13 @@ const ResultRecord = ({ data }) => {
     )
   }
 
+  // TODO: Refactor how we apply bold font
+  function dateParser(date) {
+    return(
+      <Text style={[styles.fieldTitle, {fontFamily: 'OpenSans_700Bold'}]}>{date}</Text>
+    )
+  }
+
   return (
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
@@ -63,11 +70,12 @@ const ResultRecord = ({ data }) => {
           <Row data={userFieldTitle} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
           <Row data={userFieldValue} textStyle={[styles.fieldValue , {fontFamily: 'OpenSans_700Bold'}]}/>
         </Table>
+        <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>Always verify identity with a government-issued I.D.</Text>
       </View>
       {vaccinationData.map((doseObject, key) => {
         const { dose, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
-        const dosageFieldTitleRowOne = [insertTextToTable(vaccineName, lotNumber), 'Date']
-        const dosageFieldValueRowOne = [vaccinatorParser(vaccinator), vaccinationDate]
+        const dosageFieldTitleRowOne = [insertTextToTable(vaccineName, lotNumber), dateParser(vaccinationDate)]
+        const dosageFieldValueRowOne = [vaccinatorParser(vaccinator), '']
         return (
           <View key={key}>
             <View style={styles.doseDividerContainer}>

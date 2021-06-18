@@ -1,4 +1,4 @@
-import { formatDateToUSLocaleWithPaddingZero } from './utils'
+import { formatVaccinationDate } from './utils'
 import { getCovidVaccineNameByCode } from './getCovidVaccineNameByCode'
 
 const cvxCodes = ['207', '208', '210', '211', '212']
@@ -44,7 +44,7 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
     }
 
     const dose = index + 1
-    const vaccinationDate = formatDateToUSLocaleWithPaddingZero(occurrenceDateTime)
+    const vaccinationDate = formatVaccinationDate(occurrenceDateTime)
 
     if (isVaccineShotDone && isValidVaccinationCode) {
       vaccinationData.push({
