@@ -1,6 +1,6 @@
 import { issuerNameLookUpUrl } from './constants'
 
-export const getIssuerData = async (issuer: string): any => {
+export const getIssuerData = async (issuer: string): Promise<any> => {
   const issuerUrlParameter = `&issuer=${escape(issuer)}`
   const url = `${issuerNameLookUpUrl}${issuerUrlParameter}`
 

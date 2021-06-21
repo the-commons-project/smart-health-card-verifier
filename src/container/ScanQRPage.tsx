@@ -15,6 +15,7 @@ const images = {
 
 const ScanQRPage = ({ navigation }: Props) => {
   const [hasPermission, setHasPermission] = useState(true)
+  const [isPageFocused, setIsPageFocused] = useState(false)
   const [scanned, setScanned] = useState(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
 
@@ -29,6 +30,16 @@ const ScanQRPage = ({ navigation }: Props) => {
       setHasPermission(status === 'granted')
     })()
   }, [])
+
+  navigation.addListener('focus', () => {
+    setIsPageFocused(true)
+    setScanned(false)
+  });
+
+  navigation.addListener('blur', () => {
+    setIsPageFocused(false)
+    setScanned(true)
+  });
 
   if(scanned) {
     Animated.loop(
@@ -49,15 +60,12 @@ const ScanQRPage = ({ navigation }: Props) => {
       validationResult = await validate([data])
 
       if (!validationResult || validationResult.isValid === 'false') {
-        setScanned(false)
         navigation.navigate('Error')
         return
       }
 
-      setScanned(false)
       navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
     } catch (error) {
-      setScanned(false)
 
       if (error.toString() === 'Error: Failed to download issuer JWK set') {
         validationResult.isValid = false
@@ -72,7 +80,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const { isInternetReachable } = useNetInfo()
 
-  const showCamera = hasPermission && isInternetReachable && !scanned
+  const showCamera = hasPermission && isInternetReachable && !scanned && isPageFocused
 
   return (
     <View style={styles.container}>

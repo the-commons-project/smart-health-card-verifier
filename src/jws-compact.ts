@@ -39,7 +39,7 @@ export async function validate(jws): Promise<any> {
     return false
   }
 
-  validateSchema(jwsCompactSchema, jws)
+  // validateSchema(jwsCompactSchema, jws)
 
   // split into header[0], payload[1], key[2]
   const parts = jws.split('.')

@@ -21,7 +21,7 @@ export function validate(jwsPayloadText: string): any {
   }
 
   // failures will be recorded in the log. we can continue processing.
-  validateSchema(jwsPayloadSchema, jwsPayload);
+  // validateSchema(jwsPayloadSchema, jwsPayload);
 
   // validate issuance date
   const nbf = new Date();

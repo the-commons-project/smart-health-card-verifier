@@ -71,7 +71,7 @@ export function validate(fhirBundleText: string): any {
       continue
     }
 
-    validateSchema({ $ref: 'https://smarthealth.cards/schema/fhir-schema.json#/definitions/' + resource.resourceType }, resource, ['', 'entry', i.toString(), resource.resourceType].join('/'))
+    // validateSchema({ $ref: 'https://smarthealth.cards/schema/fhir-schema.json#/definitions/' + resource.resourceType }, resource, ['', 'entry', i.toString(), resource.resourceType].join('/'))
 
     if (resource.id) {
       console.log('Bundle.entry[' + i.toString() + '].resource[' + resource.resourceType + '] should not include .id elements', ErrorCode.FHIR_SCHEMA_ERROR)

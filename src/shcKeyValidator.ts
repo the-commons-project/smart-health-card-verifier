@@ -160,7 +160,7 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
   }
 
   // failures will be console.log, we can continue processing.
-  validateSchema(keySetSchema, keySet)
+  // validateSchema(keySetSchema, keySet)
 
   for (let i = 0; i < keySet.keys.length; i++) {
     let key: JWK.Key = keySet.keys[i]

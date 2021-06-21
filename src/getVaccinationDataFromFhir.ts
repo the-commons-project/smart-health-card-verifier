@@ -1,5 +1,5 @@
 import { formatVaccinationDate } from './utils'
-import { getCovidVaccineNameByCode } from './getCovidVaccineNameByCode'
+import { getVaccineCodesHash } from './getVaccineCodesHash'
 
 const cvxCodes = ['207', '208', '210', '211', '212']
 
@@ -15,6 +15,8 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
       return entry
     }
   }).map(entry => entry.resource)
+
+  const vaccineCodesHash = await getVaccineCodesHash()
 
   for (const [index, entry] of immunizationEntries.entries()) {
     const {
@@ -33,7 +35,7 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
       console.log(`Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(',')}).`)
     }
 
-    const vaccineName = await getCovidVaccineNameByCode(code)
+    const vaccineName = vaccineCodesHash[code]
 
     const vaccinator = performer[0]?.actor?.display || ''
 
