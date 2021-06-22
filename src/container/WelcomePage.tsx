@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, Linking, TouchableWithoutFeedback, Dimen
 import { Props } from '../../types'
 import AppButton from '../components/customButton'
 import NotificationOverlay from '../components/notificationOverlay'
-import { useNetInfo } from '@react-native-community/netinfo'
 
 import appJson from '../../app.json'
 
@@ -17,7 +16,6 @@ const images = {
 
 const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
-  const { isInternetReachable } = useNetInfo()
 
   const showAppVersion = () => {
     setShowVersion(true)
@@ -27,9 +25,6 @@ const WelcomePage = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      {!isInternetReachable &&
-        <NotificationOverlay overlayState={true} type={'noInternetConnection'}/>
-      }
       <Image style={styles.smartLogoImage} source={images.smartLogo} />
       <View style={styles.screenContainer}>
         <View>
