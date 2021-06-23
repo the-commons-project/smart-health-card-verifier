@@ -58,7 +58,7 @@ const WelcomePage = ({ navigation }: Props) => {
           <View style={styles.aboutUsContainer}>
             <Text
               style={[styles.text, styles.link, {fontFamily: 'Poppins_600SemiBold'}]}
-              onPress={() => Linking.openURL('https://thecommonsproject.org/about-verifier')}>
+              onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')}>
               About us
             </Text>
           </View>

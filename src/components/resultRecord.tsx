@@ -92,7 +92,7 @@ const ResultRecord = ({ data }) => {
       <View style={styles.divider} />
       <View>
         <Text style={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}>Issuer</Text>
-        <Text style={[styles.fieldValue, {fontFamily: 'OpenSans_700Bold'}]}>{issuerData?.name}</Text>
+        <Text style={[styles.fieldValue, {fontFamily: 'OpenSans_700Bold'}]}>{issuerData?.name || issuerData?.url}</Text>
           {issuerData.name ?
             <View style={styles.verifierContainer}>
               <Image style={styles.verifierImage} source={images.commonTrustVerified} />
@@ -101,7 +101,7 @@ const ResultRecord = ({ data }) => {
             :
             <View style={styles.verifierContainer}>
               <Image style={styles.warningCrossImage} source={images.warningCross} />
-              <Text style={[styles.verifiedByText, {fontFamily: 'OpenSans_700Bold', color: '#F6A135'}]}>Issuer not recognized</Text>
+              <Text style={[styles.verifiedByText, {fontFamily: 'OpenSans_700Bold', color: '#CE471C'}]}>Issuer not recognized</Text>
             </View>
           }
       </View>

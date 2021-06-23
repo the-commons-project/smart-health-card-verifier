@@ -14,8 +14,7 @@ const images = {
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
-  const [hasPermission, setHasPermission] = useState(true)
-  const [isPageFocused, setIsPageFocused] = useState(false)
+  const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
 
@@ -32,12 +31,10 @@ const ScanQRPage = ({ navigation }: Props) => {
   }, [])
 
   navigation.addListener('focus', () => {
-    setIsPageFocused(true)
     setScanned(false)
   });
 
   navigation.addListener('blur', () => {
-    setIsPageFocused(false)
     setScanned(true)
   });
 
@@ -85,11 +82,15 @@ const ScanQRPage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.scannerContainer}>
-        {!hasPermission &&
-          <NotificationOverlay overlayState={true} type={'noCameraAccess'}/>
-        }
 
-        {!isInternetReachable &&
+        {/* TODO: Cover scenario when camera permissions disallowed later.
+            NOTE: The below shows our modal behind system's modal.
+          !hasPermission &&
+          <NotificationOverlay overlayState={true} type={'noCameraAccess'}/>
+        */}
+
+        {/* TODO: Find a better netinfo module as the check for internet connection fires three times when it is called */}
+        {isInternetReachable === false &&
           <NotificationOverlay overlayState={true} type={'noInternetConnection'}/>
         }
 
