@@ -77,7 +77,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const { isInternetReachable } = useNetInfo()
 
-  const showCamera = hasPermission && isInternetReachable && !scanned && isPageFocused
+  const showCamera = hasPermission && isInternetReachable && !scanned
 
   return (
     <View style={styles.container}>

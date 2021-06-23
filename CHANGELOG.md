@@ -1,3 +1,6 @@
+# release 1.0.7 (2021-06-23)
+  * Bug fix
+
 # release 1.0.6 (2021-06-23)
   * Update LICENSE
   * Bug fixes
