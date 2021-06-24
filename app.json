@@ -17,9 +17,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "buildNumber": "1.0.7",
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
     },
     "android": {
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptiveSHC.png",
         "backgroundColor": "#FFFFFF"

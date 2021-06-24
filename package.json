@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "name": "health-card-verifier-mobile",
-  "version": "0.1.2",
+  "version": "1.0.7",
   "description": "SMART Health Card Verifier",
   "scripts": {
     "start": "expo r -c",
@@ -9,7 +9,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "preinstall": "npx npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions",
+    "release:patch": "npx standard-version --release-as patch",
+    "release:minor": "npx standard-version --release-as minor",
+    "release:major": "npx standard-version --release-as major"
   },
   "resolutions": {
     "node-forge": "^0.10.0",
@@ -47,6 +50,8 @@
     "@types/react-native": "~0.63.2",
     "@types/react-native-table-component": "^1.2.0",
     "invariant": "^2.2.4",
+    "standard-version": "^7.1.0",
+    "standard-version-expo": "^1.0.3",
     "typescript": "~4.0.0"
   },
   "keywords": [
