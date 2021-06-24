@@ -1,7 +1,5 @@
 # List of TODOs
 
-NOTE: Developers did not have time to make code better (simplier and more readable)
-
 1. Add tests
 1. Add linter
 1. Store responses from API calls in local storage (data won't be updated often)
