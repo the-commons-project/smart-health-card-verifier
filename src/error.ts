@@ -40,5 +40,7 @@ export enum ErrorCode {
   OPENSSL_NOT_AVAILABLE = 300,
 
   // Custom error
-  NOT_VACCINE_BUNDLE
+  NOT_VACCINE_BUNDLE,
+
+  SERVER_ERROR = 500
 }

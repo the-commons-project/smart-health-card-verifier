@@ -9,5 +9,5 @@
 How do we check that `issuerURL` actually belongs to the issuer?
 1. Complete code refactoring -> code looks scrappy, use [styleguide](https://gitlab.com/affinidi/coding-styleguide) for reference:
   - Use logger, instead of console.log
-  - Proper error handling instead of console.log
+  - Proper error handling instead of console.log or SERVER_ERROR
   - Implement JWK certificate chain validation (commented out)

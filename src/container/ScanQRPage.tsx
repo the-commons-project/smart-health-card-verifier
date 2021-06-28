@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Animated, Easing } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
+
+import { ErrorCode } from '../error'
 import { Props } from '../../types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
@@ -63,11 +65,17 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
     } catch (error) {
-
       if (error.toString() === 'Error: Failed to download issuer JWK set') {
         validationResult.isValid = false
 
         navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
+        return
+      }
+
+      if (error === ErrorCode.SERVER_ERROR) {
+        navigation.navigate('Welcome')
+        alert('Server Error. Please try to scan again.')
+
         return
       }
 
