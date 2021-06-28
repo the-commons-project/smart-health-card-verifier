@@ -234,6 +234,7 @@ export async function validate(jws): Promise<any> {
 
   if (isIssuerNotFound) {
     issuerData.url = issuer
+    issuerData.name = undefined
   }
 
   const isValid = await verifyJws(jws, headerJson['kid'])
