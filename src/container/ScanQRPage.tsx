@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, Animated, Easing, Platform } from 'react-native'
+import { View, StyleSheet, Animated, Easing } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import { Props } from '../../types'
@@ -84,14 +84,14 @@ const ScanQRPage = ({ navigation }: Props) => {
       <View style={styles.scannerContainer}>
 
         {/* TODO: Cover scenario when camera permissions disallowed later.
-            NOTE: The below shows our modal behind system's modal.
-          !hasPermission &&
-          <NotificationOverlay overlayState={true} type={'noCameraAccess'}/>
-        */}
+            NOTE: The below shows our modal behind system's modal. */}
+        {!hasPermission &&
+          <NotificationOverlay type={'noCameraAccess'} navigation={navigation}/>
+        }
 
         {/* TODO: Find a better netinfo module as the check for internet connection fires three times when it is called */}
         {isInternetReachable === false &&
-          <NotificationOverlay overlayState={true} type={'noInternetConnection'}/>
+          <NotificationOverlay type={'noInternetConnection'} navigation={navigation}/>
         }
 
         {scanned &&

@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Text, Overlay } from 'react-native-elements'
+import React from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import AppClickableImage from '../components/customImage'
 
 type NotificationOverlayVariables = {
-  overlayState?: any
+  navigation?: any
   type?: any
 }
 
-const NotificationOverlay = ({ overlayState, type } : NotificationOverlayVariables) => {
-  const [displayOverlay, setDisplayOverlay] = useState(overlayState)
+const images = {
+  'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
+}
+
+const NotificationOverlay = ({ type, navigation } : NotificationOverlayVariables) => {
   let title = ''
   let subtitle = ''
 
@@ -21,56 +24,54 @@ const NotificationOverlay = ({ overlayState, type } : NotificationOverlayVariabl
   }
 
   return (
-    <View>
-      {displayOverlay &&
-        <Overlay overlayStyle={ styles.overlayContainer } isVisible>
-          <View style={ styles.modalContent }>
-            <Text style={[styles.title, styles.text, { fontFamily: 'Poppins_600SemiBold' }]}>
-              {title}
-            </Text>
-            <Text style={[styles.subtitle, styles.text, { fontFamily: 'OpenSans_600SemiBold' }]}>
-              {subtitle}
-            </Text>
-            <TouchableOpacity onPress={() => {setDisplayOverlay(false)}}>
-              <Text style={[styles.buttonText, { fontFamily: 'Poppins_600SemiBold' }]}>OK</Text>
-            </TouchableOpacity>
-          </View>
-        </Overlay>
-      }
+    <View style={styles.flexContainer}>
+      <View>
+        <AppClickableImage
+          styles={styles.leftCaretImage}
+          source={images.leftCaret}
+          onPress={() => navigation.navigate('Welcome')}
+        />
+      </View>
+      <View style={styles.notificationTextContainer}>
+        <Text style={[styles.notificationTitle, {fontFamily: 'Poppins_600SemiBold'}]}>{title}</Text>
+        <Text style={[styles.notificationSubtitle, {fontFamily: 'OpenSans_600SemiBold'}]}>{subtitle}</Text>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  overlayContainer: {
-    height:'auto',
-    justifyContent:'center',
+  flexContainer: {
+    flex: 1,
+    paddingTop: '15%',
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: '#F3F6FF',
   },
-  modalContent: {
-    maxWidth: 270,
-    height: 154,
+  notificationTextContainer: {
+    height: '100%',
+    display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  title: {
-    paddingTop: 24,
-    paddingBottom: 8,
+  notificationTitle: {
+    textAlign: 'center',
     fontSize: 17,
     lineHeight: 22,
+    color: '#000000',
+    paddingBottom: 8,
   },
-  subtitle: {
-    paddingBottom: 24,
+  notificationSubtitle: {
+    textAlign: 'center',
     fontSize: 13,
     lineHeight: 18,
-  },
-  text: {
     color: '#000000',
-    textAlign: 'center'
   },
-  buttonText: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#255DCB',
+  leftCaretImage: {
+    width: 12,
+    height: 19,
   },
 })
 
