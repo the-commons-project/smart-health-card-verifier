@@ -45,7 +45,10 @@ const ResultRecord = ({ data }) => {
   }
 
   function vaccinatorParser(vaccinator) {
-    const newText = vaccinator.split(' | ').join(', ')
+    let newText = '-'
+    if (vaccinator) {
+      newText = vaccinator.split(' | ').join(', ')
+    }
 
     return (
       <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>{newText}</Text>

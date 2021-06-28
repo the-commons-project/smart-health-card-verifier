@@ -37,7 +37,10 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
 
     const vaccineName = vaccineCodesHash[code]
 
-    const vaccinator = performer[0]?.actor?.display || ''
+    let vaccinator = ''
+    if (performer) {
+      vaccinator = performer[0]?.actor?.display || ''
+    }
 
     const isVaccineShotDone = status === 'completed'
 
