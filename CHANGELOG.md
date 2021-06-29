@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.9](https://gitlab.com/st-experiments/health-card-verifier-mobile/compare/v1.0.8...v1.0.9) (2021-06-29)
+
+
+### Bug Fixes
+
+* parse FHIR dates as strings to avoid TZ issues ([79d690e](https://gitlab.com/st-experiments/health-card-verifier-mobile/commit/79d690e50c2406937283d85a67a672e199462e19))
+
 ### 1.0.8 (2021-06-28)
 
 
