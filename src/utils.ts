@@ -9,29 +9,28 @@ export function parseJson<T>(json: string): T | undefined  {
   }
 }
 
-export const formatDateToUSLocaleWithPaddingZero = (birthDate: string): string => {
-  const date = new Date(birthDate)
-
-  const day = ('0' + date.getDate()).slice(-2)
-  const month = ('0' + (date.getMonth() + 1)).slice(-2)
-  const year = date.getFullYear()
+// NOTE: Timezone affects date presentation, so in US it will be 1 day behind,
+//       that is why `new Date()` is not needed.
+//       Birthday date in FHIR => "birthDate": "1960-01-20"
+export const formatDateOfBirth = (birthDate: string): string => {
+  const [year, month, day] = birthDate.split('-')
 
   const dateOfBirth = `${month}/${day}/${year}`
 
   return dateOfBirth
 }
 
+// NOTE: Timezone affects date presentation, so in US it will be 1 day behind,
+//       that is why `new Date()` is not needed.
+//       Vaccination date in FHIR => "occurrenceDateTime": "2020-12-29"
 export const formatVaccinationDate = (dateRaw: string): string => {
-  const date = new Date(dateRaw)
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-  // TODO: find better way
-  const day = ('0' + date.getDate()).slice(-2)
-  // const month = date.toLocaleString('en-us', { month: 'short' })
-  const month = monthNames[date.getMonth()]
-  const year = date.getFullYear()
+  const [year, month, day] = dateRaw.split('-')
+  const monthIndex = parseInt(month, 10) - 1 // 08 -> 7
+  const monthShortName = monthShortNames[monthIndex]
 
-  const vaccinationDate = `${day} ${month} ${year}`
+  const vaccinationDate = `${day} ${monthShortName} ${year}`
 
   return vaccinationDate
 }

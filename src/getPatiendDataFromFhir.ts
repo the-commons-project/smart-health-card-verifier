@@ -1,4 +1,4 @@
-import { formatDateToUSLocaleWithPaddingZero } from './utils'
+import { formatDateOfBirth } from './utils'
 
 export const getPatientDataFromFhir = (credential: any): any => {
   const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
@@ -20,7 +20,7 @@ export const getPatientDataFromFhir = (credential: any): any => {
       fullName = `${familyName}/${givenNames}`
     }
 
-    dateOfBirth = formatDateToUSLocaleWithPaddingZero(birthDate)
+    dateOfBirth = formatDateOfBirth(birthDate)
   }
 
   return { name: fullName, dateOfBirth }
