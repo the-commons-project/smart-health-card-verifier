@@ -12,6 +12,7 @@ import AppLoading from 'expo-app-loading'
 
 import {
   useFonts,
+  Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
@@ -30,6 +31,7 @@ const Stack = createStackNavigator()
 
 const App = () => {
   let [fontsLoaded] = useFonts({
+    Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_700Bold,
     OpenSans_400Regular,

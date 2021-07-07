@@ -50,16 +50,23 @@ const WelcomePage = ({ navigation }: Props) => {
           />
           <View style={styles.learnMoreContainer}>
             <Text
-              style={[styles.text, styles.link, {fontFamily: 'Poppins_600SemiBold'}]}
+              style={[styles.text, styles.link, styles.colorBlue, {fontFamily: 'Poppins_600SemiBold'}]}
               onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')}>
               How to verify SMART® Health Cards
             </Text>
           </View>
           <View style={styles.aboutUsContainer}>
             <Text
-              style={[styles.text, styles.link, {fontFamily: 'Poppins_600SemiBold'}]}
+              style={[styles.text, styles.link, styles.colorBlue, {fontFamily: 'Poppins_600SemiBold'}]}
               onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')}>
               About us
+            </Text>
+          </View>
+          <View style={styles.aboutUsContainer}>
+            <Text
+              style={[styles.privacyText, styles.link, {fontFamily: 'Poppins_500Medium'}]}
+              onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}>
+              Privacy policy
             </Text>
           </View>
         </View>
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
     paddingTop: 17,
   },
   aboutUsContainer: {
-    paddingBottom: 20,
+    paddingBottom: 16,
   },
   textContainer: {
     justifyContent: 'flex-start',
@@ -135,12 +142,18 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: '#000000',
     paddingTop: 10,
     paddingBottom: 5,
   },
-  link: {
+  privacyText: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#000000',
+  },
+  colorBlue: {
     color: '#255DCB',
+  },
+  link: {
     textDecorationLine: 'underline',
   },
 })
