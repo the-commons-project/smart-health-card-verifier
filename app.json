@@ -2,7 +2,7 @@
   "expo": {
     "name": "Verifier",
     "slug": "Verifier",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "orientation": "portrait",
     "icon": "./assets/iconSHC.png",
     "splash": {
@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.0.10",
+      "buildNumber": "1.0.11",
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
@@ -27,7 +27,7 @@
       }
     },
     "android": {
-      "versionCode": 10,
+      "versionCode": 11,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptiveSHC.png",
         "backgroundColor": "#FFFFFF"
