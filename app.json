@@ -2,7 +2,7 @@
   "expo": {
     "name": "Verifier",
     "slug": "Verifier",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "orientation": "portrait",
     "icon": "./assets/iconSHC.png",
     "splash": {
@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.0.11",
+      "buildNumber": "1.0.12",
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
@@ -27,12 +27,14 @@
       }
     },
     "android": {
-      "versionCode": 11,
+      "versionCode": 12,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptiveSHC.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": [ "CAMERA" ]
+      "permissions": [
+        "CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
