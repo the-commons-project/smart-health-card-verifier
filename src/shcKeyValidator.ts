@@ -2,7 +2,7 @@ import jose, { JWK } from 'react-native-jose'
 import { ErrorCode } from './error'
 import { validateSchema } from './schema'
 import keySetSchema from './schemas/keyset-schema.json'
-import { KeySet, store } from './keys'
+import { KeySet, KeysStore } from './keys'
 import { v4 as uuidv4 } from 'uuid'
 import { isOpensslAvailable } from './utils'
 import { Certificate } from '@fidm/x509'
@@ -212,7 +212,7 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
     }
 
     try {
-      key = await store.add(key)
+      key = await KeysStore.store.add(key)
     } catch (error) {
       console.log('Error adding key to keyStore : ' + (error as Error).message, ErrorCode.INVALID_KEY_UNKNOWN)
       return

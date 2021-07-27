@@ -2,7 +2,7 @@ import pako from 'pako'
 import jose from 'react-native-jose'
 
 import { ErrorCode } from './error'
-import * as keys from './keys'
+import { KeySet, KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
 import { parseJson } from './utils'
 import { validateSchema } from './schema'
@@ -22,6 +22,8 @@ export const JwsValidationOptions = {
 const MAX_JWS_SINGLE_CHUNK_LENGTH = 1195
 
 export async function validate(jws): Promise<any> {
+  KeysStore.resetStore()
+
   if (jws.trim() !== jws) {
     console.log(`JWS has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
     jws = jws.trim()
@@ -213,8 +215,7 @@ export async function validate(jws): Promise<any> {
     }
 
   } else {
-    // continue, since we might have the key we need in the global keystore
-    console.log("Can't find 'iss' entry in JWS payload", ErrorCode.SCHEMA_ERROR)
+    throw new Error("Can't find 'iss' entry in JWS payload")
   }
 
   let result = false
@@ -257,7 +258,7 @@ async function fetchWithTimeout(url, options, timeout, timeoutError) {
   ])
 }
 
-async function downloadAndImportKey(issuerURL: string): Promise<keys.KeySet | undefined> {
+async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefined> {
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
@@ -301,9 +302,9 @@ async function downloadAndImportKey(issuerURL: string): Promise<keys.KeySet | un
 
 
 async function verifyJws(jws: string, kid: string): Promise<boolean> {
-  const verifier: jose.JWS.Verifier = jose.JWS.createVerify(keys.store)
+  const verifier: jose.JWS.Verifier = jose.JWS.createVerify(KeysStore.store)
 
-  if (kid && !keys.store.get(kid)) {
+  if (kid && !KeysStore.store.get(kid)) {
     console.log(`JWS verification failed: can't find key with 'kid' = ${kid} in issuer set`, ErrorCode.JWS_VERIFICATION_ERROR)
 
     return false
