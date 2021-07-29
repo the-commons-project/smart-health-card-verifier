@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Animated, Easing } from 'react-native'
+import { View, StyleSheet, Animated, Easing, Alert, Platform } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
@@ -27,8 +27,39 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync()
-      setHasPermission(status === 'granted')
+      const { OS } = Platform
+
+      if (OS === 'ios') {
+        const { status } = await BarCodeScanner.requestPermissionsAsync()
+        setHasPermission(status === 'granted')
+      }
+
+      if (OS === 'android') {
+        const permission = await BarCodeScanner.getPermissionsAsync()
+
+        if (!permission.granted) {
+          Alert.alert(
+            'Camera Permission',
+            'This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => navigation.navigate('Welcome'),
+                style: 'cancel'
+              },
+              { text: 'OK', onPress: async () => {
+                  const { status } = await BarCodeScanner.requestPermissionsAsync()
+                  setHasPermission(status === 'granted')
+                }
+              }
+            ],
+            { cancelable: false }
+          )
+        } else {
+          const { status } = await BarCodeScanner.requestPermissionsAsync()
+          setHasPermission(status === 'granted')
+        }
+      }
     })()
   }, [])
 
