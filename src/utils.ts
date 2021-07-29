@@ -1,5 +1,9 @@
 import pako from 'pako'
-import jose from 'react-native-jose'
+import { Platform } from 'react-native'
+import * as Application from 'expo-application'
+import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
+
+import { uuidNamespace } from './constants'
 
 export function parseJson<T>(json: string): T | undefined  {
   try {
@@ -98,4 +102,33 @@ export function walkProperties(obj: Record<string, unknown>, path: string[], cal
   }
 
   return
+}
+
+// Extracted from https://forums.expo.io/t/constants-installationid-how-to-implement-it-on-your-own/50003/15
+export async function getInstallationIdManually() {
+  let installationId;
+
+  if(['android', 'ios'].includes(Platform.OS)) {
+    let identifierForVendor;
+
+    if(Platform.OS === 'android') {
+      identifierForVendor = Application.androidId;
+    } else { // ios
+      identifierForVendor = await Application.getIosIdForVendorAsync();
+    }
+
+    const bundleIdentifier = Application.applicationId;
+
+    if (identifierForVendor) {
+      installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace);
+    } else {
+      const installationTime = await Application.getInstallationTimeAsync();
+      installationId = uuidv5(`${bundleIdentifier}-${installationTime.getTime()}`, uuidNamespace);
+    }
+  }
+  else { // WEB. random (uuid v4)
+    installationId = uuidv4();
+  }
+
+  return installationId;
 }

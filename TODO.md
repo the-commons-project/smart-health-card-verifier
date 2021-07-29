@@ -1,6 +1,5 @@
 # List of TODOs
 
-1. Update appUUID in `constants.ts`
 1. Add tests
 1. Add linter
 1. Store responses from API calls in local storage (data won't be updated often)

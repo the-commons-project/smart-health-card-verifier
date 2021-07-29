@@ -43,7 +43,8 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-table-component": "^1.2.1",
-    "react-native-web": "^0.16.5"
+    "react-native-web": "^0.16.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
