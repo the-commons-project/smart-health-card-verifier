@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   appVersion: {
     fontSize: 10,
     color: '#255DCB',
-    left: '29%',
+    left: '28%',
     top: '40%',
     position: 'absolute',
     transform: [{ rotate: '-5deg'}],
