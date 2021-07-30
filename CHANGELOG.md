@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.13](https://gitlab.com/affinidi/safe-travel/st-experiments/health-card-verifier-mobile/compare/v1.0.12...v1.0.13) (2021-07-30)
+
+
+### Bug Fixes
+
+* add UUID on issuer lookup request ([49d5c36](https://gitlab.com/affinidi/safe-travel/st-experiments/health-card-verifier-mobile/commit/49d5c36ba658de2e61850482fa2d10ccd8447c3b))
+* reset keys storage before each scan ([c314e57](https://gitlab.com/affinidi/safe-travel/st-experiments/health-card-verifier-mobile/commit/c314e5749120c76bc6ab279fa6dc02c2e8b7b547))
+
 ### [1.0.12](https://gitlab.com/st-experiments/health-card-verifier-mobile/compare/v1.0.11...v1.0.12) (2021-07-21)
 
 
