@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Animated, Easing, Alert, Platform } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-
+import * as Device from 'expo-device';
 import { ErrorCode } from '../error'
 import { Props } from '../../types'
 import AppClickableImage from '../components/customImage'
@@ -27,8 +27,8 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const { OS } = Platform
-      
+      const OS = Device.osName?.toLowerCase()
+
       if (OS === 'android') {
         const permission = await BarCodeScanner.getPermissionsAsync()
 
