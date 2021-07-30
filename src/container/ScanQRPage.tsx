@@ -28,12 +28,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   useEffect(() => {
     (async () => {
       const { OS } = Platform
-
-      if (OS === 'ios') {
-        const { status } = await BarCodeScanner.requestPermissionsAsync()
-        setHasPermission(status === 'granted')
-      }
-
+      
       if (OS === 'android') {
         const permission = await BarCodeScanner.getPermissionsAsync()
 
@@ -59,6 +54,9 @@ const ScanQRPage = ({ navigation }: Props) => {
           const { status } = await BarCodeScanner.requestPermissionsAsync()
           setHasPermission(status === 'granted')
         }
+      } else {
+        const { status } = await BarCodeScanner.requestPermissionsAsync()
+        setHasPermission(status === 'granted')
       }
     })()
   }, [])
