@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "name": "health-card-verifier-mobile",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "SMART Health Card Verifier",
   "scripts": {
     "start": "expo r -c",
