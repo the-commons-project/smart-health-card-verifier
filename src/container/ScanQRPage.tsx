@@ -27,6 +27,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   useEffect(() => {
     (async () => {
+
       const OS = Device.osName?.toLowerCase()
 
       if (OS === 'android') {
