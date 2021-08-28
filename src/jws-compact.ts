@@ -140,6 +140,7 @@ export async function validate(jws): Promise<any> {
   // check payload
   let b64DecodedPayloadBuffer
   let b64DecodedPayloadString
+
   try {
     b64DecodedPayloadBuffer = Buffer.from(rawPayload, 'base64')
   } catch (err) {
@@ -148,14 +149,16 @@ export async function validate(jws): Promise<any> {
       (err as string)].join('\n'),
       ErrorCode.JWS_VERIFICATION_ERROR)
   }
+
   let inflatedPayload
+
   if (b64DecodedPayloadBuffer) {
     try {
-      inflatedPayload = pako.inflateRaw(b64DecodedPayloadBuffer, { to: 'string' })
+      inflatedPayload = pako.inflateRaw(b64DecodedPayloadBuffer, { to: 'string' }).trim()
     } catch (err) {
       // try normal inflate
       try {
-        inflatedPayload = pako.inflate(b64DecodedPayloadBuffer, { to: 'string' })
+        inflatedPayload = pako.inflate(b64DecodedPayloadBuffer, { to: 'string' }).trim()
         console.log(
           "Error inflating JWS payload. Compression should use raw DEFLATE (without wrapper header and adler32 crc)",
           ErrorCode.INFLATION_ERROR)
@@ -165,20 +168,19 @@ export async function validate(jws): Promise<any> {
             (err as string)].join('\n'),
           ErrorCode.INFLATION_ERROR)
         // inflating failed, let's try to parse the base64-decoded string directly
-        b64DecodedPayloadString = b64DecodedPayloadBuffer.toString('utf-8')
+        b64DecodedPayloadString = b64DecodedPayloadBuffer.toString('utf-8').trim()
       }
     }
   }
 
-  // try to validate the payload (even if inflation failed)
   const isJwsPayloadValid = jwsPayload.validate(inflatedPayload || b64DecodedPayloadString || rawPayload)
 
-  // if we got a fatal error, quit here
+  // TODO: Should we quit here, if we got a fatal error?
   if (!isJwsPayloadValid) {
     console.log('FATAL ERROR at jwsPayload.validate!')
   }
 
-  // try-parse the JSON even if it failed validation above
+  // try to parse JSON even if it failed validation above
   const payload = parseJson<JWSPayload>(inflatedPayload || b64DecodedPayloadString || rawPayload)
 
   // if we did not get a payload back, it failed to be parsed and we cannot extract the key url
