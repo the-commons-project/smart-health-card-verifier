@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.24](https://gitlab.com/st-experiments/health-card-verifier-mobile/compare/v1.0.23...v1.0.24) (2021-08-30)
+
+
+### Bug Fixes
+
+* trigger build with 1.0.23 ([dc7b5af](https://gitlab.com/st-experiments/health-card-verifier-mobile/commit/dc7b5af5f847361cc3061720f73a277ba7ec33c5))
+
 ### [1.0.22](https://gitlab.com/affinidi/safe-travel/st-experiments/health-card-verifier-mobile/compare/v1.0.15...v1.0.22) (2021-08-06)
 
 ### [1.0.21](https://gitlab.com/affinidi/safe-travel/st-experiments/health-card-verifier-mobile/compare/v1.0.20...v1.0.21) (2021-08-03)
