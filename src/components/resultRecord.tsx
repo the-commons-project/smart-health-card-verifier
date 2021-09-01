@@ -16,14 +16,19 @@ const ResultRecord = ({ data }) => {
   const { issuerData, patientData, vaccinationData } = validationResult
   const { name, dateOfBirth } = patientData
 
-  const userFieldTitle = [ 'Name', 'Date of Birth' ]
-  const userFieldValue = [ name, insertImageToTable() ]
+  // const userFieldTitle = [ 'Name', 'Date of Birth' ]
+  // const userFieldValue = [ name, insertImageToTable() ]
+  const userFieldTitle = [ 'Name' ]
+  const userFieldValue = [ name ]
+
+  const userDobTitle = [ 'Date of Birth' ]
+  const userDobValue = [ insertImageToTable() ]
 
   function insertImageToTable() {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.fieldValue, {fontFamily: 'OpenSans_700Bold', marginRight: 20}]}>{date}</Text>
+        <Text style={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold', marginRight: 20}]}>{date}</Text>
         <AppClickableImage
             styles={styles.eyesImage}
             source={images.eyes}
@@ -38,7 +43,7 @@ const ResultRecord = ({ data }) => {
   function insertTextToTable(vaccineName, lotNumber) {
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.fieldValue, {fontFamily: 'OpenSans_700Bold', marginRight: 7}]}>{vaccineName}</Text>
+        <Text style={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold', marginRight: 7}]}>{vaccineName}</Text>
         <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>Lot {lotNumber}</Text>
       </View>
     )
@@ -58,7 +63,7 @@ const ResultRecord = ({ data }) => {
   // TODO: Refactor how we apply bold font
   function dateParser(date) {
     return(
-      <Text style={[styles.fieldTitle, {fontFamily: 'OpenSans_700Bold'}]}>{date}</Text>
+      <Text style={[styles.fieldTitle, styles.increaseFont, styles.dosageTextAlign, {fontFamily: 'OpenSans_700Bold'}]}>{date}</Text>
     )
   }
 
@@ -71,7 +76,9 @@ const ResultRecord = ({ data }) => {
       <View>
         <Table borderStyle={styles.tableStyle}>
           <Row data={userFieldTitle} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
-          <Row data={userFieldValue} textStyle={[styles.fieldValue , {fontFamily: 'OpenSans_700Bold'}]}/>
+          <Row data={userFieldValue} textStyle={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold'}]}/>
+          <Row data={userDobTitle} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
+          <Row data={userDobValue} textStyle={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold'}]}/>
         </Table>
         <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>Always verify identity with a government-issued I.D.</Text>
       </View>
@@ -87,7 +94,7 @@ const ResultRecord = ({ data }) => {
             </View>
             <Table borderStyle={styles.tableStyle}>
               <Row data={dosageFieldTitleRowOne} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
-              <Row data={dosageFieldValueRowOne} textStyle={[styles.fieldValue, {fontFamily: 'OpenSans_700Bold'}]}/>
+              <Row data={dosageFieldValueRowOne} textStyle={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold'}]}/>
             </Table>
           </View>
         )
@@ -153,6 +160,9 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: '#484848',
   },
+  increaseFont: {
+    fontSize: 16,
+  },
   subFieldValue: {
     paddingTop: 4,
     paddingBottom: 4,
@@ -186,6 +196,9 @@ const styles = StyleSheet.create({
     color: '#255DCB',
     marginRight: 10,
   },
+  dosageTextAlign: {
+    textAlign: 'right',
+  },
   verifierContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -209,6 +222,7 @@ const styles = StyleSheet.create({
   eyesImage: {
     width: 18,
     height: 18,
+    marginBottom: 10
   },
   smartLogoImage: {
     width: 50.91,
@@ -216,7 +230,7 @@ const styles = StyleSheet.create({
   },
   tableStyle: {
     borderWidth: 1,
-    borderColor: 'transparent',
+    borderColor: 'transparent'
   }
 })
 
