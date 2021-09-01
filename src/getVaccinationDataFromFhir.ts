@@ -62,5 +62,16 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
     }
   }
 
+  sortDosesByDate(vaccinationData)
+
   return vaccinationData
+}
+
+function sortDosesByDate(vaccinationData: any[]){
+  // earliest -> latest
+  vaccinationData.sort((a, b) => Date.parse(a.vaccinationDate) - Date.parse(b.vaccinationDate))
+  // set correct dose number if dose objects are swapped
+  for (const [index, dose] of vaccinationData.entries()) {
+    dose.dose = index + 1
+  }
 }
