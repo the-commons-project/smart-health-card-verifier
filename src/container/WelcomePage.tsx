@@ -55,16 +55,14 @@ const WelcomePage = ({ navigation }: Props) => {
               How to verify SMART® Health Cards
             </Text>
           </View>
-          <View style={styles.aboutUsContainer}>
+          <View style={[styles.aboutUsContainer, styles.aboutUsFlex]}>
             <Text
-              style={[styles.text, styles.link, styles.colorBlue, {fontFamily: 'Poppins_600SemiBold'}]}
+              style={[styles.text, styles.link, styles.colorBlue, styles.aboutUsFlexSpacing, {fontFamily: 'Poppins_600SemiBold'}]}
               onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')}>
               About us
             </Text>
-          </View>
-          <View style={styles.aboutUsContainer}>
             <Text
-              style={[styles.privacyText, styles.link, {fontFamily: 'Poppins_500Medium'}]}
+              style={[styles.text, styles.link, styles.colorBlue, {fontFamily: 'Poppins_600SemiBold'}]}
               onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}>
               Privacy policy
             </Text>
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
   },
   handPhoneImage: {
     width: dimension.width / 240 * 150,
-    height: 256,
+    height: 250,
     resizeMode: 'contain'
   },
   smartLogoImage: {
@@ -138,17 +136,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#292B52',
     paddingTop: 0,
-    paddingBottom: 20,
+    paddingBottom: 15,
   },
   text: {
-    fontSize: 16,
-    paddingTop: 10,
+    fontSize: 13,
+    paddingTop: 5,
     paddingBottom: 5,
-  },
-  privacyText: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: '#000000',
   },
   colorBlue: {
     color: '#255DCB',
@@ -156,6 +149,14 @@ const styles = StyleSheet.create({
   link: {
     textDecorationLine: 'underline',
   },
+  aboutUsFlex: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  aboutUsFlexSpacing: {
+    marginRight: 60,
+    marginBottom: 50
+  }
 })
 
 export default WelcomePage
