@@ -13,12 +13,14 @@ import { validate } from '../qr'
 const images = {
   'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
   'loading': require('../../assets/img/error/loading.png'),
+  'switchCamera': require('../../assets/img/scanqr/switch-camera.png'),
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
+  const [cameraType, setCameraType] = React.useState(BarCodeScanner.Constants.Type.back)
 
   const spin = spinAnimation.interpolate({
     inputRange: [0, 1],
@@ -140,12 +142,26 @@ const ScanQRPage = ({ navigation }: Props) => {
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
+            type={cameraType}
           >
             <View style={styles.backButtonContainer}>
               <AppClickableImage
                 styles={styles.leftCaretImage}
                 source={images.leftCaret}
                 onPress={() => navigation.navigate('Welcome')}
+              />
+            </View>
+
+            <View style={styles.switchCameraContainer}>
+              <AppClickableImage
+                styles={styles.switchCameraImage}
+                source={images.switchCamera}
+                onPress={() => {
+                  setCameraType(
+                    cameraType === BarCodeScanner.Constants.Type.back
+                      ? BarCodeScanner.Constants.Type.front
+                      : BarCodeScanner.Constants.Type.back
+                  )}}
               />
             </View>
           </BarCodeScanner>
@@ -180,6 +196,15 @@ const styles = StyleSheet.create({
     width: 12,
     height: 19,
   },
+  switchCameraContainer: {
+    position: 'absolute',
+    right: 50,
+    bottom: 60,
+  },
+  switchCameraImage: {
+    width: 48,
+    height: 41,
+  }
 })
 
 export default ScanQRPage
