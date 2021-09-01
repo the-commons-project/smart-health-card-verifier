@@ -67,6 +67,13 @@ const WelcomePage = ({ navigation }: Props) => {
               Privacy policy
             </Text>
           </View>
+          <View style={styles.aboutUsContainer}>
+            <Text
+              style={[styles.privacyText, styles.link, {fontFamily: 'Poppins_500Medium'}]}
+              onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}>
+              Privacy policy
+            </Text>
+          </View>
         </View>
       </View>
     </View>

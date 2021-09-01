@@ -21,9 +21,9 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
         <AppClickableImage
           styles={styles.leftCaretImage}
           source={images.leftCaret}
-          onPress={() => navigation.navigate('ScanQR')}
+          onPress={() => navigation.navigate('Welcome')}
         />
-        <Text style={[styles.backButtonText, {fontFamily: 'Poppins_700Bold'}]} onPress={() => navigation.navigate('ScanQR')}> Verification result </Text>
+        <Text style={[styles.backButtonText, {fontFamily: 'Poppins_700Bold'}]} onPress={() => navigation.navigate('Welcome')}> Verification result </Text>
       </View>
       <ScrollView>
         <ResultBanner validationResult={validationResult}/>
