@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   handPhoneImage: {
     width: dimension.width / 240 * 150,
     height: 256,
-    resizeMode: 'stretch'
+    resizeMode: 'contain'
   },
   smartLogoImage: {
     position: 'absolute',
