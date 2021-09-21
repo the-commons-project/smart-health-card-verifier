@@ -1,7 +1,7 @@
-import * as utils from './utils'
+import * as utils from '../utils'
 import { validateSchema } from './schema'
-import { ErrorCode } from './error'
-import jwsPayloadSchema from './schemas/smart-health-card-vc-schema.json'
+import { ErrorCode } from '../error'
+import jwsPayloadSchema from '../../schemas/smart-health-card-vc-schema.json'
 import * as fhirBundle from './fhirBundle'
 
 export const schema = jwsPayloadSchema

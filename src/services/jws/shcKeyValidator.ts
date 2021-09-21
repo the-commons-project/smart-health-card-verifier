@@ -1,10 +1,10 @@
 import jose, { JWK } from 'react-native-jose'
-import { ErrorCode } from './error'
+import { ErrorCode } from '../error'
 import { validateSchema } from './schema'
 import keySetSchema from './schemas/keyset-schema.json'
 import { KeySet, KeysStore } from './keys'
 import { v4 as uuidv4 } from 'uuid'
-import { isOpensslAvailable } from './utils'
+import { isOpensslAvailable } from '../utils'
 import { Certificate } from '@fidm/x509'
 
 // directory where to write cert files for openssl validation
@@ -13,8 +13,8 @@ const tmpDir = 'tmp'
 const PEM_CERT_HEADER = '-----BEGIN CERTIFICATE-----'
 const PEM_CERT_FOOTER = '-----END CERTIFICATE-----'
 const PEM_CERT_FILE_EXT = '.pem'
-const EC_P256_ASN1_PUBLIC_KEY_HEADER_HEX = "3059301306072a8648ce3d020106082a8648ce3d030107034200"
-const EC_COMPRESSED_KEY_HEX = "04"
+const EC_P256_ASN1_PUBLIC_KEY_HEADER_HEX = '3059301306072a8648ce3d020106082a8648ce3d030107034200'
+const EC_COMPRESSED_KEY_HEX = '04'
 
 // PEM format for P-256 (prime256v1) public key (as used by issuer keys in SMART Health Cards)
 // -----BEGIN PUBLIC KEY-----
@@ -28,7 +28,7 @@ const EC_COMPRESSED_KEY_HEX = "04"
 
 // PEM to DER encoding
 // Drop the first and last lines (BEGIN/END markers), concatenate the others, base64-decode
-const PEMtoDER = (pem: string[]) => Buffer.from(pem.slice(1,-2).join(), "base64")
+const PEMtoDER = (pem: string[]) => Buffer.from(pem.slice(1, -2).join(), 'base64')
 
 interface CertFields {
   x: string
@@ -39,8 +39,8 @@ interface CertFields {
 }
 
 interface EcPublicJWK extends JWK.Key {
-  x: string,
-  y: string,
+  x: string
+  y: string
   x5c?: string[]
 }
 
@@ -152,10 +152,13 @@ interface EcPublicJWK extends JWK.Key {
 //   }
 // }
 
-export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expectedSubjectAltName = ''): Promise<any> => {
+export const verifyAndImportHealthCardIssuerKey = async (
+  keySet: KeySet,
+  expectedSubjectAltName = '',
+): Promise<any> => {
   // check that keySet is valid
   if (!(keySet instanceof Object) || !keySet.keys || !(keySet.keys instanceof Array)) {
-    console.log("keySet not valid. Expect {keys : JWK.Key[]}", ErrorCode.INVALID_KEY_SCHEMA)
+    console.log('keySet not valid. Expect {keys : JWK.Key[]}', ErrorCode.INVALID_KEY_SCHEMA)
     return
   }
 
@@ -174,8 +177,11 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
     // check for private key material (as to happen before the following store.add, because the returned
     // value will be the corresponding public key)
     // Note: this is RSA/ECDSA specific, but ok since ECDSA is mandated
-    if ((key as (JWK.Key & { d: string })).d) {
-      console.log(keyName + ': ' + "key contains private key material.", ErrorCode.INVALID_KEY_PRIVATE)
+    if ((key as JWK.Key & { d: string }).d) {
+      console.log(
+        keyName + ': ' + 'key contains private key material.',
+        ErrorCode.INVALID_KEY_PRIVATE,
+      )
     }
 
     // check cert chain if present, if so, validate it
@@ -183,38 +189,40 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
 
     // TODO: refactor. For now SKIP cert chain check
     if (ecPubKey.x5c) {
-    //   const certFields = validateX5c(ecPubKey.x5c, log)
-    //   if (certFields) {
-    //     const checkKeyValue = (v: 'x' | 'y') => {
-    //       if (ecPubKey[v]) {
-    //         if (certFields[v] !== ecPubKey[v]) {
-    //           console.log(`JWK public key value ${v} doesn't match the certificate's public key`, ErrorCode.INVALID_KEY_X5C)
-    //         }
-    //       } else {
-    //         console.log(`JWK missing elliptic curve public key value ${v}`, ErrorCode.INVALID_KEY_SCHEMA)
-    //       }
-    //     }
-    //     checkKeyValue('x')
-    //     checkKeyValue('y')
-
-    //     if (expectedSubjectAltName && certFields.subjectAltName && certFields.subjectAltName !== expectedSubjectAltName) {
-    //       console.log("Subject Alternative Name extension in the issuer's cert (in x5c JWK value) doesn't match issuer URL.\n" +
-    //       `Expected: ${expectedSubjectAltName}. Actual: ${certFields.subjectAltName.substring(4)}`, ErrorCode.INVALID_KEY_X5C)
-    //     }
-    //     const now = new Date()
-    //     if (certFields.notBefore && now < certFields.notBefore) {
-    //       console.log('issuer certificate (in x5c JWK value) is not yet valid', ErrorCode.INVALID_KEY_X5C)
-    //     }
-    //     if (certFields.notAfter && now > certFields.notAfter) {
-    //       console.log('issuer certificate (in x5c JWK value) is expired', ErrorCode.INVALID_KEY_X5C)
-    //     }
-    //   }
+      //   const certFields = validateX5c(ecPubKey.x5c, log)
+      //   if (certFields) {
+      //     const checkKeyValue = (v: 'x' | 'y') => {
+      //       if (ecPubKey[v]) {
+      //         if (certFields[v] !== ecPubKey[v]) {
+      //           console.log(`JWK public key value ${v} doesn't match the certificate's public key`, ErrorCode.INVALID_KEY_X5C)
+      //         }
+      //       } else {
+      //         console.log(`JWK missing elliptic curve public key value ${v}`, ErrorCode.INVALID_KEY_SCHEMA)
+      //       }
+      //     }
+      //     checkKeyValue('x')
+      //     checkKeyValue('y')
+      //     if (expectedSubjectAltName && certFields.subjectAltName && certFields.subjectAltName !== expectedSubjectAltName) {
+      //       console.log("Subject Alternative Name extension in the issuer's cert (in x5c JWK value) doesn't match issuer URL.\n" +
+      //       `Expected: ${expectedSubjectAltName}. Actual: ${certFields.subjectAltName.substring(4)}`, ErrorCode.INVALID_KEY_X5C)
+      //     }
+      //     const now = new Date()
+      //     if (certFields.notBefore && now < certFields.notBefore) {
+      //       console.log('issuer certificate (in x5c JWK value) is not yet valid', ErrorCode.INVALID_KEY_X5C)
+      //     }
+      //     if (certFields.notAfter && now > certFields.notAfter) {
+      //       console.log('issuer certificate (in x5c JWK value) is expired', ErrorCode.INVALID_KEY_X5C)
+      //     }
+      //   }
     }
 
     try {
       key = await KeysStore.store.add(key)
     } catch (error) {
-      console.log('Error adding key to keyStore : ' + (error as Error).message, ErrorCode.INVALID_KEY_UNKNOWN)
+      console.log(
+        'Error adding key to keyStore : ' + (error as Error).message,
+        ErrorCode.INVALID_KEY_UNKNOWN,
+      )
       return
     }
 
@@ -222,17 +230,31 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
     if (!key.kid) {
       console.log(keyName + ': ' + "'kid' missing in issuer key", ErrorCode.INVALID_KEY_SCHEMA)
     } else {
-      await key.thumbprint('SHA-256')
-        .then(tpDigest => {
+      await key
+        .thumbprint('SHA-256')
+        .then((tpDigest) => {
           const thumbprint = jose.util.base64url.encode(tpDigest)
 
           if (key.kid !== thumbprint) {
-            console.log(keyName + ': ' + "'kid' does not match thumbprint in issuer key. expected: "
-              + thumbprint + ", actual: " + key.kid, ErrorCode.INVALID_KEY_WRONG_KID)
+            console.log(
+              keyName +
+                ': ' +
+                "'kid' does not match thumbprint in issuer key. expected: " +
+                thumbprint +
+                ', actual: ' +
+                key.kid,
+              ErrorCode.INVALID_KEY_WRONG_KID,
+            )
           }
         })
-        .catch(err => {
-          console.log(keyName + ': ' + "Failed to calculate issuer key thumbprint : " + (err as Error).message, ErrorCode.INVALID_KEY_UNKNOWN)
+        .catch((err) => {
+          console.log(
+            keyName +
+              ': ' +
+              'Failed to calculate issuer key thumbprint : ' +
+              (err as Error).message,
+            ErrorCode.INVALID_KEY_UNKNOWN,
+          )
         })
     }
 
@@ -240,23 +262,31 @@ export const verifyAndImportHealthCardIssuerKey = async (keySet: KeySet, expecte
     if (!key.kty) {
       console.log(keyName + ': ' + "'kty' missing in issuer key", ErrorCode.INVALID_KEY_SCHEMA)
     } else if (key.kty !== 'EC') {
-      console.log(keyName + ': ' + "wrong key type in issuer key. expected: 'EC', actual: " + key.kty, ErrorCode.INVALID_KEY_WRONG_KTY)
+      console.log(
+        keyName + ': ' + "wrong key type in issuer key. expected: 'EC', actual: " + key.kty,
+        ErrorCode.INVALID_KEY_WRONG_KTY,
+      )
     }
 
     // check that EC curve is 'ES256'
     if (!key.alg) {
       console.log(keyName + ': ' + "'alg' missing in issuer key", ErrorCode.INVALID_KEY_SCHEMA)
     } else if (key.alg !== 'ES256') {
-      console.log(keyName + ': ' + "wrong algorithm in issuer key. expected: 'ES256', actual: " + key.alg, ErrorCode.INVALID_KEY_WRONG_ALG)
+      console.log(
+        keyName + ': ' + "wrong algorithm in issuer key. expected: 'ES256', actual: " + key.alg,
+        ErrorCode.INVALID_KEY_WRONG_ALG,
+      )
     }
 
     // check that usage is 'sig'
     if (!key.use) {
       console.log(keyName + ': ' + "'use' missing in issuer key", ErrorCode.INVALID_KEY_SCHEMA)
     } else if (key.use !== 'sig') {
-      console.log(keyName + ': ' + "wrong usage in issuer key. expected: 'sig', actual: " + key.use, ErrorCode.INVALID_KEY_WRONG_USE)
+      console.log(
+        keyName + ': ' + "wrong usage in issuer key. expected: 'sig', actual: " + key.use,
+        ErrorCode.INVALID_KEY_WRONG_USE,
+      )
     }
-
   }
 
   return

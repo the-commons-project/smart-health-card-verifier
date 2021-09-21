@@ -2,7 +2,6 @@ import pako from 'pako'
 import { Platform } from 'react-native'
 import * as Application from 'expo-application'
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
-
 import { uuidNamespace } from './constants'
 
 export function parseJson<T>(json: string): T | undefined {

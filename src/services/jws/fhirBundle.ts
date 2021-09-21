@@ -1,10 +1,10 @@
-import * as utils from './utils'
-import { ErrorCode } from './error'
+import * as utils from '../utils'
+import { ErrorCode } from '../error'
 import { validateSchema, objPathToSchema } from './schema'
 
-const patientDM = require('./schemas/patient-dm.json')
-const fhirSchema = require('./schemas/fhir-schema.json')
-const immunizationDM = require('./schemas/immunization-dm.json')
+const patientDM = require('../../schemas/patient-dm.json')
+const fhirSchema = require('../../schemas/fhir-schema.json')
+const immunizationDM = require('../../schemas/immunization-dm.json')
 
 export enum ValidationProfiles {
   'any',
@@ -28,10 +28,6 @@ export function validate(fhirBundleText: string): any {
   if (fhirBundle === undefined) {
     console.log('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return
-  }
-
-  if (FhirOptions.LogOutputPath) {
-    // fs.writeFileSync(FhirOptions.LogOutputPath, fhirBundleText) // should we instead print out the output of beautify
   }
 
   // failures will be recorded in the log
@@ -186,13 +182,6 @@ export function validate(fhirBundleText: string): any {
     }
   }
 
-  // if (profile === ValidationProfiles['usa-covid19-immunization']) {
-  //   console.log(`applying profile : usa-covid19-immunization`)
-
-  //   return ValidationProfilesFunctions['usa-covid19-immunization'](fhirBundle.entry)
-  // }
-
-  // console.log('applying profile : usa-covid19-immunization')
   return ValidationProfilesFunctions['usa-covid19-immunization'](fhirBundle.entry)
 }
 
@@ -203,7 +192,6 @@ const ValidationProfilesFunctions = {
 
   'usa-covid19-immunization': function (entries: BundleEntry[]): boolean {
     const profileName = 'usa-covid19-immunization'
-
     const patients = entries.filter((entry) => entry.resource.resourceType === 'Patient')
 
     if (patients.length !== 1) {

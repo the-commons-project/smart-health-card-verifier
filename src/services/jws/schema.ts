@@ -3,7 +3,7 @@ import Ajv, { AnySchemaObject } from 'ajv'
 import { AnyValidateFunction } from 'ajv/dist/core'
 import { KeySet } from './keys'
 
-const fhirSchema = require('./schemas/fhir-schema.json')
+const fhirSchema = require('../../schemas/fhir-schema.json')
 const schemaCache: Record<string, AnyValidateFunction> = {}
 
 export function validateSchema(

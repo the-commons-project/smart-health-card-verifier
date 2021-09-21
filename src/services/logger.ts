@@ -108,10 +108,6 @@ export default class Log {
   toString(level: LogLevels = LogLevels.INFO): string {
     return formatOutput(this, level).join('\n')
   }
-
-  // toFile(path: string, options: CliOptions, append = true): void {
-  //   return toFile(this, path, options, append);
-  // }
 }
 
 function list(title: string, items: LogItem[]) {
@@ -126,22 +122,9 @@ function list(title: string, items: LogItem[]) {
 }
 
 function formatOutput(outputTree: Log, level: LogLevels): string[] {
-  let results: string[][] = []
-
+  let results: string[] = []
   // remove empty entries
   results = results.filter((r) => r.length)
-
-  // outputTree.child.forEach(c => results.push(formatOutput(c, level)));
-
-  // return [outputTree.title].concat(results.map<string[]>((r, i) => {
-  //   const lastChild = (i === results.length - 1);
-  //   return [lines[0]].concat(r.map((s, j) => {
-  //     if (j === 0 && lastChild) { return lines[1] + s; }
-  //     if (j === 0) { return lines[2] + s; }
-  //     if (lastChild) { return lines[3] + s; }
-  //     return lines[0] + s;
-  //   }));
-  // }).flat());
 
   return results
 }

@@ -1,18 +1,18 @@
 import pako from 'pako'
 import jose from 'react-native-jose'
 
-import { ErrorCode } from './error'
+import { ErrorCode } from '../error'
 import { KeySet, KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
-import { parseJson } from './utils'
+import { parseJson } from '../utils'
 import { validateSchema } from './schema'
-import jwsCompactSchema from './schemas/jws-schema.json'
+// import jwsCompactSchema from './schemas/jws-schema.json'
 import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
 
-import { getPatientDataFromFhir } from './helpers/getPatiendDataFromFhir'
-import { getVaccinationDataFromFhir } from './helpers/getVaccinationDataFromFhir'
-import { getIssuerFromFhir } from './helpers/getIssuerFromFhir'
-import { getIssuerData } from './helpers/getIssuerData'
+import { getPatientDataFromFhir } from '../helpers/getPatiendDataFromFhir'
+import { getVaccinationDataFromFhir } from '../helpers/getVaccinationDataFromFhir'
+import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
+import { getIssuerData } from '../helpers/getIssuerData'
 
 export const JwsValidationOptions = {
   skipJwksDownload: false,

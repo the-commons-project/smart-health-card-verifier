@@ -1,5 +1,5 @@
 import { ErrorCode } from './error'
-import * as jws from './jws-compact'
+import * as jws from './jws/jws-compact'
 
 const MAX_QR_CHUNK_LENGTH = 1191
 

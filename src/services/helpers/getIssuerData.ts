@@ -1,6 +1,6 @@
-import { ErrorCode } from './error'
-import { issuerNameLookUpUrl, issuerStatus } from './constants'
-import { getInstallationIdManually } from './utils'
+import { ErrorCode } from '../error'
+import { issuerNameLookUpUrl, issuerStatus } from '../constants'
+import { getInstallationIdManually } from '../utils'
 
 export const getIssuerData = async (issuer: string): Promise<any> => {
   const appUuid = await getInstallationIdManually()

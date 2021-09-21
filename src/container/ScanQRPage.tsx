@@ -3,12 +3,12 @@ import { View, StyleSheet, Animated, Easing, Alert } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import * as Device from 'expo-device'
-import { ErrorCode } from '../error'
+import { ErrorCode } from '../services/error'
 import { Props } from './types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
 
-import { validate } from '../qr'
+import { validate } from '../services/qr'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),

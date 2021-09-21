@@ -16,7 +16,7 @@ export const getVaccineCodesHash = async (): Promise<any> => {
 
   const { covid_19_vaccine_codes: vaccineCodes } = await response.json()
 
-  const vaccineCodesHash: any = {}
+  const vaccineCodesHash: { [key: string]: string } = {}
 
   for (const vaccineCode of vaccineCodes) {
     const { code, display } = vaccineCode
