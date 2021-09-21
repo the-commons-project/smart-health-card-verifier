@@ -25,7 +25,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.",
         "NSMicrophoneUsageDescription": "This app uses the microphone as part of the camera usage to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
-      }
+      },
+      "bundleIdentifier": "com.thecommonsproject.smarthealthcardverifier"
     },
     "android": {
       "versionCode": 24,
@@ -35,7 +36,8 @@
       },
       "permissions": [
         "CAMERA"
-      ]
+      ],
+      "package": "com.thecommonsproject.smarthealthcardverifier"
     },
     "web": {
       "favicon": "./assets/favicon.png"

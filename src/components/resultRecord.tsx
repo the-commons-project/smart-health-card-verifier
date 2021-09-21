@@ -4,10 +4,10 @@ import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 
 const images = {
-  'commonTrustVerified': require('../../assets/img/verificationresult/common-trust-verified.png'),
-  'smartLogo': require('../../assets/img/verificationresult/smart-logo.png'),
-  'eyes': require('../../assets/img/verificationresult/eyes.png'),
-  'warningCross': require('../../assets/img/verificationresult/warning-cross.png'),
+  commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
+  smartLogo: require('../../assets/img/verificationresult/smart-logo.png'),
+  eyes: require('../../assets/img/verificationresult/eyes.png'),
+  warningCross: require('../../assets/img/verificationresult/warning-cross.png'),
 }
 
 const ResultRecord = ({ data }) => {
@@ -18,23 +18,31 @@ const ResultRecord = ({ data }) => {
 
   // const userFieldTitle = [ 'Name', 'Date of Birth' ]
   // const userFieldValue = [ name, insertImageToTable() ]
-  const userFieldTitle = [ 'Name' ]
-  const userFieldValue = [ name ]
+  const userFieldTitle = ['Name']
+  const userFieldValue = [name]
 
-  const userDobTitle = [ 'Date of Birth' ]
-  const userDobValue = [ insertImageToTable() ]
+  const userDobTitle = ['Date of Birth']
+  const userDobValue = [insertImageToTable()]
 
   function insertImageToTable() {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold', marginRight: 20}]}>{date}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text
+          style={[
+            styles.fieldValue,
+            styles.increaseFont,
+            { fontFamily: 'OpenSans_700Bold', marginRight: 20 },
+          ]}
+        >
+          {date}
+        </Text>
         <AppClickableImage
-            styles={styles.eyesImage}
-            source={images.eyes}
-            onPress={() => {
-              setBoolBirthDate(!boolBirthDate)
-            }}
+          styles={styles.eyesImage}
+          source={images.eyes}
+          onPress={() => {
+            setBoolBirthDate(!boolBirthDate)
+          }}
         />
       </View>
     )
@@ -42,9 +50,19 @@ const ResultRecord = ({ data }) => {
 
   function insertTextToTable(vaccineName, lotNumber) {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold', marginRight: 7}]}>{vaccineName}</Text>
-        <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>Lot {lotNumber}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text
+          style={[
+            styles.fieldValue,
+            styles.increaseFont,
+            { fontFamily: 'OpenSans_700Bold', marginRight: 7 },
+          ]}
+        >
+          {vaccineName}
+        </Text>
+        <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>
+          Lot {lotNumber}
+        </Text>
       </View>
     )
   }
@@ -56,64 +74,112 @@ const ResultRecord = ({ data }) => {
     }
 
     return (
-      <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>{newText}</Text>
+      <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>{newText}</Text>
     )
   }
 
   // TODO: Refactor how we apply bold font
   function dateParser(date) {
-    return(
-      <Text style={[styles.fieldTitle, styles.increaseFont, styles.dosageTextAlign, {fontFamily: 'OpenSans_700Bold'}]}>{date}</Text>
+    return (
+      <Text
+        style={[
+          styles.fieldTitle,
+          styles.increaseFont,
+          styles.dosageTextAlign,
+          { fontFamily: 'OpenSans_700Bold' },
+        ]}
+      >
+        {date}
+      </Text>
     )
   }
 
   return (
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, {fontFamily: 'OpenSans_700Bold'}]}>COVID-19 Vaccination Record</Text>
+        <Text style={[styles.titleText, { fontFamily: 'OpenSans_700Bold' }]}>
+          COVID-19 Vaccination Record
+        </Text>
         <Image style={styles.smartLogoImage} source={images.smartLogo} />
       </View>
       <View>
         <Table borderStyle={styles.tableStyle}>
-          <Row data={userFieldTitle} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
-          <Row data={userFieldValue} textStyle={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold'}]}/>
-          <Row data={userDobTitle} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
-          <Row data={userDobValue} textStyle={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold'}]}/>
+          <Row
+            data={userFieldTitle}
+            textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+          />
+          <Row
+            data={userFieldValue}
+            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'OpenSans_700Bold' }]}
+          />
+          <Row
+            data={userDobTitle}
+            textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+          />
+          <Row
+            data={userDobValue}
+            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'OpenSans_700Bold' }]}
+          />
         </Table>
-        <Text style={[styles.subFieldValue, {fontFamily: 'OpenSans_400Regular'}]}>Always verify identity with a government-issued I.D.</Text>
+        <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>
+          Always verify identity with a government-issued I.D.
+        </Text>
       </View>
       {vaccinationData.map((doseObject, key) => {
         const { dose, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
-        const dosageFieldTitleRowOne = [insertTextToTable(vaccineName, lotNumber), dateParser(vaccinationDate)]
+        const dosageFieldTitleRowOne = [
+          insertTextToTable(vaccineName, lotNumber),
+          dateParser(vaccinationDate),
+        ]
         const dosageFieldValueRowOne = [vaccinatorParser(vaccinator), '']
         return (
           <View key={key}>
             <View style={styles.doseDividerContainer}>
-              <Text style={[styles.dosageText, {fontFamily: 'OpenSans_700Bold'}]}>Dose {dose}</Text>
+              <Text style={[styles.dosageText, { fontFamily: 'OpenSans_700Bold' }]}>
+                Dose {dose}
+              </Text>
               <View style={styles.doseDivider} />
             </View>
             <Table borderStyle={styles.tableStyle}>
-              <Row data={dosageFieldTitleRowOne} textStyle={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}/>
-              <Row data={dosageFieldValueRowOne} textStyle={[styles.fieldValue, styles.increaseFont, {fontFamily: 'OpenSans_700Bold'}]}/>
+              <Row
+                data={dosageFieldTitleRowOne}
+                textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+              />
+              <Row
+                data={dosageFieldValueRowOne}
+                textStyle={[
+                  styles.fieldValue,
+                  styles.increaseFont,
+                  { fontFamily: 'OpenSans_700Bold' },
+                ]}
+              />
             </Table>
           </View>
         )
       })}
       <View style={styles.divider} />
       <View>
-        <Text style={[styles.fieldTitle, {fontFamily: 'OpenSans_400Regular'}]}>Issuer</Text>
-        <Text style={[styles.fieldValue, {fontFamily: 'OpenSans_700Bold'}]}>{issuerData?.name || issuerData?.url}</Text>
-          {issuerData.name ?
-            <View style={styles.verifierContainer}>
-              <Image style={styles.verifierImage} source={images.commonTrustVerified} />
-              <Text style={[styles.verifiedByText, {fontFamily: 'OpenSans_700Bold'}]}>Verified</Text>
-            </View>
-            :
-            <View style={styles.verifierContainer}>
-              <Image style={styles.warningCrossImage} source={images.warningCross} />
-              <Text style={[styles.verifiedByText, {fontFamily: 'OpenSans_700Bold', color: '#CE471C'}]}>Issuer not recognized</Text>
-            </View>
-          }
+        <Text style={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}>Issuer</Text>
+        <Text style={[styles.fieldValue, { fontFamily: 'OpenSans_700Bold' }]}>
+          {issuerData?.name || issuerData?.url}
+        </Text>
+        {issuerData.name ? (
+          <View style={styles.verifierContainer}>
+            <Image style={styles.verifierImage} source={images.commonTrustVerified} />
+            <Text style={[styles.verifiedByText, { fontFamily: 'OpenSans_700Bold' }]}>
+              Verified
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.verifierContainer}>
+            <Image style={styles.warningCrossImage} source={images.warningCross} />
+            <Text
+              style={[styles.verifiedByText, { fontFamily: 'OpenSans_700Bold', color: '#CE471C' }]}
+            >
+              Issuer not recognized
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   )
@@ -202,7 +268,7 @@ const styles = StyleSheet.create({
   verifierContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   verifiedByText: {
     fontSize: 12,
@@ -222,7 +288,7 @@ const styles = StyleSheet.create({
   eyesImage: {
     width: 18,
     height: 18,
-    marginBottom: 10
+    marginBottom: 10,
   },
   smartLogoImage: {
     width: 50.91,
@@ -230,8 +296,8 @@ const styles = StyleSheet.create({
   },
   tableStyle: {
     borderWidth: 1,
-    borderColor: 'transparent'
-  }
+    borderColor: 'transparent',
+  },
 })
 
 export default ResultRecord

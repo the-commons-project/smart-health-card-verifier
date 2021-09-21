@@ -42,5 +42,5 @@ export enum ErrorCode {
   // Custom error
   NOT_VACCINE_BUNDLE,
 
-  SERVER_ERROR = 500
+  SERVER_ERROR = 500,
 }

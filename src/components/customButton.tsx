@@ -8,21 +8,16 @@ type AppButtonVariables = {
 }
 
 const images = {
-  'barcodeScanner': require('../../assets/img/error/barcode-scanner.png'),
+  barcodeScanner: require('../../assets/img/error/barcode-scanner.png'),
 }
 
-const AppButton = ({ onPress, title, backgroundColor } : AppButtonVariables) => {
+const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[
-        styles.appButtonContainer,
-        backgroundColor && { backgroundColor }
-      ]}
+      style={[styles.appButtonContainer, backgroundColor && { backgroundColor }]}
     >
-      <Text style={[styles.appButtonText, {fontFamily: 'Poppins_600SemiBold'}]}>
-        {title}
-      </Text>
+      <Text style={[styles.appButtonText, { fontFamily: 'Poppins_600SemiBold' }]}>{title}</Text>
       <Image style={styles.appButtonImage} source={images.barcodeScanner} />
     </TouchableOpacity>
   )
@@ -33,21 +28,22 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: '#009688',
     borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 30,
+    paddingVertical: 20,
+    paddingHorizontal: 24,
     flexDirection: 'row',
     justifyContent: 'center',
+    minWidth: '100%',
   },
   appButtonText: {
     fontSize: 18,
     color: '#FFFFFF',
-    alignSelf: 'center',
+    alignSelf: 'stretch',
     marginRight: 10,
   },
   appButtonImage: {
     maxHeight: 26,
     maxWidth: 26,
-  }
+  },
 })
 
 export default AppButton

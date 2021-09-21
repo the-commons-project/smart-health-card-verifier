@@ -7,11 +7,9 @@ type AppClickableImageVariables = {
   source?: any
 }
 
-const AppClickableImage = ({ onPress, styles, source } : AppClickableImageVariables) => (
+const AppClickableImage = ({ onPress, styles, source }: AppClickableImageVariables) => (
   <TouchableOpacity onPress={onPress}>
-    <Image style={styles}
-      source={source}
-    />
+    <Image style={styles} source={source} />
   </TouchableOpacity>
 )
 

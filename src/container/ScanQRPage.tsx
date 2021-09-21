@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Animated, Easing, Alert, Platform } from 'react-native'
+import { View, StyleSheet, Animated, Easing, Alert } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
-import * as Device from 'expo-device';
+import * as Device from 'expo-device'
 import { ErrorCode } from '../error'
-import { Props } from '../../types'
+import { Props } from './types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
 
 import { validate } from '../qr'
 
 const images = {
-  'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
-  'loading': require('../../assets/img/error/loading.png'),
-  'switchCamera': require('../../assets/img/scanqr/switch-camera.png'),
+  leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
+  loading: require('../../assets/img/error/loading.png'),
+  switchCamera: require('../../assets/img/scanqr/switch-camera.png'),
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
-  const [hasPermission, setHasPermission] = useState(null)
+  const [hasPermission, setHasPermission] = useState(false)
   const [scanned, setScanned] = useState(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = React.useState(BarCodeScanner.Constants.Type.back)
@@ -28,8 +28,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   })
 
   useEffect(() => {
-    (async () => {
-
+    ;(async () => {
       const OS = Device.osName?.toLowerCase()
 
       if (OS === 'android') {
@@ -43,15 +42,17 @@ const ScanQRPage = ({ navigation }: Props) => {
               {
                 text: 'Cancel',
                 onPress: () => navigation.navigate('Welcome'),
-                style: 'cancel'
+                style: 'cancel',
               },
-              { text: 'OK', onPress: async () => {
+              {
+                text: 'OK',
+                onPress: async () => {
                   const { status } = await BarCodeScanner.requestPermissionsAsync()
                   setHasPermission(status === 'granted')
-                }
-              }
+                },
+              },
             ],
-            { cancelable: false }
+            { cancelable: false },
           )
         } else {
           const { status } = await BarCodeScanner.requestPermissionsAsync()
@@ -66,13 +67,13 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   navigation.addListener('focus', () => {
     setScanned(false)
-  });
+  })
 
   navigation.addListener('blur', () => {
     setScanned(true)
-  });
+  })
 
-  if(scanned) {
+  if (scanned) {
     Animated.loop(
       Animated.timing(spinAnimation, {
         toValue: 1,
@@ -83,11 +84,11 @@ const ScanQRPage = ({ navigation }: Props) => {
     ).start()
   }
 
-  const handleBarCodeScanned = async ({ type, data }) => {
+  const handleBarCodeScanned = async ({ data }: { data: string }) => {
     let validationResult = {}
+
     try {
       setScanned(true)
-
       validationResult = await validate([data])
 
       if (!validationResult || validationResult.isValid === 'false') {
@@ -122,23 +123,23 @@ const ScanQRPage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.scannerContainer}>
-
         {/* TODO: Cover scenario when camera permissions disallowed later.
             NOTE: The below shows our modal behind system's modal. */}
-        {!hasPermission &&
-          <NotificationOverlay type={'noCameraAccess'} navigation={navigation}/>
-        }
+        {!hasPermission && <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />}
 
         {/* TODO: Find a better netinfo module as the check for internet connection fires three times when it is called */}
-        {isInternetReachable === false &&
-          <NotificationOverlay type={'noInternetConnection'} navigation={navigation}/>
-        }
+        {isInternetReachable === false && (
+          <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
+        )}
 
-        {scanned &&
-          <Animated.Image style={[styles.spinner, {transform: [{rotate: spin}]}]} source={images.loading} />
-        }
+        {scanned && (
+          <Animated.Image
+            style={[styles.spinner, { transform: [{ rotate: spin }] }]}
+            source={images.loading}
+          />
+        )}
 
-        {showCamera &&
+        {showCamera && (
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
@@ -160,12 +161,13 @@ const ScanQRPage = ({ navigation }: Props) => {
                   setCameraType(
                     cameraType === BarCodeScanner.Constants.Type.back
                       ? BarCodeScanner.Constants.Type.front
-                      : BarCodeScanner.Constants.Type.back
-                  )}}
+                      : BarCodeScanner.Constants.Type.back,
+                  )
+                }}
               />
             </View>
           </BarCodeScanner>
-        }
+        )}
       </View>
     </View>
   )
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
   switchCameraImage: {
     width: 48,
     height: 41,
-  }
+  },
 })
 
 export default ScanQRPage

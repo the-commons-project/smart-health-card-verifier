@@ -2,14 +2,14 @@ import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native'
 
 const images = {
-  'warning': require('../../assets/img/verificationresult/warning.png'),
-  'success': require('../../assets/img/verificationresult/success.png'),
-  'fail': require('../../assets/img/verificationresult/fail.png'),
-  'tick': require('../../assets/img/verificationresult/tick.png'),
-  'cross': require('../../assets/img/verificationresult/cross.png'),
+  warning: require('../../assets/img/verificationresult/warning.png'),
+  success: require('../../assets/img/verificationresult/success.png'),
+  fail: require('../../assets/img/verificationresult/fail.png'),
+  tick: require('../../assets/img/verificationresult/tick.png'),
+  cross: require('../../assets/img/verificationresult/cross.png'),
 }
 
-const ResultBanner = ({validationResult}) => {
+const ResultBanner = ({ validationResult }) => {
   let icon = images.success
   let text = 'Verified'
   let color = '#158E00' // green
@@ -30,7 +30,7 @@ const ResultBanner = ({validationResult}) => {
     validityColor = '#C33E38' // red
   }
 
-  const isIssuerRecognized = !! validationResult?.issuerData?.name
+  const isIssuerRecognized = !!validationResult?.issuerData?.name
 
   if (isDocumentValid && !isIssuerRecognized) {
     icon = images.warning
@@ -45,25 +45,46 @@ const ResultBanner = ({validationResult}) => {
     <View>
       <View style={[styles.bannerContainer, { backgroundColor: color }]}>
         <Image style={styles.bannerImage} source={icon} />
-        <Text style={[styles.bannerText, {fontFamily: 'Poppins_600SemiBold'}]}>{text}</Text>
+        <Text style={[styles.bannerText, { fontFamily: 'Poppins_600SemiBold' }]}>{text}</Text>
       </View>
-      <View style={[styles.subBannerContainer, {borderColor: color}]}>
-        {!isDocumentValid ?
+      <View style={[styles.subBannerContainer, { borderColor: color }]}>
+        {!isDocumentValid ? (
           <View style={styles.flexRowContainer}>
-            <Text style={[styles.subBannerText, {fontFamily: 'Poppins_600SemiBold', color: validityColor}]}>{validityText}</Text>
+            <Text
+              style={[
+                styles.subBannerText,
+                { fontFamily: 'Poppins_600SemiBold', color: validityColor },
+              ]}
+            >
+              {validityText}
+            </Text>
           </View>
-          :
+        ) : (
           <View>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={validityIcon} />
-              <Text style={[styles.subBannerText, {fontFamily: 'Poppins_600SemiBold', color: validityColor}]}>{validityText}</Text>
+              <Text
+                style={[
+                  styles.subBannerText,
+                  { fontFamily: 'Poppins_600SemiBold', color: validityColor },
+                ]}
+              >
+                {validityText}
+              </Text>
             </View>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={verifiedIssuerIcon} />
-              <Text style={[styles.subBannerText, {fontFamily: 'Poppins_600SemiBold', color: verifiedColor}]}>{verifiedIssuerText}</Text>
+              <Text
+                style={[
+                  styles.subBannerText,
+                  { fontFamily: 'Poppins_600SemiBold', color: verifiedColor },
+                ]}
+              >
+                {verifiedIssuerText}
+              </Text>
             </View>
           </View>
-        }
+        )}
       </View>
     </View>
   )

@@ -8,14 +8,14 @@ type NotificationOverlayVariables = {
 }
 
 const images = {
-  'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
+  leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
 }
 
-const NotificationOverlay = ({ type, navigation } : NotificationOverlayVariables) => {
+const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables) => {
   let title = ''
   let subtitle = ''
 
-  if(type === 'noInternetConnection') {
+  if (type === 'noInternetConnection') {
     title = 'No internet connection'
     subtitle = 'Please check your internet connection and try again.'
   } else {
@@ -33,8 +33,12 @@ const NotificationOverlay = ({ type, navigation } : NotificationOverlayVariables
         />
       </View>
       <View style={styles.notificationTextContainer}>
-        <Text style={[styles.notificationTitle, {fontFamily: 'Poppins_600SemiBold'}]}>{title}</Text>
-        <Text style={[styles.notificationSubtitle, {fontFamily: 'OpenSans_600SemiBold'}]}>{subtitle}</Text>
+        <Text style={[styles.notificationTitle, { fontFamily: 'Poppins_600SemiBold' }]}>
+          {title}
+        </Text>
+        <Text style={[styles.notificationSubtitle, { fontFamily: 'OpenSans_600SemiBold' }]}>
+          {subtitle}
+        </Text>
       </View>
     </View>
   )

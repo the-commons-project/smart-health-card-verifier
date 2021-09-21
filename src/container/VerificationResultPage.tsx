@@ -1,14 +1,14 @@
 import React from 'react'
-import { Text, View, SafeAreaView, ScrollView, StyleSheet, Platform } from 'react-native'
+import { Text, View, ScrollView, StyleSheet } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'
-import { Props } from '../../types'
+import { Props } from './types'
 
 const images = {
-  'qrError': require('../../assets/img/error/qr-error.png'),
-  'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
+  qrError: require('../../assets/img/error/qr-error.png'),
+  leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
 }
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
@@ -23,18 +23,21 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
           source={images.leftCaret}
           onPress={() => navigation.navigate('Welcome')}
         />
-        <Text style={[styles.backButtonText, {fontFamily: 'Poppins_700Bold'}]} onPress={() => navigation.navigate('Welcome')}> Verification result </Text>
+        <Text
+          style={[styles.backButtonText, { fontFamily: 'Poppins_700Bold' }]}
+          onPress={() => navigation.navigate('Welcome')}
+        >
+          Verification result
+        </Text>
       </View>
       <ScrollView>
-        <ResultBanner validationResult={validationResult}/>
-        {validationResult.isValid &&
-          <ResultRecord data={data} />
-        }
+        <ResultBanner validationResult={validationResult} />
+        {validationResult.isValid && <ResultRecord data={data} />}
       </ScrollView>
       <AppButton
-        title='Scan next vaccination record'
+        title="Scan next vaccination record"
         onPress={() => navigation.navigate('ScanQR')}
-        backgroundColor='#255DCB'
+        backgroundColor="#255DCB"
       />
     </View>
   )

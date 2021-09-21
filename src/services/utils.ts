@@ -5,7 +5,7 @@ import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
 
 import { uuidNamespace } from './constants'
 
-export function parseJson<T>(json: string): T | undefined  {
+export function parseJson<T>(json: string): T | undefined {
   try {
     return JSON.parse(json) as T
   } catch (error) {
@@ -28,7 +28,20 @@ export const formatDateOfBirth = (birthDate: string): string => {
 //       that is why `new Date()` is not needed.
 //       Vaccination date in FHIR => "occurrenceDateTime": "2020-12-29"
 export const formatVaccinationDate = (dateRaw: string): string => {
-  const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthShortNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
 
   const [year, month, day] = dateRaw.split('-')
   const monthIndex = parseInt(month, 10) - 1 // 08 -> 7
@@ -39,9 +52,12 @@ export const formatVaccinationDate = (dateRaw: string): string => {
   return vaccinationDate
 }
 
-export function inflatePayload(verificationResult): Buffer {
+export function inflatePayload(verificationResult: {
+  header: { zip: string }
+  payload: any
+}): Buffer {
   // keep typescript happy by extending object with a 'zip' property
-  const header = verificationResult.header as {zip: string }
+  const header = verificationResult.header as { zip: string }
   let payload = verificationResult.payload
 
   if (header.zip && header.zip === 'DEF') {
@@ -66,14 +82,19 @@ export function propPath(object: Record<string, unknown>, path: string): string 
   for (let i = 1; i < props.length; i++) {
     val = val[props[i]] as Record<string, Record<string, unknown>>
 
-    if(val instanceof Array) val = val.length === 0 ? val : val[0] as Record<string, Record<string, unknown>>
+    if (val instanceof Array)
+      val = val.length === 0 ? val : (val[0] as Record<string, Record<string, unknown>>)
     if (val === undefined) return val
   }
 
   return val as unknown as string
 }
 
-export function walkProperties(obj: Record<string, unknown>, path: string[], callback: (o: Record<string, unknown>, p: string[]) => void): void {
+export function walkProperties(
+  obj: Record<string, unknown>,
+  path: string[],
+  callback: (o: Record<string, unknown>, p: string[]) => void,
+): void {
   if (obj instanceof Array) {
     for (let i = 0; i < obj.length; i++) {
       const element = obj[i] as Record<string, unknown>
@@ -83,7 +104,7 @@ export function walkProperties(obj: Record<string, unknown>, path: string[], cal
       }
     }
 
-    if(obj.length === 0) callback(obj, path)
+    if (obj.length === 0) callback(obj, path)
 
     return
   }
@@ -106,29 +127,30 @@ export function walkProperties(obj: Record<string, unknown>, path: string[], cal
 
 // Extracted from https://forums.expo.io/t/constants-installationid-how-to-implement-it-on-your-own/50003/15
 export async function getInstallationIdManually() {
-  let installationId;
+  let installationId
 
-  if(['android', 'ios'].includes(Platform.OS)) {
-    let identifierForVendor;
+  if (['android', 'ios'].includes(Platform.OS)) {
+    let identifierForVendor
 
-    if(Platform.OS === 'android') {
-      identifierForVendor = Application.androidId;
-    } else { // ios
-      identifierForVendor = await Application.getIosIdForVendorAsync();
+    if (Platform.OS === 'android') {
+      identifierForVendor = Application.androidId
+    } else {
+      // ios
+      identifierForVendor = await Application.getIosIdForVendorAsync()
     }
 
-    const bundleIdentifier = Application.applicationId;
+    const bundleIdentifier = Application.applicationId
 
     if (identifierForVendor) {
-      installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace);
+      installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
     } else {
-      const installationTime = await Application.getInstallationTimeAsync();
-      installationId = uuidv5(`${bundleIdentifier}-${installationTime.getTime()}`, uuidNamespace);
+      const installationTime = await Application.getInstallationTimeAsync()
+      installationId = uuidv5(`${bundleIdentifier}-${installationTime.getTime()}`, uuidNamespace)
     }
-  }
-  else { // WEB. random (uuid v4)
-    installationId = uuidv4();
+  } else {
+    // WEB. random (uuid v4)
+    installationId = uuidv4()
   }
 
-  return installationId;
+  return installationId
 }

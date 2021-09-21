@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, Linking, TouchableWithoutFeedback, Dimensions, useWindowDimensions } from 'react-native'
-import { Props } from '../../types'
+import React, { useState } from 'react'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Linking,
+  TouchableWithoutFeedback,
+  Dimensions,
+  useWindowDimensions,
+} from 'react-native'
+import { Props } from './types'
 import AppButton from '../components/customButton'
-import NotificationOverlay from '../components/notificationOverlay'
 
 import appJson from '../../app.json'
 
 const { version } = appJson.expo
-const dimension = Dimensions.get('window');
+const dimension = Dimensions.get('window')
 
 const images = {
-  'smartLogo': require('../../assets/img/main/smart-logo.png'),
-  'handPhone': require('../../assets/img/main/hand-phone.png'),
+  smartLogo: require('../../assets/img/main/smart-logo.png'),
+  handPhone: require('../../assets/img/main/hand-phone.png'),
 }
 
 const WelcomePage = ({ navigation }: Props) => {
@@ -22,7 +30,9 @@ const WelcomePage = ({ navigation }: Props) => {
   const showAppVersion = () => {
     setShowVersion(true)
 
-    setTimeout(() => { setShowVersion(false) }, 1000)
+    setTimeout(() => {
+      setShowVersion(false)
+    }, 1000)
   }
 
   return (
@@ -30,42 +40,83 @@ const WelcomePage = ({ navigation }: Props) => {
       <Image style={styles.smartLogoImage} source={images.smartLogo} />
       <View style={styles.screenContainer}>
         <View>
-          <Text style={[deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText, {fontFamily: 'Poppins_700Bold'}]}>Welcome!</Text>
-          <Text style={[styles.mainTitle, {fontFamily: 'Poppins_700Bold'}]}>SMART® Health Card Verifier</Text>
+          <Text
+            style={[
+              deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
+              { fontFamily: 'Poppins_700Bold' },
+            ]}
+          >
+            Welcome!
+          </Text>
+          <Text style={[styles.mainTitle, { fontFamily: 'Poppins_700Bold' }]}>
+            SMART® Health Card Verifier
+          </Text>
         </View>
 
         <TouchableWithoutFeedback onLongPress={showAppVersion}>
           <View>
-            { showVersion &&
-              <Text style={styles.appVersion}>{version}</Text>
-            }
-            <Image style={deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage} source={images.handPhone} />
+            {showVersion && <Text style={styles.appVersion}>{version}</Text>}
+            <Image
+              style={deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage}
+              source={images.handPhone}
+            />
           </View>
         </TouchableWithoutFeedback>
 
         <View style={styles.textContainer}>
-          <Text style={[styles.subTitle, {fontFamily: 'OpenSans_400Regular'}]}> Verify SMART® Health Card QR code in a safe and privacy-preserving way </Text>
+          <Text style={[styles.subTitle, { fontFamily: 'OpenSans_400Regular' }]}>
+            {' '}
+            Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
+          </Text>
           <AppButton
-            title='Scan vaccination record'
+            title="Scan vaccination record"
             onPress={() => navigation.navigate('ScanQR')}
-            backgroundColor='#255DCB'
+            backgroundColor="#255DCB"
           />
           <View style={styles.learnMoreContainer}>
             <Text
-               style={[deviceHeight < minHeight ? styles.textMobile: styles.text, styles.link, styles.colorBlue, {fontFamily: 'Poppins_600SemiBold'}]}
-               onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')}>
-               How to verify SMART® Health Cards
+              style={[
+                deviceHeight < minHeight ? styles.textMobile : styles.text,
+                styles.link,
+                styles.colorBlue,
+                { fontFamily: 'Poppins_600SemiBold' },
+              ]}
+              onPress={() =>
+                Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
+              }
+            >
+              How to verify SMART® Health Cards
             </Text>
           </View>
-          <View style={[deviceHeight < minHeight ? styles.aboutUsContainerMobile : styles.aboutUsContainer, styles.aboutUsFlex]}>
+          <View
+            style={[
+              deviceHeight < minHeight ? styles.aboutUsContainerMobile : styles.aboutUsContainer,
+              styles.aboutUsFlex,
+            ]}
+          >
             <Text
-              style={[styles.text, styles.link, styles.colorBlue, styles.aboutUsFlexSpacing, {fontFamily: 'Poppins_600SemiBold'}]}
-              onPress={() => Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')}>
+              style={[
+                styles.text,
+                styles.link,
+                styles.colorBlue,
+                styles.aboutUsFlexSpacing,
+                { fontFamily: 'Poppins_600SemiBold' },
+              ]}
+              onPress={() =>
+                Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
+              }
+            >
               About us
             </Text>
             <Text
-              style={[styles.text, styles.link, styles.colorBlue, {fontFamily: 'Poppins_600SemiBold'}]}
-              onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}>
+              style={[
+                styles.text,
+                styles.link,
+                styles.colorBlue,
+                { fontFamily: 'Poppins_600SemiBold' },
+              ]}
+              onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
+            >
               Privacy policy
             </Text>
           </View>
@@ -107,18 +158,18 @@ const styles = StyleSheet.create({
     left: '28%',
     top: '40%',
     position: 'absolute',
-    transform: [{ rotate: '-5deg'}],
-    zIndex: 10
+    transform: [{ rotate: '-5deg' }],
+    zIndex: 10,
   },
   handPhoneImage: {
-    width: dimension.width / 240 * 150,
+    width: (dimension.width / 240) * 150,
     height: 250,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   handPhoneImageMobile: {
-    width: dimension.width / 240 * 100,
+    width: (dimension.width / 240) * 100,
     height: 180,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   smartLogoImage: {
     position: 'absolute',
@@ -134,11 +185,11 @@ const styles = StyleSheet.create({
     paddingTop: 88,
   },
   welcomeTextMobile: {
-      fontSize: 24,
-      lineHeight: 36,
-      color: '#255DCB',
-      paddingTop: 70,
-    },
+    fontSize: 24,
+    lineHeight: 36,
+    color: '#255DCB',
+    paddingTop: 70,
+  },
   mainTitle: {
     fontSize: 32,
     lineHeight: 48,
@@ -177,12 +228,12 @@ const styles = StyleSheet.create({
   },
   aboutUsFlex: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   aboutUsFlexSpacing: {
     marginRight: 60,
-    marginBottom: 50
-  }
+    marginBottom: 50,
+  },
 })
 
 export default WelcomePage

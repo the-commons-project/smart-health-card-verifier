@@ -1,5 +1,5 @@
-import { ErrorCode } from './error'
-import { vaccineNameLookUpUrl } from './constants'
+import { ErrorCode } from '../error'
+import { vaccineNameLookUpUrl } from '../constants'
 
 export const getVaccineCodesHash = async (): Promise<any> => {
   let response

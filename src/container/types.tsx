@@ -7,10 +7,9 @@ type RootStackParamList = {
   Error: undefined
 }
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList
->
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList>
 
 export type Props = {
   navigation: ProfileScreenNavigationProp
+  route: any
 }

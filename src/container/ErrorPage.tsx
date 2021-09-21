@@ -2,11 +2,11 @@ import React from 'react'
 import { Text, View, Image, StyleSheet, Platform } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
-import { Props } from '../../types'
+import { Props } from './types'
 
 const images = {
-  'qrError': require('../../assets/img/error/qr-error.png'),
-  'leftCaret': require('../../assets/img/verificationresult/left-caret.png'),
+  qrError: require('../../assets/img/error/qr-error.png'),
+  leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
 }
 
 const ErrorPage = ({ navigation }: Props) => {
@@ -18,16 +18,23 @@ const ErrorPage = ({ navigation }: Props) => {
           source={images.leftCaret}
           onPress={() => navigation.navigate('ScanQR')}
         />
-        <Text style={[styles.backButtonText, {fontFamily: 'Poppins_700Bold'}]} onPress={() => navigation.navigate('ScanQR')}> Unsupported QR </Text>
+        <Text
+          style={[styles.backButtonText, { fontFamily: 'Poppins_700Bold' }]}
+          onPress={() => navigation.navigate('ScanQR')}
+        >
+          Unsupported QR
+        </Text>
       </View>
       <View style={styles.imageContainer}>
         <Image style={styles.imageStyle} source={images.qrError} />
-        <Text style={[styles.message, {fontFamily: 'OpenSans_600SemiBold'}]}> Only valid vaccine SMART® Health Cards are currently supported </Text>
+        <Text style={[styles.message, { fontFamily: 'OpenSans_600SemiBold' }]}>
+          Only valid vaccine SMART® Health Cards are currently supported
+        </Text>
       </View>
       <AppButton
-        title='Scan next vaccination record'
+        title="Scan next vaccination record"
         onPress={() => navigation.navigate('ScanQR')}
-        backgroundColor='#255DCB'
+        backgroundColor="#255DCB"
       />
     </View>
   )

@@ -1,4 +1,4 @@
-import { formatVaccinationDate } from './utils'
+import { formatVaccinationDate } from '../utils'
 import { getVaccineCodesHash } from './getVaccineCodesHash'
 
 const cvxCodes = ['207', '208', '210', '211', '212']
@@ -8,31 +8,29 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
 
   const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
 
-  const immunizationEntries = entries?.filter((entry: any) => {
-    const isTypeImmunization = entry?.resource?.resourceType === 'Immunization'
+  const immunizationEntries = entries
+    ?.filter((entry: any) => {
+      const isTypeImmunization = entry?.resource?.resourceType === 'Immunization'
 
-    if (isTypeImmunization) {
-      return entry
-    }
-  }).map(entry => entry.resource)
+      if (isTypeImmunization) {
+        return entry
+      }
+    })
+    .map((entry) => entry.resource)
 
   const vaccineCodesHash = await getVaccineCodesHash()
 
   for (const [index, entry] of immunizationEntries.entries()) {
-    const {
-      status,
-      lotNumber,
-      performer,
-      vaccineCode,
-      occurrenceDateTime,
-    } = entry
+    const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry
 
     const { code } = vaccineCode?.coding[0]
 
     const isValidVaccinationCode = code && cvxCodes.includes(code)
 
     if (!isValidVaccinationCode) {
-      console.log(`Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(',')}).`)
+      console.log(
+        `Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(',')}).`,
+      )
     }
 
     const vaccineName = vaccineCodesHash[code]
@@ -67,7 +65,7 @@ export const getVaccinationDataFromFhir = async (credential: any): any => {
   return vaccinationData
 }
 
-function sortDosesByDate(vaccinationData: any[]){
+function sortDosesByDate(vaccinationData: any[]) {
   // earliest -> latest
   vaccinationData.sort((a, b) => Date.parse(a.vaccinationDate) - Date.parse(b.vaccinationDate))
   // set correct dose number if dose objects are swapped

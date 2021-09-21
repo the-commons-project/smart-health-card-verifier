@@ -1,4 +1,4 @@
-import { formatDateOfBirth } from './utils'
+import { formatDateOfBirth } from '../utils'
 
 export const getPatientDataFromFhir = (credential: any): any => {
   const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
