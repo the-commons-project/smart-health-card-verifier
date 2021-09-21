@@ -6,6 +6,7 @@ const MAX_QR_CHUNK_LENGTH = 1191
 export const validate = async (qr: string[]): Promise<any> => {
   const jwsString: JWS | undefined = shcChunksToJws(qr)
 
+  console.log(jwsString)
   const isJwsExtracted = !!jwsString
 
   if (!isJwsExtracted) {
