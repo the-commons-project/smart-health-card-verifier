@@ -6,7 +6,7 @@ import { KeySet, KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
 import { parseJson } from '../utils'
 import { validateSchema } from './schema'
-// import jwsCompactSchema from './schemas/jws-schema.json'
+import jwsCompactSchema from '../../schemas/jws-schema.json'
 import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
 import Log from '../logger'
 
@@ -47,7 +47,8 @@ export async function validate(jws: string): Promise<any> {
     return false
   }
 
-  // validateSchema(jwsCompactSchema, jws)
+  // failures will be recorded in the log. we can continue processing.
+  validateSchema(jwsCompactSchema, jws)
 
   // split jws into header, payload, key
   let [header, rawPayload, key] = jws.split('.')
@@ -61,7 +62,7 @@ export async function validate(jws: string): Promise<any> {
     inflatedPayload || b64DecodedPayloadString || rawPayload,
   )
   if (!isJwsPayloadValid) {
-    log.fatal('FATAL ERROR at jwsPayload.validate!')
+    log.error('ERROR at jwsPayload.validate!')
   }
 
   // try to parse JSON even if it failed validation above
@@ -121,7 +122,6 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
   const timeout = JwsValidationOptions.jwksDownloadTimeOut
 
   try {
-    // TODO: Weird way for timeout, if just a value it won't work
     const responseRaw: any = await fetchWithTimeout(
       jwkURL,
       { headers: { Origin: requestedOrigin } },

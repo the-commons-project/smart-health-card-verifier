@@ -1,12 +1,12 @@
 import * as utils from '../utils'
 import { ErrorCode } from '../error'
 import { validateSchema, objPathToSchema } from './schema'
+import patientDM from '../../schemas/patient-dm.json'
+import fhirSchema from '../../schemas/fhir-schema.json'
+import immunizationDM from '../../schemas/immunization-dm.json'
 import Log from '../logger'
 
 const log = new Log()
-const patientDM = require('../../schemas/patient-dm.json')
-const fhirSchema = require('../../schemas/fhir-schema.json')
-const immunizationDM = require('../../schemas/immunization-dm.json')
 
 export enum ValidationProfiles {
   'any',
@@ -22,7 +22,7 @@ export function validate(fhirBundleText: string): any {
   const profile: ValidationProfiles = FhirOptions.ValidationProfile
 
   if (fhirBundleText.trim() !== fhirBundleText) {
-    log.warn(`FHIR bundle has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
+    log.error(`FHIR bundle has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
     fhirBundleText = fhirBundleText.trim()
   }
 
@@ -48,7 +48,7 @@ export function validate(fhirBundleText: string): any {
 
     // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
     if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
-      log.warn(
+      log.error(
         'fhirBundle.entry.fullUrl should be short resource-scheme URIs (e.g., {"fullUrl": "resource:0"}',
         ErrorCode.FHIR_SCHEMA_ERROR,
       )
@@ -59,7 +59,7 @@ export function validate(fhirBundleText: string): any {
 
 function validateFhirBundle(fhirBundle: FhirBundle) {
   if (fhirBundle === undefined) {
-    log.warn('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
+    log.error('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return false
   }
 
@@ -71,7 +71,7 @@ function validateFhirBundle(fhirBundle: FhirBundle) {
   // to continue validation, we must have a list of resources in .entry[]
   if (!fhirBundle.entry || !(fhirBundle.entry instanceof Array) || fhirBundle.entry.length === 0) {
     // The schema check above will list the expected properties/type
-    log.warn('FhirBundle.entry[] required to continue.', ErrorCode.CRITICAL_DATA_MISSING)
+    log.error('FhirBundle.entry[] required to continue.', ErrorCode.CRITICAL_DATA_MISSING)
     return false
   }
 
@@ -96,7 +96,7 @@ function validateFhirBundleEntry(entry: any, i: number) {
 
   // validateSchema({ $ref: 'https://smarthealth.cards/schema/fhir-schema.json#/definitions/' + resource.resourceType }, resource, ['', 'entry', i.toString(), resource.resourceType].join('/'))
   if (resource.id) {
-    log.warn(
+    log.error(
       'Bundle.entry[' +
         i.toString() +
         '].resource[' +
@@ -109,7 +109,7 @@ function validateFhirBundleEntry(entry: any, i: number) {
   if (resource.meta) {
     // resource.meta.security allowed as special case, however, no other properties may be included on .meta
     if (!resource.meta.security || Object.keys(resource.meta).length > 1) {
-      log.warn(
+      log.error(
         'Bundle.entry[' +
           i.toString() +
           '].resource[' +
@@ -121,7 +121,7 @@ function validateFhirBundleEntry(entry: any, i: number) {
   }
 
   if (resource.text) {
-    log.warn(
+    log.error(
       'Bundle.entry[' +
         i.toString() +
         '].resource[' +
@@ -134,7 +134,7 @@ function validateFhirBundleEntry(entry: any, i: number) {
 
 function validatePropType(propType: string, i: number, path: string[], o: Record<string, unknown>) {
   if (propType === 'CodeableConcept' && o['text']) {
-    log.warn(
+    log.error(
       'fhirBundle.entry[' +
         i.toString() +
         ']' +
@@ -146,7 +146,7 @@ function validatePropType(propType: string, i: number, path: string[], o: Record
   }
 
   if (propType === 'Coding' && o['display']) {
-    log.warn(
+    log.error(
       'fhirBundle.entry[' +
         i.toString() +
         ']' +
@@ -158,7 +158,7 @@ function validatePropType(propType: string, i: number, path: string[], o: Record
   }
 
   if (propType === 'Reference' && o['reference'] && !/[^:]+:\d+/.test(o['reference'] as string)) {
-    log.warn(
+    log.error(
       'fhirBundle.entry[' +
         i.toString() +
         ']' +
@@ -170,12 +170,12 @@ function validatePropType(propType: string, i: number, path: string[], o: Record
   }
 
   if (
-    // warn on empty string, empty object, empty array
+    // error on empty string, empty object, empty array
     (o instanceof Array && o.length === 0) ||
     (typeof o === 'string' && o === '') ||
     (o instanceof Object && Object.keys(o).length === 0)
   ) {
-    log.warn(
+    log.error(
       'fhirBundle.entry[' +
         i.toString() +
         ']' +
@@ -197,7 +197,7 @@ const ValidationProfilesFunctions = {
     const patients = entries.filter((entry) => entry.resource.resourceType === 'Patient')
 
     if (patients.length !== 1) {
-      log.warn(
+      log.error(
         `Profile : ${profileName} : requires exactly 1 ${'Patient'} resource. Actual : ${patients.length.toString()}`,
         ErrorCode.PROFILE_ERROR,
       )
@@ -206,7 +206,7 @@ const ValidationProfilesFunctions = {
     const immunizations = entries.filter((entry) => entry.resource.resourceType === 'Immunization')
 
     if (immunizations.length === 0) {
-      log.warn(
+      log.error(
         `Profile : ${profileName} : requires 1 or more Immunization resources. Actual : ${immunizations.length.toString()}`,
         ErrorCode.PROFILE_ERROR,
       )
@@ -216,7 +216,7 @@ const ValidationProfilesFunctions = {
 
     entries.forEach((entry, index) => {
       if (!expectedResources.includes(entry.resource.resourceType)) {
-        log.warn(
+        log.error(
           `Profile : ${profileName} : resourceType: ${entry.resource.resourceType} is not allowed.`,
           ErrorCode.PROFILE_ERROR,
         )
@@ -231,7 +231,7 @@ const ValidationProfilesFunctions = {
         const cvxCodes = ['207', '208', '210', '211', '212']
 
         if (code && !cvxCodes.includes(code)) {
-          log.warn(
+          log.error(
             `Profile : ${profileName} : Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(
               ',',
             )}).`,
@@ -242,7 +242,7 @@ const ValidationProfilesFunctions = {
         // check for properties that are forbidden by the dm-profiles
         ;(immunizationDM as { path: string }[]).forEach((constraint) => {
           utils.propPath(entry.resource, constraint.path) &&
-            log.warn(
+            log.error(
               `Profile : ${profileName} : entry[${index.toString()}].resource.${
                 constraint.path
               } should not be present.`,
@@ -255,7 +255,7 @@ const ValidationProfilesFunctions = {
         // check for properties that are forbidden by the dm-profiles
         ;(patientDM as { path: string }[]).forEach((constraint) => {
           utils.propPath(entry.resource, constraint.path) &&
-            log.warn(
+            log.error(
               `Profile : ${profileName} : entry[${index.toString()}].resource.${
                 constraint.path
               } should not be present.`,

@@ -1,7 +1,7 @@
 import jose, { JWK } from 'react-native-jose'
 import { ErrorCode } from '../error'
 import { validateSchema } from './schema'
-import keySetSchema from './schemas/keyset-schema.json'
+import keySetSchema from '../../schemas/keyset-schema.json'
 import { KeySet, KeysStore } from './keys'
 import { v4 as uuidv4 } from 'uuid'
 import { isOpensslAvailable } from '../utils'

@@ -2,13 +2,15 @@ import { ErrorCode } from '../error'
 import Ajv, { AnySchemaObject } from 'ajv'
 import { AnyValidateFunction } from 'ajv/dist/core'
 import { KeySet } from './keys'
+import fhirSchema from '../../schemas/fhir-schema.json'
+import Log from '../logger'
 
-const fhirSchema = require('../../schemas/fhir-schema.json')
+const log = new Log()
 const schemaCache: Record<string, AnyValidateFunction> = {}
 
 export function validateSchema(
   schema: AnySchemaObject,
-  data: FhirBundle | JWS | JWSPayload | HealthCard | KeySet | Resource,
+  data: FhirBundle | JWS | JWSPayload | HealthCard | KeySet | Resource | undefined,
   pathPrefix = '',
 ): boolean {
   // by default, the validator will stop at the first failure. 'allErrors' allows it to keep going.
@@ -27,7 +29,6 @@ export function validateSchema(
     }
 
     const validate = schemaCache[schemaId]
-
     if (validate(data)) {
       return true
     }
@@ -35,9 +36,7 @@ export function validateSchema(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     let errors = validate.errors!.map((err) => {
       // reformat the schema errors into something more readable:
-
       err.instancePath = pathPrefix + err.instancePath
-
       switch (err.keyword) {
         // · Schema: {"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"resourceType"},"message":"must have required property 'resourceType'"}
         case 'required':
@@ -72,7 +71,7 @@ export function validateSchema(
     errors = errors.filter((err, index) => errors.indexOf(err) === index)
 
     errors.forEach((ve) => {
-      console.log(ve, isFhirSchema ? ErrorCode.FHIR_SCHEMA_ERROR : ErrorCode.SCHEMA_ERROR)
+      log.error(ve, isFhirSchema ? ErrorCode.FHIR_SCHEMA_ERROR : ErrorCode.SCHEMA_ERROR)
     })
 
     return false
@@ -81,9 +80,9 @@ export function validateSchema(
 
     if (missingRef) {
       const property = (err as { missingRef: string }).missingRef.split('/').pop() as string
-      console.log(`Schema: ${pathPrefix + property} additional property '${property}' not allowed.`)
+      log.error(`Schema: ${pathPrefix + property} additional property '${property}' not allowed.`)
     } else {
-      console.log(
+      log.error(
         'Schema: ' + (err as Error).message,
         isFhirSchema ? ErrorCode.FHIR_SCHEMA_ERROR : ErrorCode.SCHEMA_ERROR,
       )
