@@ -4,7 +4,7 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import * as Device from 'expo-device'
 import { ErrorCode } from '../services/error'
-import { Props } from './types'
+import { Props } from '../types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
 
@@ -127,7 +127,6 @@ const ScanQRPage = ({ navigation }: Props) => {
             NOTE: The below shows our modal behind system's modal. */}
         {!hasPermission && <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />}
 
-        {/* TODO: Find a better netinfo module as the check for internet connection fires three times when it is called */}
         {isInternetReachable === false && (
           <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
         )}

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
+import { Data } from '../types'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -10,14 +11,12 @@ const images = {
   warningCross: require('../../assets/img/verificationresult/warning-cross.png'),
 }
 
-const ResultRecord = ({ data }) => {
+const ResultRecord = ({ data }: Data) => {
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
   const { issuerData, patientData, vaccinationData } = validationResult
   const { name, dateOfBirth } = patientData
 
-  // const userFieldTitle = [ 'Name', 'Date of Birth' ]
-  // const userFieldValue = [ name, insertImageToTable() ]
   const userFieldTitle = ['Name']
   const userFieldValue = [name]
 
@@ -48,7 +47,7 @@ const ResultRecord = ({ data }) => {
     )
   }
 
-  function insertTextToTable(vaccineName, lotNumber) {
+  function insertTextToTable(vaccineName: string, lotNumber: string) {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text
@@ -67,7 +66,7 @@ const ResultRecord = ({ data }) => {
     )
   }
 
-  function vaccinatorParser(vaccinator) {
+  function vaccinatorParser(vaccinator: string) {
     let newText = '-'
     if (vaccinator) {
       newText = vaccinator.split(' | ').join(', ')
@@ -78,7 +77,7 @@ const ResultRecord = ({ data }) => {
     )
   }
 
-  function dateParser(date) {
+  function dateParser(date: string) {
     return (
       <Text
         style={[

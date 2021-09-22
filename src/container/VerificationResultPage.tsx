@@ -4,7 +4,7 @@ import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'
-import { Props } from './types'
+import { Props } from '../types'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
@@ -13,6 +13,7 @@ const images = {
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
   const data = route.params
+  console.log(data)
   const { validationResult } = data
 
   return (

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, View, Image, StyleSheet, Platform } from 'react-native'
+import { Text, View, Image, StyleSheet } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
-import { Props } from './types'
+import { Props } from '../types'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),

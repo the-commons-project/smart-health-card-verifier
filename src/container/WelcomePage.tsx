@@ -9,7 +9,7 @@ import {
   Dimensions,
   useWindowDimensions,
 } from 'react-native'
-import { Props } from './types'
+import { Props } from '../types'
 import AppButton from '../components/customButton'
 
 import appJson from '../../app.json'

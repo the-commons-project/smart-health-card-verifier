@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native'
+import { ValidationResult } from '../types'
 
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
@@ -9,7 +10,7 @@ const images = {
   cross: require('../../assets/img/verificationresult/cross.png'),
 }
 
-const ResultBanner = ({ validationResult }) => {
+const ResultBanner = ({ validationResult }: ValidationResult) => {
   let icon = images.success
   let text = 'Verified'
   let color = '#158E00' // green

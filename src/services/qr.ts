@@ -109,7 +109,7 @@ function shcToJws(shc: string, chunkCount = 1): { result: JWS; chunkIndex: numbe
       )
       const found = shc.match(
         new RegExp(`^${qrHeader}${positiveIntRegExp}/(?<expectedChunkCount2>[1-9][0-9]*)/.*$`),
-      ) // FIXME!!!!!
+      )
 
       if (found) console.log(`${found}`)
 
