@@ -78,7 +78,6 @@ const ResultRecord = ({ data }) => {
     )
   }
 
-  // TODO: Refactor how we apply bold font
   function dateParser(date) {
     return (
       <Text

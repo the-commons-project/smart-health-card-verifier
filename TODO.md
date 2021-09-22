@@ -1,7 +1,7 @@
 # List of TODOs
 
 1. Add tests
-2. Add linter
+2. Add linter (done)
 3. Store responses from API calls in local storage (data won't be updated often)
 4. Add pre-push to main hook to check if version in app.json was updated
 5. Add decision tree diagram

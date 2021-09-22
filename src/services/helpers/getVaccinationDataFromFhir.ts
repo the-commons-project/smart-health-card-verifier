@@ -1,9 +1,7 @@
 import { formatVaccinationDate } from '../utils'
 import { getVaccineCodesHash } from './getVaccineCodesHash'
-import Log from '../logger'
 
 const cvxCodes = ['207', '208', '210', '211', '212']
-const log = new Log()
 
 export const getVaccinationDataFromFhir = async (credential: any): Promise<any> => {
   const vaccinationData = []
@@ -27,13 +25,13 @@ export const getVaccinationDataFromFhir = async (credential: any): Promise<any> 
     const isVaccineShotDone = status === 'completed'
 
     if (!isValidVaccinationCode) {
-      log.info(
+      console.log(
         `Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(',')}).`,
       )
     }
 
     if (!isVaccineShotDone) {
-      log.info(`Immunization.status should be "completed", but it is ${status}`)
+      console.log(`Immunization.status should be "completed", but it is ${status}`)
     }
 
     const dose = index + 1

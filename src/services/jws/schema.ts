@@ -3,9 +3,7 @@ import Ajv, { AnySchemaObject } from 'ajv'
 import { AnyValidateFunction } from 'ajv/dist/core'
 import { KeySet } from './keys'
 import fhirSchema from '../../schemas/fhir-schema.json'
-import Log from '../logger'
 
-const log = new Log()
 const schemaCache: Record<string, AnyValidateFunction> = {}
 
 export function validateSchema(
@@ -71,7 +69,7 @@ export function validateSchema(
     errors = errors.filter((err, index) => errors.indexOf(err) === index)
 
     errors.forEach((ve) => {
-      log.error(ve, isFhirSchema ? ErrorCode.FHIR_SCHEMA_ERROR : ErrorCode.SCHEMA_ERROR)
+      console.log(ve, isFhirSchema ? ErrorCode.FHIR_SCHEMA_ERROR : ErrorCode.SCHEMA_ERROR)
     })
 
     return false
@@ -80,9 +78,9 @@ export function validateSchema(
 
     if (missingRef) {
       const property = (err as { missingRef: string }).missingRef.split('/').pop() as string
-      log.error(`Schema: ${pathPrefix + property} additional property '${property}' not allowed.`)
+      console.log(`Schema: ${pathPrefix + property} additional property '${property}' not allowed.`)
     } else {
-      log.error(
+      console.log(
         'Schema: ' + (err as Error).message,
         isFhirSchema ? ErrorCode.FHIR_SCHEMA_ERROR : ErrorCode.SCHEMA_ERROR,
       )
