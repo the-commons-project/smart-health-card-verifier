@@ -7,8 +7,8 @@ import { ErrorCode } from '../services/error'
 import { Props } from '../types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
-
 import { validate } from '../services/qr'
+import { ValidationResult, BaseResponse } from '../types'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -85,7 +85,21 @@ const ScanQRPage = ({ navigation }: Props) => {
   }
 
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
-    let validationResult = {}
+    let validationResult: BaseResponse = {
+      isValid: '',
+      issuerData: {
+        iss: '',
+        logo_uri: '',
+        name: '',
+        updated_at: 0,
+        url: '',
+      },
+      patientData: {
+        dateOfBirth: '',
+        name: '',
+      },
+      vaccinationData: [],
+    }
 
     try {
       setScanned(true)

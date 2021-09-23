@@ -22,8 +22,8 @@ export type ValidationResult = {
   validationResult: BaseResponse
 }
 
-type BaseResponse = {
-  isValid: boolean
+export type BaseResponse = {
+  isValid: boolean | string
   issuerData: issuerData
   patientData: patientData
   vaccinationData: vaccinationData[]

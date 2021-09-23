@@ -16,10 +16,6 @@ SMART Health Card certificate encoded in a QR code.
     - [Run application locally](#run-application-locally)
     - [Making commits](#making-commits)
   - [Release](#release)
-      - [Patch version update](#patch-version-update)
-      - [Minor version update](#minor-version-update)
-      - [Major version update](#major-version-update)
-  - [Publish application](#publish-application)
   - [How to Contribute](#how-to-contribute)
   - [Authors and acknowledgement](#authors-and-acknowledgement)
   - [License](#license)
@@ -120,35 +116,6 @@ manifest automatically 🤖.
 To update the _application version_, Android _versionCode_ and iOS _buildNumber_
 run one of the commands below.
 
-#### Patch version update
-
-WHEN: everytime except of breaking changes or new feature introduction
-
-```bash
-  npm run release:patch
-```
-
-#### Minor version update
-
-WHEN: on adding new feature
-
-```bash
-  npm run release:minor
-```
-
-#### Major version update
-
-WHEN: on breaking changes
-
-```bash
-  npm run release:major
-```
-
-## Publish application
-
-Application is published to App Store and Google Play via Bitrise as a part of CI/CD
-on merge/commit into the `main` branch.
-
 ## How to Contribute
 
 See [contributing guidelines](CONTRIBUTING.md) for more information.
@@ -156,3 +123,5 @@ See [contributing guidelines](CONTRIBUTING.md) for more information.
 ## Authors and acknowledgement
 
 ## License
+
+TBD
