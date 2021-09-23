@@ -20,7 +20,6 @@ SMART Health Card certificate encoded in a QR code.
       - [Minor version update](#minor-version-update)
       - [Major version update](#major-version-update)
   - [Publish application](#publish-application)
-  - [TODOs](#todos)
   - [How to Contribute](#how-to-contribute)
   - [Authors and acknowledgement](#authors-and-acknowledgement)
   - [License](#license)
@@ -150,14 +149,9 @@ WHEN: on breaking changes
 Application is published to App Store and Google Play via Bitrise as a part of CI/CD
 on merge/commit into the `main` branch.
 
-## TODOs
-
-List of [things to improve](./TODO.md) and to make code better, simplier and
-more readable ❤️.
-
 ## How to Contribute
 
-See contributing guidelines here.
+See [contributing guidelines](CONTRIBUTING.md) for more information.
 
 ## Authors and acknowledgement
 

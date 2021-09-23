@@ -23,10 +23,6 @@ import {
   OpenSans_700Bold,
 } from '@expo-google-fonts/open-sans'
 
-//TODO: CSS values convert to relative values(!px, em or something)
-//TODO: Consolidated and clean up duplicated css
-//TODO: Clean up fontFamily
-
 const Stack = createStackNavigator()
 
 const App = () => {

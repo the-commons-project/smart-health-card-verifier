@@ -123,8 +123,6 @@ const ScanQRPage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.scannerContainer}>
-        {/* TODO: Cover scenario when camera permissions disallowed later.
-            NOTE: The below shows our modal behind system's modal. */}
         {!hasPermission && <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />}
 
         {isInternetReachable === false && (
