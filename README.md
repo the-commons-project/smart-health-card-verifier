@@ -5,21 +5,25 @@ SMART Health Card certificate encoded in a QR code.
 
 ## Table of contents
 
-* [Environment Setup](#environment-setup)
-  - [Prerequisites](#prerequisites)
-  - [Global dependencies](#global-dependencies)
-  - [Clone the repository](#clone-the-repository)
-  - [Install project required dependencies](#install-project-required-dependencies)
-  - [Expo Go](#expo-go)
-* [Run application locally](#run-application-locally)
-* [Making commits](#making-commits)
-* [Release](#release)
-  - [Patch version update](#patch-version-update)
-  - [Minor version update](#minor-version-update)
-  - [Major version update](#major-version-update)
-* [Publish application](#publish-application)
-* [TODOs](#todos)
-* [How to Contribute](#how-to-contribute)
+- [SMART Health Card Verifier](#smart-health-card-verifier)
+  - [Table of contents](#table-of-contents)
+  - [Environment Setup](#environment-setup)
+    - [Prerequisites](#prerequisites)
+    - [Global dependencies](#global-dependencies)
+    - [Clone the repository](#clone-the-repository)
+    - [Install project required dependencies](#install-project-required-dependencies)
+    - [Expo Go](#expo-go)
+    - [Run application locally](#run-application-locally)
+    - [Making commits](#making-commits)
+  - [Release](#release)
+      - [Patch version update](#patch-version-update)
+      - [Minor version update](#minor-version-update)
+      - [Major version update](#major-version-update)
+  - [Publish application](#publish-application)
+  - [TODOs](#todos)
+  - [How to Contribute](#how-to-contribute)
+  - [Authors and acknowledgement](#authors-and-acknowledgement)
+  - [License](#license)
 
 ## Environment Setup
 
@@ -84,13 +88,15 @@ Therefore, it increases the **minor version** (0.1.0).
 
 A commit marked as a breaking change 🚨 results in increasing the **major version**
 (1.0.0).<br />
-We can create it either by appending the `!`  sign, or adding the information
+We can create it either by appending the `!` sign, or adding the information
 in the footer.
 
 ```bash
   git commit -m 'fix!: change the way that the posts are filtered to deal with a bug'
 ```
+
 Or
+
 ```bash
   git commit -m 'feat: add pagination to the posts endpoint' -m 'BREAKING CHANGE: now the result might not contain all posts'
 ```
@@ -112,7 +118,7 @@ for more inspiration 🏋️‍.
 is used to automate the versioning of the project❗️- to update the Expo
 manifest automatically 🤖.
 
-To update the *application version*, Android *versionCode* and iOS *buildNumber*
+To update the _application version_, Android _versionCode_ and iOS _buildNumber_
 run one of the commands below.
 
 #### Patch version update
@@ -152,8 +158,14 @@ more readable ❤️.
 ## How to Contribute
 
 1. [Clone repo](#clone-the-repository) and create a new branch:
+
 ```bash
   $ git checkout https://gitlab.com/st-experiments/health-card-verifier-mobile.git -b name_for_new_branch
 ```
+
 2. Make changes and test
-3. Submit Merge Request with comprehensive description of changes
+3. Submit Pull Request with comprehensive description of changes
+
+## Authors and acknowledgement
+
+## License
