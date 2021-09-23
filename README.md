@@ -157,14 +157,7 @@ more readable ❤️.
 
 ## How to Contribute
 
-1. [Clone repo](#clone-the-repository) and create a new branch:
-
-```bash
-  $ git checkout https://gitlab.com/st-experiments/health-card-verifier-mobile.git -b name_for_new_branch
-```
-
-2. Make changes and test
-3. Submit Pull Request with comprehensive description of changes
+See contributing guidelines here.
 
 ## Authors and acknowledgement
 
