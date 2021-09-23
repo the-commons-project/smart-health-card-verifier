@@ -13,7 +13,6 @@ const images = {
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
   const data = route.params
-  console.log(data)
   const { validationResult } = data
 
   return (
