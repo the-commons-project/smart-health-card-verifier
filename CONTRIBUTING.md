@@ -54,7 +54,3 @@ When you're done making the changes, open a pull request, often referred to as a
 ### Your PR is merged!
 
 Congratulations :tada::tada: The SHC team thanks you :sparkles:.
-
-Once your PR is merged, your contributions will be publicly visible on the [GitHubs docs](https://docs.github.com/en).
-
-Now that you are part of the GitHub docs community, see how else you can [contribute to the docs](/contributing/types-of-contributions.md).

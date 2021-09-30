@@ -1,7 +1,7 @@
 # SMART Health Card Verifier
 
 Verifier is a safe, privacy-preserving mobile application, designed to verify
-SMART Health Card certificate encoded in a QR code.
+SMART Health Card certificate encoded in a QR code. The app is launched in both the Play store and iOS store. It is built using React Native with Typescript and Expo.
 
 ## Table of contents
 
@@ -10,14 +10,12 @@ SMART Health Card certificate encoded in a QR code.
   - [Environment Setup](#environment-setup)
     - [Prerequisites](#prerequisites)
     - [Global dependencies](#global-dependencies)
-    - [Clone the repository](#clone-the-repository)
     - [Install project required dependencies](#install-project-required-dependencies)
     - [Expo Go](#expo-go)
     - [Run application locally](#run-application-locally)
-    - [Making commits](#making-commits)
-  - [Release](#release)
   - [How to Contribute](#how-to-contribute)
-  - [Authors and acknowledgement](#authors-and-acknowledgement)
+    - [Code of Conduct](#code-of-conduct)
+    - [Contributing Guide](#contributing-guide)
   - [License](#license)
 
 ## Environment Setup
@@ -30,12 +28,6 @@ Node **v14.17.X** (LTS/fermium)
 
 ```bash
   npm install -g expo-cli
-```
-
-### Clone the repository
-
-```bash
-  git clone git@gitlab.com:st-experiments/health-card-verifier-mobile.git
 ```
 
 ### Install project required dependencies
@@ -59,69 +51,18 @@ instructions to install Expo Go on your mobile phone.
 Expo will open an application in the default browser with a QR code, that should
 be scanned with your mobile device and open the application with Expo Go.
 
-### Making commits
-
-Using conventional commits and proper commit messages 🙏 will keep our [CHANGELOG](./CHANGELOG.md)
-awesome 🚀.
-
-Here are conventional commit prefixes, and HOW to use them:
-
-The `fix` type indicates that this commit removes a bug in the codebase.<br />
-Creating a release with such a commit results in bumping the **patch version**
-(0.0.1).
-
-```bash
-  git commit -m 'fix: prevent the application from crashing'
-```
-
-Creating a `feat` commit means introducing a new feature.<br />
-Therefore, it increases the **minor version** (0.1.0).
-
-```bash
-  git commit -m 'feat: add the possibility to filter posts'
-```
-
-A commit marked as a breaking change 🚨 results in increasing the **major version**
-(1.0.0).<br />
-We can create it either by appending the `!` sign, or adding the information
-in the footer.
-
-```bash
-  git commit -m 'fix!: change the way that the posts are filtered to deal with a bug'
-```
-
-Or
-
-```bash
-  git commit -m 'feat: add pagination to the posts endpoint' -m 'BREAKING CHANGE: now the result might not contain all posts'
-```
-
-We can use many different types of commits:
-
-`test` – when modifying existing tests, or adding new ones<br />
-`refactor` – changing the code in a way that does not fix a bug nor adds features<br />
-`docs` – modifying the documentation<br />
-`chore` – routine tasks such as updating dependencies<br />
-`build` – affecting the way the application builds
-
-Please check [this great article](https://wanago.io/2020/08/17/generating-changelog-standard-version/)
-for more inspiration 🏋️‍.
-
-## Release
-
-[Standard Version](https://github.com/expo-community/standard-version-expo#readme)
-is used to automate the versioning of the project❗️- to update the Expo
-manifest automatically 🤖.
-
-To update the _application version_, Android _versionCode_ and iOS _buildNumber_
-run one of the commands below.
-
 ## How to Contribute
 
-See [contributing guidelines](CONTRIBUTING.md) for more information.
+We welcome any contributions for bug fixes and improvements. Below explains how you can be a part of the open source communitiy.
 
-## Authors and acknowledgement
+### Code of Conduct
+
+Affinidi has adopted a Code of Conduct that we expect the community to adhere to. Please see the [document here](./CODE_OF_CONDUCT.md) so that we can maintain a healthy and collaborative community.
+
+### Contributing Guide
+
+See [contributing guidelines](./CONTRIBUTING.md) for more information.
 
 ## License
 
-TBD
+Smart Health Card Verifier is [MIT licensed](./LICENSE)
