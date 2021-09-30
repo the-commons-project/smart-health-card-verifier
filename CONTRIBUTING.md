@@ -63,8 +63,6 @@ We are using GitHub Issues for our public bugs. Before filing a new task, try to
 
 Report a new issue by submitting one [here](link-to-github-issues). Please ensure you provide necessary details for us to understand and replicate the issue.
 
-## How to Get in Touch
-
 ## Your First Pull Request
 
 Here is a great resource to guide you to making your first pull request.
