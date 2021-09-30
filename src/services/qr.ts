@@ -101,44 +101,38 @@ function shcToJws(shc: string, chunkCount = 1): { result: JWS; chunkIndex: numbe
   // check numeric QR header
   const isChunkedHeader = new RegExp(`^${qrHeader}${positiveIntRegExp}/${chunkCount}/.*$`).test(shc)
 
-  if (chunked) {
-    if (!isChunkedHeader) {
-      // should have been a valid chunked header, check if we are missing one
-      const hasBadChunkCount = new RegExp(`^${qrHeader}${positiveIntRegExp}/[1-9][0-9]*/.*$`).test(
-        shc,
-      )
-      const found = shc.match(
-        new RegExp(`^${qrHeader}${positiveIntRegExp}/(?<expectedChunkCount2>[1-9][0-9]*)/.*$`),
-      )
+  if (chunked && !isChunkedHeader) {
+    // should have been a valid chunked header, check if we are missing one
+    const hasBadChunkCount = new RegExp(`^${qrHeader}${positiveIntRegExp}/[1-9][0-9]*/.*$`).test(
+      shc,
+    )
+    const found = shc.match(
+      new RegExp(`^${qrHeader}${positiveIntRegExp}/(?<expectedChunkCount2>[1-9][0-9]*)/.*$`),
+    )
 
-      if (found) console.log(`${found}`)
-
-      if (hasBadChunkCount) {
-        const expectedChunkCount = parseInt(shc.substring(7, 8))
-        console.log(
-          `Missing QR code chunk: received ${chunkCount}, expected ${expectedChunkCount}`,
-          ErrorCode.MISSING_QR_CHUNK,
-        )
-        return undefined
-      }
-    }
-  } else {
-    if (isChunkedHeader) {
+    if (found) console.log(`${found}`)
+    if (hasBadChunkCount) {
+      const expectedChunkCount = parseInt(shc.substring(7, 8))
       console.log(
-        `Single-chunk numeric QR code should have a header ${qrHeader}, not ${qrHeader}1/1/`,
-        ErrorCode.INVALID_NUMERIC_QR_HEADER,
+        `Missing QR code chunk: received ${chunkCount}, expected ${expectedChunkCount}`,
+        ErrorCode.MISSING_QR_CHUNK,
       )
-      chunked = true // interpret the code as chunked even though it shouldn't
+      return undefined
     }
   }
+  if (chunked && isChunkedHeader) {
+    console.log(
+      `Single-chunk numeric QR code should have a header ${qrHeader}, not ${qrHeader}1/1/`,
+      ErrorCode.INVALID_NUMERIC_QR_HEADER,
+    )
+    chunked = true // interpret the code as chunked even though it shouldn't
+  }
 
-  if (
-    !new RegExp(
-      chunked ? `^${qrHeader}${positiveIntRegExp}/${chunkCount}/.*$` : `^${qrHeader}.*$`,
-      'g',
-    ).test(shc)
-  ) {
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  const validQrHeader = new RegExp(
+    chunked ? `^${qrHeader}${positiveIntRegExp}/${chunkCount}/.*$` : `^${qrHeader}.*$`,
+    'g',
+  ).test(shc)
+  if (!validQrHeader) {
     const expectedHeader = chunked
       ? `${qrHeader}${positiveIntRegExp}/${positiveIntRegExp}/`
       : `${qrHeader}`
@@ -150,13 +144,11 @@ function shcToJws(shc: string, chunkCount = 1): { result: JWS; chunkIndex: numbe
   }
 
   // check numeric QR encoding
-  if (
-    !new RegExp(
-      chunked ? `^${qrHeader}${positiveIntRegExp}/${chunkCount}/[0-9]+$` : `^${qrHeader}[0-9]+$`,
-      'g',
-    ).test(shc)
-  ) {
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  const validQrEncoding = new RegExp(
+    chunked ? `^${qrHeader}${positiveIntRegExp}/${chunkCount}/[0-9]+$` : `^${qrHeader}[0-9]+$`,
+    'g',
+  ).test(shc)
+  if (!validQrEncoding) {
     const expectedBody = chunked
       ? `${qrHeader}${positiveIntRegExp}/${positiveIntRegExp}/[0-9]+`
       : `${qrHeader}[0-9]+`
@@ -166,14 +158,12 @@ function shcToJws(shc: string, chunkCount = 1): { result: JWS; chunkIndex: numbe
 
   // get the chunk index
   if (chunked) {
-    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
     const found = shc.match(new RegExp(`^shc:/(?<chunkIndex>${positiveIntRegExp})`))
     chunkIndex =
       found && found.groups && found.groups['chunkIndex']
         ? parseInt(found.groups['chunkIndex'])
         : -1
     if (chunkIndex < 1 || chunkIndex > chunkCount) {
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       console.log('Invalid QR chunk index: ' + chunkIndex, ErrorCode.INVALID_NUMERIC_QR_HEADER)
       return undefined
     }

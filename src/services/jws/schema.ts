@@ -31,7 +31,6 @@ export function validateSchema(
       return true
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     let errors = validate.errors!.map((err) => {
       // reformat the schema errors into something more readable:
       err.instancePath = pathPrefix + err.instancePath
