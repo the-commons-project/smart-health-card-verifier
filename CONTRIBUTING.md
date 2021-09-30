@@ -57,11 +57,11 @@ Submit all changes directly to the `main` branch. Code may contain additional fe
 
 ### Known Issues
 
-We are using GitHub Issues for our public bugs. Before filing a new task, try to make sure your problem doesn’t already exist. Scan through our [existing issues](link-to-github-issues) to find one that interests you.
+We are using GitHub Issues for our public bugs. Before filing a new task, try to make sure your problem doesn’t already exist. Scan through our [existing issues](https://github.com/affinityproject/smart-health-card-verifier/issues) to find one that interests you.
 
 ### Reporting New Issues
 
-Report a new issue by submitting one [here](link-to-github-issues). Please ensure you provide necessary details for us to understand and replicate the issue.
+Report a new issue by submitting one [here](https://github.com/affinityproject/smart-health-card-verifier/issues). Please ensure you provide necessary details for us to understand and replicate the issue.
 
 ## Your First Pull Request
 
@@ -73,7 +73,7 @@ If you decide to fix an issue, please be sure to check the comment thread in cas
 
 ## Sending a Pull Request
 
-1. Fork [the repository](repository-link) and create a new branch from `main`:
+1. Fork [the repository](https://github.com/affinityproject/smart-health-card-verifier) and create a new branch from `main`:
 
 ```bash
   $ git checkout https://gitlab.com/st-experiments/health-card-verifier-mobile.git -b name_for_new_branch
