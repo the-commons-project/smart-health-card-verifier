@@ -73,12 +73,7 @@ If you decide to fix an issue, please be sure to check the comment thread in cas
 
 ## Sending a Pull Request
 
-1. Fork [the repository](https://github.com/affinityproject/smart-health-card-verifier) and create a new branch from `main`:
-
-```bash
-  $ git checkout https://gitlab.com/st-experiments/health-card-verifier-mobile.git -b name_for_new_branch
-```
-
+1. Fork [the repository](https://github.com/affinityproject/smart-health-card-verifier) and create a new branch from `main`
 2. Make changes and test
 3. Ensure you code is formtted with our [prettier](https://github.com/prettier/prettier) config.
 4. Submit Pull Request with comprehensive description of changes

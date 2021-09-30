@@ -18,8 +18,8 @@ const images = {
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
-  const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(null)
-  const [hasLocationPermission, setHasLocationPermission] = useState<boolean>(null)
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
+  const [hasLocationPermission, setHasLocationPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
@@ -162,13 +162,22 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const { isInternetReachable } = useNetInfo()
 
-  const showCamera = hasPermission && isInternetReachable && !scanned
+  const showCamera = hasCameraPermission && hasLocationPermission && isInternetReachable && !scanned
+
+  const renderAccessError = () => {
+    if (!hasCameraPermission)
+      return <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />
+
+    if (!hasLocationPermission)
+      return <NotificationOverlay type={'noLocationAccess'} navigation={navigation} />
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.scannerContainer}>
-        {!hasPermission && <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />}
+        {renderAccessError()}
 
+        {/* TODO: Find a better netinfo module as the check for internet connection fires three times when it is called */}
         {isInternetReachable === false && (
           <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
         )}
