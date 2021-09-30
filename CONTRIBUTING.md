@@ -47,7 +47,7 @@ We can use many different types of commits:
 `chore` – routine tasks such as updating dependencies<br />
 `build` – affecting the way the application builds
 
-Commit the changes once you are happy with them. See [Atom's contributing guide]https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages) to know how to use emoji's for commit messages.
+Commit the changes once you are happy with them. See [Atom's contributing guide](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages) to know how to use emoji's for commit messages.
 
 ## Branch Organization
 
