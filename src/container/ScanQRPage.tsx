@@ -3,12 +3,13 @@ import { View, StyleSheet, Animated, Easing, Alert } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import * as Device from 'expo-device'
+import * as Location from 'expo-location'
 import { ErrorCode } from '../services/error'
 import { Props } from '../types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
-import { ValidationResult, BaseResponse } from '../types'
+import { BaseResponse } from '../types'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -17,10 +18,11 @@ const images = {
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
-  const [hasPermission, setHasPermission] = useState(false)
-  const [scanned, setScanned] = useState(false)
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(null)
+  const [hasLocationPermission, setHasLocationPermission] = useState<boolean>(null)
+  const [scanned, setScanned] = useState<boolean>(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
-  const [cameraType, setCameraType] = React.useState(BarCodeScanner.Constants.Type.back)
+  const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
 
   const spin = spinAnimation.interpolate({
     inputRange: [0, 1],
@@ -32,9 +34,9 @@ const ScanQRPage = ({ navigation }: Props) => {
       const OS = Device.osName?.toLowerCase()
 
       if (OS === 'android') {
-        const permission = await BarCodeScanner.getPermissionsAsync()
-
-        if (!permission.granted) {
+        const cameraPermission = await BarCodeScanner.getPermissionsAsync()
+        const locationPermission = await Location.getForegroundPermissionsAsync()
+        if (!cameraPermission.granted) {
           Alert.alert(
             'Camera Permission',
             'This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.',
@@ -48,7 +50,7 @@ const ScanQRPage = ({ navigation }: Props) => {
                 text: 'OK',
                 onPress: async () => {
                   const { status } = await BarCodeScanner.requestPermissionsAsync()
-                  setHasPermission(status === 'granted')
+                  setHasCameraPermission(status === 'granted')
                 },
               },
             ],
@@ -56,11 +58,39 @@ const ScanQRPage = ({ navigation }: Props) => {
           )
         } else {
           const { status } = await BarCodeScanner.requestPermissionsAsync()
-          setHasPermission(status === 'granted')
+          setHasCameraPermission(status === 'granted')
+        }
+        if (!locationPermission.granted) {
+          Alert.alert(
+            'Location Permission',
+            'This app uses SSID to check internet connection.',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => navigation.navigate('Welcome'),
+                style: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: async () => {
+                  const { status } = await Location.requestForegroundPermissionsAsync()
+                  setHasLocationPermission(status === 'granted')
+                },
+              },
+            ],
+            { cancelable: false },
+          )
+        } else {
+          const { status } = await Location.requestForegroundPermissionsAsync()
+          setHasLocationPermission(status === 'granted')
         }
       } else {
-        const { status } = await BarCodeScanner.requestPermissionsAsync()
-        setHasPermission(status === 'granted')
+        const { status: cameraPermissionStatus } = await BarCodeScanner.requestPermissionsAsync()
+        setHasCameraPermission(cameraPermissionStatus === 'granted')
+
+        const { status: locationPermissionStatus } =
+          await Location.requestForegroundPermissionsAsync()
+        setHasLocationPermission(locationPermissionStatus === 'granted')
       }
     })()
   }, [])
