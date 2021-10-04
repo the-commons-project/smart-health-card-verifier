@@ -9,6 +9,7 @@ import VerificationResultPage from './src/container/VerificationResultPage'
 import ErrorPage from './src/container/ErrorPage'
 
 import AppLoading from 'expo-app-loading'
+import { RootStackParamList } from './src/types'
 
 import {
   useFonts,
@@ -23,7 +24,7 @@ import {
   OpenSans_700Bold,
 } from '@expo-google-fonts/open-sans'
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
   let [fontsLoaded] = useFonts({

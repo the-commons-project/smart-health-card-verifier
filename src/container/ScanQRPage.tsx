@@ -5,11 +5,10 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 import * as Device from 'expo-device'
 import * as Location from 'expo-location'
 import { ErrorCode } from '../services/error'
-import { Props } from '../types'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
-import { BaseResponse } from '../types'
+import { Props, BaseResponse } from '../types'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -141,7 +140,7 @@ const ScanQRPage = ({ navigation }: Props) => {
       }
 
       navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
-    } catch (error) {
+    } catch (error: any) {
       if (error.toString() === 'Error: Failed to download issuer JWK set') {
         validationResult.isValid = false
 
@@ -177,7 +176,6 @@ const ScanQRPage = ({ navigation }: Props) => {
       <View style={styles.scannerContainer}>
         {renderAccessError()}
 
-        {/* TODO: Find a better netinfo module as the check for internet connection fires three times when it is called */}
         {isInternetReachable === false && (
           <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
         )}

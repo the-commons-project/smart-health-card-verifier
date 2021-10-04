@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Welcome: undefined
   ScanQR: undefined
   VerificationResult: undefined
