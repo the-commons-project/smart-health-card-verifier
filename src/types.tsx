@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 export type RootStackParamList = {
   Welcome: undefined
   ScanQR: undefined
-  VerificationResult: undefined
+  VerificationResult: undefined | { validationResult: BaseResponse }
   Error: undefined
 }
 
