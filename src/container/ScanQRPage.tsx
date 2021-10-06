@@ -62,7 +62,7 @@ const ScanQRPage = ({ navigation }: Props) => {
         if (!locationPermission.granted) {
           Alert.alert(
             'Location Permission',
-            'This app uses SSID to check internet connection.',
+            'When the app is in use, the Smart Health Card Verifier App accesses data about your internet network (SSID/BSSID) to ensure you have a working internet connection. Data about your internet network is not stored.',
             [
               {
                 text: 'Cancel',
