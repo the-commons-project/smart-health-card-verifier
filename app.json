@@ -2,7 +2,7 @@
   "expo": {
     "name": "Verifier",
     "slug": "Verifier",
-    "version": "1.0.24",
+    "version": "1.0.26",
     "orientation": "portrait",
     "icon": "./assets/iconSHC.png",
     "splash": {
@@ -13,27 +13,34 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "buildNumber": "1.0.24",
+      "buildNumber": "1.0.26",
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
       },
+      "entitlements": {
+        "com.apple.developer.networking.wifi-info": "true"
+      },
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.",
-        "NSMicrophoneUsageDescription": "This app uses the microphone as part of the camera usage to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
-      },
-      "bundleIdentifier": "com.thecommonsproject.smarthealthcardverifier"
+        "NSMicrophoneUsageDescription": "This app uses the microphone as part of the camera usage to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.",
+        "NSLocationWhenInUseUsageDescription": "When the app is in use, the Smart Health Card Verifier App accesses data about your internet network (SSID/BSSID) to ensure you have a working internet connection. Data about your internet network is not stored."
+      }
     },
     "android": {
-      "versionCode": 24,
+      "versionCode": 26,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptiveSHC.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": ["CAMERA"],
-      "package": "com.thecommonsproject.smarthealthcardverifier"
+      "permissions": [
+        "CAMERA",
+        "ACCESS_BACKGROUND_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
