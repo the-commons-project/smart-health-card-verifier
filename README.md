@@ -66,7 +66,7 @@ See [contributing guidelines](./CONTRIBUTING.md) for more information.
 
 ## Publishing the App
 
-You can upload the app to the Apple App Store and the Google Play Store by following these steps.
+You can upload the app to the Apple App Store and the Google Play by following these steps.
 
 1. [Create an expo account](https://expo.dev/signup) if you dont already have one.
 2. Run `expo login` in your command prompt and enter your credentials
