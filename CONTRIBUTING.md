@@ -53,12 +53,12 @@ Commit the changes once you are happy with them. See [Atom's contributing guide]
 
 ### Changelog
 
-The [CHANGELOG](./CHANGELOG.md) is generated using [standard-version](https://github.com/conventional-changelog/standard-version). When we are ready for a release we will run either one of the commands shown below depending on the changes as stated in the [Commits section](#commits).
+The [CHANGELOG](./CHANGELOG.md) is generated using [standard-version](https://github.com/conventional-changelog/standard-version). When we are ready for a release, we will run either one of the commands shown below depending on the changes as stated in the [Commits section](#commits).
 
 ```bash
-npm run release:patch
-npm run release:minor
-npm run release:major
+npm run release:patch # git commit -m fix: ....
+npm run release:minor # git commit -m feat: ...
+npm run release:major # git commit -m feat: ... -m BREAKING CHANGE: ...
 ```
 
 In short, the package version (e.g. `package.json`) will be bumped up accordingly based on commits. A `changelog` will also be generated/updated based on the commits.
