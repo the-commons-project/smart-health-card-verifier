@@ -71,7 +71,7 @@ You can upload the app to the Apple App Store and the Google Play by following t
 1. [Create an expo account](https://expo.dev/signup) if you dont already have one.
 2. Run `expo login` in your command prompt and enter your credentials
 3. Run `expo eject --npm`
-   - This step will ask you for an bundle identifier which has to be unique. For instance, `com.yourcompany.appname.ios`
+   - This step will ask you for an bundle identifier which has to be unique. For instance, `com.yourcompany.appname.ios` or `com.yourcompany.appname.android`
 4. Once done, the `ios` and `android` directories should appear in the repository. You can use XCode to edit and view the `ios` directory and similarly, use Android studio for the `android` directory.
 5. Create the `.ipa` by running `expo build:ios`, and upload the iOS app to TestFlight by following the instructions [here](https://docs.expo.dev/distribution/uploading-apps/#manually-uploading-your-app).
 6. Create the `.apk` by running `expo build:android`, and upload the Android app to Google Play by following the instructions [here](https://docs.expo.dev/distribution/uploading-apps/#21-if-you-choose-to-upload-your).
