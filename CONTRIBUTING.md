@@ -7,6 +7,8 @@ In this guide you will get an overview of the contribution workflow from opening
 SMART Health Card Verifier follows [semantic versioning](https://semver.org/). Using conventional commits and proper commit messages 🙏 will keep our [CHANGELOG](./CHANGELOG.md)
 awesome 🚀.
 
+### Commits
+
 Here are conventional commit prefixes, and HOW to use them:
 
 The `fix` type indicates that this commit removes a bug in the codebase.<br />
@@ -49,6 +51,18 @@ We can use many different types of commits:
 
 Commit the changes once you are happy with them. See [Atom's contributing guide](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages) to know how to use emoji's for commit messages.
 
+### Changelog
+
+The [CHANGELOG](./CHANGELOG.md) is generated using [standard-version](https://github.com/conventional-changelog/standard-version). When we are ready for a release we will run either one of the commands shown below depending on the changes as stated in the [Commits section](#commits).
+
+```bash
+npm run release:patch
+npm run release:minor
+npm run release:major
+```
+
+In short, the package version (e.g. `package.json`) will be bumped up accordingly based on commits. A `changelog` will also be generated/updated based on the commits.
+
 ## Branch Organization
 
 Submit all changes directly to the `main` branch. Code may contain additional features, but no breaking changes.
@@ -74,6 +88,7 @@ If you decide to fix an issue, please be sure to check the comment thread in cas
 ## Sending a Pull Request
 
 1. Fork [the repository](https://github.com/affinityproject/smart-health-card-verifier) and create a new branch from `main`
-2. Make changes and test
-3. Ensure you code is formtted with our [prettier](https://github.com/prettier/prettier) config.
-4. Submit Pull Request with comprehensive description of changes
+2. Install dependencies - more details can be found in [README.md](./README.md). Do note the project uses `npx npm-force-resolutions` ([link to repo](https://www.npmjs.com/package/npm-force-resolutions), equivalent to [yarn resolutions](https://classic.yarnpkg.com/en/docs/selective-version-resolutions/).
+3. Make changes and test
+4. Ensure you code is formtted with our [prettier](https://github.com/prettier/prettier) config.
+5. Submit Pull Request with comprehensive description of changes

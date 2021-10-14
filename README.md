@@ -16,6 +16,7 @@ SMART Health Card certificate encoded in a QR code. The app is launched in both 
   - [How to Contribute](#how-to-contribute)
     - [Code of Conduct](#code-of-conduct)
     - [Contributing Guide](#contributing-guide)
+  - [Publishing the App](#publishing-the-app)
   - [License](#license)
 
 ## Environment Setup
@@ -38,7 +39,7 @@ Node **v14.17.X** (LTS/fermium)
 
 ### Expo Go
 
-Expo Go allows to run the project directly on your mobile device.
+Expo Go allows you to run the project directly on your mobile device.
 Follow [these](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and)
 instructions to install Expo Go on your mobile phone.
 
@@ -62,6 +63,20 @@ Affinidi has adopted a Code of Conduct that we expect the community to adhere to
 ### Contributing Guide
 
 See [contributing guidelines](./CONTRIBUTING.md) for more information.
+
+## Publishing the App
+
+You can upload the app to the Apple App Store and the Google Play Store by following these steps.
+
+1. [Create an expo account](https://expo.dev/signup) if you dont already have one.
+2. Run `expo login` in your command prompt and enter your credentials
+3. Run `expo eject --npm`
+   - This step will ask you for an bundle identifier which has to be unique. For instance, `com.yourcompany.appname.ios`
+4. Once done, the `ios` and `android` directories should appear in the repository. You can use XCode to edit and view the `ios` directory and similarly, use Android studio for the `android` directory.
+5. Create the `.ipa` by running `expo build:ios`, and upload the iOS app to TestFlight by following the instructions [here](https://docs.expo.dev/distribution/uploading-apps/#manually-uploading-your-app).
+6. Create the `.apk` by running `expo build:android`, and upload the Android app to Google Play by following the instructions [here](https://docs.expo.dev/distribution/uploading-apps/#21-if-you-choose-to-upload-your).
+
+The steps described above is a manual process. If you would like to automate the workflow, you may refer to [using the EAS CLI](https://docs.expo.dev/distribution/uploading-apps/#manually-uploading-your-app-for-the-first). However, you will need a [PAID EAS subscription](https://expo.dev/pricing).
 
 ## License
 
