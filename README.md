@@ -80,4 +80,4 @@ The steps described above is a manual process. If you would like to automate the
 
 ## License
 
-Smart Health Card Verifier is [MIT licensed](./LICENSE)
+Smart Health Card Verifier is [MIT licensed](./LICENSE) is derived from [**SMART Health Cards Dev Tools**](https://github.com/smart-on-fhir/health-cards-dev-tools) by (c) Microsoft Corporation
