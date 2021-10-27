@@ -31,7 +31,6 @@
     "expo-barcode-scanner": "~10.1.2",
     "expo-device": "~3.2.0",
     "expo-font": "~9.1.0",
-    "expo-location": "^12.1.2",
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
     "expo-updates": "~0.5.4",

@@ -21,9 +21,6 @@ const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables)
   } else if (type === 'noCameraAccess') {
     title = 'No access to camera'
     subtitle = 'To continue, please enable camera access in Settings.'
-  } else if (type === 'noLocationAccess') {
-    title = 'No access to location'
-    subtitle = 'To continue, please enable location access in Settings.'
   }
 
   return (

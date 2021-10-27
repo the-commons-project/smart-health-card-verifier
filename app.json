@@ -38,8 +38,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "permissions": [
-        "CAMERA",
-        "ACCESS_BACKGROUND_LOCATION"
+        "CAMERA"
       ]
     },
     "web": {
