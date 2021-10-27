@@ -57,11 +57,6 @@ function checkJwsPayload(jwsPayload: JWSPayload | undefined) {
     }
   }
 
-  if (jwsPayload.vc && Object.keys(jwsPayload.vc).includes('@context')) {
-    console.log("JWS.payload.vc shouldn't have a @context property", ErrorCode.SCHEMA_ERROR)
-    throw ErrorCode.SCHEMA_ERROR
-  }
-
   if (
     !jwsPayload.vc.type ||
     !jwsPayload.vc.type.includes('https://smarthealth.cards#health-card')
