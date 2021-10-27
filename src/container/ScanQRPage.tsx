@@ -3,7 +3,6 @@ import { View, StyleSheet, Animated, Easing, Alert } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import * as Device from 'expo-device'
-import * as Location from 'expo-location'
 import { ErrorCode } from '../services/error'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
@@ -18,7 +17,6 @@ const images = {
 
 const ScanQRPage = ({ navigation }: Props) => {
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
-  const [hasLocationPermission, setHasLocationPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
@@ -34,7 +32,6 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       if (OS === 'android') {
         const cameraPermission = await BarCodeScanner.getPermissionsAsync()
-        const locationPermission = await Location.getForegroundPermissionsAsync()
         if (!cameraPermission.granted) {
           Alert.alert(
             'Camera Permission',
@@ -59,37 +56,9 @@ const ScanQRPage = ({ navigation }: Props) => {
           const { status } = await BarCodeScanner.requestPermissionsAsync()
           setHasCameraPermission(status === 'granted')
         }
-        if (!locationPermission.granted) {
-          Alert.alert(
-            'Location Permission',
-            'When the app is in use, the Smart Health Card Verifier App accesses data about your internet network (SSID/BSSID) to ensure you have a working internet connection. Data about your internet network is not stored.',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => navigation.navigate('Welcome'),
-                style: 'cancel',
-              },
-              {
-                text: 'OK',
-                onPress: async () => {
-                  const { status } = await Location.requestForegroundPermissionsAsync()
-                  setHasLocationPermission(status === 'granted')
-                },
-              },
-            ],
-            { cancelable: false },
-          )
-        } else {
-          const { status } = await Location.requestForegroundPermissionsAsync()
-          setHasLocationPermission(status === 'granted')
-        }
       } else {
         const { status: cameraPermissionStatus } = await BarCodeScanner.requestPermissionsAsync()
         setHasCameraPermission(cameraPermissionStatus === 'granted')
-
-        const { status: locationPermissionStatus } =
-          await Location.requestForegroundPermissionsAsync()
-        setHasLocationPermission(locationPermissionStatus === 'granted')
       }
     })()
   }, [])
@@ -161,14 +130,11 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const { isInternetReachable } = useNetInfo()
 
-  const showCamera = hasCameraPermission && hasLocationPermission && isInternetReachable && !scanned
+  const showCamera = hasCameraPermission && isInternetReachable && !scanned
 
   const renderAccessError = () => {
     if (!hasCameraPermission)
       return <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />
-
-    if (!hasLocationPermission)
-      return <NotificationOverlay type={'noLocationAccess'} navigation={navigation} />
   }
 
   return (
