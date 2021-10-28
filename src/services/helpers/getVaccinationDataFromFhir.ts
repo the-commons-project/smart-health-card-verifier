@@ -4,7 +4,7 @@ import { getVaccineCodesHash } from './getVaccineCodesHash'
 const cvxCodes = ['207', '208', '210', '211', '212']
 
 export const getVaccinationDataFromFhir = async (credential: any): Promise<any> => {
-  const vaccinationData = []
+  let vaccinationData = []
   const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
 
   const immunizationEntries = entries
@@ -54,7 +54,7 @@ export const getVaccinationDataFromFhir = async (credential: any): Promise<any> 
     }
   }
 
-  sortDosesByDate(vaccinationData)
+  vaccinationData = sortDosesByDate(vaccinationData)
 
   return vaccinationData
 }
@@ -66,4 +66,5 @@ const sortDosesByDate = (vaccinationData: any[]) => {
   for (const [index, dose] of vaccinationData.entries()) {
     dose.dose = index + 1
   }
+  return vaccinationData;
 }
