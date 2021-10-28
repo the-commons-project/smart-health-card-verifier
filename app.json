@@ -27,8 +27,7 @@
       },
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.",
-        "NSMicrophoneUsageDescription": "This app uses the microphone as part of the camera usage to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.",
-        "NSLocationWhenInUseUsageDescription": "When the app is in use, the Smart Health Card Verifier App accesses data about your internet network (SSID/BSSID) to ensure you have a working internet connection. Data about your internet network is not stored."
+        "NSMicrophoneUsageDescription": "This app uses the microphone as part of the camera usage to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
       }
     },
     "android": {
