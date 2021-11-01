@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, ScrollView, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, PixelRatio } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     color: '#255DCB',
   },
   leftCaretImage: {
-    width: 12,
-    height: 19,
+    width: 12 * PixelRatio.getFontScale(),
+    height: 19 * PixelRatio.getFontScale(),
   },
 })
 
