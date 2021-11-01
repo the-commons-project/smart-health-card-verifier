@@ -37,7 +37,6 @@ const WelcomePage = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-
       <ScrollView>
         <View style={styles.container}>
           <Image style={styles.smartLogoImage} source={images.smartLogo} />
@@ -65,6 +64,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 />
               </View>
             </TouchableWithoutFeedback>
+
             <View style={styles.textContainer}>
               <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
                 {' '}
@@ -81,7 +81,7 @@ const WelcomePage = ({ navigation }: Props) => {
                     deviceHeight < minHeight ? styles.textMobile : styles.text,
                     styles.link,
                     styles.colorBlue,
-                    FontStyle.Poppins_600SemiBold,
+                    FontStyle.Poppins_600SemiBold
                   ]}
                   onPress={() =>
                     Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
