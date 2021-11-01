@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
@@ -92,6 +92,23 @@ const ResultRecord = ({ data }: Data) => {
     )
   }
 
+  function rowAdapter(dosageFieldTitleRowOne) {
+    return (
+      <View style={[{ flexWrap: "wrap", alignItems: "flex-end", justifyContent:'space-between', flexDirection: 'row' }]}>
+      <View style={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}>
+        { dosageFieldTitleRowOne[0] }
+      </View>
+      <View style={[
+          styles.fieldValue,
+          styles.increaseFont,
+          { fontFamily: 'OpenSans_700Bold' },
+        ]}>
+        { dosageFieldTitleRowOne[1] }
+      </View>
+    </View>
+    )
+  }
+
   return (
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
@@ -140,7 +157,7 @@ const ResultRecord = ({ data }: Data) => {
             </View>
             <Table borderStyle={styles.tableStyle}>
               <Row
-                data={dosageFieldTitleRowOne}
+                data={[rowAdapter(dosageFieldTitleRowOne)]}
                 textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
               />
               <Row
@@ -274,8 +291,8 @@ const styles = StyleSheet.create({
     color: '#484848',
   },
   verifierImage: {
-    width: 104,
-    height: 18.52,
+    width: 104 * PixelRatio.getFontScale(),
+    height: 18.52 * PixelRatio.getFontScale(),
     marginRight: 10,
   },
   warningCrossImage: {
@@ -284,8 +301,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   eyesImage: {
-    width: 18,
-    height: 18,
+    width: 18 * PixelRatio.getFontScale(),
+    height: 18  * PixelRatio.getFontScale(),
     marginBottom: 10,
   },
   smartLogoImage: {
