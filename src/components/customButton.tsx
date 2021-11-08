@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     alignSelf: 'stretch',
     marginRight: 10,
+    textAlign: "center"
   },
   appButtonImage: {
     maxHeight: 26 * PixelRatio.getFontScale(),
