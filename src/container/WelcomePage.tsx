@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingStart: 12,
     paddingEnd: 12,
+    paddingBottom: 0,
     backgroundColor: '#F3F6FF',
   },
   learnMoreContainer: {
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   aboutUsContainerMobile: {
-    paddingBottom: 6,
+    paddingBottom: 0,
   },
   textContainer: {
     justifyContent: 'flex-start',
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   },
   aboutUsFlexSpacing: {
     marginRight: 60,
-    marginBottom: 50,
+    marginBottom: 20,
   },
 })
 
