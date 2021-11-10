@@ -156,7 +156,7 @@ const ScanQRPage = ({ navigation }: Props) => {
         {showCamera && (
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
+            style={[StyleSheet.absoluteFillObject, styles.barCodeScanner]}
             type={cameraType}
           >
             <View style={styles.backButtonContainer}>
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: '100%',
+    height: '100%'
   },
   backButtonContainer: {
     marginTop: '15%',
@@ -221,6 +222,10 @@ const styles = StyleSheet.create({
     width: 48,
     height: 41,
   },
+  barCodeScanner: {
+    top: 0,
+    bottom: 0
+  }
 })
 
 export default ScanQRPage
