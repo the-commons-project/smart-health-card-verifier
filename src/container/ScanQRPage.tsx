@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Animated, Easing, Alert } from 'react-native'
+import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import { Platform, View, StyleSheet, Animated, Easing, Alert } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
-import { BarCodeScanner } from 'expo-barcode-scanner'
-import * as Device from 'expo-device'
+import BarCodeScanner from '../components/BarCodeScanner'
 import { ErrorCode } from '../services/error'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
@@ -15,7 +15,11 @@ const images = {
   switchCamera: require('../../assets/img/scanqr/switch-camera.png'),
 }
 
+const isAndroid = Platform.OS?.toLowerCase() == 'android'
+const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA;
+
 const ScanQRPage = ({ navigation }: Props) => {
+
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
@@ -27,12 +31,10 @@ const ScanQRPage = ({ navigation }: Props) => {
   })
 
   useEffect(() => {
-    ;(async () => {
-      const OS = Device.osName?.toLowerCase()
-
-      if (OS === 'android') {
-        const cameraPermission = await BarCodeScanner.getPermissionsAsync()
-        if (!cameraPermission.granted) {
+    (async () => {
+      if ( isAndroid ) {
+        var result = await check(cameraPermissionType) 
+        if (!result == RESULTS.GRANTED) {
           Alert.alert(
             'Camera Permission',
             'This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.',
@@ -45,20 +47,20 @@ const ScanQRPage = ({ navigation }: Props) => {
               {
                 text: 'OK',
                 onPress: async () => {
-                  const { status } = await BarCodeScanner.requestPermissionsAsync()
-                  setHasCameraPermission(status === 'granted')
+                  result = await request( cameraPermissionType )
+                  setHasCameraPermission(result === RESULTS.GRANTED)
                 },
               },
             ],
             { cancelable: false },
           )
         } else {
-          const { status } = await BarCodeScanner.requestPermissionsAsync()
-          setHasCameraPermission(status === 'granted')
+          result = await request( cameraPermissionType )
+          setHasCameraPermission(result === RESULTS.GRANTED )
         }
       } else {
-        const { status: cameraPermissionStatus } = await BarCodeScanner.requestPermissionsAsync()
-        setHasCameraPermission(cameraPermissionStatus === 'granted')
+        result = await request( cameraPermissionType )
+        setHasCameraPermission(result === RESULTS.GRANTED)
       }
     })()
   }, [])
@@ -154,33 +156,35 @@ const ScanQRPage = ({ navigation }: Props) => {
         )}
 
         {showCamera && (
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-            type={cameraType}
-          >
-            <View style={styles.backButtonContainer}>
-              <AppClickableImage
-                styles={styles.leftCaretImage}
-                source={images.leftCaret}
-                onPress={() => navigation.navigate('Welcome')}
-              />
-            </View>
+          <View style={{backgroundColor: "#FF0000"}}>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              type={cameraType}
+              styles={styles.scannerContainer}
+            >
+              <View style={styles.backButtonContainer}>
+                <AppClickableImage
+                  styles={styles.leftCaretImage}
+                  source={images.leftCaret}
+                  onPress={() => navigation.navigate('Welcome')}
+                />
+              </View>
 
-            <View style={styles.switchCameraContainer}>
-              <AppClickableImage
-                styles={styles.switchCameraImage}
-                source={images.switchCamera}
-                onPress={() => {
-                  setCameraType(
-                    cameraType === BarCodeScanner.Constants.Type.back
-                      ? BarCodeScanner.Constants.Type.front
-                      : BarCodeScanner.Constants.Type.back,
-                  )
-                }}
-              />
-            </View>
-          </BarCodeScanner>
+              <View style={styles.switchCameraContainer}>
+                <AppClickableImage
+                  styles={styles.switchCameraImage}
+                  source={images.switchCamera}
+                  onPress={() => {
+                    setCameraType(
+                      cameraType === BarCodeScanner.Constants.Type.back
+                        ? BarCodeScanner.Constants.Type.front
+                        : BarCodeScanner.Constants.Type.back,
+                    )
+                  }}
+                />
+              </View>
+            </BarCodeScanner>
+          </View>
         )}
       </View>
     </View>
@@ -189,7 +193,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   scannerContainer: {
     flex: 1,
@@ -199,10 +203,12 @@ const styles = StyleSheet.create({
     maxHeight: '100%',
   },
   backButtonContainer: {
-    marginTop: '15%',
+    position:"absolute",
+    background:"FF0000",
+    top: '10%',
+    left: 20,
     height: 40,
     paddingLeft: 20,
-    paddingTop: 20,
   },
   spinner: {
     maxHeight: 55,

@@ -12,9 +12,8 @@ import {
 import { Props } from '../types'
 import AppButton from '../components/customButton'
 
-import appJson from '../../app.json'
+import { version }  from '../../package.json';
 
-const { version } = appJson.expo
 const dimension = Dimensions.get('window')
 
 const images = {
@@ -43,12 +42,12 @@ const WelcomePage = ({ navigation }: Props) => {
           <Text
             style={[
               deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
-              { fontFamily: 'Poppins_700Bold' },
+              { fontFamily: 'Poppins', fontWeight:'bold' },
             ]}
           >
             Welcome!
           </Text>
-          <Text style={[styles.mainTitle, { fontFamily: 'Poppins_700Bold' }]}>
+          <Text style={[styles.mainTitle, { fontFamily: 'Poppins', fontWeight:'bold'}]}>
             SMART® Health Card Verifier
           </Text>
         </View>
@@ -64,7 +63,7 @@ const WelcomePage = ({ navigation }: Props) => {
         </TouchableWithoutFeedback>
 
         <View style={styles.textContainer}>
-          <Text style={[styles.subTitle, { fontFamily: 'OpenSans_400Regular' }]}>
+          <Text style={[styles.subTitle, { fontFamily: 'Open Sans' }]}>
             {' '}
             Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
           </Text>
@@ -79,7 +78,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 deviceHeight < minHeight ? styles.textMobile : styles.text,
                 styles.link,
                 styles.colorBlue,
-                { fontFamily: 'Poppins_600SemiBold' },
+                { fontFamily: 'Poppins' },
               ]}
               onPress={() =>
                 Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
@@ -100,7 +99,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 styles.link,
                 styles.colorBlue,
                 styles.aboutUsFlexSpacing,
-                { fontFamily: 'Poppins_600SemiBold' },
+                { fontFamily: 'Poppins', fontWeight:'600'}
               ]}
               onPress={() =>
                 Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
@@ -113,7 +112,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 styles.text,
                 styles.link,
                 styles.colorBlue,
-                { fontFamily: 'Poppins_600SemiBold' },
+                { fontFamily: 'Poppins', fontWeight:'600'}
               ]}
               onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
             >

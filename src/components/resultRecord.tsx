@@ -31,7 +31,7 @@ const ResultRecord = ({ data }: Data) => {
           style={[
             styles.fieldValue,
             styles.increaseFont,
-            { fontFamily: 'OpenSans_700Bold', marginRight: 20 },
+            { fontFamily: 'Open Sans', fontWeight: 'bold', marginRight: 20 },
           ]}
         >
           {date}
@@ -54,12 +54,12 @@ const ResultRecord = ({ data }: Data) => {
           style={[
             styles.fieldValue,
             styles.increaseFont,
-            { fontFamily: 'OpenSans_700Bold', marginRight: 7 },
+            { fontFamily: 'Open Sans', fontWeight:'700', marginRight: 7 },
           ]}
         >
           {vaccineName}
         </Text>
-        <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>
+        <Text style={[styles.subFieldValue, { fontFamily: 'Open Sans' }]}>
           Lot {lotNumber}
         </Text>
       </View>
@@ -73,7 +73,7 @@ const ResultRecord = ({ data }: Data) => {
     }
 
     return (
-      <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>{newText}</Text>
+      <Text style={[styles.subFieldValue, { fontFamily: 'Open Sans' }]}>{newText}</Text>
     )
   }
 
@@ -84,7 +84,7 @@ const ResultRecord = ({ data }: Data) => {
           styles.fieldTitle,
           styles.increaseFont,
           styles.dosageTextAlign,
-          { fontFamily: 'OpenSans_700Bold' },
+          { fontFamily: 'Open Sans', fontWeight:'bold' },
         ]}
       >
         {date}
@@ -95,7 +95,7 @@ const ResultRecord = ({ data }: Data) => {
   return (
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, { fontFamily: 'OpenSans_700Bold' }]}>
+        <Text style={[styles.titleText, { fontFamily: 'Open Sans', fontWeight:'bold' }]}>
           COVID-19 Vaccination Record
         </Text>
         <Image style={styles.smartLogoImage} source={images.smartLogo} />
@@ -104,22 +104,22 @@ const ResultRecord = ({ data }: Data) => {
         <Table borderStyle={styles.tableStyle}>
           <Row
             data={userFieldTitle}
-            textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+            textStyle={[styles.fieldTitle, { fontFamily: 'Open Sans' }]}
           />
           <Row
             data={userFieldValue}
-            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'OpenSans_700Bold' }]}
+            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'Open Sans', fontWeight:'bold' }]}
           />
           <Row
             data={userDobTitle}
-            textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+            textStyle={[styles.fieldTitle, { fontFamily: 'Open Sans' }]}
           />
           <Row
             data={userDobValue}
-            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'OpenSans_700Bold' }]}
+            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'Open Sans', fontWeight:'bold' }]}
           />
         </Table>
-        <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>
+        <Text style={[styles.subFieldValue, { fontFamily: 'Open Sans' }]}>
           Always verify identity with a government-issued I.D.
         </Text>
       </View>
@@ -133,7 +133,7 @@ const ResultRecord = ({ data }: Data) => {
         return (
           <View key={key}>
             <View style={styles.doseDividerContainer}>
-              <Text style={[styles.dosageText, { fontFamily: 'OpenSans_700Bold' }]}>
+              <Text style={[styles.dosageText, { fontFamily: 'Open Sans', fontWeight:'bold' }]}>
                 Dose {dose}
               </Text>
               <View style={styles.doseDivider} />
@@ -141,14 +141,14 @@ const ResultRecord = ({ data }: Data) => {
             <Table borderStyle={styles.tableStyle}>
               <Row
                 data={dosageFieldTitleRowOne}
-                textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+                textStyle={[styles.fieldTitle, { fontFamily: 'Open Sans' }]}
               />
               <Row
                 data={dosageFieldValueRowOne}
                 textStyle={[
                   styles.fieldValue,
                   styles.increaseFont,
-                  { fontFamily: 'OpenSans_700Bold' },
+                  { fontFamily: 'Open Sans', fontWeight:'bold' },
                 ]}
               />
             </Table>
@@ -157,14 +157,14 @@ const ResultRecord = ({ data }: Data) => {
       })}
       <View style={styles.divider} />
       <View>
-        <Text style={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}>Issuer</Text>
-        <Text style={[styles.fieldValue, { fontFamily: 'OpenSans_700Bold' }]}>
+        <Text style={[styles.fieldTitle, { fontFamily: 'Open Sans' }]}>Issuer</Text>
+        <Text style={[styles.fieldValue, { fontFamily: 'Open Sans', fontWeight:'bold' }]}>
           {issuerData?.name || issuerData?.url}
         </Text>
         {issuerData.name ? (
           <View style={styles.verifierContainer}>
             <Image style={styles.verifierImage} source={images.commonTrustVerified} />
-            <Text style={[styles.verifiedByText, { fontFamily: 'OpenSans_700Bold' }]}>
+            <Text style={[styles.verifiedByText, { fontFamily: 'Open Sans', fontWeight:'bold' }]}>
               Verified
             </Text>
           </View>
@@ -172,7 +172,7 @@ const ResultRecord = ({ data }: Data) => {
           <View style={styles.verifierContainer}>
             <Image style={styles.warningCrossImage} source={images.warningCross} />
             <Text
-              style={[styles.verifiedByText, { fontFamily: 'OpenSans_700Bold', color: '#CE471C' }]}
+              style={[styles.verifiedByText, { fontFamily: 'Open Sans', fontWeight:'bold', color: '#CE471C' }]}
             >
               Issuer not recognized
             </Text>

@@ -19,7 +19,7 @@ const ErrorPage = ({ navigation }: Props) => {
           onPress={() => navigation.navigate('ScanQR')}
         />
         <Text
-          style={[styles.backButtonText, { fontFamily: 'Poppins_700Bold' }]}
+          style={[styles.backButtonText, { fontFamily: 'Poppins', fontWeight:'bold' }]}
           onPress={() => navigation.navigate('ScanQR')}
         >
           Unsupported QR
@@ -27,7 +27,7 @@ const ErrorPage = ({ navigation }: Props) => {
       </View>
       <View style={styles.imageContainer}>
         <Image style={styles.imageStyle} source={images.qrError} />
-        <Text style={[styles.message, { fontFamily: 'OpenSans_600SemiBold' }]}>
+        <Text style={[styles.message,  { fontFamily: 'Poppins', fontWeight:'600'}]}>
           Only valid vaccine SMART® Health Cards are currently supported
         </Text>
       </View>

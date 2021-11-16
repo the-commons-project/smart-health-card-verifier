@@ -1,7 +1,8 @@
 import pako from 'pako'
 import { Platform } from 'react-native'
-import * as Application from 'expo-application'
-import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
+import { getUniqueId, getBundleId } from 'react-native-device-info';
+
+import { v5 as uuidv5 } from 'uuid'
 import { uuidNamespace } from './constants'
 
 export function parseJson<T>(json: string): T | undefined {
@@ -128,28 +129,10 @@ export function walkProperties(
 export async function getInstallationIdManually() {
   let installationId
 
-  if (['android', 'ios'].includes(Platform.OS)) {
-    let identifierForVendor
+  const identifierForVendor = await getUniqueId()
 
-    if (Platform.OS === 'android') {
-      identifierForVendor = Application.androidId
-    } else {
-      // ios
-      identifierForVendor = await Application.getIosIdForVendorAsync()
-    }
-
-    const bundleIdentifier = Application.applicationId
-
-    if (identifierForVendor) {
-      installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
-    } else {
-      const installationTime = await Application.getInstallationTimeAsync()
-      installationId = uuidv5(`${bundleIdentifier}-${installationTime.getTime()}`, uuidNamespace)
-    }
-  } else {
-    // WEB. random (uuid v4)
-    installationId = uuidv4()
-  }
+  const bundleIdentifier = await getBundleId()
+  installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
 
   return installationId
 }

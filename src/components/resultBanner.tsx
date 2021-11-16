@@ -46,7 +46,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     <View>
       <View style={[styles.bannerContainer, { backgroundColor: color }]}>
         <Image style={styles.bannerImage} source={icon} />
-        <Text style={[styles.bannerText, { fontFamily: 'Poppins_600SemiBold' }]}>{text}</Text>
+        <Text style={[styles.bannerText, { fontFamily: 'Poppins', fontWeight:'600'}]}>{text}</Text>
       </View>
       <View style={[styles.subBannerContainer, { borderColor: color }]}>
         {!isDocumentValid ? (
@@ -54,7 +54,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             <Text
               style={[
                 styles.subBannerText,
-                { fontFamily: 'Poppins_600SemiBold', color: validityColor },
+                { fontFamily: 'Poppins', fontWeight:'600', color: validityColor },
               ]}
             >
               {validityText}
@@ -67,7 +67,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
               <Text
                 style={[
                   styles.subBannerText,
-                  { fontFamily: 'Poppins_600SemiBold', color: validityColor },
+                  { fontFamily: 'Poppins', fontWeight:'600', color: validityColor },
                 ]}
               >
                 {validityText}
@@ -78,7 +78,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
               <Text
                 style={[
                   styles.subBannerText,
-                  { fontFamily: 'Poppins_600SemiBold', color: verifiedColor },
+                  { fontFamily: 'Poppins', fontWeight:'600', color: verifiedColor },
                 ]}
               >
                 {verifiedIssuerText}

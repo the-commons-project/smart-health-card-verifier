@@ -33,10 +33,10 @@ const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables)
         />
       </View>
       <View style={styles.notificationTextContainer}>
-        <Text style={[styles.notificationTitle, { fontFamily: 'Poppins_600SemiBold' }]}>
+        <Text style={[styles.notificationTitle, { fontFamily: 'Poppins', fontWeight:'600'}]}>
           {title}
         </Text>
-        <Text style={[styles.notificationSubtitle, { fontFamily: 'OpenSans_600SemiBold' }]}>
+        <Text style={[styles.notificationSubtitle, { fontFamily: 'Poppins', fontWeight:'600'}]}>
           {subtitle}
         </Text>
       </View>
