@@ -12,11 +12,11 @@ const FontStyle = StyleSheet.create({
     fontWeight: isAndroid ? undefined : "600"
   },
   OpenSans_400Regular: {
-    fontFamily: isAndroid ? "OpenSans_400Regular": "OpenSans",
+    fontFamily: isAndroid ? "OpenSans_400Regular": "Open Sans",
     fontWeight: isAndroid ? undefined : "400"
   },
   OpenSans_700Bold: {
-    fontFamily: isAndroid ? "OpenSans_700Bold": "OpenSans",
+    fontFamily: isAndroid ? "OpenSans_700Bold": "Open Sans",
     fontWeight: isAndroid ? undefined : "700"
   },
 });
