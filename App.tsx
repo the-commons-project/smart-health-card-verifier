@@ -9,6 +9,7 @@
  */
 
 import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -66,6 +67,7 @@ const App = () => {
   };
 
   return (
+    <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome" component={WelcomePage} />
@@ -74,6 +76,7 @@ const App = () => {
           <Stack.Screen name="Error" component={ErrorPage} />
         </Stack.Navigator>
       </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

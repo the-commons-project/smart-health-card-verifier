@@ -8,7 +8,7 @@ import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
 import { Props, BaseResponse } from '../types'
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
   loading: require('../../assets/img/error/loading.png'),
@@ -24,7 +24,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   const [scanned, setScanned] = useState<boolean>(false)
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
-
+  const insets = useSafeAreaInsets()
   const spin = spinAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
@@ -163,7 +163,7 @@ const ScanQRPage = ({ navigation }: Props) => {
               styles={styles.scannerContainer}
             >
             </BarCodeScanner>
-              <View style={styles.backButtonContainer}>
+              <View style={[styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top)}]}>
                   <AppClickableImage
                     styles={styles.leftCaretImage}
                     source={images.leftCaret}

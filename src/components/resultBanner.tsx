@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native'
 import { ValidationResult } from '../types'
-
+import FontStyle from '../utils/FontStyleHelper'
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
   success: require('../../assets/img/verificationresult/success.png'),
@@ -46,7 +46,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     <View>
       <View style={[styles.bannerContainer, { backgroundColor: color }]}>
         <Image style={styles.bannerImage} source={icon} />
-        <Text style={[styles.bannerText, { fontFamily: 'Poppins', fontWeight:'600'}]}>{text}</Text>
+        <Text style={[styles.bannerText, FontStyle.Poppins_600SemiBold]}>{text}</Text>
       </View>
       <View style={[styles.subBannerContainer, { borderColor: color }]}>
         {!isDocumentValid ? (
@@ -54,7 +54,8 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             <Text
               style={[
                 styles.subBannerText,
-                { fontFamily: 'Poppins', fontWeight:'600', color: validityColor },
+                FontStyle.Poppins_600SemiBold,
+                {color: validityColor },
               ]}
             >
               {validityText}
@@ -67,7 +68,8 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
               <Text
                 style={[
                   styles.subBannerText,
-                  { fontFamily: 'Poppins', fontWeight:'600', color: validityColor },
+                  FontStyle.Poppins_600SemiBold,
+                  { color: validityColor },
                 ]}
               >
                 {validityText}
@@ -78,7 +80,8 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
               <Text
                 style={[
                   styles.subBannerText,
-                  { fontFamily: 'Poppins', fontWeight:'600', color: verifiedColor },
+                  FontStyle.Poppins_600SemiBold,
+                  { color: verifiedColor },
                 ]}
               >
                 {verifiedIssuerText}

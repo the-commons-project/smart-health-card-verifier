@@ -34,12 +34,12 @@
 		AF9D63F5917440CD80B13BB7 /* eyes.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAE9212F2664703B7BB2BF1 /* eyes.png */; };
 		B1D966869AC4425C937CB7D5 /* smart-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06117D5C1A471B82F82702 /* smart-logo.png */; };
 		B4D704C7D0144920AE3543A2 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 445C38EC735A46519E6C42D0 /* tick.png */; };
+		C233296DA4B94D1692445945 /* icon_shc.svg in Resources */ = {isa = PBXBuildFile; fileRef = 09D9DFCA531743A9899B1786 /* icon_shc.svg */; };
 		C917C146E1AE471C99F95801 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = FB64E84E9ABF4043873F92E9 /* cross.png */; };
 		D14C319C08F4432BAE409AD3 /* iconSHC.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C7CC4379234D80A8C8D207 /* iconSHC.png */; };
 		D82B2A1C125A497881A89C1A /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AF40B96D2C4EB3BFB01839 /* loading.png */; };
 		D9D00F45EA4E41D89ED4450A /* hand-phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 94950809BE4547939618F389 /* hand-phone.png */; };
 		F4F4CC6AEB7447EFA601B9FE /* favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DD2F975E86249C18302E2A4 /* favicon.png */; };
-		C233296DA4B94D1692445945 /* icon_shc.svg in Resources */ = {isa = PBXBuildFile; fileRef = 09D9DFCA531743A9899B1786 /* icon_shc.svg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +56,7 @@
 		00E356EE1AD99517003FC87E /* VerifierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VerifierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* VerifierTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VerifierTests.m; sourceTree = "<group>"; };
+		09D9DFCA531743A9899B1786 /* icon_shc.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = icon_shc.svg; path = ../assets/img/icon_shc.svg; sourceTree = "<group>"; };
 		119CC1FF493C47A9BED2D595 /* OpenSans_700Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OpenSans_700Bold.ttf; path = ../assets/fonts/OpenSans_700Bold.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Verifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Verifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Verifier/AppDelegate.h; sourceTree = "<group>"; };
@@ -95,7 +96,6 @@
 		EE06117D5C1A471B82F82702 /* smart-logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "smart-logo.png"; path = "../assets/img/main/smart-logo.png"; sourceTree = "<group>"; };
 		FB56374F4EF34EBFA943C5D7 /* common-trust-verified.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "common-trust-verified.png"; path = "../assets/img/verificationresult/common-trust-verified.png"; sourceTree = "<group>"; };
 		FB64E84E9ABF4043873F92E9 /* cross.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = cross.png; path = ../assets/img/verificationresult/cross.png; sourceTree = "<group>"; };
-		09D9DFCA531743A9899B1786 /* icon_shc.svg */ = {isa = PBXFileReference; name = "icon_shc.svg"; path = "../assets/img/icon_shc.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

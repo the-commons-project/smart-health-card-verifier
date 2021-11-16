@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import { Props } from '../types'
+import FontStyle from '../utils/FontStyleHelper'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
@@ -19,7 +20,7 @@ const ErrorPage = ({ navigation }: Props) => {
           onPress={() => navigation.navigate('ScanQR')}
         />
         <Text
-          style={[styles.backButtonText, { fontFamily: 'Poppins', fontWeight:'bold' }]}
+          style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
           onPress={() => navigation.navigate('ScanQR')}
         >
           Unsupported QR
@@ -27,7 +28,7 @@ const ErrorPage = ({ navigation }: Props) => {
       </View>
       <View style={styles.imageContainer}>
         <Image style={styles.imageStyle} source={images.qrError} />
-        <Text style={[styles.message,  { fontFamily: 'Poppins', fontWeight:'600'}]}>
+        <Text style={[styles.message,  FontStyle.Poppins_600SemiBold]}>
           Only valid vaccine SMART® Health Cards are currently supported
         </Text>
       </View>
