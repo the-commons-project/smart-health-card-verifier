@@ -1,29 +1,30 @@
-import React, { ReactChildren, useState } from 'react'
+import React, { ReactChildren, useState, useEffect } from 'react'
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import { View, StyleSheet } from "react-native";
 
 
+export type CameraType = 'back' | 'front' | undefined;
+
 export type BarcodeProps = {
-  children: ReactChildren
+  children: JSX.Element[]
   onBarCodeScanned?: any
-  type: string,
+  type: CameraType,
   styles?: any
 }
 
-const BarCodeScanner = ({ children, onBarCodeScanned, type, styles}: BarcodeProps) => {
 
+const BarCodeScanner = ({onBarCodeScanned, type, styles}: BarcodeProps) => {
 	return <View style={styles}>
           <QRCodeScanner
-            style={[{height: '100%'}]} 
             reactivate={true}
-            showMarker={true}
+            showMarker={false}
+            cameraType={type}
             cameraStyle={cameraStyles.camerPreview}
             containerStyle={cameraStyles.cameraContainer}
             onRead={onBarCodeScanned}
           >
           </QRCodeScanner>
-          {children}
         </View>
 
 }

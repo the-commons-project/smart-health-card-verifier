@@ -34,7 +34,7 @@ const ScanQRPage = ({ navigation }: Props) => {
     (async () => {
       if ( isAndroid ) {
         var result = await check(cameraPermissionType) 
-        if (!result == RESULTS.GRANTED) {
+        if ( result != RESULTS.GRANTED) {
           Alert.alert(
             'Camera Permission',
             'This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.',
@@ -156,34 +156,34 @@ const ScanQRPage = ({ navigation }: Props) => {
         )}
 
         {showCamera && (
-          <View style={{backgroundColor: "#FF0000"}}>
+          <View >
             <BarCodeScanner
               onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
               type={cameraType}
               styles={styles.scannerContainer}
             >
-              <View style={styles.backButtonContainer}>
-                <AppClickableImage
-                  styles={styles.leftCaretImage}
-                  source={images.leftCaret}
-                  onPress={() => navigation.navigate('Welcome')}
-                />
-              </View>
-
-              <View style={styles.switchCameraContainer}>
-                <AppClickableImage
-                  styles={styles.switchCameraImage}
-                  source={images.switchCamera}
-                  onPress={() => {
-                    setCameraType(
-                      cameraType === BarCodeScanner.Constants.Type.back
-                        ? BarCodeScanner.Constants.Type.front
-                        : BarCodeScanner.Constants.Type.back,
-                    )
-                  }}
-                />
-              </View>
             </BarCodeScanner>
+              <View style={styles.backButtonContainer}>
+                  <AppClickableImage
+                    styles={styles.leftCaretImage}
+                    source={images.leftCaret}
+                    onPress={() => navigation.navigate('Welcome')}
+                  />
+                </View>
+
+                <View style={styles.switchCameraContainer}>
+                  <AppClickableImage
+                    styles={styles.switchCameraImage}
+                    source={images.switchCamera}
+                    onPress={() => {
+                      setCameraType(
+                        cameraType === BarCodeScanner.Constants.Type.back
+                          ? BarCodeScanner.Constants.Type.front
+                          : BarCodeScanner.Constants.Type.back,
+                      )
+                    }}
+                  />
+                </View>
           </View>
         )}
       </View>
@@ -204,11 +204,15 @@ const styles = StyleSheet.create({
   },
   backButtonContainer: {
     position:"absolute",
-    background:"FF0000",
-    top: '10%',
+    bototm: 5,
     left: 20,
     height: 40,
     paddingLeft: 20,
+  },
+  switchCameraContainer: {
+    position: 'absolute',
+    right: 50,
+    bottom: 60,
   },
   spinner: {
     maxHeight: 55,
@@ -217,11 +221,6 @@ const styles = StyleSheet.create({
   leftCaretImage: {
     width: 12,
     height: 19,
-  },
-  switchCameraContainer: {
-    position: 'absolute',
-    right: 50,
-    bottom: 60,
   },
   switchCameraImage: {
     width: 48,
