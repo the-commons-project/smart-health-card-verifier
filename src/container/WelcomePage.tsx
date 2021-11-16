@@ -42,12 +42,12 @@ const WelcomePage = ({ navigation }: Props) => {
           <Text
             style={[
               deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
-              { fontFamily: 'Poppins', fontWeight:'bold' },
+              { fontFamily: 'Poppins_700Bold' },
             ]}
           >
             Welcome!
           </Text>
-          <Text style={[styles.mainTitle, { fontFamily: 'Poppins', fontWeight:'bold'}]}>
+          <Text style={[styles.mainTitle, { fontFamily: 'Poppins_700Bold'}]}>
             SMART® Health Card Verifier
           </Text>
         </View>
@@ -63,7 +63,7 @@ const WelcomePage = ({ navigation }: Props) => {
         </TouchableWithoutFeedback>
 
         <View style={styles.textContainer}>
-          <Text style={[styles.subTitle, { fontFamily: 'Open Sans' }]}>
+          <Text style={[styles.subTitle, { fontFamily: 'OpenSans_400Regular' }]}>
             {' '}
             Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
           </Text>
@@ -78,7 +78,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 deviceHeight < minHeight ? styles.textMobile : styles.text,
                 styles.link,
                 styles.colorBlue,
-                { fontFamily: 'Poppins' },
+                { fontFamily: 'Poppins_600SemiBold' },
               ]}
               onPress={() =>
                 Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
@@ -99,7 +99,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 styles.link,
                 styles.colorBlue,
                 styles.aboutUsFlexSpacing,
-                { fontFamily: 'Poppins', fontWeight:'600'}
+                { fontFamily: 'Poppins_600SemiBold'}
               ]}
               onPress={() =>
                 Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
@@ -112,7 +112,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 styles.text,
                 styles.link,
                 styles.colorBlue,
-                { fontFamily: 'Poppins', fontWeight:'600'}
+                { fontFamily: 'Poppins_600SemiBold'}
               ]}
               onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
             >

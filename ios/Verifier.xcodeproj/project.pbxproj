@@ -39,6 +39,7 @@
 		D82B2A1C125A497881A89C1A /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AF40B96D2C4EB3BFB01839 /* loading.png */; };
 		D9D00F45EA4E41D89ED4450A /* hand-phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 94950809BE4547939618F389 /* hand-phone.png */; };
 		F4F4CC6AEB7447EFA601B9FE /* favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DD2F975E86249C18302E2A4 /* favicon.png */; };
+		C233296DA4B94D1692445945 /* icon_shc.svg in Resources */ = {isa = PBXBuildFile; fileRef = 09D9DFCA531743A9899B1786 /* icon_shc.svg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		EE06117D5C1A471B82F82702 /* smart-logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "smart-logo.png"; path = "../assets/img/main/smart-logo.png"; sourceTree = "<group>"; };
 		FB56374F4EF34EBFA943C5D7 /* common-trust-verified.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "common-trust-verified.png"; path = "../assets/img/verificationresult/common-trust-verified.png"; sourceTree = "<group>"; };
 		FB64E84E9ABF4043873F92E9 /* cross.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = cross.png; path = ../assets/img/verificationresult/cross.png; sourceTree = "<group>"; };
+		09D9DFCA531743A9899B1786 /* icon_shc.svg */ = {isa = PBXFileReference; name = "icon_shc.svg"; path = "../assets/img/icon_shc.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 				B8D3F2DB69F64BFC8DEDF6DA /* Poppins_500Medium.ttf */,
 				B3C01201184E455783C7510C /* Poppins_600SemiBold.ttf */,
 				4B8C875982B040BCB7359B5E /* Poppins_700Bold.ttf */,
+				09D9DFCA531743A9899B1786 /* icon_shc.svg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				328548CA05C34BC8A99B4EC3 /* Poppins_500Medium.ttf in Resources */,
 				25C2C12877064820903AFC36 /* Poppins_600SemiBold.ttf in Resources */,
 				2ADCF520B9AE4C1581665F1B /* Poppins_700Bold.ttf in Resources */,
+				C233296DA4B94D1692445945 /* icon_shc.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

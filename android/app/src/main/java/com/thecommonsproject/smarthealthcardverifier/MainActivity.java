@@ -1,4 +1,4 @@
-package com.verifier;
+package com.thecommonsproject.smarthealthcardverifier;
 
 import com.facebook.react.ReactActivity;
 

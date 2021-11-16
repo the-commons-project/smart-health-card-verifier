@@ -17,7 +17,7 @@ const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
       onPress={onPress}
       style={[styles.appButtonContainer, backgroundColor && { backgroundColor }]}
     >
-      <Text style={[styles.appButtonText, { fontFamily: 'Poppins', fontWeight:'600'}]}>{title}</Text>
+      <Text style={[styles.appButtonText, { fontFamily: 'Poppins_600SemiBold'}]}>{title}</Text>
       <Image style={styles.appButtonImage} source={images.barcodeScanner} />
     </TouchableOpacity>
   )

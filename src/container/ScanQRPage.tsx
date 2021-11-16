@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   backButtonContainer: {
     position:"absolute",
-    bototm: 5,
+    top: 20,
     left: 20,
     height: 40,
     paddingLeft: 20,

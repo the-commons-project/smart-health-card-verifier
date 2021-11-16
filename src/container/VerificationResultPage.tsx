@@ -24,7 +24,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
           onPress={() => navigation.navigate('Welcome')}
         />
         <Text
-          style={[styles.backButtonText, { fontFamily: 'Poppins', fontWeight:'bold' }]}
+          style={[styles.backButtonText, { fontFamily: 'Poppins_700Bold' }]}
           onPress={() => navigation.navigate('Welcome')}
         >
           Verification result
