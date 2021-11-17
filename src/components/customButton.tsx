@@ -1,4 +1,5 @@
 import React from 'react'
+import FontStyle from '../utils/FontStyleHelper'
 import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native'
 
 type AppButtonVariables = {
@@ -17,7 +18,7 @@ const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
       onPress={onPress}
       style={[styles.appButtonContainer, backgroundColor && { backgroundColor }]}
     >
-      <Text style={[styles.appButtonText, { fontFamily: 'Poppins_600SemiBold' }]}>{title}</Text>
+      <Text style={[styles.appButtonText, FontStyle.Poppins_600SemiBold]}>{title}</Text>
       <Image style={styles.appButtonImage} source={images.barcodeScanner} />
     </TouchableOpacity>
   )

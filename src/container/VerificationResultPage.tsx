@@ -5,6 +5,7 @@ import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'
 import { Props } from '../types'
+import FontStyle from '../utils/FontStyleHelper'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
@@ -24,7 +25,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
           onPress={() => navigation.navigate('Welcome')}
         />
         <Text
-          style={[styles.backButtonText, { fontFamily: 'Poppins_700Bold' }]}
+          style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
           onPress={() => navigation.navigate('Welcome')}
         >
           Verification result
