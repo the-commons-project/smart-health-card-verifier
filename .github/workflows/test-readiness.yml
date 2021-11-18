@@ -1,5 +1,7 @@
 name: learn-github-actions
-on: [push]
+on:
+  push:
+    types: [opened, synchronize]
 jobs:
   check-code-readiness:
     runs-on: ubuntu-latest
