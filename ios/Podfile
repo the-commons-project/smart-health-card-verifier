@@ -20,6 +20,8 @@ target 'Verifier' do
 
   pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'VerifierTests' do
     inherit! :complete
     # Pods for testing
