@@ -16,7 +16,12 @@ SMART Health Card Verifier is a safe, privacy-preserving mobile application, des
     - [Contributing Guide](#contributing-guide)
   - [License](#license)
 
-## Environment Setup
+## Environment 
+
+Local test environment setup. This will give you precheck before pushing the code. 
+```bash
+cat resources/git_hooks/pre-push > .git/hooks/pre-push
+```
 
 ## Script
 
