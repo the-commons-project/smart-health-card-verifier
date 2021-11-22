@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+echo "Running test..."
+
+# Calculate the processing time and show it to the user
+time npm test
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+  echo "*************************************************"
+  echo "                 Linting failed                  "
+  echo "  Please fix the above issues before committing  "
+  echo "                                                 "
+  echo "                                                 "
+  echo " Skip linting by adding --no-verify to push cmd  "
+  echo "*************************************************"
+  exit $EXIT_CODE
+fi
+
+echo "***********************************************"
+echo "           test succeeded                      "
+echo "***********************************************"

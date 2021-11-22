@@ -9,30 +9,48 @@ SMART Health Card Verifier is a safe, privacy-preserving mobile application, des
   - [Table of contents](#table-of-contents)
   - [Environment Setup](#environment-setup)
     - [Prerequisites](#prerequisites)
-    - [Global dependencies](#global-dependencies)
+    - [Platform base setup](#platform-base-setup)
+  - [Test](#test)
   - [How to Contribute](#how-to-contribute)
     - [Code of Conduct](#code-of-conduct)
     - [Contributing Guide](#contributing-guide)
   - [License](#license)
 
-## Environment Setup
+## Environment 
+
+Local test environment setup. This will give you precheck before pushing the code. 
+```bash
+cat resources/git_hooks/pre-push > .git/hooks/pre-push
+```
+
+## Script
+
+```bash
+npm run test
+
+```
+
+- test: Test is run with [jest] (https://jestjs.io/docs) framework. 
 
 
 ### Prerequisites
 
 Node **v14.17.X** (LTS/fermium)
+
 [React Native cli](https://www.npmjs.com/package/react-native-cli)
-[XCode 13 or later](https://apps.apple.com/us/app/xcode/id497799835?mt=12) 
+```bash
+  npm install -g react-native-cli
+```
+
+[XCode 13 or later](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
+[Cocopod](https://guides.cocoapods.org/using/getting-started.html)
+
 [Android Studio](https://developer.android.com/studio/install)
 Android Studio SDK 30 download through android studio 
 
 
-### Global dependencies
+### Platform base setup
 
-For react
-```bash
-  npm install -g react-native-cli
-```
 
 For Android
 make sure you download sdk using android studio SDK 30 

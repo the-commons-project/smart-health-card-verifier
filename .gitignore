@@ -24,13 +24,14 @@ ios/Podfile.lock
 
 # Android/IntelliJ
 #
+
 build/
 .idea
 .gradle
 local.properties
 *.iml
 *.hprof
-debug.keystore
+*.keystore
 
 # node.js
 #
@@ -43,7 +44,6 @@ package-lock.json
 buck-out/
 \.buckd/
 *.keystore
-!debug.keystore
 
 # fastlane
 #
