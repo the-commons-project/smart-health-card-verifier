@@ -112,6 +112,7 @@ async function fetchWithTimeout(url: string, options: any, timeout: number, time
 }
 
 async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefined> {
+  console.info("loading issure: " + issuerURL )
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
