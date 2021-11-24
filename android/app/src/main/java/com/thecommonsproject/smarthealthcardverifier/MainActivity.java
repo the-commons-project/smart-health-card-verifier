@@ -1,5 +1,8 @@
 package com.thecommonsproject.smarthealthcardverifier;
 
+import android.os.Bundle;
+import android.view.WindowManager;
+
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -11,5 +14,18 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "Verifier";
+  }
+
+
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    disableScreenshot();
+  }
+
+  private void disableScreenshot(){
+      getWindow().setFlags(
+              WindowManager.LayoutParams.FLAG_SECURE,
+              WindowManager.LayoutParams.FLAG_SECURE
+      );
   }
 }
