@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   useWindowDimensions,
+  PixelRatio
 } from 'react-native'
 import { Props } from '../types'
 import AppButton from '../components/customButton'
@@ -16,15 +17,17 @@ import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
 
 const dimension = Dimensions.get('window')
-
 const images = {
   smartLogo: require('../../assets/img/main/smart-logo.png'),
   handPhone: require('../../assets/img/main/hand-phone.png'),
 }
 
+const imageHeight = ( dimension.height * .30 / PixelRatio.getFontScale() );
+
 const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
   const deviceHeight = useWindowDimensions().height
+
   const minHeight = 800
 
   const showAppVersion = () => {
@@ -37,8 +40,8 @@ const WelcomePage = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.container}>
+      <ScrollView style={styles.container}>
+        <View style={styles.scrollerContents}>
           <Image style={styles.smartLogoImage} source={images.smartLogo} />
           <View style={styles.screenContainer}>
             <View>
@@ -48,7 +51,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   FontStyle.Poppins_700Bold,
                 ]}
               >
-                Welcome!
+                Welcome! 
               </Text>
               <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
                 SMART® Health Card Verifier
@@ -56,7 +59,7 @@ const WelcomePage = ({ navigation }: Props) => {
             </View>
 
             <TouchableWithoutFeedback onLongPress={showAppVersion}>
-              <View>
+              <View style={( deviceHeight > minHeight && PixelRatio.getFontScale() <= 1 ) ? { paddingTop: (40/PixelRatio.getFontScale()), paddingBottom:(40/PixelRatio.getFontScale()) }:{}}>
                 {showVersion && <Text style={styles.appVersion}>{version}</Text>}
                 <Image
                   style={deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage}
@@ -131,20 +134,32 @@ const WelcomePage = ({ navigation }: Props) => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 0,
+    backgroundColor: '#F3F6FF',
+    paddingTop: 12,
+    paddingStart: 12,
+    paddingEnd: 12,
+    paddingBottom: 12
+  },
+
   screenContainer: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  container: {
+
+  scrollerContents: {
     flex: 1,
-    paddingTop: 12,
-    paddingStart: 12,
-    paddingEnd: 12,
-    paddingBottom: 0,
-    backgroundColor: '#F3F6FF',
+    paddingTop: 0,
+    paddingStart: 0,
+    paddingEnd: 0,
+    paddingBottom: 0
   },
+
   learnMoreContainer: {
     flexDirection: 'row',
     paddingTop: 10,
@@ -170,7 +185,7 @@ const styles = StyleSheet.create({
   },
   handPhoneImage: {
     width: (dimension.width / 240) * 150,
-    height: 250,
+    height: imageHeight,
     resizeMode: 'contain',
   },
   handPhoneImageMobile: {
