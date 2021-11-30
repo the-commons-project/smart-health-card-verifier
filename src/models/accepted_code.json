@@ -1,0 +1,40 @@
+{
+  "covid_19_vaccine_codes": [
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "207",
+      "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "208",
+      "display": "Pfizer"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "217",
+      "display": "Pfizer"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "218",
+      "display": "Pfizer Pediatric"
+    },
+
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "219",
+      "display": "Pfizer 2 years and 5"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "210",
+      "display": "AstraZeneca"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "212",
+      "display": "Janssen"
+    }
+  ]
+}
