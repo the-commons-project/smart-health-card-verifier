@@ -4,6 +4,7 @@ import { validateSchema, objPathToSchema } from './schema'
 import patientDM from '../../schemas/patient-dm.json'
 import fhirSchema from '../../schemas/fhir-schema.json'
 import immunizationDM from '../../schemas/immunization-dm.json'
+import { getAcceptedCodes } from '../helpers/getVaccineCodesHash'
 
 export enum ValidationProfiles {
   'any',
@@ -225,7 +226,7 @@ const ValidationProfilesFunctions = {
         // verify that valid codes are used see : https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html
         const code = (entry.resource?.vaccineCode as { coding: { code: string }[] })?.coding[0]
           ?.code
-        const cvxCodes = ['207', '208', '210', '211', '212']
+        const cvxCodes = getAcceptedCodes() //['207', '208', '210', '211', '212']
 
         if (code && !cvxCodes.includes(code)) {
           console.log(
