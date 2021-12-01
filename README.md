@@ -72,11 +72,48 @@ install dependencies and run the metro server.
 
 ```bash
   npm install
-  npm start
+  
 ```
-#### For Android 
+
+create keystore file and set that in the secret.properties 
+```bash
+  cd android; keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 
+  touch android/secret.properties
+```
+
+In the secret.properties file directly under the android folder, 
+add below. 
+
+```
+signing_keystore_location = "<your path to project dir>/smart-health-card-verifier/android/debug.keystore"
+signing_keystore_password = "android"
+signing_keystore_key_alias = "androiddebugkey"
+signing_keystore_key_password = "android"
+```
+
+
+```bash
+
+  npm start -- --reset-cache
+```
+
+
+
+#### For Android
+Open another terminal
+```
+  npx react-native run-android
+```
   Open Android project from ./android folder
   and run.
+
+If you are running on the device, 
+
+When it's started, load will fail. Make sure your android phone is on the same network. 
+
+Shake device -> see setting -> Change host to <ipaddress that node runs>:8081
+
+
 
 #### For IOS 
 
