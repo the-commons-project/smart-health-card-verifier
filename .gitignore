@@ -28,6 +28,7 @@ ios/Podfile.lock
 build/
 .idea
 .gradle
+android/local.properties
 local.properties
 *.iml
 *.hprof
