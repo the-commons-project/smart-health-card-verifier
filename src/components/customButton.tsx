@@ -1,6 +1,6 @@
 import React from 'react'
 import FontStyle from '../utils/FontStyleHelper'
-import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native'
+import { StyleSheet, TouchableOpacity, Text, Image, PixelRatio } from 'react-native'
 
 type AppButtonVariables = {
   onPress?: any
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 24,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     minWidth: '100%',
   },
@@ -40,10 +41,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     alignSelf: 'stretch',
     marginRight: 10,
+    textAlign: "center"
   },
   appButtonImage: {
-    maxHeight: 26,
-    maxWidth: 26,
+    maxHeight: 26 * PixelRatio.getFontScale(),
+    maxWidth: 26 * PixelRatio.getFontScale(),
   },
 })
 
