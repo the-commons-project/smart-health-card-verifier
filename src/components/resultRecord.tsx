@@ -16,13 +16,12 @@ const ResultRecord = ({ data }: Data) => {
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
   const { issuerData, patientData, vaccinationData } = validationResult
-  const { name, dateOfBirth } = patientData
 
+  const { names, dateOfBirth } = patientData
   const userFieldTitle = ['Name']
-  const userFieldValue = [name]
-
   const userDobTitle = ['Date of Birth']
   const userDobValue = [insertImageToTable()]
+
 
   function insertImageToTable() {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
@@ -126,10 +125,15 @@ const ResultRecord = ({ data }: Data) => {
             data={userFieldTitle}
             textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
           />
-          <Row
-            data={userFieldValue}
-            textStyle={[styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold]}
-          />
+            {
+              names.map( ( name:string, key  )=>{
+                  return (  <Row key={key}
+                    data={[name]}
+                    textStyle={[styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold]}
+                  /> )
+
+                })
+            }
           <Row
             data={userDobTitle}
             textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
