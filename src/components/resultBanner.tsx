@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, Text } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 const images = {
@@ -62,7 +62,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             </Text>
           </View>
         ) : (
-          <View>
+          <View style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={validityIcon} />
               <Text
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     width: '100%',
-    height: 56,
+    minHeight: 56,
+    alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
   },
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     width: '100%',
-    height: 74,
+    minHeight: 74,
     flexDirection: 'column',
     paddingTop: 8,
     paddingLeft: 16,
@@ -140,8 +141,8 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   subIcon: {
-    width: 9,
-    height: 7,
+    width: 9 * PixelRatio.getFontScale(),
+    height: 7 * PixelRatio.getFontScale(),
   },
   flexRowContainer: {
     flexDirection: 'row',
