@@ -15,6 +15,7 @@ import { Props } from '../types'
 import AppButton from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
+import CompanyLogoSVG from '../../assets/img/main/companylogo.svg';
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -95,7 +96,6 @@ const WelcomePage = ({ navigation }: Props) => {
               </View>
               <View
                 style={[
-                  deviceHeight < minHeight ? styles.aboutUsContainerMobile : styles.aboutUsContainer,
                   styles.aboutUsFlex,
                 ]}
               >
@@ -126,6 +126,10 @@ const WelcomePage = ({ navigation }: Props) => {
                 </Text>
               </View>
             </View>
+            <View style={styles.logoContainer}>
+              <CompanyLogoSVG style={styles.logo} height={60} />
+            </View>
+
           </View>
         </View>
       </ScrollView>
@@ -144,7 +148,14 @@ const styles = StyleSheet.create({
     paddingEnd: 12,
     paddingBottom: 12
   },
-
+  logoContainer: {
+    margin: 0,
+    width: "100%",
+  },
+  logo: {
+    justifyContent: 'center', 
+    alignSelf: 'center'
+  },
   screenContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -163,12 +174,6 @@ const styles = StyleSheet.create({
   learnMoreContainer: {
     flexDirection: 'row',
     paddingTop: 10,
-  },
-  aboutUsContainer: {
-    paddingBottom: 16,
-  },
-  aboutUsContainerMobile: {
-    paddingBottom: 0,
   },
   textContainer: {
     justifyContent: 'flex-start',
@@ -249,13 +254,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   aboutUsFlex: {
+    paddingBottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap'
   },
   aboutUsFlexSpacing: {
-    marginRight: 60,
-    marginBottom: 20,
+    marginRight: 60
   },
 })
 
