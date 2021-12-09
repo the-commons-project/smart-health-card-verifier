@@ -39,7 +39,7 @@ type issuerData = {
 
 type patientData = {
   dateOfBirth: string
-  name: string
+  names: string[]
 }
 
 type vaccinationData = {

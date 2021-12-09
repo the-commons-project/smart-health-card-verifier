@@ -80,7 +80,6 @@ export async function validate(jws: string): Promise<any> {
   }
 
   const isValid = await verifyJws(jws, headerJson['kid'])
-
   const issuer = getIssuerFromFhir(payload)
   const issuerData = await getIssuerData(issuer)
   const { message } = issuerData
@@ -92,7 +91,6 @@ export async function validate(jws: string): Promise<any> {
 
   const patientData = getPatientDataFromFhir(payload)
   const vaccinationData = await getVaccinationDataFromFhir(payload)
-
   const document = {
     isValid,
     issuerData,
