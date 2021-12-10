@@ -65,16 +65,6 @@ make sure you download sdk using android studio SDK 30
 
 ```
 
-
-### Install project required dependencies
-
-install dependencies and run the metro server. 
-
-```bash
-  npm install
-  
-```
-
 create keystore file and set that in the secret.properties 
 ```bash
   cd android; keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 
@@ -91,6 +81,15 @@ signing_keystore_key_alias = "androiddebugkey"
 signing_keystore_key_password = "android"
 ```
 
+
+### Install project required dependencies
+
+install dependencies and run the metro server. 
+
+```bash
+  npm install
+  
+```
 
 ```bash
 
@@ -120,6 +119,7 @@ Shake device -> see setting -> Change host to <ipaddress that node runs>:8081
 Install dependencies 
 
 ```bash
+  npm run ios
   cd ios; pod install
 ```
 
