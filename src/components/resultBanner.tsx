@@ -1,5 +1,10 @@
 import React from 'react'
+<<<<<<< HEAD
 import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+=======
+import { View, Image, StyleSheet, Text } from 'react-native'
+import { JwsValidationOptions } from '../services/jws/jws-compact'
+>>>>>>> e6d3c9a (kidnotmatch)
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 const images = {
@@ -40,6 +45,16 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     verifiedIssuerText = 'Issuer not recognized'
     verifiedIssuerIcon = images.cross
     verifiedColor = '#CE471C' // orange
+  }
+  
+  const isKeyValid = !!validationResult?.isValid === false 
+  
+  if (isKeyValid && !isDocumentValid) {
+    icon = images.fail
+    text = 'Not Verified'
+    color = '#C33E38' //red
+    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted. (0001)'
+    validityColor = '#C33E38' // red
   }
 
   return (
