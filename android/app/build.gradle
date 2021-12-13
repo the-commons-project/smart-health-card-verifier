@@ -131,7 +131,7 @@ if (secretProps.exists()) {
     secrets.load(secretProps.newDataInputStream())
 }
 def isRunningInGHAction = System.getenv("VERIFIRE_STORE_FILE") != null
-println("Github Storefile: " + System.getenv("VERIFIRE_STORE_FILE") )
+println("isRunningInGHAction: " + isRunningInGHAction )
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -139,11 +139,17 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.thecommonsproject.smarthealthcardverifier"
+
+        println( "project: ${project.name}------------------------------")
+        println( "packageName: ${rootProject.ext.buildConfigJSON['packageName']}")
+        println( "versionCode: ${rootProject.ext.buildConfigJSON['versionCode']}")
+        println( "versionName: ${rootProject.ext.buildConfigJSON['versionName']}")
+
+        applicationId rootProject.ext.buildConfigJSON['packageName']
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 30
-        versionName "1.0.30"
+        versionCode rootProject.ext.buildConfigJSON['versionCode']
+        versionName rootProject.ext.buildConfigJSON['versionName']
         missingDimensionStrategy 'react-native-camera', 'general'
     }
 
