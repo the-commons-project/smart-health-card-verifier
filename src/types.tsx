@@ -29,6 +29,11 @@ export type BaseResponse = {
   vaccinationData: vaccinationData[]
 }
 
+export declare class Timer {
+  constructor();
+  start(): void;
+  stop(): number;
+}
 
 type issuerData = {
   iss: string

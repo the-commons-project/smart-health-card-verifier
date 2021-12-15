@@ -96,7 +96,7 @@ const ScanQRPage = ({ navigation }: Props) => {
       },
       patientData: {
         dateOfBirth: '',
-        name: '',
+        names: [],
       },
       vaccinationData: [],
     }
@@ -107,7 +107,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       if (!validationResult || validationResult.isValid === 'false') {
         navigation.navigate('Error')
-        return 
+        return
       }
 
       navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
