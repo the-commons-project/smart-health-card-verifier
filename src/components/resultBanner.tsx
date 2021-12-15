@@ -1,12 +1,9 @@
 import React from 'react'
-<<<<<<< HEAD
 import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
-=======
-import { View, Image, StyleSheet, Text } from 'react-native'
 import { JwsValidationOptions } from '../services/jws/jws-compact'
->>>>>>> e6d3c9a (kidnotmatch)
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
   success: require('../../assets/img/verificationresult/success.png'),
@@ -46,9 +43,9 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     verifiedIssuerIcon = images.cross
     verifiedColor = '#CE471C' // orange
   }
-  
+
   const isKeyValid = !!validationResult?.isValid === false 
-  
+
   if (isKeyValid && !isDocumentValid) {
     icon = images.fail
     text = 'Not Verified'
@@ -77,7 +74,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             </Text>
           </View>
         ) : (
-          <View style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
+          <View>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={validityIcon} />
               <Text
@@ -115,8 +112,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     width: '100%',
-    minHeight: 56,
-    alignItems: 'center',
+    height: 56,
     flexDirection: 'row',
     marginTop: 16,
   },
@@ -141,7 +137,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     width: '100%',
-    minHeight: 74,
+    height: 74,
     flexDirection: 'column',
     paddingTop: 8,
     paddingLeft: 16,
@@ -156,8 +152,8 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   subIcon: {
-    width: 9 * PixelRatio.getFontScale(),
-    height: 7 * PixelRatio.getFontScale(),
+    width: 9,
+    height: 7,
   },
   flexRowContainer: {
     flexDirection: 'row',
