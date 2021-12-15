@@ -1,6 +1,6 @@
 {
   "name": "health-card-verifier-mobile",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "SMART Health Card Verifier",
   "scripts": {
     "android": "react-native run-android",
