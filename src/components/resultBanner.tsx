@@ -50,7 +50,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     icon = images.fail
     text = 'Not Verified'
     color = '#C33E38' //red
-    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted. (0001)'
+    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted. (203)'
     validityColor = '#C33E38' // red
   }
 
