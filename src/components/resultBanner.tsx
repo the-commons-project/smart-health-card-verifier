@@ -83,7 +83,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
                 style={[
                   styles.subBannerText,
                   FontStyle.Poppins_600SemiBold,
-                  { color: verifiedColor },
+                  { color: verifiedColor, textAlign: "left"},
                 ]}
               >
                 {verifiedIssuerText}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   flexRowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
   },
 })
 
