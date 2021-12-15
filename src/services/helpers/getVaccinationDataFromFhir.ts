@@ -36,7 +36,6 @@ export const getVaccinationDataFromFhir = async (credential: any): Promise<any> 
 
     const dose = index + 1
     const vaccineName = vaccineCodesHash[code]
-    console.log(`vaccine Name: ${vaccineName}`);
     const vaccinationDate = formatVaccinationDate(occurrenceDateTime)
 
     let vaccinator = ''

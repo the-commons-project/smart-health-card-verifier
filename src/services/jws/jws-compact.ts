@@ -12,6 +12,7 @@ import { getPatientDataFromFhir } from '../helpers/getPatiendDataFromFhir'
 import { getVaccinationDataFromFhir } from '../helpers/getVaccinationDataFromFhir'
 import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
 import { getIssuerData } from '../helpers/getIssuerData'
+import Timer from '../../utils/timer'
 
 export const JwsValidationOptions = {
   skipJwksDownload: false,
@@ -110,8 +111,7 @@ async function fetchWithTimeout(url: string, options: any, timeout: number, time
 }
 
 async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefined> {
-  console.info("loading issure: " + issuerURL )
-  var loadingTime = ( new Date() ).getTime()
+  var timer = new Timer()
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
@@ -119,6 +119,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
   const timeout = JwsValidationOptions.jwksDownloadTimeOut
 
   try {
+    timer.start()
     const responseRaw: any = await fetchWithTimeout(
       jwkURL,
       { headers: { Origin: requestedOrigin } },
@@ -126,18 +127,16 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
       timeoutError,
     )
     const keySet = await responseRaw.json()
-    var tmpTime = ( new Date().getTime() );
-    loadingTime = (tmpTime - loadingTime ) / 1000
-    loadingTime = tmpTime;
-    console.log(`loading issure took:  ${loadingTime.toFixed(2)}sec`)
+    var loadingTime = timer.stop()
+    console.log(`loading issure key:  ${loadingTime.toFixed(2)}sec`)
     if (!keySet) {
       throw 'Failed to parse JSON KeySet schema'
     }
 
     try {
+      timer.start()
       await verifyAndImportHealthCardIssuerKey(keySet, issuerURL)
-      tmpTime = ( new Date().getTime() );
-      loadingTime = (tmpTime - loadingTime ) / 1000
+      loadingTime = timer.stop()
       console.log(`verification took:  ${loadingTime.toFixed(2)}sec`)
 
       return keySet
