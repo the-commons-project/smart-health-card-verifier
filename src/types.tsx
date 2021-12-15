@@ -29,6 +29,7 @@ export type BaseResponse = {
   vaccinationData: vaccinationData[]
 }
 
+
 type issuerData = {
   iss: string
   logo_uri: string

@@ -182,11 +182,12 @@ const ResultRecord = ({ data }: Data) => {
       <View style={styles.divider} />
       <View>
         <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>Issuer</Text>
-        <Text style={[styles.fieldValue, FontStyle.OpenSans_700Bold]}>
-          {issuerData?.name || issuerData?.url}
-        </Text>
         {issuerData.name ? (
           <View style={styles.verifierContainer}>
+            <Text style={[styles.fieldValue, FontStyle.OpenSans_700Bold]}>
+              {issuerData?.name || issuerData?.url}
+            </Text>
+
             <Image style={styles.verifierImage} source={images.commonTrustVerified} />
             <Text style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}>
               Verified
