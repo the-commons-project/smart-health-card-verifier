@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    padding: 0,
     backgroundColor: '#F3F6FF',
     paddingTop: 12,
     paddingStart: 12,
@@ -203,13 +202,13 @@ const styles = StyleSheet.create({
     width: 71,
     height: 37,
     right: 19,
-    top: 69,
+    top: 50,
   },
   welcomeText: {
     fontSize: 24,
     lineHeight: 36,
     color: '#255DCB',
-    paddingTop: 88,
+    paddingTop: 60,
   },
   welcomeTextMobile: {
     fontSize: 24,
