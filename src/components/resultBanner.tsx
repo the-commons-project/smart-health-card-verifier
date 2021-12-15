@@ -44,16 +44,6 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     verifiedColor = '#CE471C' // orange
   }
 
-  const isKeyValid = !!validationResult?.isValid === false 
-
-  if (isKeyValid && !isDocumentValid) {
-    icon = images.fail
-    text = 'Not Verified'
-    color = '#C33E38' //red
-    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted. (0001)'
-    validityColor = '#C33E38' // red
-  }
-
   return (
     <View>
       <View style={[styles.bannerContainer, { backgroundColor: color }]}>
@@ -74,7 +64,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             </Text>
           </View>
         ) : (
-          <View>
+          <View style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={validityIcon} />
               <Text
@@ -112,16 +102,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     width: '100%',
-    height: 56,
+    minHeight: 56,
+    alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
   },
   bannerImage: {
-    marginTop: 7,
     marginLeft: 16,
     marginRight: 16,
     height: 40,
     width: 40,
+    alignSelf: 'center',
   },
   bannerText: {
     fontSize: 22,
@@ -137,7 +128,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     width: '100%',
-    height: 74,
+    minHeight: 74,
     flexDirection: 'column',
     paddingTop: 8,
     paddingLeft: 16,
@@ -152,12 +143,13 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   subIcon: {
-    width: 9,
-    height: 7,
+    width: 9 * PixelRatio.getFontScale(),
+    height: 7 * PixelRatio.getFontScale(),
   },
   flexRowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center'
   },
 })
 

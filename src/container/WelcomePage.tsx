@@ -40,100 +40,98 @@ const WelcomePage = ({ navigation }: Props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container}>
-        <View style={styles.scrollerContents}>
-          <Image style={styles.smartLogoImage} source={images.smartLogo} />
-          <View style={styles.screenContainer}>
-            <View>
+    <ScrollView style={styles.container}>
+      <View style={styles.scrollerContents}>
+        <Image style={styles.smartLogoImage} source={images.smartLogo} />
+        <View style={styles.screenContainer}>
+          <View>
+            <Text
+              style={[
+                deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
+                FontStyle.Poppins_700Bold,
+              ]}
+            >
+              Welcome! 
+            </Text>
+            <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
+              SMART® Health Card Verifier
+            </Text>
+          </View>
+
+          <TouchableWithoutFeedback onLongPress={showAppVersion}>
+            <View style={( deviceHeight > minHeight && PixelRatio.getFontScale() <= 1 ) ? { paddingTop: (40/PixelRatio.getFontScale()), paddingBottom:(40/PixelRatio.getFontScale()) }:{}}>
+              {showVersion && <Text style={styles.appVersion}>{version}</Text>}
+              <Image
+                style={deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage}
+                source={images.handPhone}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+
+          <View style={styles.textContainer}>
+            <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
+              {' '}
+              Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
+            </Text>
+            <AppButton
+              title="Scan vaccination record"
+              onPress={() => navigation.navigate('ScanQR')}
+              backgroundColor="#255DCB"
+            />
+            <View style={styles.learnMoreContainer}>
               <Text
                 style={[
-                  deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
-                  FontStyle.Poppins_700Bold,
+                  deviceHeight < minHeight ? styles.textMobile : styles.text,
+                  styles.link,
+                  styles.colorBlue,
+                  FontStyle.Poppins_600SemiBold
                 ]}
+                onPress={() =>
+                  Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
+                }
               >
-                Welcome! 
-              </Text>
-              <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
-                SMART® Health Card Verifier
+                How to verify SMART® Health Cards
               </Text>
             </View>
-
-            <TouchableWithoutFeedback onLongPress={showAppVersion}>
-              <View style={( deviceHeight > minHeight && PixelRatio.getFontScale() <= 1 ) ? { paddingTop: (40/PixelRatio.getFontScale()), paddingBottom:(40/PixelRatio.getFontScale()) }:{}}>
-                {showVersion && <Text style={styles.appVersion}>{version}</Text>}
-                <Image
-                  style={deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage}
-                  source={images.handPhone}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-
-            <View style={styles.textContainer}>
-              <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
-                {' '}
-                Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
-              </Text>
-              <AppButton
-                title="Scan vaccination record"
-                onPress={() => navigation.navigate('ScanQR')}
-                backgroundColor="#255DCB"
-              />
-              <View style={styles.learnMoreContainer}>
-                <Text
-                  style={[
-                    deviceHeight < minHeight ? styles.textMobile : styles.text,
-                    styles.link,
-                    styles.colorBlue,
-                    FontStyle.Poppins_600SemiBold
-                  ]}
-                  onPress={() =>
-                    Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
-                  }
-                >
-                  How to verify SMART® Health Cards
-                </Text>
-              </View>
-              <View
+            <View
+              style={[
+                styles.aboutUsFlex,
+              ]}
+            >
+              <Text
                 style={[
-                  styles.aboutUsFlex,
+                  styles.text,
+                  styles.link,
+                  styles.colorBlue,
+                  styles.aboutUsFlexSpacing,
+                  FontStyle.Poppins_600SemiBold,
                 ]}
+                onPress={() =>
+                  Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
+                }
               >
-                <Text
-                  style={[
-                    styles.text,
-                    styles.link,
-                    styles.colorBlue,
-                    styles.aboutUsFlexSpacing,
-                    FontStyle.Poppins_600SemiBold,
-                  ]}
-                  onPress={() =>
-                    Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
-                  }
-                >
-                  About us
-                </Text>
-                <Text
-                  style={[
-                    styles.text,
-                    styles.link,
-                    styles.colorBlue,
-                    FontStyle.Poppins_600SemiBold,
-                  ]}
-                  onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
-                >
-                  Privacy policy
-                </Text>
-              </View>
+                About us
+              </Text>
+              <Text
+                style={[
+                  styles.text,
+                  styles.link,
+                  styles.colorBlue,
+                  FontStyle.Poppins_600SemiBold,
+                ]}
+                onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
+              >
+                Privacy policy
+              </Text>
             </View>
-            <View style={styles.logoContainer}>
-              <CompanyLogoSVG style={styles.logo} height={60} />
-            </View>
-
           </View>
+          <View style={styles.logoContainer}>
+            <CompanyLogoSVG style={styles.logo} height={60} />
+          </View>
+
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   )
 }
 
