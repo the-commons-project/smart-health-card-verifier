@@ -12,29 +12,48 @@
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "210",
+      "display": "AstraZeneca"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "211",
+      "display": "Novavax"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "212",
+      "display": "Janssen"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
       "code": "217",
       "display": "Pfizer"
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "218",
-      "display": "Pfizer Pediatric"
+      "display": "Pfizer"
     },
-
     {
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "219",
-      "display": "Pfizer 2 years and 5"
+      "display": "Pfizer"
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
-      "code": "210",
-      "display": "AstraZeneca"
+      "code": "510",
+      "display": "Sinopharm-Biotech"
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
-      "code": "212",
-      "display": "Janssen"
+      "code": "511",
+      "display": "Sinovac"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "502",
+      "display": "Bharat Biotech"
     }
   ]
 }
