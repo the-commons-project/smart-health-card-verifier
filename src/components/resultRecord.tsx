@@ -184,7 +184,7 @@ const ResultRecord = ({ data }: Data) => {
         <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>Issuer</Text>
         {issuerData.name ? (
           <View style={styles.verifierContainer}>
-            <Text style={[styles.fieldValue, FontStyle.OpenSans_700Bold]}>
+            <Text style={[ {width:"100%"},styles.fieldValue, FontStyle.OpenSans_700Bold]}>
               {issuerData?.name || issuerData?.url}
             </Text>
 
@@ -289,6 +289,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   verifierContainer: {
+    flex: 1,
+    flexWrap: "wrap",
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
