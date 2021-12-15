@@ -1,7 +1,9 @@
 import React from 'react'
 import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
   success: require('../../assets/img/verificationresult/success.png'),
@@ -42,6 +44,16 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     verifiedColor = '#CE471C' // orange
   }
 
+  const isKeyValid = !!validationResult?.isValid === false 
+
+  if (isKeyValid && !isDocumentValid) {
+    icon = images.fail
+    text = 'Not Verified'
+    color = '#C33E38' //red
+    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted. (0001)'
+    validityColor = '#C33E38' // red
+  }
+
   return (
     <View>
       <View style={[styles.bannerContainer, { backgroundColor: color }]}>
@@ -62,7 +74,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             </Text>
           </View>
         ) : (
-          <View style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
+          <View>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={validityIcon} />
               <Text
@@ -100,8 +112,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     width: '100%',
-    minHeight: 56,
-    alignItems: 'center',
+    height: 56,
     flexDirection: 'row',
     marginTop: 16,
   },
@@ -126,7 +137,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     width: '100%',
-    minHeight: 74,
+    height: 74,
     flexDirection: 'column',
     paddingTop: 8,
     paddingLeft: 16,
@@ -141,8 +152,8 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   subIcon: {
-    width: 9 * PixelRatio.getFontScale(),
-    height: 7 * PixelRatio.getFontScale(),
+    width: 9,
+    height: 7,
   },
   flexRowContainer: {
     flexDirection: 'row',
