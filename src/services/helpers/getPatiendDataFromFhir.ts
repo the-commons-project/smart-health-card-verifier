@@ -1,5 +1,5 @@
 import { formatDateOfBirth } from '../utils'
-import constants from '../../models/fireFieldConstant'
+import constants from '../../models/FHIRFieldConstant'
 const { RESOURCE_TYPES } = constants
 
 export const getPatientDataFromFhir = (credential: any): any => {
