@@ -1,7 +1,7 @@
 import { formatVaccinationDate } from '../utils'
-import { getVaccineCodesHash } from './getVaccineCodesHash'
+import { getVaccineCodesHash, getAcceptedCodes } from './getVaccineCodesHash'
 
-const cvxCodes = ['207', '208', '210', '211', '212']
+const cvxCodes = getAcceptedCodes() // ['207', '208', '210', '211', '212']
 
 export const getVaccinationDataFromFhir = async (credential: any): Promise<any> => {
   const vaccinationData = []
@@ -16,7 +16,7 @@ export const getVaccinationDataFromFhir = async (credential: any): Promise<any> 
     })
     .map((entry: any) => entry.resource)
 
-  const vaccineCodesHash = await getVaccineCodesHash()
+  const vaccineCodesHash: { [key: string]: string } = getVaccineCodesHash()
 
   for (const [index, entry] of immunizationEntries.entries()) {
     const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry

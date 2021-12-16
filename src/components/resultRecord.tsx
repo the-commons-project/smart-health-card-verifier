@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
+import FontStyle from '../utils/FontStyleHelper'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -15,13 +16,12 @@ const ResultRecord = ({ data }: Data) => {
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
   const { issuerData, patientData, vaccinationData } = validationResult
-  const { name, dateOfBirth } = patientData
 
+  const { names, dateOfBirth } = patientData
   const userFieldTitle = ['Name']
-  const userFieldValue = [name]
-
   const userDobTitle = ['Date of Birth']
   const userDobValue = [insertImageToTable()]
+
 
   function insertImageToTable() {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
@@ -31,7 +31,8 @@ const ResultRecord = ({ data }: Data) => {
           style={[
             styles.fieldValue,
             styles.increaseFont,
-            { fontFamily: 'OpenSans_700Bold', marginRight: 20 },
+            FontStyle.OpenSans_700Bold, 
+            {marginRight: 20 },
           ]}
         >
           {date}
@@ -54,12 +55,13 @@ const ResultRecord = ({ data }: Data) => {
           style={[
             styles.fieldValue,
             styles.increaseFont,
-            { fontFamily: 'OpenSans_700Bold', marginRight: 7 },
+            FontStyle.OpenSans_700Bold, 
+            {marginRight: 7 },
           ]}
         >
           {vaccineName}
         </Text>
-        <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>
+        <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>
           Lot {lotNumber}
         </Text>
       </View>
@@ -73,7 +75,7 @@ const ResultRecord = ({ data }: Data) => {
     }
 
     return (
-      <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>{newText}</Text>
+      <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>{newText}</Text>
     )
   }
 
@@ -84,7 +86,7 @@ const ResultRecord = ({ data }: Data) => {
           styles.fieldTitle,
           styles.increaseFont,
           styles.dosageTextAlign,
-          { fontFamily: 'OpenSans_700Bold' },
+          FontStyle.OpenSans_700Bold,
         ]}
       >
         {date}
@@ -92,10 +94,27 @@ const ResultRecord = ({ data }: Data) => {
     )
   }
 
+  function rowAdapter(dosageFieldTitleRowOne) {
+    return (
+      <View style={[{ flexWrap: "wrap", alignItems: "flex-end", justifyContent:'space-between', flexDirection: 'row' }]}>
+      <View style={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}>
+        { dosageFieldTitleRowOne[0] }
+      </View>
+      <View style={[
+          styles.fieldValue,
+          styles.increaseFont,
+          FontStyle.OpenSans_700Bold
+        ]}>
+        { dosageFieldTitleRowOne[1] }
+      </View>
+    </View>
+    )
+  }
+
   return (
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, { fontFamily: 'OpenSans_700Bold' }]}>
+        <Text style={[styles.titleText, FontStyle.OpenSans_700Bold]}>
           COVID-19 Vaccination Record
         </Text>
         <Image style={styles.smartLogoImage} source={images.smartLogo} />
@@ -104,22 +123,27 @@ const ResultRecord = ({ data }: Data) => {
         <Table borderStyle={styles.tableStyle}>
           <Row
             data={userFieldTitle}
-            textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+            textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
           />
-          <Row
-            data={userFieldValue}
-            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'OpenSans_700Bold' }]}
-          />
+            {
+              names.map( ( name:string, key  )=>{
+                  return (  <Row key={key}
+                    data={[name]}
+                    textStyle={[styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold]}
+                  /> )
+
+                })
+            }
           <Row
             data={userDobTitle}
-            textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+            textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
           />
           <Row
             data={userDobValue}
-            textStyle={[styles.fieldValue, styles.increaseFont, { fontFamily: 'OpenSans_700Bold' }]}
+            textStyle={[styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold]}
           />
         </Table>
-        <Text style={[styles.subFieldValue, { fontFamily: 'OpenSans_400Regular' }]}>
+        <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>
           Always verify identity with a government-issued I.D.
         </Text>
       </View>
@@ -133,22 +157,22 @@ const ResultRecord = ({ data }: Data) => {
         return (
           <View key={key}>
             <View style={styles.doseDividerContainer}>
-              <Text style={[styles.dosageText, { fontFamily: 'OpenSans_700Bold' }]}>
+              <Text style={[styles.dosageText, FontStyle.OpenSans_700Bold]}>
                 Dose {dose}
               </Text>
               <View style={styles.doseDivider} />
             </View>
             <Table borderStyle={styles.tableStyle}>
               <Row
-                data={dosageFieldTitleRowOne}
-                textStyle={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}
+                data={[rowAdapter(dosageFieldTitleRowOne)]}
+                textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
               />
               <Row
                 data={dosageFieldValueRowOne}
                 textStyle={[
                   styles.fieldValue,
                   styles.increaseFont,
-                  { fontFamily: 'OpenSans_700Bold' },
+                  FontStyle.OpenSans_700Bold,
                 ]}
               />
             </Table>
@@ -157,14 +181,15 @@ const ResultRecord = ({ data }: Data) => {
       })}
       <View style={styles.divider} />
       <View>
-        <Text style={[styles.fieldTitle, { fontFamily: 'OpenSans_400Regular' }]}>Issuer</Text>
-        <Text style={[styles.fieldValue, { fontFamily: 'OpenSans_700Bold' }]}>
-          {issuerData?.name || issuerData?.url}
-        </Text>
+        <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>Issuer</Text>
         {issuerData.name ? (
           <View style={styles.verifierContainer}>
+            <Text style={[ {width:"100%"},styles.fieldValue, FontStyle.OpenSans_700Bold]}>
+              {issuerData?.name || issuerData?.url}
+            </Text>
+
             <Image style={styles.verifierImage} source={images.commonTrustVerified} />
-            <Text style={[styles.verifiedByText, { fontFamily: 'OpenSans_700Bold' }]}>
+            <Text style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}>
               Verified
             </Text>
           </View>
@@ -172,7 +197,7 @@ const ResultRecord = ({ data }: Data) => {
           <View style={styles.verifierContainer}>
             <Image style={styles.warningCrossImage} source={images.warningCross} />
             <Text
-              style={[styles.verifiedByText, { fontFamily: 'OpenSans_700Bold', color: '#CE471C' }]}
+              style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}
             >
               Issuer not recognized
             </Text>
@@ -264,6 +289,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   verifierContainer: {
+    flex: 1,
+    flexWrap: "wrap",
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -274,8 +301,8 @@ const styles = StyleSheet.create({
     color: '#484848',
   },
   verifierImage: {
-    width: 104,
-    height: 18.52,
+    width: 104 * PixelRatio.getFontScale(),
+    height: 18.52 * PixelRatio.getFontScale(),
     marginRight: 10,
   },
   warningCrossImage: {
@@ -284,8 +311,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   eyesImage: {
-    width: 18,
-    height: 18,
+    width: 18 * PixelRatio.getFontScale(),
+    height: 18  * PixelRatio.getFontScale(),
     marginBottom: 10,
   },
   smartLogoImage: {

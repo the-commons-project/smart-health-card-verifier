@@ -1,49 +1,5 @@
 {
-  "expo": {
-    "name": "Verifier",
-    "slug": "Verifier",
-    "version": "1.0.28",
-    "orientation": "portrait",
-    "icon": "./assets/iconSHC.png",
-    "splash": {
-      "image": "./assets/splashSHC.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "enabled": false,
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "buildNumber": "1.0.28",
-      "supportsTablet": true,
-      "config": {
-        "usesNonExemptEncryption": false
-      },
-      "entitlements": {
-        "com.apple.developer.networking.wifi-info": "true"
-      },
-      "infoPlist": {
-        "NSCameraUsageDescription": "This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.",
-        "NSMicrophoneUsageDescription": "This app uses the microphone as part of the camera usage to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
-      }
-    },
-    "android": {
-      "versionCode": 28,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptiveSHC.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "permissions": [
-        "CAMERA"
-      ]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "description": "SMART Health Card Verifier"
-  }
+  "name": "Verifier",
+  "displayName": "Verifier"
 }
+

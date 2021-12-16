@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import AppClickableImage from '../components/customImage'
+import FontStyle from '../utils/FontStyleHelper'
 
 type NotificationOverlayVariables = {
   navigation?: any
@@ -33,10 +34,10 @@ const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables)
         />
       </View>
       <View style={styles.notificationTextContainer}>
-        <Text style={[styles.notificationTitle, { fontFamily: 'Poppins_600SemiBold' }]}>
+        <Text style={[styles.notificationTitle, FontStyle.Poppins_600SemiBold]}>
           {title}
         </Text>
-        <Text style={[styles.notificationSubtitle, { fontFamily: 'OpenSans_600SemiBold' }]}>
+        <Text style={[styles.notificationSubtitle, FontStyle.Poppins_600SemiBold]}>
           {subtitle}
         </Text>
       </View>

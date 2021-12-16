@@ -9,49 +9,124 @@ SMART Health Card Verifier is a safe, privacy-preserving mobile application, des
   - [Table of contents](#table-of-contents)
   - [Environment Setup](#environment-setup)
     - [Prerequisites](#prerequisites)
-    - [Global dependencies](#global-dependencies)
-    - [Install project required dependencies](#install-project-required-dependencies)
-    - [Expo Go](#expo-go)
-    - [Run application locally](#run-application-locally)
+    - [Platform base setup](#platform-base-setup)
+  - [Test](#test)
   - [How to Contribute](#how-to-contribute)
     - [Code of Conduct](#code-of-conduct)
     - [Contributing Guide](#contributing-guide)
-  - [Publishing the App](#publishing-the-app)
   - [License](#license)
 
-## Environment Setup
+## Environment 
+
+Local test environment setup. This will give you precheck before pushing the code. 
+```bash
+cat resources/git_hooks/pre-push > .git/hooks/pre-push
+```
+
+## Script
+
+```bash
+npm run test
+
+```
+
+- test: Test is run with [jest] (https://jestjs.io/docs) framework. 
+
 
 ### Prerequisites
 
 Node **v14.17.X** (LTS/fermium)
 
-### Global dependencies
+[React Native cli](https://www.npmjs.com/package/react-native-cli)
+```bash
+  npm install -g react-native-cli
+```
+
+[XCode 13 or later](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
+[Cocopod](https://guides.cocoapods.org/using/getting-started.html)
+
+[Android Studio](https://developer.android.com/studio/install)
+Android Studio SDK 30 download through android studio 
+
+
+### Platform base setup
+
+
+For Android
+make sure you download sdk using android studio SDK 30 
+
 
 ```bash
-  npm install -g expo-cli
+  export ANDROID_HOME=$HOME/Android/Sdk
+  export PATH=$PATH:$ANDROID_HOME/emulator
+  export PATH=$PATH:$ANDROID_HOME/tools
+  export PATH=$PATH:$ANDROID_HOME/tools/bin
+  export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 ```
+
+create keystore file and set that in the secret.properties 
+```bash
+  cd android; keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 
+  touch android/secret.properties
+```
+
+In the secret.properties file directly under the android folder, 
+add below. 
+
+```
+signing_keystore_location = "<your path to project dir>/smart-health-card-verifier/android/debug.keystore"
+signing_keystore_password = "android"
+signing_keystore_key_alias = "androiddebugkey"
+signing_keystore_key_password = "android"
+```
+
 
 ### Install project required dependencies
 
+install dependencies and run the metro server. 
+
 ```bash
   npm install
+  
 ```
-
-### Expo Go
-
-Expo Go allows you to run the project directly on your mobile device.
-Follow [these](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and)
-instructions to install Expo Go on your mobile phone.
-
-### Run application locally
 
 ```bash
-  npm start
+
+  npm start -- --reset-cache
 ```
 
-Expo will open an application in the default browser with a QR code, that should
-be scanned with your mobile device and open the application with Expo Go.
 
+
+#### For Android
+Open another terminal
+```
+  npx react-native run-android
+```
+  Open Android project from ./android folder
+  and run.
+
+If you are running on the device, 
+
+When it's started, load will fail. Make sure your android phone is on the same network. 
+
+Shake device -> see setting -> Change host to <ipaddress that node runs>:8081
+
+
+
+#### For IOS 
+
+Install dependencies 
+
+```bash
+  npm run ios
+  cd ios; pod install
+```
+
+  Open  Xcoe workspace by selecting Verifier.xcworkspace
+  and run. 
+
+  
 ## How to Contribute
 
 We welcome any contributions for bug fixes and improvements. Below explains how you can be a part of the open source communitiy.
@@ -63,20 +138,6 @@ Affinidi has adopted a Code of Conduct that we expect the community to adhere to
 ### Contributing Guide
 
 See [contributing guidelines](./CONTRIBUTING.md) for more information.
-
-## Publishing the App
-
-You can upload the app to the Apple App Store and the Google Play by following these steps.
-
-1. [Create an expo account](https://expo.dev/signup) if you dont already have one.
-2. Run `expo login` in your command prompt and enter your credentials
-3. Run `expo eject --npm`
-   - This step will ask you for an bundle identifier which has to be unique. For instance, `com.yourcompany.appname.ios` or `com.yourcompany.appname.android`
-4. Once done, the `ios` and `android` directories should appear in the repository. You can use XCode to edit and view the `ios` directory and similarly, use Android studio for the `android` directory.
-5. Create the `.ipa` by running `expo build:ios`, and upload the iOS app to TestFlight by following the instructions [here](https://docs.expo.dev/distribution/uploading-apps/#manually-uploading-your-app).
-6. Create the `.apk` by running `expo build:android`, and upload the Android app to Google Play by following the instructions [here](https://docs.expo.dev/distribution/uploading-apps/#21-if-you-choose-to-upload-your).
-
-The steps described above is a manual process. If you would like to automate the workflow, you may refer to [using the EAS CLI](https://docs.expo.dev/distribution/uploading-apps/#manually-uploading-your-app-for-the-first). However, you will need a [PAID EAS subscription](https://expo.dev/pricing).
 
 ## License
 

@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native'
+import FontStyle from '../utils/FontStyleHelper'
+import { StyleSheet, TouchableOpacity, Text, Image, PixelRatio } from 'react-native'
 
 type AppButtonVariables = {
   onPress?: any
@@ -17,7 +18,7 @@ const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
       onPress={onPress}
       style={[styles.appButtonContainer, backgroundColor && { backgroundColor }]}
     >
-      <Text style={[styles.appButtonText, { fontFamily: 'Poppins_600SemiBold' }]}>{title}</Text>
+      <Text style={[styles.appButtonText, FontStyle.Poppins_600SemiBold]}>{title}</Text>
       <Image style={styles.appButtonImage} source={images.barcodeScanner} />
     </TouchableOpacity>
   )
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 24,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     minWidth: '100%',
   },
@@ -39,10 +41,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     alignSelf: 'stretch',
     marginRight: 10,
+    textAlign: "center"
   },
   appButtonImage: {
-    maxHeight: 26,
-    maxWidth: 26,
+    maxHeight: 26 * PixelRatio.getFontScale(),
+    maxWidth: 26 * PixelRatio.getFontScale(),
   },
 })
 

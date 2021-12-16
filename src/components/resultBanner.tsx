@@ -1,6 +1,8 @@
 import React from 'react'
-import { View, Image, StyleSheet, Text } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
+import FontStyle from '../utils/FontStyleHelper'
 
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
@@ -46,7 +48,7 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
     <View>
       <View style={[styles.bannerContainer, { backgroundColor: color }]}>
         <Image style={styles.bannerImage} source={icon} />
-        <Text style={[styles.bannerText, { fontFamily: 'Poppins_600SemiBold' }]}>{text}</Text>
+        <Text style={[styles.bannerText, FontStyle.Poppins_600SemiBold]}>{text}</Text>
       </View>
       <View style={[styles.subBannerContainer, { borderColor: color }]}>
         {!isDocumentValid ? (
@@ -54,20 +56,22 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
             <Text
               style={[
                 styles.subBannerText,
-                { fontFamily: 'Poppins_600SemiBold', color: validityColor },
+                FontStyle.Poppins_600SemiBold,
+                {color: validityColor },
               ]}
             >
               {validityText}
             </Text>
           </View>
         ) : (
-          <View>
+          <View style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
             <View style={styles.flexRowContainer}>
               <Image style={styles.subIcon} source={validityIcon} />
               <Text
                 style={[
                   styles.subBannerText,
-                  { fontFamily: 'Poppins_600SemiBold', color: validityColor },
+                  FontStyle.Poppins_600SemiBold,
+                  { color: validityColor },
                 ]}
               >
                 {validityText}
@@ -78,7 +82,8 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
               <Text
                 style={[
                   styles.subBannerText,
-                  { fontFamily: 'Poppins_600SemiBold', color: verifiedColor },
+                  FontStyle.Poppins_600SemiBold,
+                  { color: verifiedColor, textAlign: "left"},
                 ]}
               >
                 {verifiedIssuerText}
@@ -97,16 +102,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
     width: '100%',
-    height: 56,
+    minHeight: 56,
+    alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
   },
   bannerImage: {
-    marginTop: 7,
     marginLeft: 16,
     marginRight: 16,
     height: 40,
     width: 40,
+    alignSelf: 'center',
   },
   bannerText: {
     fontSize: 22,
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     width: '100%',
-    height: 74,
+    minHeight: 74,
     flexDirection: 'column',
     paddingTop: 8,
     paddingLeft: 16,
@@ -137,12 +143,13 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   subIcon: {
-    width: 9,
-    height: 7,
+    width: 9 * PixelRatio.getFontScale(),
+    height: 7 * PixelRatio.getFontScale(),
   },
   flexRowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 })
 

@@ -12,6 +12,7 @@ import { getPatientDataFromFhir } from '../helpers/getPatiendDataFromFhir'
 import { getVaccinationDataFromFhir } from '../helpers/getVaccinationDataFromFhir'
 import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
 import { getIssuerData } from '../helpers/getIssuerData'
+import Timer from '../../utils/timer'
 
 export const JwsValidationOptions = {
   skipJwksDownload: false,
@@ -80,7 +81,6 @@ export async function validate(jws: string): Promise<any> {
   }
 
   const isValid = await verifyJws(jws, headerJson['kid'])
-
   const issuer = getIssuerFromFhir(payload)
   const issuerData = await getIssuerData(issuer)
   const { message } = issuerData
@@ -92,7 +92,6 @@ export async function validate(jws: string): Promise<any> {
 
   const patientData = getPatientDataFromFhir(payload)
   const vaccinationData = await getVaccinationDataFromFhir(payload)
-
   const document = {
     isValid,
     issuerData,
@@ -112,6 +111,7 @@ async function fetchWithTimeout(url: string, options: any, timeout: number, time
 }
 
 async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefined> {
+  var timer = new Timer()
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
@@ -119,6 +119,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
   const timeout = JwsValidationOptions.jwksDownloadTimeOut
 
   try {
+    timer.start()
     const responseRaw: any = await fetchWithTimeout(
       jwkURL,
       { headers: { Origin: requestedOrigin } },
@@ -126,13 +127,17 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
       timeoutError,
     )
     const keySet = await responseRaw.json()
-
+    var loadingTime = timer.stop()
+    console.log(`loading issure key:  ${loadingTime.toFixed(2)}sec`)
     if (!keySet) {
       throw 'Failed to parse JSON KeySet schema'
     }
 
     try {
+      timer.start()
       await verifyAndImportHealthCardIssuerKey(keySet, issuerURL)
+      loadingTime = timer.stop()
+      console.log(`verification took:  ${loadingTime.toFixed(2)}sec`)
 
       return keySet
     } catch (err) {
