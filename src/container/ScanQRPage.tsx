@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-import { Platform, View, StyleSheet, Animated, Easing, Alert } from 'react-native'
+import { Platform, View, StyleSheet, Animated, Easing, Alert, useWindowDimensions } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import BarCodeScanner from '../components/BarCodeScanner'
 import { ErrorCode } from '../services/error'
@@ -9,6 +9,8 @@ import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
 import { Props, BaseResponse } from '../types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
+
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
   loading: require('../../assets/img/error/loading.png'),
@@ -18,19 +20,58 @@ const images = {
 const isAndroid = Platform.OS?.toLowerCase() == 'android'
 const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA;
 
-const ScanQRPage = ({ navigation }: Props) => {
+type markerPosition = {
+  left: number,
+  top: number
+}
 
+const ScanQRPage = ({ navigation }: Props) => {
+  const { height, width }   = useWindowDimensions();
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
+  const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0})
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
+
   const insets = useSafeAreaInsets()
+  var windowWidth  = 0
+  var windowHeight = 0
+  var markerLayerHeight:any = 273
+  var markerLayerWidth:any  = 126
+  var markerLayerOffsetTop  = 0
+  var markerLayerOffsetLeft = 0
+
   const spin = spinAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   })
 
+  const configureMarkerSizes = ( width: number, height: number) => {
+    console.log("screen size : " + width + "," + height )
+    windowWidth  = width;
+    windowHeight = height;
+    let tmpMarkerLayerHeight    = Math.ceil( markerLayerHeight * windowWidth / markerLayerWidth )
+    let tmpMarkerLayerWidth     = windowWidth;
+    markerLayerOffsetTop =  windowHeight - tmpMarkerLayerHeight;
+    if( markerLayerOffsetTop > 0  ) {
+      markerLayerOffsetTop = 0 
+      tmpMarkerLayerWidth     = markerLayerWidth * height / markerLayerHeight
+      tmpMarkerLayerHeight    = height
+      markerLayerOffsetLeft = width - tmpMarkerLayerWidth
+    }
+    markerLayerOffsetLeft = ( tmpMarkerLayerHeight * markerLayerOffsetLeft / markerLayerHeight )
+    markerLayerOffsetTop  = (tmpMarkerLayerWidth * markerLayerOffsetTop / markerLayerWidth ) 
+    let shiftPosition = { "left": markerLayerOffsetLeft, "top": markerLayerOffsetTop };
+    setMarkerShift( shiftPosition )
+  }
+
+
   useEffect(() => {
+
+    
+    configureMarkerSizes( width, height);
+    
+
     (async () => {
       if ( isAndroid ) {
         var result = await check(cameraPermissionType) 
@@ -163,27 +204,33 @@ const ScanQRPage = ({ navigation }: Props) => {
               styles={styles.scannerContainer}
             >
             </BarCodeScanner>
+              <View style={styles.markerLayerContaier}>
+                { ( markerShift.left < 0 ) ?
+                  ( <MarkerLayerSVG  height="100%" style={{"left": markerShift.left }} /> )
+                  :
+                  ( <MarkerLayerSVG width="100%"  style={{"top": markerShift.top}} /> )
+                }
+              </View>
               <View style={[styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top)}]}>
                   <AppClickableImage
                     styles={styles.leftCaretImage}
                     source={images.leftCaret}
                     onPress={() => navigation.navigate('Welcome')}
                   />
-                </View>
-
-                <View style={styles.switchCameraContainer}>
-                  <AppClickableImage
-                    styles={styles.switchCameraImage}
-                    source={images.switchCamera}
-                    onPress={() => {
-                      setCameraType(
-                        cameraType === BarCodeScanner.Constants.Type.back
-                          ? BarCodeScanner.Constants.Type.front
-                          : BarCodeScanner.Constants.Type.back,
-                      )
-                    }}
-                  />
-                </View>
+              </View>
+              <View style={styles.switchCameraContainer}>
+                <AppClickableImage
+                  styles={styles.switchCameraImage}
+                  source={images.switchCamera}
+                  onPress={() => {
+                    setCameraType(
+                      cameraType === BarCodeScanner.Constants.Type.back
+                        ? BarCodeScanner.Constants.Type.front
+                        : BarCodeScanner.Constants.Type.back,
+                    )
+                  }}
+                />
+              </View>
           </View>
 
         )}
@@ -210,6 +257,13 @@ const styles = StyleSheet.create({
     left: 20,
     height: 40,
     paddingLeft: 20,
+  },
+  markerLayerContaier: {
+    position: 'absolute',
+    top:0,
+    left:0,
+    width: "100%",
+    height: "100%"
   },
   switchCameraContainer: {
     position: 'absolute',
