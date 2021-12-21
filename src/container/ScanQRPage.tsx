@@ -31,7 +31,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   const { height, width }   = useWindowDimensions();
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
-  const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0})
+  const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0, width:width, height:height})
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
 
@@ -39,7 +39,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   var windowWidth  = 0
   var windowHeight = 0
   var markerLayerHeight:any = 273
-  var markerLayerWidth:any  = 126
+  var markerLayerWidth:any  = 127
   var markerLayerOffsetTop  = 0
   var markerLayerOffsetLeft = 0
 
@@ -49,17 +49,13 @@ const ScanQRPage = ({ navigation }: Props) => {
   })
 
   const configureMarkerSizes = ( width: number, height: number) => {
-    console.log("screen size : " + width + "," + height )
     windowWidth = width;
     windowHeight = height
     let ratio = windowWidth / markerLayerWidth;
-    console.log("ratio:" + ratio)
     let tmpMarkerLayerHeight    = ( markerLayerHeight * ratio )
-    console.log("tmpMarkerLayerHeight: " + tmpMarkerLayerHeight )
     let tmpMarkerLayerWidth     = windowWidth;
 
     markerLayerOffsetTop =  windowHeight - tmpMarkerLayerHeight;
-    console.log("markerLayerOffsetTop1:" + markerLayerOffsetTop)
     if( markerLayerOffsetTop > 0  ) {
       markerLayerOffsetTop = 0 
       ratio = height / markerLayerHeight;
@@ -67,14 +63,11 @@ const ScanQRPage = ({ navigation }: Props) => {
       tmpMarkerLayerHeight    = height
       markerLayerOffsetLeft = width - tmpMarkerLayerWidth
     }
-    // markerLayerOffsetLeft = ( tmpMarkerLayerHeight *  / markerLayerHeight )
-    // markerLayerOffsetTop  = (tmpMarkerLayerWidth * markerLayerOffsetTop / markerLayerWidth )
     let shiftPosition = { 
-      "left": markerLayerOffsetLeft, 
-      "top": markerLayerOffsetTop,
-      "width": tmpMarkerLayerWidth,
-      "height": tmpMarkerLayerHeight};
-    console.info("sift: " + shiftPosition.left + ", " +  shiftPosition.top );
+      "left": Math.floor(markerLayerOffsetLeft), 
+      "top": Math.floor(markerLayerOffsetTop),
+      "width": Math.ceil(tmpMarkerLayerWidth),
+      "height": Math.ceil(tmpMarkerLayerHeight)};
     setMarkerShift( shiftPosition )
   }
 
