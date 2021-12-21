@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-import { Platform, View, StyleSheet, Animated, Easing, Alert, useWindowDimensions } from 'react-native'
+import { Platform, View, StyleSheet, Animated, Easing, Alert, useWindowDimensions, PixelRatio } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import BarCodeScanner from '../components/BarCodeScanner'
 import { ErrorCode } from '../services/error'
@@ -22,7 +22,9 @@ const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIO
 
 type markerPosition = {
   left: number,
-  top: number
+  top: number,
+  width: number,
+  height: number
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
@@ -48,20 +50,31 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const configureMarkerSizes = ( width: number, height: number) => {
     console.log("screen size : " + width + "," + height )
-    windowWidth  = width;
-    windowHeight = height;
-    let tmpMarkerLayerHeight    = Math.ceil( markerLayerHeight * windowWidth / markerLayerWidth )
+    windowWidth = width;
+    windowHeight = height
+    let ratio = windowWidth / markerLayerWidth;
+    console.log("ratio:" + ratio)
+    let tmpMarkerLayerHeight    = ( markerLayerHeight * ratio )
+    console.log("tmpMarkerLayerHeight: " + tmpMarkerLayerHeight )
     let tmpMarkerLayerWidth     = windowWidth;
+
     markerLayerOffsetTop =  windowHeight - tmpMarkerLayerHeight;
+    console.log("markerLayerOffsetTop1:" + markerLayerOffsetTop)
     if( markerLayerOffsetTop > 0  ) {
       markerLayerOffsetTop = 0 
-      tmpMarkerLayerWidth     = markerLayerWidth * height / markerLayerHeight
+      ratio = height / markerLayerHeight;
+      tmpMarkerLayerWidth     = markerLayerWidth * ratio
       tmpMarkerLayerHeight    = height
       markerLayerOffsetLeft = width - tmpMarkerLayerWidth
     }
-    markerLayerOffsetLeft = ( tmpMarkerLayerHeight * markerLayerOffsetLeft / markerLayerHeight )
-    markerLayerOffsetTop  = (tmpMarkerLayerWidth * markerLayerOffsetTop / markerLayerWidth ) 
-    let shiftPosition = { "left": markerLayerOffsetLeft, "top": markerLayerOffsetTop };
+    // markerLayerOffsetLeft = ( tmpMarkerLayerHeight *  / markerLayerHeight )
+    // markerLayerOffsetTop  = (tmpMarkerLayerWidth * markerLayerOffsetTop / markerLayerWidth )
+    let shiftPosition = { 
+      "left": markerLayerOffsetLeft, 
+      "top": markerLayerOffsetTop,
+      "width": tmpMarkerLayerWidth,
+      "height": tmpMarkerLayerHeight};
+    console.info("sift: " + shiftPosition.left + ", " +  shiftPosition.top );
     setMarkerShift( shiftPosition )
   }
 
@@ -69,7 +82,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   useEffect(() => {
 
     
-    configureMarkerSizes( width, height);
+    configureMarkerSizes(width, height);
     
 
     (async () => {
@@ -206,9 +219,9 @@ const ScanQRPage = ({ navigation }: Props) => {
             </BarCodeScanner>
               <View style={styles.markerLayerContaier}>
                 { ( markerShift.left < 0 ) ?
-                  ( <MarkerLayerSVG  height="100%" style={{"left": markerShift.left }} /> )
+                  ( <MarkerLayerSVG  height={markerShift.height} width={markerShift.width} style={{ "left": markerShift.left }} /> )
                   :
-                  ( <MarkerLayerSVG width="100%"  style={{"top": markerShift.top}} /> )
+                  ( <MarkerLayerSVG height={markerShift.height} width={markerShift.width} style={{"top": markerShift.top}} /> )
                 }
               </View>
               <View style={[styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top)}]}>
