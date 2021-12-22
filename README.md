@@ -93,7 +93,7 @@ install dependencies and run the metro server.
 
 ```bash
 
-  npm start -- --reset-cache
+  npm start
 ```
 
 
