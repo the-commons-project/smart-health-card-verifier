@@ -128,7 +128,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
     )
     const keySet = await responseRaw.json()
     var loadingTime = timer.stop()
-    console.log(`loading issure key:  ${loadingTime.toFixed(2)}sec`)
+    console.log(`loading issure key: ${loadingTime.toFixed(2)}sec`)
     if (!keySet) {
       throw 'Failed to parse JSON KeySet schema'
     }
