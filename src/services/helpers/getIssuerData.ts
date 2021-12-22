@@ -22,7 +22,7 @@ export const getIssuerData = async (issuer: string): Promise<any> => {
     throw ErrorCode.SERVER_ERROR
   }
   let loadingTime = timer.stop()
-  console.log(`loading issure took:  ${loadingTime.toFixed(2)}sec`)
+  console.log(`loading issuer took:  ${loadingTime.toFixed(2)}sec`)
 
   const okOrNotFound = response.status === 200 || response.status === 404
 
