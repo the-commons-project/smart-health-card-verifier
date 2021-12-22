@@ -22,7 +22,7 @@ const BarCodeScanner = ({onBarCodeScanned, type, styles}: BarcodeProps) => {
             cameraType={type}
             cameraStyle={cameraStyles.camerPreview}
             containerStyle={cameraStyles.cameraContainer}
-            onRead={onBarCodeScanned}F
+            onRead={onBarCodeScanned}
           >
           </QRCodeScanner>
         </View>
