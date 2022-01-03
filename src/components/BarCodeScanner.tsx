@@ -15,13 +15,18 @@ export interface BarcodeProps {
 const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
   return <View style={ styles }>
     <QRCodeScanner
-      reactivate={ true }
-      showMarker={ false }
-      cameraType={ type }
-      cameraStyle={ cameraStyles.camerPreview }
-      containerStyle={ cameraStyles.cameraContainer }
-      onRead={ onBarCodeScanned }
-    />
+      reactivate={true}
+      showMarker={false}
+      cameraType={type}
+      cameraStyle={cameraStyles.camerPreview}
+      cameraProps={{
+        autoFocus: RNCamera.Constants.AutoFocus.on, 
+        barCodeTypes:[RNCamera.Constants.BarCodeType.qr]
+      }}
+      containerStyle={cameraStyles.cameraContainer}
+      onRead={onBarCodeScanned}
+    >
+    </QRCodeScanner>
   </View>
 
 }
