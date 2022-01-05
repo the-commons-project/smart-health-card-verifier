@@ -24,6 +24,7 @@
     "react-native-device-info": "^8.4.5",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-jose": "git+https://github.com/hellojoko/react-native-jose.git",
+    "react-native-localize": "^2.1.7",
     "react-native-permissions": "^3.1.0",
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-safe-area-context": "^3.3.2",

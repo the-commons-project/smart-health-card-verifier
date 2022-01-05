@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import AppButton from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg';
+import { useLocaleContext } from '../contexts/LocaleContext'
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -27,8 +28,8 @@ const imageHeight = ( dimension.height * .30 / PixelRatio.getFontScale() );
 
 const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
+  const { initialized, getLocaleString } = useLocaleContext();
   const deviceHeight = useWindowDimensions().height
-
   const minHeight = 800
 
   const showAppVersion = () => {
@@ -51,7 +52,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 FontStyle.Poppins_700Bold,
               ]}
             >
-              Welcome! 
+              Welcome! { getLocaleString("t") } { initialized ? "True" : "False" }
             </Text>
             <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
               SMART® Health Card Verifier
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#F3F6FF',
-    paddingTop: 12,
+    paddingTop: 0,
     paddingStart: 12,
     paddingEnd: 12,
     paddingBottom: 12
