@@ -35,6 +35,12 @@ export declare class Timer {
   stop(): number;
 }
 
+
+export type localeType = {
+    lang: string,
+    region: string
+}
+
 type issuerData = {
   iss: string
   logo_uri: string

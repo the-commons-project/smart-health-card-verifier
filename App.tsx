@@ -10,7 +10,7 @@
 
 import React, { useEffect, useContext, useRef }from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { getProvider as getLocalProvider, useLocaleContext } from './src/contexts/LocaleContext'
+import { getProvider as getLocalProvider } from './src/contexts/LocaleContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
