@@ -3,6 +3,7 @@ const localeLoopupUpHost = 'http://192.168.50.154'
 const issuerLookUpPath = '/api/v1/issuers/lookup'
 const vaccineNameLookUpPath = '/api/v1/vaccines'
 
+export { localeLoopupUpHost }
 export const issuerStatus = 'VERIFIED'
 export const issuerNameLookUpUrl = `${apiLookUpHost}${issuerLookUpPath}`
 export const vaccineNameLookUpUrl = `${apiLookUpHost}${vaccineNameLookUpPath}`

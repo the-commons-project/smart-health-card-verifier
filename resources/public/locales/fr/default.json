@@ -1,0 +1,36 @@
+{
+  "key":"fr",
+  "lang":"fr",
+  "region":"default",
+  "data": {
+    "default": {
+      "Common":{
+        "Cancel":"Cancel",
+        "OK":"OK"
+      },
+      "Error": {
+        "Server Error Please try to scan again":"Server Error. Please try to scan again."
+      },
+      "ErrorPage": {
+        "Unsupported QR":"Unsupported QR",
+        "Scan next vaccination record":"Scan next vaccination record"
+      },
+      "Welcome":{
+        "Title": "Bienvenue!",
+        "SMART® Health Card Verifier": "SMART® Health Card Verifier",
+        "Verify SMART® Health Card QR code in a safe and privacy-preserving way": "Verify SMART® Health Card QR code in a safe and privacy-preserving way",
+        "Scan vaccination record": "Scan vaccination record",
+        "How to verify SMART® Health Cards": "How to verify SMART® Health Cards",
+        "About us":"About us",
+        "Privacy policy":"Privacy policy"
+      },
+      "Scan":{
+        "Camera Permission":"Camera Permission",
+        "Camera Permission Description":"This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
+      },
+      "Result":{
+        "Scan next vaccination record":"Scan next vaccination record"
+      }
+    }
+  }
+}

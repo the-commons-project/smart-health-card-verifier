@@ -1,7 +1,8 @@
-import React, { useContext, useState, useRef, useEffect} from 'react'
+import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
 import * as RNLocalize from "react-native-localize";
 import { createContext } from "./Context";
 import i18nUtils from '../services/i18nUtils'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const i18n = i18nUtils.initailize()
 
@@ -71,15 +72,13 @@ export function getProvider() {
     }, []);
 
 
-    return  (<>
-             {
-              ( state.initialized ) && (
+    return  (
+              < Suspense  fallback={ LoadingSpinner } >
                <localeContext.Provider value={{...state,  getLocaleString }} >
                 {children}
                </localeContext.Provider>
-              )
-             }
-    </>);
+              </Suspense>
+             );
   }
   return [ Provider ] as const; 
 }

@@ -16,7 +16,7 @@ import AppButton from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg';
-import { useLocaleContext } from '../contexts/LocaleContext'
+import { useTranslation } from '../services/i18nUtils'
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -28,7 +28,7 @@ const imageHeight = ( dimension.height * .30 / PixelRatio.getFontScale() );
 
 const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
-  const { initialized, getLocaleString } = useLocaleContext();
+  const { t } = useTranslation();
   const deviceHeight = useWindowDimensions().height
   const minHeight = 800
 
@@ -52,10 +52,10 @@ const WelcomePage = ({ navigation }: Props) => {
                 FontStyle.Poppins_700Bold,
               ]}
             >
-              Welcome! { getLocaleString("t") } { initialized ? "True" : "False" }
+              { t('Welcome.Title') }
             </Text>
             <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
-              SMART® Health Card Verifier
+              { t('Welcome.SMART® Health Card Verifier')}
             </Text>
           </View>
 
@@ -71,11 +71,10 @@ const WelcomePage = ({ navigation }: Props) => {
 
           <View style={styles.textContainer}>
             <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
-              {' '}
-              Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
+              {t("Welcome.Verify SMART® Health Card QR code in a safe and privacy-preserving way")}
             </Text>
             <AppButton
-              title="Scan vaccination record"
+              title={t("Welcome.Scan vaccination record")}
               onPress={() => navigation.navigate('ScanQR')}
               backgroundColor="#255DCB"
             />
@@ -91,7 +90,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
                 }
               >
-                How to verify SMART® Health Cards
+                {t("Welcome.How to verify SMART® Health Cards")}
               </Text>
             </View>
             <View
@@ -111,7 +110,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
                 }
               >
-                About us
+                {t("Welcome.About us")}
               </Text>
               <Text
                 style={[
@@ -122,7 +121,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 ]}
                 onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
               >
-                Privacy policy
+                {t("Welcome.Privacy policy")}
               </Text>
             </View>
           </View>

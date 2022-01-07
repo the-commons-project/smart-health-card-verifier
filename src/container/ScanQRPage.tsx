@@ -9,6 +9,7 @@ import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
 import { Props, BaseResponse } from '../types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useTranslation } from '../services/i18nUtils'
 import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
 
 const images = {
@@ -28,6 +29,7 @@ type markerPosition = {
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
+  const {t} = useTranslation()
   const { height, width }   = useWindowDimensions();
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
@@ -83,16 +85,16 @@ const ScanQRPage = ({ navigation }: Props) => {
         var result = await check(cameraPermissionType) 
         if ( result != RESULTS.GRANTED) {
           Alert.alert(
-            'Camera Permission',
-            'This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them.',
+            t("Scan.Camera Permission"),
+            t("Scan.Camera Permission Description"),
             [
               {
-                text: 'Cancel',
+                text: t("Common.Cancel"),
                 onPress: () => navigation.navigate('Welcome'),
                 style: 'cancel',
               },
               {
-                text: 'OK',
+                text: t("Common.OK"),
                 onPress: async () => {
                   result = await request( cameraPermissionType )
                   setHasCameraPermission(result === RESULTS.GRANTED)
@@ -168,7 +170,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       if (error === ErrorCode.SERVER_ERROR) {
         navigation.navigate('Welcome')
-        alert('Server Error. Please try to scan again.')
+        alert(t('Error.Server Error Please try to scan again'))
 
         return
       }
