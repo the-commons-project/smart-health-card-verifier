@@ -57,13 +57,13 @@ const ScanQRPage = ({ navigation }: Props) => {
     let tmpMarkerLayerHeight    = ( markerLayerHeight * ratio )
     let tmpMarkerLayerWidth     = windowWidth;
 
-    markerLayerOffsetTop =  windowHeight - tmpMarkerLayerHeight;
+    markerLayerOffsetTop =  (windowHeight - tmpMarkerLayerHeight) / 2;
     if( markerLayerOffsetTop > 0  ) {
       markerLayerOffsetTop = 0 
       ratio = height / markerLayerHeight;
       tmpMarkerLayerWidth     = markerLayerWidth * ratio
       tmpMarkerLayerHeight    = height
-      markerLayerOffsetLeft = width - tmpMarkerLayerWidth
+      markerLayerOffsetLeft = ( width - tmpMarkerLayerWidth ) / 2
     }
     let shiftPosition = { 
       "left": Math.floor(markerLayerOffsetLeft), 

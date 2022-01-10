@@ -355,6 +355,8 @@ PODS:
     - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
+  - RNLocalize (2.1.7):
+    - React-Core
   - RNPermissions (3.1.0):
     - React-Core
   - RNScreens (3.9.0):
@@ -425,6 +427,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNLocalize (from `../node_modules/react-native-localize`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -518,6 +521,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNLocalize:
+    :path: "../node_modules/react-native-localize"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNScreens:
@@ -576,12 +581,13 @@ SPEC CHECKSUMS:
   ReactCommon: c0263c1a41509aeb94be3214fa7bc3b71eae5ef6
   RNDeviceInfo: 3b3bbe00f478907223daa580b6882f0bae162f72
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNLocalize: b8980509fc4db6895953aa95b90c8d81cb984603
   RNPermissions: b3588a19e12bff03fe21bc46911fd32343666dc0
   RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   Yoga: 9a08effa851c1d8cc1647691895540bc168ea65f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 817ae3ef374405c290044ad393f4d76556d52d1f
+PODFILE CHECKSUM: 7da588c9400a7f86a28dc5d57188db614bb73199
 
 COCOAPODS: 1.11.2

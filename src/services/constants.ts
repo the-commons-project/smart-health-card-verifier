@@ -1,5 +1,5 @@
 const apiLookUpHost = 'https://shc.tcp.affinidi.com'
-const localeLoopupUpHost = 'http://192.168.50.154'
+const localeLoopupUpHost = 'http://192.168.50.154:8080'
 const issuerLookUpPath = '/api/v1/issuers/lookup'
 const vaccineNameLookUpPath = '/api/v1/vaccines'
 
