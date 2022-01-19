@@ -68,11 +68,10 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
                   <View 
                     style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
                     <View style={styles.flexRowContainer}>
-                      <Text
-                        style={[
+                      <Text style={[
                           styles.subBannerText,
                           FontStyle.Poppins_600SemiBold,
-                          { color: verifiedColor, textAlign: "center"},
+                          { color: verifiedColor, textAlign: "center"}
                         ]}
                       >
                         {verifiedIssuerText}

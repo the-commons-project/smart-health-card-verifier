@@ -5,6 +5,7 @@ import  { localeType} from '../types'
 import { localeLoopupUpHost } from './constants'
 import Timer from '../utils/timer'
 import defaultLocaleResource  from "../../resources/public/locales/en/default.json"
+
 const localeFetchURL = `${localeLoopupUpHost}/{{lng}}/default.json`
 /* #TODO: Can change to more granular when server side has fallback logic 
   `${localeLoopupUpHost}/{{lng}}/{{region}}/default.json` */

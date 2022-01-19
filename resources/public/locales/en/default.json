@@ -9,7 +9,11 @@
         "OK":"OK"
       },
       "Error": {
-        "Server Error Please try to scan again":"Server Error. Please try to scan again."
+        "Server Error Please try to scan again":"Server Error. Please try to scan again.",
+        "NoInterNet":"No internet connection",
+        "NoInterNetText":"Please check your internet connection and try again.",
+        "NoCamera":"No access to camera",
+        "NoCameraText": "To continue, please enable camera access in Settings."
       },
       "ErrorPage": {
         "Unsupported QR":"Unsupported QR",
@@ -29,7 +33,16 @@
         "Camera Permission Description":"This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
       },
       "Result":{
-        "Scan next vaccination record":"Scan next vaccination record"
+        "IssuerVerified":"Issuer verified",
+        "IssuerNotRecognized":"Issuer not recognized",
+        "NotVerified":"Not Verified",
+        "NotVerifiedText":"This SMART Health Card cannot be verified. It may have been corrupted.",
+        "PartialVarified":"Partially Verified",
+        "Varid":"Varid",
+        "Verified":"Verified",
+        "Scan next vaccination record":"Scan next vaccination record",
+        "Name":"Name",
+        "DOB":"Result.DOB"
       }
     }
   }

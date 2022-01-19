@@ -4,6 +4,7 @@ import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+import { useTranslation } from '../services/i18nUtils'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -13,13 +14,14 @@ const images = {
 }
 
 const ResultRecord = ({ data }: Data) => {
+  const { t } = useTranslation()
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
   const { issuerData, patientData, vaccinationData } = validationResult
 
   const { names, dateOfBirth } = patientData
-  const userFieldTitle = ['Name']
-  const userDobTitle = ['Date of Birth']
+  const userFieldTitle = [t("Result.Name",'Name')]
+  const userDobTitle = [t("Result.DOB",'Date of Birth')]
   const userDobValue = [insertImageToTable()]
 
 
