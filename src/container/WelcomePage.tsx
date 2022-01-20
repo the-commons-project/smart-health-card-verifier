@@ -71,10 +71,10 @@ const WelcomePage = ({ navigation }: Props) => {
 
           <View style={styles.textContainer}>
             <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
-              {t("Welcome.Verify SMART® Health Card QR code in a safe and privacy-preserving way")}
+              {t("Welcome.VerifySmartHealthCard", "Verify SMART® Health Card QR code in a safe and privacy-preserving way")}
             </Text>
             <AppButton
-              title={t("Welcome.Scan vaccination record")}
+              title={t("Welcome.ScanVaccinationRecord","Scan vaccination record")}
               onPress={() => navigation.navigate('ScanQR')}
               backgroundColor="#255DCB"
             />
@@ -90,7 +90,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
                 }
               >
-                {t("Welcome.How to verify SMART® Health Cards")}
+                {t("Welcome.HowTo","How to verify SMART® Health Cards")}
               </Text>
             </View>
             <View
@@ -110,7 +110,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
                 }
               >
-                {t("Welcome.About us")}
+                {t("Welcome.AboutUs", "About us")}
               </Text>
               <Text
                 style={[
@@ -121,7 +121,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 ]}
                 onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
               >
-                {t("Welcome.Privacy policy")}
+                {t("Welcome.PrivacyPolicy","Privacy policy")}
               </Text>
             </View>
           </View>

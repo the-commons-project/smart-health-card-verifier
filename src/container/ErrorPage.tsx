@@ -25,7 +25,7 @@ const ErrorPage = ({ navigation }: Props) => {
           style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
           onPress={() => navigation.navigate('ScanQR')}
         >
-          {t("ErrorPage.Unsupported QR")}
+          {t("ErrorPage.UnsupportedQR","Unsupported QR")}
         </Text>
       </View>
       <View style={styles.imageContainer}>
@@ -35,7 +35,7 @@ const ErrorPage = ({ navigation }: Props) => {
         </Text>
       </View>
       <AppButton
-        title={t("ErrorPage.Scan next vaccination record")}
+        title={t("ErrorPage.ScanNext")}
         onPress={() => navigation.navigate('ScanQR')}
         backgroundColor="#255DCB"
       />

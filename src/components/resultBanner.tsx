@@ -16,7 +16,7 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
   let icon = images.success
   let text = 'Verified'
   let color = '#158E00' // green
-  let validityText = 'Valid SMART® Health Card'
+  let validityText = t('Result.ValidSmartHealthCard', 'Valid SMART® Health Card')
   let validityIcon = images.tick
   let validityColor = '#0E6B23' // green
   let verifiedIssuerText = 'Issuer verified'

@@ -183,7 +183,7 @@ const ResultRecord = ({ data }: Data) => {
       })}
       <View style={styles.divider} />
       <View>
-        <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>Issuer</Text>
+        <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>{t("Result.Issuer","Issuer")}</Text>
         {issuerData.name ? (
           <View style={styles.verifierContainer}>
             <Text style={[ {width:"100%"},styles.fieldValue, FontStyle.OpenSans_700Bold]}>
@@ -192,7 +192,7 @@ const ResultRecord = ({ data }: Data) => {
 
             <Image style={styles.verifierImage} source={images.commonTrustVerified} />
             <Text style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}>
-              Verified
+              {t("Result.Verified","Verified")}
             </Text>
           </View>
         ) : (
@@ -201,7 +201,7 @@ const ResultRecord = ({ data }: Data) => {
             <Text
               style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}
             >
-              Issuer not recognized
+              {t("Result.IssuerNotRecognized", "Issuer not recognized")}
             </Text>
           </View>
         )}

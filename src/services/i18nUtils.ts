@@ -1,16 +1,34 @@
 import i18next from 'i18next';
-import * as RNLocalize from "react-native-localize";
+import RNLocalize from "react-native-localize";
 import { useTranslation as i18nUseTranslation, initReactI18next } from "react-i18next";
 import  { localeType} from '../types'
 import { localeLoopupUpHost } from './constants'
 import Timer from '../utils/timer'
 import defaultLocaleResource  from "../../resources/public/locales/en/default.json"
+import frResource  from "../../resources/public/locales/fr/default.json"
+import jaResource  from "../../resources/public/locales/ja/default.json"
+
+
+const localeResolutionOnly = true
+
+type localeResourcesMapType = {
+  [key:string] : any 
+}
+
+
+const localeResourcesMap:localeResourcesMapType = {
+  "en": defaultLocaleResource,
+  "fr": frResource,
+  "ja": jaResource
+}
+
 
 const localeFetchURL = `${localeLoopupUpHost}/{{lng}}/default.json`
 /* #TODO: Can change to more granular when server side has fallback logic 
   `${localeLoopupUpHost}/{{lng}}/{{region}}/default.json` */
 
 const defaultState = {
+  key: "en",
   lang: "en",
   region: "US",
 };
@@ -76,13 +94,22 @@ class i18nUtils{
       .init( i18nOption );
   }
 
+  bindChange( callback: any ){
+    var that = this
+    RNLocalize.addEventListener("change", async() => {
+      await this.updateLocale(false);
+      callback();
+      // do localization related stuff…
+    });
+  }
+
 
   getSystemLocale(){
     return RNLocalize.getLocales()
   }
 
-  setCurrentLocale( lang: string, region: string,  ){
-    this.currentLocale = { lang, region }
+  setCurrentLocale( key: string, lang: string, region: string,  ){
+    this.currentLocale = { key, lang, region }
   }
 
   parseResult( res: any ) {
@@ -90,8 +117,12 @@ class i18nUtils{
     const resources = data[defaultNameSpace] 
     return [key, defaultNameSpace, resources, lang, region ]
   }
+  
+  fetchLocalResource( lang: string, region: string,): Promise<any>{
+    return ( localeResourcesMap[ lang ] || null )
+  }
 
-  async fetchLocaleResource( lang: string, region: string,  ): Promise< any >{
+  async fetchResource( lang: string, region: string,  ): Promise< any >{
     const timer = new Timer()
     var   url   =  localeFetchURL
                     .replace("{{lng}}",lang)
@@ -109,6 +140,7 @@ class i18nUtils{
         res = tmp.json()
       } catch (error) {
         let loadingTime = timer.stop()
+        res = this.fetchLocalResource( lang, region );
         console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
       }
     } else {
@@ -117,32 +149,47 @@ class i18nUtils{
     return res;
   }
 
-  async initializeLocale() : Promise<localeType> {
-    console.info("#YF: initializeLocale")
+  updateResourceBundle( res: any ):[ key: string, lang: any, region:any] {
+      var _lang:any
+      var _region:any
+      const [key, namespace, resources, lang, region ] = this.parseResult( res );
+      /* Store data : #TODO to store locally */
+      _lang = lang 
+      if ( region == 'default'){
+        _region = null
+      }
+      i18next.addResourceBundle( key, namespace, resources, true, true );
+      this.cache.set( _lang, _region, resources )
+      return [key, _lang, _region];
+  }
+
+  loadDefaultResources(){
+    Object.keys( localeResourcesMap ).forEach( key => {
+      this.updateResourceBundle(localeResourcesMap[key])
+    })
+  }
+
+  async updateLocale(force: boolean = false): Promise<localeType>{
+    var key         = defaultState.key
+    var _lang       = defaultState.lang 
+    var _region:any = defaultState.region
+    var arr = this.getSystemLocale()
+    var res = defaultLocaleResource;
+    if( arr.length > 0 ) {
+      _lang = arr[0].languageCode
+      _region = arr[0].countryCode
+      res = await this.fetchResource( _lang, _region ) || res
+    }
+    [ key, _lang, _region ] = this.updateResourceBundle( res );
+    i18next.changeLanguage( key )
+    this.setCurrentLocale( key, _lang, _region )
+    return this.currentLocale
+  }
+
+  initializeLocale(){
     var that = this;
-    return new Promise( async ( resolve:any, reject:any )=>{
-        var _lang       = defaultState.lang 
-        var _region:any = defaultState.region
-        var arr = that.getSystemLocale()
-        var res = defaultLocaleResource;
-        if( arr.length > 0 ) {
-          _lang = arr[0].languageCode
-          _region = arr[0].countryCode
-          res = await that.fetchLocaleResource( _lang, _region ) || res
-        }
-        const [key, namespace, resources, lang, region ] = that.parseResult( res );
-        /* Store data : #TODO to store locally */
-        _lang = lang 
-        if ( region == 'default'){
-          _region = null
-        }
-        console.info("adding resources : "  + JSON.stringify( resources ))
-        i18next.addResourceBundle( key, namespace, resources, true, true );
-        i18next.changeLanguage( key )
-        that.cache.set( _lang, _region, resources )
-        that.setCurrentLocale( _lang, _region )
-        resolve( res )
-      });
+    that.loadDefaultResources()
+    that.updateLocale(true)
   };
 
 }

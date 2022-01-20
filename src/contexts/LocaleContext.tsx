@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
-import * as RNLocalize from "react-native-localize";
+import RNLocalize from "react-native-localize"
 import { createContext } from "./Context";
 import i18nUtils from '../services/i18nUtils'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner'
 const i18n = i18nUtils.initailize()
 
 type localeType = {
+    key: string,
     lang: string,
     region: string
     initialized: boolean
@@ -15,6 +16,7 @@ type localeType = {
 
 // Declaring the state object globally.
 const defaultState = {
+  key: 'en',
   lang: "en",
   region: "US",
   initialized: false
@@ -62,15 +64,15 @@ export function getProvider() {
         return key + ":" + state.lang
       }
 
-    const checkLanguageLocale = async ()=>{
-      var res = await i18n.initializeLocale()
+    const udpateLocale = ()=>{
+      var res = i18n.initializeLocale()
+      console.log("updated Locale: " + JSON.stringify( res ))
       setLocale( res );
     }
 
-    useEffect(() => {
-      checkLanguageLocale();
+    useEffect(()=>{
+        udpateLocale();
     }, []);
-
 
     return  (
               < Suspense  fallback={ LoadingSpinner } >

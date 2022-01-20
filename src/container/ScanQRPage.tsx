@@ -85,8 +85,8 @@ const ScanQRPage = ({ navigation }: Props) => {
         var result = await check(cameraPermissionType) 
         if ( result != RESULTS.GRANTED) {
           Alert.alert(
-            t("Scan.Camera Permission"),
-            t("Scan.Camera Permission Description"),
+            t("Scan.CameraPermission", "Camera Permission"),
+            t("Scan.CameraPermissionText","Camera Permission Description"),
             [
               {
                 text: t("Common.Cancel"),
@@ -170,7 +170,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       if (error === ErrorCode.SERVER_ERROR) {
         navigation.navigate('Welcome')
-        alert(t('Error.Server Error Please try to scan again'))
+        alert(t('Error.ServerError',"Server Error Please try to scan again"))
 
         return
       }
