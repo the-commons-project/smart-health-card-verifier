@@ -1,22 +1,41 @@
-import React from 'react'
-import { Text, View, ScrollView, StyleSheet, PixelRatio } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, ScrollView, StyleSheet, PixelRatio, Pressable } from 'react-native'
 import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'
 import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+import { BaseResponse } from '../types'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
 }
 
+const canShowResult = ( result: BaseResponse): Boolean => {
+  return( result.isValid == true ) ;
+}
+
+const initiallyShowRecord = ( result: BaseResponse )=>{
+  const isIssuerRecognized = !!result?.issuerData?.name
+  return ( result.isValid && isIssuerRecognized );
+}
+
 const VerificationResultPage = ({ route, navigation }: Props) => {
   const data = route.params
   const { validationResult } = data
+  const canToggleResult = canShowResult( validationResult );
+  const [ showResult, setShowResult ] = useState(initiallyShowRecord( validationResult ) )
 
-  return (
+  const resultBannerClicked = ()=>{
+    if( canToggleResult ) {
+      setShowResult( !showResult)
+    }
+  }  
+
+  return ( 
+
     <View style={styles.flexContainer}>
       <View style={styles.backButtonContainer}>
         <AppClickableImage
@@ -32,8 +51,10 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
         </Text>
       </View>
       <ScrollView>
-        <ResultBanner validationResult={validationResult} />
-        {validationResult.isValid && <ResultRecord data={data} />}
+        <Pressable onPress={ resultBannerClicked } >
+          <ResultBanner validationResult={validationResult} />
+        </Pressable>
+        {showResult && validationResult.isValid && <ResultRecord data={data} />}
       </ScrollView>
       <AppButton
         title="Scan next vaccination record"

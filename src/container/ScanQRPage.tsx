@@ -133,7 +133,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
     let validationResult: BaseResponse = {
-      isValid: '',
+      isValid: false,
       issuerData: {
         iss: '',
         logo_uri: '',
@@ -152,7 +152,7 @@ const ScanQRPage = ({ navigation }: Props) => {
       setScanned(true)
       validationResult = await validate([data])
 
-      if (!validationResult || validationResult.isValid === 'false') {
+      if (!validationResult || validationResult.isValid === false ) {
         navigation.navigate('Error')
         return
       }

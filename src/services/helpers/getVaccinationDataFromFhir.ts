@@ -23,10 +23,9 @@ export const getVaccinationDataFromFhir = async (credential: any): Promise<any> 
     const { code } = vaccineCode?.coding[0]
     const isValidVaccinationCode = code && cvxCodes.includes(code)
     const isVaccineShotDone = status === 'completed'
-
     if (!isValidVaccinationCode) {
       console.log(
-        `Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(',')}).`,
+        `Immunization.vaccineCode.code (${code}) requires valid COVID-19 code (${cvxCodes.join(',')}).`,
       )
     }
 
