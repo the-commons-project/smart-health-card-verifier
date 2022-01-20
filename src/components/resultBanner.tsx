@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio} from 'react-native'
 import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
@@ -12,7 +12,7 @@ const images = {
   cross: require('../../assets/img/verificationresult/cross.png'),
 }
 
-const ResultBanner = ({ validationResult }: ValidationResult) => {
+const ResultBanner = ({ validationResult}: ValidationResult ) => {
   let icon = images.success
   let text = 'Verified'
   let color = '#158E00' // green
@@ -45,53 +45,55 @@ const ResultBanner = ({ validationResult }: ValidationResult) => {
   }
 
   return (
-    <View>
-      <View style={[styles.bannerContainer, { backgroundColor: color }]}>
-        <Image style={styles.bannerImage} source={icon} />
-        <Text style={[styles.bannerText, FontStyle.Poppins_600SemiBold]}>{text}</Text>
-      </View>
-      <View style={[styles.subBannerContainer, { borderColor: color }]}>
-        {!isDocumentValid ? (
-          <View style={styles.flexRowContainer}>
-            <Text
-              style={[
-                styles.subBannerText,
-                FontStyle.Poppins_600SemiBold,
-                {color: validityColor },
-              ]}
-            >
-              {validityText}
-            </Text>
-          </View>
-        ) : (
-          <View style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
+    <View >
+        <View style={[styles.bannerContainer, { backgroundColor: color }]}>
+          <Image style={styles.bannerImage} source={icon} />
+          <Text style={[styles.bannerText, FontStyle.Poppins_600SemiBold]}>{text}</Text>
+        </View>
+        <View style={[styles.subBannerContainer, { borderColor: color }]}>
+          {!isDocumentValid ? (
             <View style={styles.flexRowContainer}>
-              <Image style={styles.subIcon} source={validityIcon} />
               <Text
-                style={[
+              style={[
                   styles.subBannerText,
                   FontStyle.Poppins_600SemiBold,
-                  { color: validityColor },
+                  {color: validityColor },
                 ]}
               >
                 {validityText}
               </Text>
             </View>
-            <View style={styles.flexRowContainer}>
-              <Image style={styles.subIcon} source={verifiedIssuerIcon} />
-              <Text
-                style={[
-                  styles.subBannerText,
-                  FontStyle.Poppins_600SemiBold,
-                  { color: verifiedColor, textAlign: "left"},
-                ]}
-              >
-                {verifiedIssuerText}
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
+          ) : (
+              <View 
+                style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
+                <View style={styles.flexRowContainer} >
+                  <Image style={styles.subIcon} source={validityIcon} />
+                  <Text
+
+                    style={[
+                      styles.subBannerText,
+                      FontStyle.Poppins_600SemiBold,
+                      { color: validityColor },
+                    ]}
+                  >
+                    {validityText}
+                  </Text>
+                </View>
+                <View style={styles.flexRowContainer}>
+                  <Image style={styles.subIcon} source={verifiedIssuerIcon} />
+                  <Text
+                    style={[
+                      styles.subBannerText,
+                      FontStyle.Poppins_600SemiBold,
+                      { color: verifiedColor, textAlign: "left"},
+                    ]}
+                  >
+                    {verifiedIssuerText}
+                  </Text>
+                </View>
+              </View>
+          )}
+        </View>
     </View>
   )
 }
