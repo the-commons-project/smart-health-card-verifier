@@ -48,9 +48,6 @@
     "path": "Patient.name.extension"
   },
   {
-    "path": "Patient.name.use"
-  },
-  {
     "path": "Patient.telecom"
   },
   {
