@@ -39,7 +39,7 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
     icon = images.warning
     text = 'Partially Verified'
     color = '#EA6300' // orange
-    verifiedIssuerText = 'Issuer not recognized'
+    verifiedIssuerText = 'The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network\'s registry of trusted issuers.\n Tap for Details'
     verifiedIssuerIcon = images.cross
     verifiedColor = '#CE471C' // orange
   }
@@ -63,36 +63,53 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
                 {validityText}
               </Text>
             </View>
-          ) : (
-              <View 
-                style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
-                <View style={styles.flexRowContainer} >
-                  <Image style={styles.subIcon} source={validityIcon} />
-                  <Text
+          ) : ( !isIssuerRecognized ) ?
+                (
+                  <View 
+                    style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
+                    <View style={styles.flexRowContainer}>
+                      <Text
+                        style={[
+                          styles.subBannerText,
+                          FontStyle.Poppins_600SemiBold,
+                          { color: verifiedColor, textAlign: "center"},
+                        ]}
+                      >
+                        {verifiedIssuerText}
+                      </Text>
+                    </View>
+                  </View>
+                ):(
+                  <View 
+                    style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
+                    <View style={styles.flexRowContainer} >
+                      <Image style={styles.subIcon} source={validityIcon} />
+                      <Text
 
-                    style={[
-                      styles.subBannerText,
-                      FontStyle.Poppins_600SemiBold,
-                      { color: validityColor },
-                    ]}
-                  >
-                    {validityText}
-                  </Text>
-                </View>
-                <View style={styles.flexRowContainer}>
-                  <Image style={styles.subIcon} source={verifiedIssuerIcon} />
-                  <Text
-                    style={[
-                      styles.subBannerText,
-                      FontStyle.Poppins_600SemiBold,
-                      { color: verifiedColor, textAlign: "left"},
-                    ]}
-                  >
-                    {verifiedIssuerText}
-                  </Text>
-                </View>
-              </View>
-          )}
+                        style={[
+                          styles.subBannerText,
+                          FontStyle.Poppins_600SemiBold,
+                          { color: validityColor },
+                        ]}
+                      >
+                        {validityText}
+                      </Text>
+                    </View>
+                    <View style={styles.flexRowContainer}>
+                      <Image style={styles.subIcon} source={verifiedIssuerIcon} />
+                      <Text
+                        style={[
+                          styles.subBannerText,
+                          FontStyle.Poppins_600SemiBold,
+                          { color: verifiedColor, textAlign: "left"},
+                        ]}
+                      >
+                        {verifiedIssuerText}
+                      </Text>
+                    </View>
+                  </View>
+                )
+           }
         </View>
     </View>
   )
