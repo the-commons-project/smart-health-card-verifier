@@ -2,6 +2,21 @@ import { formatDateOfBirth } from '../utils'
 import constants from '../../models/FHIRFieldConstant'
 const { RESOURCE_TYPES } = constants
 
+const resolveName = ( name: any ): string | null  => {
+  var res = null;
+  if( name.family ) {
+    const familyName = name.family
+    const givenNames = name.given?.join(' ')
+    res = `${familyName} / ${givenNames}`
+  } else if( name.text ) {
+    res = `${name.text}`
+  }
+  if( res != null && name.use ){
+    res = `${res} (${name.use})`
+  }
+  return res;
+}
+
 export const getPatientDataFromFhir = (credential: any): any => {
   const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
 
@@ -12,14 +27,15 @@ export const getPatientDataFromFhir = (credential: any): any => {
   let fullName: string = ''
   let dateOfBirth: string = ''
 
+
+
   if ( patientEntry ) {
     const { name, birthDate } = patientEntry
+    const nameList = name
     var names = []
     if ( name ) {
-      names = name.map ( (it)=> {
-        const familyName = it.family
-        const givenNames = it.given?.join(' ')
-        fullName = `${familyName} / ${givenNames}`
+      names = nameList.map ( (it:any)=> {
+        fullName = resolveName( it ) || ''
         return fullName
       })
     }
