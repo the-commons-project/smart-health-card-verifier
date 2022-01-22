@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import AppClickableImage from '../components/customImage'
 import FontStyle from '../utils/FontStyleHelper'
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 type NotificationOverlayVariables = {
   navigation?: any

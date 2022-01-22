@@ -21,7 +21,7 @@
       },
       "Welcome":{
         "Title": "Welcome!",
-        "SMART® Health Card Verifier": "SMART® Health Card Verifier",
+        "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "Verify SMART® Health Card QR code in a safe and privacy-preserving way",
         "ScanVaccinationRecord": "Scan vaccination record",
         "HowTo": "How to verify SMART® Health Cards",
@@ -37,7 +37,8 @@
         "IssuerNotRecognized":"Issuer not recognized",
         "NotVerified":"Not Verified",
         "NotVerifiedText":"This SMART Health Card cannot be verified. It may have been corrupted.",
-        "PartialVarified":"Partially Varified",
+        "PartialVerified":"Partially Varified",
+        "PartialVerifiedText":"The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network's registry of trusted issuers.\n Tap for Details",
         "Valid":"Valid",
         "ValidSmartHealthCard":"Valid SMART® Health Card",
         "Verified":"Verified",

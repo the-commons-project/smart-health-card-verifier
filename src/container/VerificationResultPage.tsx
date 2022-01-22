@@ -7,7 +7,7 @@ import ResultRecord from '../components/resultRecord'
 import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { BaseResponse } from '../types'
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 
 const images = {

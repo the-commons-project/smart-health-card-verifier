@@ -1,6 +1,6 @@
 {
-  "key":"jp",
-  "lang":"jp",
+  "key":"ja",
+  "lang":"ja",
   "region":"default",
   "data": {
     "default": {
@@ -21,7 +21,7 @@
       },
       "Welcome":{
         "Title": "",
-        "SMART® Health Card Verifier": "SMART® Health Card Verifier",
+        "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "SMART® Health Card QR コードを認証しましょう",
         "ScanVaccinationRecord": "接種証明書をスキャン",
         "HowTo": "SMART® Health Cardsの確認の仕方",
@@ -37,7 +37,8 @@
         "IssuerNotRecognized":"発行元が確認できません",
         "NotVerified":"確認できませんでした",
         "NotVerifiedText":"この SMART Health Card は検証できませんでした。データを確認してください。",
-        "PartialVarified":"部分的に検証済み",
+        "PartialVerified":"部分的に検証済み",
+        "PartialVerifiedText":"SMART® Health Card は確認できましたが、、発行先が CommonTrust Network's に登録されていません。詳細はここをクリックしてご参照ください。",
         "Valid":"有効",
         "ValidSmartHealthCard":"Valid SMART® Health Card",
         "Verified":"確認完了",

@@ -1,13 +1,13 @@
 import i18next from 'i18next';
 import RNLocalize from "react-native-localize";
 import { useTranslation as i18nUseTranslation, initReactI18next } from "react-i18next";
-import  { localeType} from '../types'
-import { localeLoopupUpHost } from './constants'
-import Timer from '../utils/timer'
-import defaultLocaleResource  from "../../resources/public/locales/en/default.json"
-import frResource  from "../../resources/public/locales/fr/default.json"
-import jaResource  from "../../resources/public/locales/ja/default.json"
-
+import  { localeType} from '../../types'
+import { localeLoopupUpHost } from '../constants'
+import Timer from '../../utils/timer'
+import defaultLocaleResource  from "../../../resources/public/locales/en/default.json"
+import frResource  from "../../../resources/public/locales/fr/default.json"
+import jaResource  from "../../../resources/public/locales/ja/default.json"
+import i18nCache from './i18nCache'
 
 const localeResolutionOnly = true
 
@@ -30,7 +30,7 @@ const localeFetchURL = `${localeLoopupUpHost}/{{lng}}/default.json`
 const defaultState = {
   key: "en",
   lang: "en",
-  region: "US",
+  region: null,
 };
 
 export const defaultNameSpace = 'default'
@@ -44,35 +44,15 @@ const i18nOption = {
     compatibilityJSON: 'v3',
     initImmediate: false,
     react: { 
-      useSuspense: true
+      useSuspense: false
     },
     ns: [defaultNameSpace],
     defaultNS: defaultNameSpace,
     resources: {},
-    languages: ['en','fr']
+    useSuspense: false,
+    languages: ['en','fr','ja']
 }
 
-class i18nCache {
-  store:any = {}
-  constructor(){
-    this.store = {}
-  }
-
-  async set( lang:string, region:string, data:any ) {
-    this.store[ lang ] = this.store[ lang ] || {}
-    if( region == null || region.length == 0 ) {
-      this.store[ lang ][ 'default' ] = data
-    } else {
-      this.store[ lang ][region] = data 
-    }
-  }
-
-  async get( lang: string, region: string  ) : Promise< any > {
-    return this.store[ lang ] ? 
-      ( this.store[ lang ][ region ] || this.store[lang]['default'] || null ) 
-      : null 
-  } 
-}
 
 class i18nUtils{
   static initailize: any
@@ -97,8 +77,8 @@ class i18nUtils{
   bindChange( callback: any ){
     var that = this
     RNLocalize.addEventListener("change", async() => {
-      await this.updateLocale(false);
-      callback();
+      await this.updateLocale();
+      callback( this.currentLocale );
       // do localization related stuff…
     });
   }
@@ -119,10 +99,21 @@ class i18nUtils{
   }
   
   fetchLocalResource( lang: string, region: string,): Promise<any>{
-    return ( localeResourcesMap[ lang ] || null )
+    return Promise.resolve( localeResourcesMap[ lang ] || null )
+  }
+
+  getKey( lang: string, region: string | null ): string {
+    var key = [ lang, ( region || "default")].join("_").toLowerCase()
+    key = key.replace("_default","")
+    return key
   }
 
   async fetchResource( lang: string, region: string,  ): Promise< any >{
+    console.info(`#YF fetchResource1: ${lang}, ${region}`)
+    var key         = defaultState.key
+    var _lang       = defaultState.lang 
+    var _region:any = defaultState.region
+
     const timer = new Timer()
     var   url   =  localeFetchURL
                     .replace("{{lng}}",lang)
@@ -131,28 +122,46 @@ class i18nUtils{
     console.log( `resource url = ${url}` );
     timer.start()
     var res = null;
+    var res = null;
     res = await this.cache.get(lang, region )
-    if( res == null ) {
+    if( res != null ) {
+
+      key = this.getKey( lang, region )
+      _lang = lang.toLowerCase();
+      _region = region.toLowerCase()
+
+    } else if( ( res = this.cache.get( lang, 'default') ) != null ){
+      _lang = lang.toLowerCase();
+      _region = null
+      key = this.getKey( lang, _region )
+
+    } else {
+
       try {
         var tmp = await fetch(url)
         let loadingTime = timer.stop()
         console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
         res = tmp.json()
+        if( res ) {
+          [ key, _lang, _region ] = this.updateResourceBundle( res );
+           console.info(`#YF fetchResource3: From remote${lang}, ${_region}`)
+        }
       } catch (error) {
         let loadingTime = timer.stop()
-        res = this.fetchLocalResource( lang, region );
         console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
+        return null;
       }
-    } else {
-      console.log(`picked up resources from the local cache`)
     }
-    return res;
+    return [ key, _lang, _region ];
   }
 
-  updateResourceBundle( res: any ):[ key: string, lang: any, region:any] {
+  updateResourceBundle( bundle: any ):[ key: string, lang: any, region:any] {
       var _lang:any
       var _region:any
-      const [key, namespace, resources, lang, region ] = this.parseResult( res );
+      console.log("#YF===============================")
+      console.log(JSON.stringify( bundle ))
+
+      const [key, namespace, resources, lang, region ] = this.parseResult( bundle );
       /* Store data : #TODO to store locally */
       _lang = lang 
       if ( region == 'default'){
@@ -169,27 +178,29 @@ class i18nUtils{
     })
   }
 
-  async updateLocale(force: boolean = false): Promise<localeType>{
-    var key         = defaultState.key
-    var _lang       = defaultState.lang 
-    var _region:any = defaultState.region
+  async updateLocale(): Promise<localeType>{
+    var key                = defaultState.key
+    var _lang              = defaultState.lang 
+    var _region:string|any = defaultState.region
     var arr = this.getSystemLocale()
     var res = defaultLocaleResource;
     if( arr.length > 0 ) {
-      _lang = arr[0].languageCode
-      _region = arr[0].countryCode
-      res = await this.fetchResource( _lang, _region ) || res
+      _lang   = arr[0].languageCode;
+      _region = arr[0].countryCode;
+      [ key, _lang, _region ] = await this.fetchResource( _lang, _region ) || res
+      console.log(`#YF==resolved [ key, _lang, _region ]  = [ ${key}, ${_lang}, ${_region} ] `);
     }
-    [ key, _lang, _region ] = this.updateResourceBundle( res );
     i18next.changeLanguage( key )
+    console.log(`#YF==i18next.changeLanguage( ${key} )`);
+    let tmp = JSON.stringify( i18next.getResourceBundle(key, defaultNameSpace ))
+    console.log(`${tmp}`)
     this.setCurrentLocale( key, _lang, _region )
     return this.currentLocale
   }
 
   initializeLocale(){
-    var that = this;
-    that.loadDefaultResources()
-    that.updateLocale(true)
+    this.loadDefaultResources()
+    return this.updateLocale();
   };
 
 }

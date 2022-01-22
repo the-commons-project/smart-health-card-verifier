@@ -1,7 +1,7 @@
 import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
 import RNLocalize from "react-native-localize"
 import { createContext } from "./Context";
-import i18nUtils from '../services/i18nUtils'
+import i18nUtils from '../services/i18n/i18nUtils'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const i18n = i18nUtils.initailize()
@@ -51,36 +51,50 @@ export function getProvider() {
 
   const Provider = ({ children }: Props): JSX.Element =>  {
     const [ state, setState ] = useState( defaultState );
+    const [ initialized, setInitialized ] = useState( false );
+
     const setLocale = ( locale: localeType) => {
-        const newState = {
+      console.log("updated Locale: " + JSON.stringify( locale ))
+      const newState = {
           ...state,
           ...{ initialized: true },
           ...locale
           };
-
         setState( newState );
+
       }
     const getLocaleString = ( key: string ):string => {
         return key + ":" + state.lang
       }
 
-    const udpateLocale = ()=>{
-      var res = i18n.initializeLocale()
-      console.log("updated Locale: " + JSON.stringify( res ))
+    const udpateLocale = async ()=>{
+      var res = await i18n.initializeLocale()
       setLocale( res );
+      return res;
     }
 
-    useEffect(()=>{
-        udpateLocale();
+    useEffect( ()=>{
+      udpateLocale().then( ()=> setInitialized( true ) )
+      i18n.bindChange( (locale: localeType)=>{
+        setLocale( locale )
+      })
+
     }, []);
+    // { if( true ) return( < LoadingSpinner enabled={true} /> )}
 
     return  (
-              < Suspense  fallback={ LoadingSpinner } >
-               <localeContext.Provider value={{...state,  getLocaleString }} >
-                {children}
-               </localeContext.Provider>
-              </Suspense>
-             );
+               ( initialized == true )? 
+                 (
+                   <localeContext.Provider value={{...state,  getLocaleString }} >
+                     { 
+                       ( state.initialized === true ) && children
+                     }
+                   </localeContext.Provider>
+                 ):(
+                   < LoadingSpinner enabled={true} /> 
+                 )                 
+              
+            );
   }
   return [ Provider ] as const; 
 }

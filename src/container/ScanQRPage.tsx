@@ -9,7 +9,7 @@ import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
 import { Props, BaseResponse } from '../types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
 
 const images = {

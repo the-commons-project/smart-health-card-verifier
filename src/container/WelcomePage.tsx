@@ -16,7 +16,7 @@ import AppButton from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg';
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -55,7 +55,7 @@ const WelcomePage = ({ navigation }: Props) => {
               { t('Welcome.Title') }
             </Text>
             <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
-              { t('Welcome.SMART® Health Card Verifier')}
+              { t("Welcome.SHCV","SMART® Health Card Verifier")}
             </Text>
           </View>
 
@@ -200,13 +200,13 @@ const styles = StyleSheet.create({
     width: 71,
     height: 37,
     right: 19,
-    top: 50,
+    top: 40,
   },
   welcomeText: {
     fontSize: 24,
     lineHeight: 36,
     color: '#255DCB',
-    paddingTop: 60,
+    paddingTop: 50,
   },
   welcomeTextMobile: {
     fontSize: 24,

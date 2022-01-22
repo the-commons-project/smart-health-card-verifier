@@ -4,7 +4,7 @@ import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),

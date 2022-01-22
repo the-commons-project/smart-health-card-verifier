@@ -8,7 +8,7 @@ const images = {
 }
 
 interface LoadingProps {
-  enabled: boolean,
+  enabled: boolean | any,
 }
 
 export default ( { enabled = true }: LoadingProps )=> {

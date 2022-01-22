@@ -4,7 +4,7 @@ import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),

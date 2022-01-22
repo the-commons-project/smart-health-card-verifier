@@ -21,7 +21,7 @@
       },
       "Welcome":{
         "Title": "Bienvenue!",
-        "SMART® Health Card Verifier": "SMART® Health Card Verifier",
+        "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "Vérifier le code QR SMART Health Cards en toute sécurité et dans le respect de la vie privée",
         "ScanVaccinationRecord": "Scanner le carnet de vaccination",
         "HowTo": "Comment vérifier SMART Health Cards",
@@ -37,7 +37,8 @@
         "IssuerNotRecognized":"Émetteur non vérifié",
         "NotVerified":"Non vérifié",
         "NotVerifiedText":"Cette SMART Health Card ne peut pas être vérifiée. Il a peut-être été corrompu.",
-        "PartialVarified":"Partiellement vérifié",
+        "PartialVerified":"Partiellement vérifié",
+        "PartialVerifiedText":"La SMART® Health Card est valide, mais l'émetteur ne figure pas dans le registre des émetteurs de confiance du réseau CommonTrust.\n\nAppuyez pour plus de détails",
         "Valid":"Valide",
         "ValidSmartHealthCard":"Valid SMART® Health Card",
         "Verified":"Vérifié",

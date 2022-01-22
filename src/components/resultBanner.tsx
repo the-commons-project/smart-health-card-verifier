@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, Text, PixelRatio} from 'react-native'
 import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
-import { useTranslation } from '../services/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
@@ -16,12 +16,12 @@ const images = {
 const ResultBanner = ({ validationResult}: ValidationResult ) => {
   const {t} = useTranslation()
   let icon = images.success
-  let text = 'Verified'
+  let text = t("Result.Verified",'Verified');
   let color = '#158E00' // green
   let validityText = t('Result.ValidSmartHealthCard', 'Valid SMART® Health Card')
   let validityIcon = images.tick
   let validityColor = '#0E6B23' // green
-  let verifiedIssuerText = 'Issuer verified'
+  let verifiedIssuerText = t("Result.IssuerVerified",'Issuer verified')
   let verifiedIssuerIcon = images.tick
   let verifiedColor = '#0E6B23' // green
 
@@ -29,9 +29,9 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
 
   if (!isDocumentValid) {
     icon = images.fail
-    text = 'Not Verified'
+    text = t("Result.NotVerified",'Not Verified');
     color = '#C33E38' //red
-    validityText = 'This SMART Health Card cannot be verified. It may have been corrupted.'
+    validityText = t("Result.NotVerifiedText",'This SMART Health Card cannot be verified. It may have been corrupted.');
     validityColor = '#C33E38' // red
   }
 
@@ -39,9 +39,9 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
 
   if (isDocumentValid && !isIssuerRecognized) {
     icon = images.warning
-    text = 'Partially Verified'
+    text = t("Result.PartialVerified",'Partially Verified');
     color = '#EA6300' // orange
-    verifiedIssuerText = 'The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network\'s registry of trusted issuers.\n Tap for Details'
+    verifiedIssuerText = t("Result.PartialVerifiedText",'The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network\'s registry of trusted issuers.\n Tap for Details');
     verifiedIssuerIcon = images.cross
     verifiedColor = '#CE471C' // orange
   }
