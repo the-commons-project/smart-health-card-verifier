@@ -3,6 +3,7 @@ import { View, Image, StyleSheet, Text, PixelRatio} from 'react-native'
 import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+import { useTranslation } from '../services/i18nUtils'
 
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
@@ -13,6 +14,7 @@ const images = {
 }
 
 const ResultBanner = ({ validationResult}: ValidationResult ) => {
+  const {t} = useTranslation()
   let icon = images.success
   let text = 'Verified'
   let color = '#158E00' // green
