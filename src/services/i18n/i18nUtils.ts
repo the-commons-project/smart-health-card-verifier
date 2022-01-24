@@ -187,9 +187,6 @@ class i18nUtils{
       [ key, _lang, _region ] = await this.fetchResource( _lang, _region ) || res
     }
     i18next.changeLanguage( key )
-    console.log(`#YF==i18next.changeLanguage( ${key} )`);
-    let tmp = JSON.stringify( i18next.getResourceBundle(key, defaultNameSpace ))
-    console.log(`${tmp}`)
     this.setCurrentLocale( key, _lang, _region )
     return this.currentLocale
   }
