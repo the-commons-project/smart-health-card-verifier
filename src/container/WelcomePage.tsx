@@ -52,7 +52,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 FontStyle.Poppins_700Bold,
               ]}
             >
-              { t('Welcome.Title') }
+              { t('Welcome.Title', "Welcome!") }
             </Text>
             <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
               { t("Welcome.SHCV","SMART® Health Card Verifier")}

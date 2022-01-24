@@ -122,7 +122,6 @@ class i18nUtils{
     console.log( `resource url = ${url}` );
     timer.start()
     var res = null;
-    var res = null;
     res = await this.cache.get(lang, region )
     if( res != null ) {
 
@@ -135,32 +134,30 @@ class i18nUtils{
       _region = null
       key = this.getKey( lang, _region )
 
-    } else {
+    } 
+    // else {
 
-      try {
-        var tmp = await fetch(url)
-        let loadingTime = timer.stop()
-        console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
-        res = tmp.json()
-        if( res ) {
-          [ key, _lang, _region ] = this.updateResourceBundle( res );
-           console.info(`#YF fetchResource3: From remote${lang}, ${_region}`)
-        }
-      } catch (error) {
-        let loadingTime = timer.stop()
-        console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
-        return null;
-      }
-    }
+    //   try {
+    //     var tmp = await fetch(url)
+    //     let loadingTime = timer.stop()
+    //     console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
+    //     res = tmp.json()
+    //     if( res ) {
+    //       [ key, _lang, _region ] = this.updateResourceBundle( res );
+    //        console.info(`#YF fetchResource3: From remote${lang}, ${_region}`)
+    //     }
+    //   } catch (error) {
+    //     let loadingTime = timer.stop()
+    //     console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
+    //     return null;
+    //   }
+    // }
     return [ key, _lang, _region ];
   }
 
   updateResourceBundle( bundle: any ):[ key: string, lang: any, region:any] {
       var _lang:any
       var _region:any
-      console.log("#YF===============================")
-      console.log(JSON.stringify( bundle ))
-
       const [key, namespace, resources, lang, region ] = this.parseResult( bundle );
       /* Store data : #TODO to store locally */
       _lang = lang 
@@ -188,7 +185,6 @@ class i18nUtils{
       _lang   = arr[0].languageCode;
       _region = arr[0].countryCode;
       [ key, _lang, _region ] = await this.fetchResource( _lang, _region ) || res
-      console.log(`#YF==resolved [ key, _lang, _region ]  = [ ${key}, ${_lang}, ${_region} ] `);
     }
     i18next.changeLanguage( key )
     console.log(`#YF==i18next.changeLanguage( ${key} )`);
