@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Animated, Easing, StyleSheet } from 'react-native'
+import { Animated, Easing, StyleSheet, View } from 'react-native'
 import { Props } from '../types'
 
 const images = {
@@ -30,15 +30,23 @@ export default ( { enabled = true }: LoadingProps )=> {
     }
   }, [] )
 
-  return (
-      <Animated.Image style={[styles.spinner, { transform: [{ rotate: spin }] }]}
-        source={images.loading}
-          /> )
+  return ( <View style={styles.container}>
+        <Animated.Image style={[styles.spinner, { transform: [{ rotate: spin }] }]}
+          source={images.loading}
+            />
+      </View>
+       )
 }
 
 const styles = StyleSheet.create({
-    spinner: {
-    maxHeight: 55,
-    maxWidth: 55,
-  },
+    container: {
+      flex: 1,
+      backgroundColor:"#FFFFFF",
+      justifyContent: 'center', 
+      alignItems: 'center'
+    },
+    spinner: {     
+      maxHeight: 55,
+      maxWidth: 55,
+    }
 })
