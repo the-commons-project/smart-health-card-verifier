@@ -33,6 +33,7 @@
         "CameraPermissionText":"This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
       },
       "Result":{
+        "VaccineRecord":"COVID-19 Vaccination Record",
         "IssuerVerified":"Issuer verified",
         "IssuerNotRecognized":"Issuer not recognized",
         "NotVerified":"Not Verified",
@@ -45,7 +46,9 @@
         "ScanNext":"Scan next vaccination record",
         "Issuer":"Issuer",
         "Name":"Name",
-        "DOB":"Date of Birth"
+        "DOB":"Date of Birth",
+        "Dose":"Dose {{num}}",
+        "AlwaysVerify":"Always verify identity with a government-issued I.D."
       }
     }
   }

@@ -4,7 +4,7 @@ import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
-import { useTranslation } from '../services/i18n/i18nUtils'
+import { Trans, useTranslation } from '../services/i18n/i18nUtils'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -117,7 +117,7 @@ const ResultRecord = ({ data }: Data) => {
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
         <Text style={[styles.titleText, FontStyle.OpenSans_700Bold]}>
-          COVID-19 Vaccination Record
+          {t("Result.VaccineRecord","COVID-19 Vaccination Record")}
         </Text>
         <Image style={styles.smartLogoImage} source={images.smartLogo} />
       </View>
@@ -146,7 +146,7 @@ const ResultRecord = ({ data }: Data) => {
           />
         </Table>
         <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>
-          Always verify identity with a government-issued I.D.
+          {t("Result.AlwaysVerify","Always verify identity with a government-issued I.D.")}
         </Text>
       </View>
       {vaccinationData.map((doseObject, key) => {
@@ -160,7 +160,7 @@ const ResultRecord = ({ data }: Data) => {
           <View key={key}>
             <View style={styles.doseDividerContainer}>
               <Text style={[styles.dosageText, FontStyle.OpenSans_700Bold]}>
-                Dose {dose}
+                 {t("Result.Dose", `Dose ${dose}`, {num:dose})}
               </Text>
               <View style={styles.doseDivider} />
             </View>

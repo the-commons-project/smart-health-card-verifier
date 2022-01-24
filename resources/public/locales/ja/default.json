@@ -33,19 +33,23 @@
         "CameraPermissionText":"このアプリはワクチン接種認証のQRコードをスキャンするためにカメラ機能を使用します。この機能はCOVID-19ワクチンの接種履歴の証明の検証し、表示します。"
       },
       "Result":{
+        "VaccineRecord":"ワクチン履歴",
         "IssuerVerified":"発行元確完了",
         "IssuerNotRecognized":"発行元が確認できません",
         "NotVerified":"確認できませんでした",
         "NotVerifiedText":"この SMART Health Card は検証できませんでした。データを確認してください。",
         "PartialVerified":"部分的に検証済み",
-        "PartialVerifiedText":"SMART® Health Card は確認できましたが、、発行先が CommonTrust Network's に登録されていません。詳細はここをクリックしてご参照ください。",
+        "PartialVerifiedText":"SMART® Health Card は確認できましたが、、発行先が CommonTrust Network に登録されていません。\n詳細はここをクリックしてご参照ください。",
         "Valid":"有効",
         "ValidSmartHealthCard":"Valid SMART® Health Card",
         "Verified":"確認完了",
         "ScanNext":"スキャン",
         "Issuer":"発行者",
         "Name":"名前",
-        "DOB":"生年月日"      }
+        "DOB":"生年月日",
+        "Dose":"{{num}}回目接種",
+        "AlwaysVerify":"必ず政府発行の身分証明書での本人確認をしてください。"
+      }
     }
   }
 }

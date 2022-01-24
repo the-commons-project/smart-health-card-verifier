@@ -207,7 +207,7 @@ const initailize = ():i18nUtils => {
 
 i18nUtils.initailize = initailize
 const useTranslation = ()=> {
-  return i18nUseTranslation([ defaultNameSpace ])
+  return i18nUseTranslation( defaultNameSpace )
 }
 
 export { useTranslation }
