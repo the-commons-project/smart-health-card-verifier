@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import AppButton from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg';
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -27,8 +28,8 @@ const imageHeight = ( dimension.height * .30 / PixelRatio.getFontScale() );
 
 const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
+  const { t } = useTranslation();
   const deviceHeight = useWindowDimensions().height
-
   const minHeight = 800
 
   const showAppVersion = () => {
@@ -51,10 +52,10 @@ const WelcomePage = ({ navigation }: Props) => {
                 FontStyle.Poppins_700Bold,
               ]}
             >
-              Welcome! 
+              { t('Welcome.Title', "Welcome!") }
             </Text>
             <Text style={[styles.mainTitle, FontStyle.Poppins_700Bold]}>
-              SMART® Health Card Verifier
+              { t("Welcome.SHCV","SMART® Health Card Verifier")}
             </Text>
           </View>
 
@@ -70,11 +71,10 @@ const WelcomePage = ({ navigation }: Props) => {
 
           <View style={styles.textContainer}>
             <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
-              {' '}
-              Verify SMART® Health Card QR code in a safe and privacy-preserving way{' '}
+              {t("Welcome.VerifySmartHealthCard", "Verify SMART® Health Card QR code in a safe and privacy-preserving way")}
             </Text>
             <AppButton
-              title="Scan vaccination record"
+              title={t("Welcome.ScanVaccinationRecord","Scan vaccination record")}
               onPress={() => navigation.navigate('ScanQR')}
               backgroundColor="#255DCB"
             />
@@ -90,7 +90,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
                 }
               >
-                How to verify SMART® Health Cards
+                {t("Welcome.HowTo","How to verify SMART® Health Cards")}
               </Text>
             </View>
             <View
@@ -110,7 +110,7 @@ const WelcomePage = ({ navigation }: Props) => {
                   Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
                 }
               >
-                About us
+                {t("Welcome.AboutUs", "About us")}
               </Text>
               <Text
                 style={[
@@ -121,7 +121,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 ]}
                 onPress={() => Linking.openURL('https://thecommonsproject.org/verifier-privacy/')}
               >
-                Privacy policy
+                {t("Welcome.PrivacyPolicy","Privacy policy")}
               </Text>
             </View>
           </View>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#F3F6FF',
-    paddingTop: 12,
+    paddingTop: 0,
     paddingStart: 12,
     paddingEnd: 12,
     paddingBottom: 12
@@ -200,13 +200,13 @@ const styles = StyleSheet.create({
     width: 71,
     height: 37,
     right: 19,
-    top: 50,
+    top: 40,
   },
   welcomeText: {
     fontSize: 24,
     lineHeight: 36,
     color: '#255DCB',
-    paddingTop: 60,
+    paddingTop: 50,
   },
   welcomeTextMobile: {
     fontSize: 24,

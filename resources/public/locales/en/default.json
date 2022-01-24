@@ -1,0 +1,55 @@
+{
+  "key":"en",
+  "lang":"en",
+  "region":"default",
+  "data": {
+    "default": {
+      "Common":{
+        "Cancel":"Cancel",
+        "OK":"OK"
+      },
+      "Error": {
+        "ServerError":"Server Error. Please try to scan again.",
+        "NoInterNet":"No internet connection",
+        "NoInterNetText":"Please check your internet connection and try again.",
+        "NoCamera":"No access to camera",
+        "NoCameraText": "To continue, please enable camera access in Settings."
+      },
+      "ErrorPage": {
+        "UnsupportedQR":"Unsupported QR",
+        "ScanNext":"Scan next vaccination record"
+      },
+      "Welcome":{
+        "Title": "Welcome!",
+        "SHCV": "SMART® Health Card Verifier",
+        "VerifySmartHealthCard": "Verify SMART® Health Card QR code in a safe and privacy-preserving way",
+        "ScanVaccinationRecord": "Scan vaccination record",
+        "HowTo": "How to verify SMART® Health Cards",
+        "AboutUs":"About us",
+        "PrivacyPolicy":"Privacy policy"
+      },
+      "Scan":{
+        "CameraPermission":"Camera Permission",
+        "CameraPermissionText":"This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
+      },
+      "Result":{
+        "VaccineRecord":"COVID-19 Vaccination Record",
+        "IssuerVerified":"Issuer verified",
+        "IssuerNotRecognized":"Issuer not recognized",
+        "NotVerified":"Not Verified",
+        "NotVerifiedText":"This SMART Health Card cannot be verified. It may have been corrupted.",
+        "PartialVerified":"Partially Varified",
+        "PartialVerifiedText":"The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network's registry of trusted issuers.\n Tap for Details",
+        "Valid":"Valid",
+        "ValidSmartHealthCard":"Valid SMART® Health Card",
+        "Verified":"Verified",
+        "ScanNext":"Scan next vaccination record",
+        "Issuer":"Issuer",
+        "Name":"Name",
+        "DOB":"Date of Birth",
+        "Dose":"Dose {{num}}",
+        "AlwaysVerify":"Always verify identity with a government-issued I.D."
+      }
+    }
+  }
+}

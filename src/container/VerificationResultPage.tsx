@@ -7,6 +7,8 @@ import ResultRecord from '../components/resultRecord'
 import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { BaseResponse } from '../types'
+import { useTranslation } from '../services/i18n/i18nUtils'
+
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
@@ -33,9 +35,9 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
       setShowResult( !showResult)
     }
   }  
+  const {t} = useTranslation()
 
   return ( 
-
     <View style={styles.flexContainer}>
       <View style={styles.backButtonContainer}>
         <AppClickableImage
@@ -57,7 +59,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
         {showResult && validationResult.isValid && <ResultRecord data={data} />}
       </ScrollView>
       <AppButton
-        title="Scan next vaccination record"
+        title={t("Result.ScanNext","Scan next vaccination record")}
         onPress={() => navigation.navigate('ScanQR')}
         backgroundColor="#255DCB"
       />

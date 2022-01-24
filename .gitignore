@@ -21,6 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/Podfile.lock
+android/secret.properties
 
 # Android/IntelliJ
 #

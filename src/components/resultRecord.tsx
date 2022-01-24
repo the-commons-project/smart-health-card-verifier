@@ -4,6 +4,7 @@ import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+import { Trans, useTranslation } from '../services/i18n/i18nUtils'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -13,13 +14,14 @@ const images = {
 }
 
 const ResultRecord = ({ data }: Data) => {
+  const { t } = useTranslation()
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
   const { issuerData, patientData, vaccinationData } = validationResult
 
   const { names, dateOfBirth } = patientData
-  const userFieldTitle = ['Name']
-  const userDobTitle = ['Date of Birth']
+  const userFieldTitle = [t("Result.Name",'Name')]
+  const userDobTitle = [t("Result.DOB",'Date of Birth')]
   const userDobValue = [insertImageToTable()]
 
 
@@ -115,7 +117,7 @@ const ResultRecord = ({ data }: Data) => {
     <View style={styles.recordContainer}>
       <View style={styles.titleContainer}>
         <Text style={[styles.titleText, FontStyle.OpenSans_700Bold]}>
-          COVID-19 Vaccination Record
+          {t("Result.VaccineRecord","COVID-19 Vaccination Record")}
         </Text>
         <Image style={styles.smartLogoImage} source={images.smartLogo} />
       </View>
@@ -144,7 +146,7 @@ const ResultRecord = ({ data }: Data) => {
           />
         </Table>
         <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>
-          Always verify identity with a government-issued I.D.
+          {t("Result.AlwaysVerify","Always verify identity with a government-issued I.D.")}
         </Text>
       </View>
       {vaccinationData.map((doseObject, key) => {
@@ -158,7 +160,7 @@ const ResultRecord = ({ data }: Data) => {
           <View key={key}>
             <View style={styles.doseDividerContainer}>
               <Text style={[styles.dosageText, FontStyle.OpenSans_700Bold]}>
-                Dose {dose}
+                 {t("Result.Dose", `Dose ${dose}`, {num:dose})}
               </Text>
               <View style={styles.doseDivider} />
             </View>
@@ -181,7 +183,7 @@ const ResultRecord = ({ data }: Data) => {
       })}
       <View style={styles.divider} />
       <View>
-        <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>Issuer</Text>
+        <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>{t("Result.Issuer","Issuer")}</Text>
         {issuerData.name ? (
           <View style={styles.verifierContainer}>
             <Text style={[ {width:"100%"},styles.fieldValue, FontStyle.OpenSans_700Bold]}>
@@ -190,7 +192,7 @@ const ResultRecord = ({ data }: Data) => {
 
             <Image style={styles.verifierImage} source={images.commonTrustVerified} />
             <Text style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}>
-              Verified
+              {t("Result.Verified","Verified")}
             </Text>
           </View>
         ) : (
@@ -199,7 +201,7 @@ const ResultRecord = ({ data }: Data) => {
             <Text
               style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}
             >
-              Issuer not recognized
+              {t("Result.IssuerNotRecognized", "Issuer not recognized")}
             </Text>
           </View>
         )}

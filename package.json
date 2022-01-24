@@ -8,6 +8,7 @@
     "start": "react-native start",
     "test": "jest -c ./config/jest/jest.config.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "bundle-service": "tsc-bundle ./resources/apis/src/index.ts --outFile ./resources/apis/output/bundle.js",
     "generateAndroid": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
@@ -16,21 +17,25 @@
     "@react-navigation/stack": "^6.0.11",
     "ajv": "^8.7.1",
     "buffer": "^6.0.3",
+    "i18next": "^21.6.5",
     "ieee754": "^1.2.1",
     "pako": "^2.0.4",
     "react": "17.0.2",
+    "react-i18next": "^11.15.3",
     "react-native": "0.66.2",
     "react-native-camera": "^4.2.1",
     "react-native-device-info": "^8.4.5",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-jose": "git+https://github.com/hellojoko/react-native-jose.git",
+    "react-native-localize": "^2.1.7",
     "react-native-permissions": "^3.1.0",
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
     "react-native-svg": "^12.1.1",
     "react-native-table-component": "^1.2.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "webpack": "^5.66.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -44,11 +49,13 @@
     "babel-jest": "^26.6.3",
     "eslint": "^7.14.0",
     "jest": "^26.6.3",
+    "json-loader": "^0.5.7",
     "metro-react-native-babel-preset": "^0.66.2",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "17.0.2",
     "ts-node": "^10.4.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack-cli": "^4.9.1"
   },
   "resolutions": {
     "@types/react": "^17"

@@ -1,0 +1,55 @@
+{
+  "key":"fr",
+  "lang":"fr",
+  "region":"default",
+  "data": {
+    "default": {
+      "Common":{
+        "Cancel":"Cancel",
+        "OK":"OK"
+      },
+      "Error": {
+        "ServerError":"Server Error. Please try to scan again.",
+        "NoInterNet":"No internet connection",
+        "NoInterNetText":"Please check your internet connection and try again.",
+        "NoCamera":"No access to camera",
+        "NoCameraText": "To continue, please enable camera access in Settings."
+      },
+      "ErrorPage": {
+        "UnsupportedQR":"Code QR non pris en charge",
+        "ScanNext":"Scanner le prochain carnet de vaccination"
+      },
+      "Welcome":{
+        "Title": "Bienvenue!",
+        "SHCV": "SMART® Health Card Verifier",
+        "VerifySmartHealthCard": "Vérifier le code QR SMART Health Cards en toute sécurité et dans le respect de la vie privée",
+        "ScanVaccinationRecord": "Scanner le carnet de vaccination",
+        "HowTo": "Comment vérifier SMART Health Cards",
+        "AboutUs":"à propos de nous",
+        "PrivacyPolicy":"Politique de confidentialité"
+      },
+      "Scan":{
+        "CameraPermission":"Camera Permission",
+        "CameraPermissionText":"This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
+      },
+      "Result":{
+        "VaccineRecord":"COVID-19 Dossier de vaccination",
+        "IssuerVerified":"Émetteur vérifié",
+        "IssuerNotRecognized":"Émetteur non vérifié",
+        "NotVerified":"Non vérifié",
+        "NotVerifiedText":"Cette SMART Health Card ne peut pas être vérifiée. Il a peut-être été corrompu.",
+        "PartialVerified":"Partiellement vérifié",
+        "PartialVerifiedText":"La SMART® Health Card est valide, mais l'émetteur ne figure pas dans le registre des émetteurs de confiance du réseau CommonTrust.\n\nAppuyez pour plus de détails",
+        "Valid":"Valide",
+        "ValidSmartHealthCard":"Valid SMART® Health Card",
+        "Verified":"Vérifié",
+        "ScanNext":"Scan next vaccination record",
+        "Issuer":"Émettrice",
+        "Name":"Nom",
+        "DOB":"Date de naissance",
+        "Dose":"Dose {{num}}",
+        "AlwaysVerify":"Vérifiez toujours votre identité avec une pièce d'identité délivrée par le gouvernement."
+     }
+    }
+  }
+}

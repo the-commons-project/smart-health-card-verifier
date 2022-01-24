@@ -24,6 +24,8 @@ target 'Verifier' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
+
   target 'VerifierTests' do
     inherit! :complete
     # Pods for testing

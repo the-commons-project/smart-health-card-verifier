@@ -4,6 +4,7 @@ import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
@@ -11,6 +12,7 @@ const images = {
 }
 
 const ErrorPage = ({ navigation }: Props) => {
+  const {t} = useTranslation()
   return (
     <View style={styles.flexContainer}>
       <View style={styles.backButtonContainer}>
@@ -23,7 +25,7 @@ const ErrorPage = ({ navigation }: Props) => {
           style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
           onPress={() => navigation.navigate('ScanQR')}
         >
-          Unsupported QR
+          {t("ErrorPage.UnsupportedQR","Unsupported QR")}
         </Text>
       </View>
       <View style={styles.imageContainer}>
@@ -33,7 +35,7 @@ const ErrorPage = ({ navigation }: Props) => {
         </Text>
       </View>
       <AppButton
-        title="Scan next vaccination record"
+        title={t("ErrorPage.ScanNext")}
         onPress={() => navigation.navigate('ScanQR')}
         backgroundColor="#255DCB"
       />

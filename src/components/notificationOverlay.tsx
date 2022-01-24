@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import AppClickableImage from '../components/customImage'
 import FontStyle from '../utils/FontStyleHelper'
+import { useTranslation } from '../services/i18n/i18nUtils'
 
 type NotificationOverlayVariables = {
   navigation?: any
@@ -13,15 +14,16 @@ const images = {
 }
 
 const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables) => {
+  const { t } = useTranslation()
   let title = ''
   let subtitle = ''
 
   if (type === 'noInternetConnection') {
-    title = 'No internet connection'
-    subtitle = 'Please check your internet connection and try again.'
+    title = t("Error.NoInterNet", "No internet connection");
+    subtitle = t("Error.NoInterNetText",'Please check your internet connection and try again.');
   } else if (type === 'noCameraAccess') {
-    title = 'No access to camera'
-    subtitle = 'To continue, please enable camera access in Settings.'
+    title = t("Error.NoCamera",'No access to camera');
+    subtitle = t("Error.NoCameraText",'To continue, please enable camera access in Settings.');
   }
 
   return (
