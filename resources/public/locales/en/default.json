@@ -33,13 +33,15 @@
         "CameraPermissionText":"This app uses the camera to scan QR codes with COVID-19 vaccine certificates. This allows verifiers to verify the authenticity of COVID-19 vaccine certificates presented to them."
       },
       "Result":{
+        "ResultTitle":"Verification result",
         "VaccineRecord":"COVID-19 Vaccination Record",
         "IssuerVerified":"Issuer verified",
         "IssuerNotRecognized":"Issuer not recognized",
         "NotVerified":"Not Verified",
         "NotVerifiedText":"This SMART Health Card cannot be verified. It may have been corrupted.",
-        "PartialVerified":"Partially Varified",
-        "PartialVerifiedText":"The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network's registry of trusted issuers.\n Tap for Details",
+        "IssureNotRecognized":"Issuer Not Recognized",
+        "PartialVerifiedText":"The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network's registry of trusted issuers.",
+        "TapHere":"Tap to expand details",
         "Valid":"Valid",
         "ValidSmartHealthCard":"Valid SMART® Health Card",
         "Verified":"Verified",
