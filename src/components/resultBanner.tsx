@@ -5,6 +5,7 @@ import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 
+const warningColor = '#EA6300'
 const images = {
   warning: require('../../assets/img/verificationresult/warning.png'),
   success: require('../../assets/img/verificationresult/success.png'),
@@ -21,7 +22,7 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
   let validityText = t('Result.ValidSmartHealthCard', 'Valid SMART® Health Card')
   let validityIcon = images.tick
   let validityColor = '#0E6B23' // green
-  let verifiedIssuerText = t("Result.IssuerVerified",'Issuer verified')
+  let verifiedIssuerText = t("Result.IssuerVerified",'Issuer Not Recognized')
   let verifiedIssuerIcon = images.tick
   let verifiedColor = '#0E6B23' // green
 
@@ -39,9 +40,9 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
 
   if (isDocumentValid && !isIssuerRecognized) {
     icon = images.warning
-    text = t("Result.PartialVerified",'Partially Verified');
+    text = t("Result.IssureNotRecognized",'Partially Verified');
     color = '#EA6300' // orange
-    verifiedIssuerText = t("Result.PartialVerifiedText",'The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network\'s registry of trusted issuers.\n Tap for Details');
+    verifiedIssuerText = t("Result.PartialVerifiedText",'The SMART® Health Card is valid, but the issuer is not in the CommonTrust Network\'s registry of trusted issuers.');
     verifiedIssuerIcon = images.cross
     verifiedColor = '#CE471C' // orange
   }
@@ -78,35 +79,43 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
                       >
                         {verifiedIssuerText}
                       </Text>
+                      <Text
+                          style={[
+                          styles.subBannerText,
+                          styles.clickHere,
+                          FontStyle.Poppins_600SemiBold,
+                          {color: verifiedColor },
+                        ]}>{t("Result.TapHere", "Tap to expand details")}
+                      </Text>
                     </View>
                   </View>
                 ):(
                   <View 
-                    style={[{ flexDirection: 'column', flexWrap: 'wrap' }]}>
-                    <View style={styles.flexRowContainer} >
-                      <Image style={styles.subIcon} source={validityIcon} />
-                      <Text
+                    style={styles.flexRowContainer}>
+                    <View style={[styles.flexColumnContainer, ,{ width:'100%'}]} >
+                        <Image style={styles.subIcon} source={validityIcon} />
+                        <Text
 
-                        style={[
-                          styles.subBannerText,
-                          FontStyle.Poppins_600SemiBold,
-                          { color: validityColor },
-                        ]}
-                      >
-                        {validityText}
-                      </Text>
+                          style={[
+                            styles.subBannerText,
+                            FontStyle.Poppins_600SemiBold,
+                            { color: validityColor },
+                          ]}
+                        >
+                          {validityText}
+                        </Text>
                     </View>
-                    <View style={styles.flexRowContainer}>
-                      <Image style={styles.subIcon} source={verifiedIssuerIcon} />
-                      <Text
-                        style={[
-                          styles.subBannerText,
-                          FontStyle.Poppins_600SemiBold,
-                          { color: verifiedColor, textAlign: "left"},
-                        ]}
-                      >
-                        {verifiedIssuerText}
-                      </Text>
+                    <View  style={[styles.flexColumnContainer, ,{ width:'100%'}]} >
+                        <Image style={styles.subIcon} source={verifiedIssuerIcon} />
+                        <Text
+                          style={[
+                            styles.subBannerText,
+                            FontStyle.Poppins_600SemiBold,
+                            { color: verifiedColor, textAlign: "center" },
+                          ]}
+                        >
+                          {verifiedIssuerText}
+                        </Text>
                     </View>
                   </View>
                 )
@@ -158,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#67AC5B',
     lineHeight: 21,
-    alignSelf: 'center',
+    alignSelf:'center',
     paddingLeft: 10,
     paddingTop: 3,
   },
@@ -167,10 +176,23 @@ const styles = StyleSheet.create({
     height: 7 * PixelRatio.getFontScale(),
   },
   flexRowContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  flexColumnContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  clickHere:{
+    marginTop: 5,
+    marginBottom:5,
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    color:'#CE471C'
+  }            
+
 })
 
 export default ResultBanner

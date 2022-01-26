@@ -49,7 +49,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
           style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
           onPress={() => navigation.navigate('Welcome')}
         >
-          Verification result
+          {t("Result.ResultTitle","Verification Result")}
         </Text>
       </View>
       <ScrollView>
