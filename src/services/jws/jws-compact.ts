@@ -12,6 +12,7 @@ import { getPatientDataFromFhir } from '../helpers/getPatiendDataFromFhir'
 import { getVaccinationDataFromFhir } from '../helpers/getVaccinationDataFromFhir'
 import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
 import { getIssuerData } from '../helpers/getIssuerData'
+import { InvalidError } from '../../utils/InvalidError'
 
 export const JwsValidationOptions = {
   skipJwksDownload: false,
@@ -71,8 +72,13 @@ export async function validate(jws: string): Promise<any> {
     console.log('NO PAYLOAD!!')
     return
   }
-
-  await extractKeyURL(payload)
+  
+  try { 
+    await extractKeyURL(payload)
+  } catch (err) {
+    if (err instanceof InvalidError) throw err;
+    return 
+  }
 
   let result = false
   if (!headerJson) {
@@ -146,7 +152,8 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
         "Can't parse downloaded issuer JWK set: " + (err as Error).toString(),
         ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
       )
-      return undefined
+      if( err instanceof InvalidError ) throw err;
+      //return undefined
     }
   } catch (err) {
     console.log(
@@ -154,7 +161,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
       ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
     )
     // return undefined
-
+    if( err instanceof InvalidError ) throw err;
     throw new Error(timeoutError)
   }
 }
@@ -206,7 +213,7 @@ function checkJwsHeader(header: string) {
       }
       if (!headerKeys.includes('kid')) {
         console.log("JWS header missing 'kid' property.", ErrorCode.JWS_HEADER_ERROR)
-      }
+      } 
 
       // the value of the kid will be used in the crypto validation of the signature to select the issuer's public key
     }
@@ -350,10 +357,11 @@ async function verifyJws(jws: string, kid: string): Promise<boolean> {
     const result = await verifier.verify(jws)
 
     return !!result
-  } catch (error) {
+  } catch (err) {
     // The error message is always 'no key found', regardless if a key is missing or
     // if the signature was tempered with. Don't return the node-jose error message.
     console.log('JWS verification failed', ErrorCode.JWS_VERIFICATION_ERROR)
+    if( err instanceof InvalidError ) throw err;
     return false
   }
 }

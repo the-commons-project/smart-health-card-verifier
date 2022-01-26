@@ -1,6 +1,7 @@
 import jose, { JWK } from 'react-native-jose'
 import { ErrorCode } from '../error'
 import { KeySet, KeysStore } from './keys'
+import { InvalidError } from '../../utils/InvalidError'
 
 export const verifyAndImportHealthCardIssuerKey = async (
   keySet: KeySet,
@@ -55,7 +56,8 @@ export const verifyAndImportHealthCardIssuerKey = async (
                 key.kid,
               ErrorCode.INVALID_KEY_WRONG_KID,
             )
-          }
+            throw new InvalidError(ErrorCode.INVALID_KEY_WRONG_KID)
+          } 
         })
         .catch((err: Error) => {
           console.log(
@@ -65,6 +67,7 @@ export const verifyAndImportHealthCardIssuerKey = async (
               (err as Error).message,
             ErrorCode.INVALID_KEY_UNKNOWN,
           )
+          if( err instanceof InvalidError ) throw err;
         })
     }
 

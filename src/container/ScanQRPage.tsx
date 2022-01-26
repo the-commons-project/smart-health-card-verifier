@@ -9,6 +9,7 @@ import NotificationOverlay from '../components/notificationOverlay'
 import { validate } from '../services/qr'
 import { Props, BaseResponse } from '../types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { InvalidError } from '../utils/InvalidError'
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
   loading: require('../../assets/img/error/loading.png'),
@@ -123,6 +124,12 @@ const ScanQRPage = ({ navigation }: Props) => {
         navigation.navigate('Welcome')
         alert('Server Error. Please try to scan again.')
 
+        return
+      }
+
+      if (error instanceof InvalidError) {
+        validationResult.isValid = false
+        navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
         return
       }
 
