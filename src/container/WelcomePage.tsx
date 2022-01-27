@@ -16,7 +16,7 @@ import AppButton from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json';
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg';
-import { useTranslation } from '../services/i18n/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils';
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -31,7 +31,6 @@ const WelcomePage = ({ navigation }: Props) => {
   const { t } = useTranslation();
   const deviceHeight = useWindowDimensions().height
   const minHeight = 800
-
   const showAppVersion = () => {
     setShowVersion(true)
 

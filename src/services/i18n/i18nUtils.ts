@@ -109,7 +109,6 @@ class i18nUtils{
   }
 
   async fetchResource( lang: string, region: string,  ): Promise< any >{
-    console.info(`#YF fetchResource1: ${lang}, ${region}`)
     var key         = defaultState.key
     var _lang       = defaultState.lang 
     var _region:any = defaultState.region
