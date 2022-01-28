@@ -6,7 +6,8 @@
     "default": {
       "Common":{
         "Cancel":"キャンセル",
-        "OK":"OK"
+        "OK":"OK",
+        "ScanNext":"次のQRコードを読み取る"
       },
       "Error": {
         "ServerError":"サーバーエラー. 再度実行してください。.",
@@ -16,14 +17,14 @@
         "NoCameraText": "設定画面で、カメラ機能が有効になっているか、確認後再度実行してください。"
       },
       "ErrorPage": {
-        "UnsupportedQR":"QRコードのデータが確認できません。",
-        "ScanNext":"次のワクチン接種レコードをスキャンしてください。"
+        "UnsupportedQR":"QRコードのデータが\n確認できません。",
+        "OnlyValidText":"正しいSMART® Health Cards\nフォーマットのみ確認できます。"
       },
       "Welcome":{
         "Title": "",
         "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "SMART® Health Card QR コードを認証しましょう",
-        "ScanVaccinationRecord": "接種証明書をスキャン",
+        "ScanVaccinationRecord": "接種証明QRコードを読み取る",
         "HowTo": "SMART® Health Cardsの確認の仕方",
         "AboutUs":"組織概要",
         "PrivacyPolicy":"プライバシーポリシー"
@@ -45,7 +46,6 @@
         "Valid":"有効",
         "ValidSmartHealthCard":"SMART® Health Cardの内容確認完了",
         "Verified":"確認完了",
-        "ScanNext":"スキャン",
         "Issuer":"発行者",
         "Name":"名前",
         "DOB":"生年月日",

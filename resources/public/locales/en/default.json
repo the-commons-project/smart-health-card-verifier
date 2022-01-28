@@ -6,7 +6,8 @@
     "default": {
       "Common":{
         "Cancel":"Cancel",
-        "OK":"OK"
+        "OK":"OK",
+        "ScanNext":"Scan next vaccination record"
       },
       "Error": {
         "ServerError":"Server Error. Please try to scan again.",
@@ -17,7 +18,7 @@
       },
       "ErrorPage": {
         "UnsupportedQR":"Unsupported QR",
-        "ScanNext":"Scan next vaccination record"
+        "OnlyValidText":"Only valid vaccine SMART® Health Cards are currently supported"
       },
       "Welcome":{
         "Title": "Welcome!",
@@ -45,7 +46,6 @@
         "Valid":"Valid",
         "ValidSmartHealthCard":"Valid SMART® Health Card",
         "Verified":"Verified",
-        "ScanNext":"Scan next vaccination record",
         "Issuer":"Issuer",
         "Name":"Name",
         "DOB":"Date of Birth",

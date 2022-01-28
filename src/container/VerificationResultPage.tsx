@@ -59,7 +59,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
         {showResult && validationResult.isValid && <ResultRecord data={data} />}
       </ScrollView>
       <AppButton
-        title={t("Result.ScanNext","Scan next vaccination record")}
+        title={t("Common.ScanNext","Scan next vaccination record")}
         onPress={() => navigation.navigate('ScanQR')}
         backgroundColor="#255DCB"
       />
