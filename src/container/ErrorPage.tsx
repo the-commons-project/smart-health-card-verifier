@@ -31,11 +31,11 @@ const ErrorPage = ({ navigation }: Props) => {
       <View style={styles.imageContainer}>
         <Image style={styles.imageStyle} source={images.qrError} />
         <Text style={[styles.message,  FontStyle.Poppins_600SemiBold]}>
-          Only valid vaccine SMART® Health Cards are currently supported
+          {t('ErrorPage.OnlyValidText','Only valid vaccine SMART® Health Cards are currently supported')}
         </Text>
       </View>
       <AppButton
-        title={t("ErrorPage.ScanNext")}
+        title={t("Common.ScanNext")}
         onPress={() => navigation.navigate('ScanQR')}
         backgroundColor="#255DCB"
       />
