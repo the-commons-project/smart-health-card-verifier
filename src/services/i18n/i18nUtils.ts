@@ -118,7 +118,6 @@ class i18nUtils{
                     .replace("{{lng}}",lang)
                     .replace("{{region}}", region)
 
-    console.log( `resource url = ${url}` );
     timer.start()
     var res = null;
     res = await this.cache.get(lang, region )
