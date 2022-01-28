@@ -6,7 +6,8 @@
     "default": {
       "Common":{
         "Cancel":"Cancel",
-        "OK":"OK"
+        "OK":"OK",
+        "ScanNext":"Scanner le prochain carnet de vaccination"
       },
       "Error": {
         "ServerError":"Server Error. Please try to scan again.",
@@ -17,7 +18,7 @@
       },
       "ErrorPage": {
         "UnsupportedQR":"Code QR non pris en charge",
-        "ScanNext":"Scanner le prochain carnet de vaccination"
+        "OnlyValidText":"Seuls les vaccins valides SMART® Health Cards sont actuellement pris en charge"
       },
       "Welcome":{
         "Title": "Bienvenue!",
@@ -45,7 +46,6 @@
         "Valid":"Valide",
         "ValidSmartHealthCard":"Application de vérification　Smart Health Card",
         "Verified":"Vérifié",
-        "ScanNext":"Scan next vaccination record",
         "Issuer":"Émettrice",
         "Name":"Nom",
         "DOB":"Date de naissance",

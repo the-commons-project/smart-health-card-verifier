@@ -18,7 +18,7 @@
       },
       "ErrorPage": {
         "UnsupportedQR":"Unsupported QR",
-        "OnlyValidText":"Seules les SMART® Health Cards valides sont actuellement prises en charge"
+        "OnlyValidText":"Only valid vaccine SMART® Health Cards are currently supported"
       },
       "Welcome":{
         "Title": "Welcome!",
