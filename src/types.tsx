@@ -38,7 +38,7 @@ export declare class Timer {
 
 
 export type localeType = {
-    lang: string,
+    language: string,
     region: string
 }
 

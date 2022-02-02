@@ -4,18 +4,18 @@ export default class i18nCache {
     this.store = {}
   }
 
-  async set( lang:string, region:string, data:any ) {
-    this.store[ lang ] = this.store[ lang ] || {}
+  async set( language:string, region:string, data:any ) {
+    this.store[ language ] = this.store[language] || {}
     if( region == null || region.length == 0 ) {
-      this.store[ lang ][ 'default' ] = data
+      this.store[ language ][ 'default' ] = data
     } else {
-      this.store[ lang ][region] = data 
+      this.store[ language ][region] = data 
     }
   }
 
-  async get( lang: string, region: string  ) : Promise< any > {
-    return this.store[ lang ] ? 
-      ( this.store[ lang ][ region ] || null ) 
+  async get( language: string, region: string  ) : Promise< any > {
+    return this.store[ language ] ? 
+      ( this.store[ language ][ region ] || null ) 
       : null 
   } 
 }
