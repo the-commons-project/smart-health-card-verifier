@@ -8,7 +8,7 @@ const images = {
 }
 
 interface LoadingProps {
-  enabled: boolean | any,
+  enabled: boolean | any
 }
 
 export default ( { enabled = true }: LoadingProps )=> {
@@ -18,8 +18,8 @@ export default ( { enabled = true }: LoadingProps )=> {
     outputRange: ['0deg', '360deg'],
   })
   useEffect(()=>{
-    if( enabled ) {
-        Animated.loop(
+    if ( enabled ) {
+      Animated.loop(
         Animated.timing(spinAnimation, {
           toValue: 1,
           duration: 1000,
@@ -30,23 +30,23 @@ export default ( { enabled = true }: LoadingProps )=> {
     }
   }, [] )
 
-  return ( <View style={styles.container}>
-        <Animated.Image style={[styles.spinner, { transform: [{ rotate: spin }] }]}
-          source={images.loading}
-            />
-      </View>
-       )
+  return ( <View style={ styles.container }>
+    <Animated.Image style={ [styles.spinner, { transform: [{ rotate: spin }] }] }
+      source={ images.loading }
+    />
+  </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor:"#FFFFFF",
-      justifyContent: 'center', 
-      alignItems: 'center'
-    },
-    spinner: {     
-      maxHeight: 55,
-      maxWidth: 55,
-    }
+  container: {
+    flex: 1,
+    backgroundColor:'#FFFFFF',
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  spinner: {     
+    maxHeight: 55,
+    maxWidth: 55,
+  }
 })

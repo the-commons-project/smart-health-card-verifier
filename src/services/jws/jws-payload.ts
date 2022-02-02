@@ -5,9 +5,9 @@ import * as fhirBundle from './fhirBundle'
 
 export const schema = jwsPayloadSchema
 
-export function validate(jwsPayloadText: string): Boolean {
+export function validate (jwsPayloadText: string): Boolean {
   if (jwsPayloadText.trim() !== jwsPayloadText) {
-    console.log(`JWS payload has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
+    console.log('JWS payload has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     jwsPayloadText = jwsPayloadText.trim()
   }
 
@@ -28,7 +28,7 @@ export function validate(jwsPayloadText: string): Boolean {
   return fhirBundle.validate(fhirBundleText)
 }
 
-function checkJwsPayload(jwsPayload: JWSPayload | undefined) {
+function checkJwsPayload (jwsPayload: JWSPayload | undefined) {
   if (!jwsPayload || typeof jwsPayload !== 'object') {
     console.log('Failed to parse JWS.payload data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return false

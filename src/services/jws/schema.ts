@@ -6,14 +6,14 @@ import fhirSchema from '../../schemas/fhir-schema.json'
 
 const schemaCache: Record<string, AnyValidateFunction> = {}
 
-export function validateSchema(
+export function validateSchema (
   schema: AnySchemaObject,
   data: FhirBundle | JWS | JWSPayload | HealthCard | KeySet | Resource | undefined,
   pathPrefix = '',
 ): boolean {
   // by default, the validator will stop at the first failure. 'allErrors' allows it to keep going.
   const schemaId =
-    (schema as { [key: string]: string })['$id'] || (schema as { [key: string]: string })['$ref']
+    (schema as { [key: string]: string }).$id || (schema as { [key: string]: string }).$ref
   const isFhirSchema = schemaId.startsWith(fhirSchema.$id)
 
   try {
@@ -35,17 +35,17 @@ export function validateSchema(
       // reformat the schema errors into something more readable:
       err.instancePath = pathPrefix + err.instancePath
       switch (err.keyword) {
-        // · Schema: {"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"resourceType"},"message":"must have required property 'resourceType'"}
+      // · Schema: {"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"resourceType"},"message":"must have required property 'resourceType'"}
         case 'required':
           return `Schema: ${err.instancePath} requires property ${
             err.params.missingProperty as string
-          }`
+        }`
 
         // · Schema: {"instancePath":"","schemaPath":"#/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"resourceType1"},"message":"must NOT have additional properties"}
         case 'additionalProperties':
           return `Schema: ${err.instancePath} additional property '${
             err.params.additionalProperty as string
-          }' not allowed.`
+        }' not allowed.`
 
         //  Schema: {"instancePath":"/birthDate","schemaPath":"#/definitions/date/pattern","keyword":"pattern",
         // "params":{"pattern":"^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?$"},
@@ -53,7 +53,7 @@ export function validateSchema(
         case 'pattern':
           return `Schema: ${err.instancePath} must match pattern : '${
             err.params.pattern as string
-          }'.`
+        }'.`
 
         // · Schema: {"instancePath":"","schemaPath":"#/oneOf","keyword":"oneOf","params":{"passingSchemas":null},"message":"must match exactly one schema in oneOf"}
         case 'oneOf':
@@ -90,7 +90,7 @@ export function validateSchema(
 }
 
 // from a path, follow the schema to figure out a 'type'
-export function objPathToSchema(path: string): string {
+export function objPathToSchema (path: string): string {
   const schema: Schema = fhirSchema
   const properties = path.split('.')
 

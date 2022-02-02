@@ -1,11 +1,11 @@
 import pako from 'pako'
 import { Platform } from 'react-native'
-import { getUniqueId, getBundleId } from 'react-native-device-info';
+import { getUniqueId, getBundleId } from 'react-native-device-info'
 
 import { v5 as uuidv5 } from 'uuid'
 import { uuidNamespace } from './constants'
 
-export function parseJson<T>(json: string): T | undefined {
+export function parseJson<T> (json: string): T | undefined {
   try {
     return JSON.parse(json) as T
   } catch (error) {
@@ -52,7 +52,7 @@ export const formatVaccinationDate = (dateRaw: string): string => {
   return vaccinationDate
 }
 
-export function inflatePayload(verificationResult: {
+export function inflatePayload (verificationResult: {
   header: { zip: string }
   payload: any
 }): Buffer {
@@ -71,11 +71,11 @@ export function inflatePayload(verificationResult: {
   return payload
 }
 
-export function isOpensslAvailable(): boolean {
+export function isOpensslAvailable (): boolean {
   return false
 }
 
-export function propPath(object: Record<string, unknown>, path: string): string | undefined {
+export function propPath (object: Record<string, unknown>, path: string): string | undefined {
   const props = path.split('.')
   let val = object
 
@@ -90,7 +90,7 @@ export function propPath(object: Record<string, unknown>, path: string): string 
   return val as unknown as string
 }
 
-export function walkProperties(
+export function walkProperties (
   obj: Record<string, unknown>,
   path: string[],
   callback: (o: Record<string, unknown>, p: string[]) => void,
@@ -121,12 +121,11 @@ export function walkProperties(
       path.pop()
     }
   }
-
-  return
+  
 }
 
 // Extracted from https://forums.expo.io/t/constants-installationid-how-to-implement-it-on-your-own/50003/15
-export async function getInstallationIdManually() {
+export async function getInstallationIdManually () {
   let installationId
 
   const identifierForVendor = await getUniqueId()

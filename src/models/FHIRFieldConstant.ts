@@ -1,4 +1,4 @@
-const PATIENT: string = "Patient"
+const PATIENT: string = 'Patient'
 const constants = {
   RESOURCE_TYPES: {
     PATIENT

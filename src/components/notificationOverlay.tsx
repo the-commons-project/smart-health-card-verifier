@@ -4,7 +4,7 @@ import AppClickableImage from '../components/customImage'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 
-type NotificationOverlayVariables = {
+interface NotificationOverlayVariables {
   navigation?: any
   type?: any
 }
@@ -19,28 +19,28 @@ const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables)
   let subtitle = ''
 
   if (type === 'noInternetConnection') {
-    title = t("Error.NoInterNet", "No internet connection");
-    subtitle = t("Error.NoInterNetText",'Please check your internet connection and try again.');
+    title = t('Error.NoInterNet', 'No internet connection')
+    subtitle = t('Error.NoInterNetText', 'Please check your internet connection and try again.')
   } else if (type === 'noCameraAccess') {
-    title = t("Error.NoCamera",'No access to camera');
-    subtitle = t("Error.NoCameraText",'To continue, please enable camera access in Settings.');
+    title = t('Error.NoCamera', 'No access to camera')
+    subtitle = t('Error.NoCameraText', 'To continue, please enable camera access in Settings.')
   }
 
   return (
-    <View style={styles.flexContainer}>
+    <View style={ styles.flexContainer }>
       <View>
         <AppClickableImage
-          styles={styles.leftCaretImage}
-          source={images.leftCaret}
-          onPress={() => navigation.navigate('Welcome')}
+          styles={ styles.leftCaretImage }
+          source={ images.leftCaret }
+          onPress={ () => navigation.navigate('Welcome') }
         />
       </View>
-      <View style={styles.notificationTextContainer}>
-        <Text style={[styles.notificationTitle, FontStyle.Poppins_600SemiBold]}>
-          {title}
+      <View style={ styles.notificationTextContainer }>
+        <Text style={ [styles.notificationTitle, FontStyle.Poppins_600SemiBold] }>
+          { title }
         </Text>
-        <Text style={[styles.notificationSubtitle, FontStyle.Poppins_600SemiBold]}>
-          {subtitle}
+        <Text style={ [styles.notificationSubtitle, FontStyle.Poppins_600SemiBold] }>
+          { subtitle }
         </Text>
       </View>
     </View>

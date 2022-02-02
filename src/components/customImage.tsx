@@ -1,15 +1,15 @@
 import React from 'react'
 import { Image, TouchableOpacity } from 'react-native'
 
-type AppClickableImageVariables = {
+interface AppClickableImageVariables {
   onPress?: any
   styles?: any
   source?: any
 }
 
 const AppClickableImage = ({ onPress, styles, source }: AppClickableImageVariables) => (
-  <TouchableOpacity onPress={onPress}>
-    <Image style={styles} source={source} />
+  <TouchableOpacity onPress={ onPress }>
+    <Image style={ styles } source={ source } />
   </TouchableOpacity>
 )
 

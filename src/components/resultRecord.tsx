@@ -20,136 +20,135 @@ const ResultRecord = ({ data }: Data) => {
   const { issuerData, patientData, vaccinationData } = validationResult
 
   const { names, dateOfBirth } = patientData
-  const userFieldTitle = [t("Result.Name",'Name')]
-  const userDobTitle = [t("Result.DOB",'Date of Birth')]
+  const userFieldTitle = [t('Result.Name', 'Name')]
+  const userDobTitle = [t('Result.DOB', 'Date of Birth')]
   const userDobValue = [insertImageToTable()]
 
-
-  function insertImageToTable() {
+  function insertImageToTable () {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={ { flexDirection: 'row', alignItems: 'center' } }>
         <Text
-          style={[
+          style={ [
             styles.fieldValue,
             styles.increaseFont,
             FontStyle.OpenSans_700Bold, 
-            {marginRight: 20 },
-          ]}
+            { marginRight: 20 },
+          ] }
         >
-          {date}
+          { date }
         </Text>
         <AppClickableImage
-          styles={styles.eyesImage}
-          source={images.eyes}
-          onPress={() => {
+          styles={ styles.eyesImage }
+          source={ images.eyes }
+          onPress={ () => {
             setBoolBirthDate(!boolBirthDate)
-          }}
+          } }
         />
       </View>
     )
   }
 
-  function insertTextToTable(vaccineName: string, lotNumber: string) {
+  function insertTextToTable (vaccineName: string, lotNumber: string) {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={ { flexDirection: 'row', alignItems: 'center' } }>
         <Text
-          style={[
+          style={ [
             styles.fieldValue,
             styles.increaseFont,
             FontStyle.OpenSans_700Bold, 
-            {marginRight: 7 },
-          ]}
+            { marginRight: 7 },
+          ] }
         >
-          {vaccineName}
+          { vaccineName }
         </Text>
-        <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>
-          Lot {lotNumber}
+        <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>
+          Lot { lotNumber }
         </Text>
       </View>
     )
   }
 
-  function vaccinatorParser(vaccinator: string) {
+  function vaccinatorParser (vaccinator: string) {
     let newText = '-'
     if (vaccinator) {
       newText = vaccinator.split(' | ').join(', ')
     }
 
     return (
-      <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>{newText}</Text>
+      <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>{ newText }</Text>
     )
   }
 
-  function dateParser(date: string) {
+  function dateParser (date: string) {
     return (
       <Text
-        style={[
+        style={ [
           styles.fieldTitle,
           styles.increaseFont,
           styles.dosageTextAlign,
           FontStyle.OpenSans_700Bold,
-        ]}
+        ] }
       >
-        {date}
+        { date }
       </Text>
     )
   }
 
-  function rowAdapter(dosageFieldTitleRowOne) {
+  function rowAdapter (dosageFieldTitleRowOne) {
     return (
-      <View style={[{ flexWrap: "wrap", alignItems: "flex-end", justifyContent:'space-between', flexDirection: 'row' }]}>
-      <View style={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}>
-        { dosageFieldTitleRowOne[0] }
-      </View>
-      <View style={[
+      <View style={ { flexWrap: 'wrap', alignItems: 'flex-end', justifyContent:'space-between', flexDirection: 'row' } }>
+        <View style={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }>
+          { dosageFieldTitleRowOne[0] }
+        </View>
+        <View style={ [
           styles.fieldValue,
           styles.increaseFont,
           FontStyle.OpenSans_700Bold
-        ]}>
-        { dosageFieldTitleRowOne[1] }
+        ] }>
+          { dosageFieldTitleRowOne[1] }
+        </View>
       </View>
-    </View>
     )
   }
 
   return (
-    <View style={styles.recordContainer}>
-      <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, FontStyle.OpenSans_700Bold]}>
-          {t("Result.VaccineRecord","COVID-19 Vaccination Record")}
+    <View style={ styles.recordContainer }>
+      <View style={ styles.titleContainer }>
+        <Text style={ [styles.titleText, FontStyle.OpenSans_700Bold] }>
+          { t('Result.VaccineRecord', 'COVID-19 Vaccination Record') }
         </Text>
-        <Image style={styles.smartLogoImage} source={images.smartLogo} />
+        <Image style={ styles.smartLogoImage } source={ images.smartLogo } />
       </View>
       <View>
-        <Table borderStyle={styles.tableStyle}>
+        <Table borderStyle={ styles.tableStyle }>
           <Row
-            data={userFieldTitle}
-            textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
+            data={ userFieldTitle }
+            textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
           />
-            {
-              names.map( ( name:string, key  )=>{
-                  return (  <Row key={key}
-                    data={[name]}
-                    textStyle={[styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold]}
-                  /> )
+          {
+            names.map( ( name: string, key  )=>{
+              return (  <Row key={ key }
+                data={ [name] }
+                textStyle={ [styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold] }
+              /> )
 
-                })
-            }
+            })
+          }
           <Row
-            data={userDobTitle}
-            textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
+            data={ userDobTitle }
+            textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
           />
           <Row
-            data={userDobValue}
-            textStyle={[styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold]}
+            data={ userDobValue }
+            textStyle={ [styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold] }
           />
         </Table>
-        <Text style={[styles.subFieldValue, FontStyle.OpenSans_400Regular]}>
-          {t("Result.AlwaysVerify","Always verify identity with a government-issued I.D.")}
+        <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>
+          { t('Result.AlwaysVerify', 'Always verify identity with a government-issued I.D.') }
         </Text>
       </View>
-      {vaccinationData.map((doseObject, key) => {
+      { vaccinationData.map((doseObject, key) => {
         const { dose, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
         const dosageFieldTitleRowOne = [
           insertTextToTable(vaccineName, lotNumber),
@@ -157,54 +156,54 @@ const ResultRecord = ({ data }: Data) => {
         ]
         const dosageFieldValueRowOne = [vaccinatorParser(vaccinator), '']
         return (
-          <View key={key}>
-            <View style={styles.doseDividerContainer}>
-              <Text style={[styles.dosageText, FontStyle.OpenSans_700Bold]}>
-                 {t("Result.Dose", `Dose ${dose}`, {num:dose})}
+          <View key={ key }>
+            <View style={ styles.doseDividerContainer }>
+              <Text style={ [styles.dosageText, FontStyle.OpenSans_700Bold] }>
+                { t('Result.Dose', `Dose ${dose}`, { num:dose }) }
               </Text>
-              <View style={styles.doseDivider} />
+              <View style={ styles.doseDivider } />
             </View>
-            <Table borderStyle={styles.tableStyle}>
+            <Table borderStyle={ styles.tableStyle }>
               <Row
-                data={[rowAdapter(dosageFieldTitleRowOne)]}
-                textStyle={[styles.fieldTitle, FontStyle.OpenSans_400Regular]}
+                data={ [rowAdapter(dosageFieldTitleRowOne)] }
+                textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
               />
               <Row
-                data={dosageFieldValueRowOne}
-                textStyle={[
+                data={ dosageFieldValueRowOne }
+                textStyle={ [
                   styles.fieldValue,
                   styles.increaseFont,
                   FontStyle.OpenSans_700Bold,
-                ]}
+                ] }
               />
             </Table>
           </View>
         )
-      })}
-      <View style={styles.divider} />
+      }) }
+      <View style={ styles.divider } />
       <View>
-        <Text style={[styles.fieldTitle,  FontStyle.OpenSans_400Regular]}>{t("Result.Issuer","Issuer")}</Text>
-        {issuerData.name ? (
-          <View style={styles.verifierContainer}>
-            <Text style={[ {width:"100%"},styles.fieldValue, FontStyle.OpenSans_700Bold]}>
-              {issuerData?.name || issuerData?.url}
+        <Text style={ [styles.fieldTitle,  FontStyle.OpenSans_400Regular] }>{ t('Result.Issuer', 'Issuer') }</Text>
+        { issuerData.name ? (
+          <View style={ styles.verifierContainer }>
+            <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
+              { issuerData?.name || issuerData?.url }
             </Text>
 
-            <Image style={styles.verifierImage} source={images.commonTrustVerified} />
-            <Text style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}>
-              {t("Result.Verified","Verified")}
+            <Image style={ styles.verifierImage } source={ images.commonTrustVerified } />
+            <Text style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }>
+              { t('Result.Verified', 'Verified') }
             </Text>
           </View>
         ) : (
-          <View style={styles.verifierContainer}>
-            <Image style={styles.warningCrossImage} source={images.warningCross} />
+          <View style={ styles.verifierContainer }>
+            <Image style={ styles.warningCrossImage } source={ images.warningCross } />
             <Text
-              style={[styles.verifiedByText, FontStyle.OpenSans_700Bold]}
+              style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }
             >
-              {t("Result.IssuerNotRecognized", "Issuer not recognized")}
+              { t('Result.IssuerNotRecognized', 'Issuer not recognized') }
             </Text>
           </View>
-        )}
+        ) }
       </View>
     </View>
   )
@@ -292,7 +291,7 @@ const styles = StyleSheet.create({
   },
   verifierContainer: {
     flex: 1,
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',

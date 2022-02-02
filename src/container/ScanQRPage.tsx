@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions'
 import { Platform, View, StyleSheet, Animated, Easing, Alert, useWindowDimensions, PixelRatio } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import BarCodeScanner from '../components/BarCodeScanner'
@@ -20,31 +20,31 @@ const images = {
 }
 
 const isAndroid = Platform.OS?.toLowerCase() == 'android'
-const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA;
+const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA
 
-type markerPosition = {
-  left: number,
-  top: number,
-  width: number,
+interface markerPosition {
+  left: number
+  top: number
+  width: number
   height: number
 }
 
 const ScanQRPage = ({ navigation }: Props) => {
-  const {t} = useTranslation()
-  const { height, width }   = useWindowDimensions();
+  const { t } = useTranslation()
+  const { height, width }   = useWindowDimensions()
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
-  const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0, width:width, height:height})
+  const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0, width:width, height:height })
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
 
   const insets = useSafeAreaInsets()
-  var windowWidth  = 0
-  var windowHeight = 0
-  var markerLayerHeight:any = 273
-  var markerLayerWidth:any  = 127
-  var markerLayerOffsetTop  = 0
-  var markerLayerOffsetLeft = 0
+  let windowWidth  = 0
+  let windowHeight = 0
+  const markerLayerHeight: any = 273
+  const markerLayerWidth: any  = 127
+  let markerLayerOffsetTop  = 0
+  let markerLayerOffsetLeft = 0
 
   const spin = spinAnimation.interpolate({
     inputRange: [0, 1],
@@ -52,50 +52,47 @@ const ScanQRPage = ({ navigation }: Props) => {
   })
 
   const configureMarkerSizes = ( width: number, height: number) => {
-    windowWidth = width;
+    windowWidth = width
     windowHeight = height
-    let ratio = windowWidth / markerLayerWidth;
+    let ratio = windowWidth / markerLayerWidth
     let tmpMarkerLayerHeight    = ( markerLayerHeight * ratio )
-    let tmpMarkerLayerWidth     = windowWidth;
+    let tmpMarkerLayerWidth     = windowWidth
 
-    markerLayerOffsetTop =  (windowHeight - tmpMarkerLayerHeight) / 2;
-    if( markerLayerOffsetTop > 0  ) {
+    markerLayerOffsetTop =  (windowHeight - tmpMarkerLayerHeight) / 2
+    if ( markerLayerOffsetTop > 0  ) {
       markerLayerOffsetTop = 0 
-      ratio = height / markerLayerHeight;
+      ratio = height / markerLayerHeight
       tmpMarkerLayerWidth     = markerLayerWidth * ratio
       tmpMarkerLayerHeight    = height
       markerLayerOffsetLeft = ( width - tmpMarkerLayerWidth ) / 2
     }
-    let shiftPosition = { 
-      "left": Math.floor(markerLayerOffsetLeft), 
-      "top": Math.floor(markerLayerOffsetTop),
-      "width": Math.ceil(tmpMarkerLayerWidth),
-      "height": Math.ceil(tmpMarkerLayerHeight)};
+    const shiftPosition = { 
+      'left': Math.floor(markerLayerOffsetLeft), 
+      'top': Math.floor(markerLayerOffsetTop),
+      'width': Math.ceil(tmpMarkerLayerWidth),
+      'height': Math.ceil(tmpMarkerLayerHeight) }
     setMarkerShift( shiftPosition )
   }
 
-
   useEffect(() => {
-
     
     configureMarkerSizes(width, height);
-    
 
     (async () => {
       if ( isAndroid ) {
         var result = await check(cameraPermissionType) 
         if ( result != RESULTS.GRANTED) {
           Alert.alert(
-            t("Scan.CameraPermission", "Camera Permission"),
-            t("Scan.CameraPermissionText","Camera Permission Description"),
+            t('Scan.CameraPermission', 'Camera Permission'),
+            t('Scan.CameraPermissionText', 'Camera Permission Description'),
             [
               {
-                text: t("Common.Cancel"),
+                text: t('Common.Cancel'),
                 onPress: () => navigation.navigate('Welcome'),
                 style: 'cancel',
               },
               {
-                text: t("Common.OK"),
+                text: t('Common.OK'),
                 onPress: async () => {
                   result = await request( cameraPermissionType )
                   setHasCameraPermission(result === RESULTS.GRANTED)
@@ -171,7 +168,6 @@ const ScanQRPage = ({ navigation }: Props) => {
         return
       }
 
-
       if (error.toString() === 'Error: Failed to download issuer JWK set') {
         validationResult.isValid = false
 
@@ -181,7 +177,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       if (error === ErrorCode.SERVER_ERROR) {
         navigation.navigate('Welcome')
-        alert(t('Error.ServerError',"Server Error Please try to scan again"))
+        alert(t('Error.ServerError', 'Server Error Please try to scan again'))
 
         return
       }
@@ -196,63 +192,62 @@ const ScanQRPage = ({ navigation }: Props) => {
 
   const renderAccessError = () => {
     if (!hasCameraPermission)
-      return <NotificationOverlay type={'noCameraAccess'} navigation={navigation} />
+      return <NotificationOverlay type={ 'noCameraAccess' } navigation={ navigation } />
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.scannerContainer}>
-        {renderAccessError()}
+    <View style={ styles.container }>
+      <View style={ styles.scannerContainer }>
+        { renderAccessError() }
 
-        {isInternetReachable === false && (
-          <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
-        )}
+        { isInternetReachable === false && (
+          <NotificationOverlay type={ 'noInternetConnection' } navigation={ navigation } />
+        ) }
 
-        {scanned && (
+        { scanned && (
           <Animated.Image
-            style={[styles.spinner, { transform: [{ rotate: spin }] }]}
-            source={images.loading}
+            style={ [styles.spinner, { transform: [{ rotate: spin }] }] }
+            source={ images.loading }
           />
-        )}
+        ) }
 
-        {showCamera && (
+        { showCamera && (
           <View >
             <BarCodeScanner
-              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-              type={cameraType}
-              styles={styles.scannerContainer}
-            >
-            </BarCodeScanner>
-              <View style={styles.markerLayerContaier}>
-                { ( markerShift.left < 0 ) ?
-                  ( <MarkerLayerSVG  height={markerShift.height} width={markerShift.width} style={{ "left": markerShift.left }} /> )
-                  :
-                  ( <MarkerLayerSVG height={markerShift.height} width={markerShift.width} style={{"top": markerShift.top}} /> )
-                }
-              </View>
-              <View style={[styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top)}]}>
-                  <AppClickableImage
-                    styles={styles.leftCaretImage}
-                    source={images.leftCaret}
-                    onPress={() => navigation.navigate('Welcome')}
-                  />
-              </View>
-              <View style={styles.switchCameraContainer}>
-                <AppClickableImage
-                  styles={styles.switchCameraImage}
-                  source={images.switchCamera}
-                  onPress={() => {
-                    setCameraType(
-                      cameraType === BarCodeScanner.Constants.Type.back
-                        ? BarCodeScanner.Constants.Type.front
-                        : BarCodeScanner.Constants.Type.back,
-                    )
-                  }}
-                />
-              </View>
+              onBarCodeScanned={ scanned ? undefined : handleBarCodeScanned }
+              type={ cameraType }
+              styles={ styles.scannerContainer }
+            />
+            <View style={ styles.markerLayerContaier }>
+              { ( markerShift.left < 0 ) ?
+                  ( <MarkerLayerSVG  height={ markerShift.height } width={ markerShift.width } style={ { 'left': markerShift.left } } /> )
+                :
+                  ( <MarkerLayerSVG height={ markerShift.height } width={ markerShift.width } style={ { 'top': markerShift.top } } /> )
+              }
+            </View>
+            <View style={ [styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top) }] }>
+              <AppClickableImage
+                styles={ styles.leftCaretImage }
+                source={ images.leftCaret }
+                onPress={ () => navigation.navigate('Welcome') }
+              />
+            </View>
+            <View style={ styles.switchCameraContainer }>
+              <AppClickableImage
+                styles={ styles.switchCameraImage }
+                source={ images.switchCamera }
+                onPress={ () => {
+                  setCameraType(
+                    cameraType === BarCodeScanner.Constants.Type.back
+                      ? BarCodeScanner.Constants.Type.front
+                      : BarCodeScanner.Constants.Type.back,
+                  )
+                } }
+              />
+            </View>
           </View>
 
-        )}
+        ) }
       </View>
     </View>
   )
@@ -271,7 +266,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   backButtonContainer: {
-    position:"absolute",
+    position:'absolute',
     top: 20,
     left: 20,
     height: 40,
@@ -281,8 +276,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top:0,
     left:0,
-    width: "100%",
-    height: "100%"
+    width: '100%',
+    height: '100%'
   },
   switchCameraContainer: {
     position: 'absolute',
