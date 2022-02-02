@@ -8,7 +8,7 @@ const i18n = i18nUtils.initailize()
 
 type localeType = {
     key: string,
-    lang: string,
+    language: string,
     region: string
     initialized: boolean
 }
@@ -17,7 +17,7 @@ type localeType = {
 // Declaring the state object globally.
 const defaultState = {
   key: 'en',
-  lang: "en",
+  language: "en",
   region: "US",
   initialized: false
 };
@@ -64,7 +64,7 @@ export function getProvider() {
 
       }
     const getLocaleString = ( key: string ):string => {
-        return key + ":" + state.lang
+        return key + ":" + state.language
       }
 
     const udpateLocale = async ()=>{

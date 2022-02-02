@@ -29,7 +29,7 @@ const localeFetchURL = `${localeLoopupUpHost}/{{lng}}/default.json`
 
 const defaultState = {
   key: "en",
-  lang: "en",
+  language: "en",
   region: null,
 };
 
@@ -88,49 +88,49 @@ class i18nUtils{
     return RNLocalize.getLocales()
   }
 
-  setCurrentLocale( key: string, lang: string, region: string,  ){
-    this.currentLocale = { key, lang, region }
+  setCurrentLocale( key: string, language: string, region: string,  ){
+    this.currentLocale = { key, language, region }
   }
 
   parseResult( res: any ) {
-    const{ key, data, lang, region } = res;
+    const{ key, data, language, region } = res;
     const resources = data[defaultNameSpace] 
-    return [key, defaultNameSpace, resources, lang, region ]
+    return [key, defaultNameSpace, resources, language, region ]
   }
   
-  fetchLocalResource( lang: string, region: string,): Promise<any>{
-    return Promise.resolve( localeResourcesMap[ lang ] || null )
+  fetchLocalResource( language: string, region: string,): Promise<any>{
+    return Promise.resolve( localeResourcesMap[ language ] || null )
   }
 
-  getKey( lang: string, region: string | null ): string {
-    var key = [ lang, ( region || "default")].join("_").toLowerCase()
+  getKey( language: string, region: string | null ): string {
+    var key = [ language, ( region || "default")].join("_").toLowerCase()
     key = key.replace("_default","")
     return key
   }
 
-  async fetchResource( lang: string, region: string,  ): Promise< any >{
+  async fetchResource( language: string, region: string,  ): Promise< any >{
     var key         = defaultState.key
-    var _lang       = defaultState.lang 
+    var _lang       = defaultState.language 
     var _region:any = defaultState.region
 
     const timer = new Timer()
     var   url   =  localeFetchURL
-                    .replace("{{lng}}",lang)
-                    .replace("{{region}}", region)
+                    .replace("{{lng}}",language)
+                    .replace("{{region}}", language)
 
     timer.start()
     var res = null;
-    res = await this.cache.get(lang, region )
+    res = await this.cache.get(language, region )
     if( res != null ) {
 
-      key = this.getKey( lang, region )
-      _lang = lang.toLowerCase();
+      key = this.getKey( language, region )
+      _lang = language.toLowerCase();
       _region = region.toLowerCase()
 
-    } else if( ( res = this.cache.get( lang, 'default') ) != null ){
-      _lang = lang.toLowerCase();
+    } else if( ( res = this.cache.get( language, 'default') ) != null ){
+      _lang = language.toLowerCase();
       _region = null
-      key = this.getKey( lang, _region )
+      key = this.getKey( language, _region )
 
     } 
     // else {
@@ -153,12 +153,12 @@ class i18nUtils{
     return [ key, _lang, _region ];
   }
 
-  updateResourceBundle( bundle: any ):[ key: string, lang: any, region:any] {
+  updateResourceBundle( bundle: any ):[ key: string, language: any, region:any] {
       var _lang:any
       var _region:any
-      const [key, namespace, resources, lang, region ] = this.parseResult( bundle );
+      const [key, namespace, resources, language, region ] = this.parseResult( bundle );
       /* Store data : #TODO to store locally */
-      _lang = lang 
+      _lang = language 
       if ( region == 'default'){
         _region = null
       }
@@ -175,7 +175,7 @@ class i18nUtils{
 
   async updateLocale(): Promise<localeType>{
     var key                = defaultState.key
-    var _lang              = defaultState.lang 
+    var _lang              = defaultState.language 
     var _region:string|any = defaultState.region
     var arr = this.getSystemLocale()
     var res = defaultLocaleResource;
