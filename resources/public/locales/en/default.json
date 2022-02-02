@@ -23,7 +23,7 @@
       "Welcome":{
         "Title": "Welcome!",
         "SHCV": "SMART® Health Card Verifier",
-        "VerifySmartHealthCard": "Verify SMART® Health Card QR code in a safe and privacy-preserving way",
+        "VerifySmartHealthCard": "Verify SMART® Health Card QR codes in a safe and privacy-preserving way",
         "ScanVaccinationRecord": "Scan vaccination record",
         "HowTo": "How to verify SMART® Health Cards",
         "AboutUs":"About us",

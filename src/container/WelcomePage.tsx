@@ -70,7 +70,7 @@ const WelcomePage = ({ navigation }: Props) => {
 
           <View style={styles.textContainer}>
             <Text style={[styles.subTitle, FontStyle.OpenSans_400Regular]}>
-              {t("Welcome.VerifySmartHealthCard", "Verify SMART® Health Card QR code in a safe and privacy-preserving way")}
+              {t("Welcome.VerifySmartHealthCard", "Verify SMART® Health Card QR codes in a safe and privacy-preserving way")}
             </Text>
             <AppButton
               title={t("Welcome.ScanVaccinationRecord","Scan vaccination record")}
