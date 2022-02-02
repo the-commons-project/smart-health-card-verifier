@@ -49,7 +49,6 @@ import VerificationResultPage from './src/container/VerificationResultPage'
 import ErrorPage from './src/container/ErrorPage'
 
 import { RootStackParamList } from './src/types'
-1
 global.Buffer = Buffer
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -77,11 +76,5 @@ const App = () => {
     </LocaleProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  highlight: {
-    fontWeight: '700',
-  },
-})
 
 export default App
