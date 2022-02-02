@@ -24,6 +24,7 @@ export type ValidationResult = {
 
 export type BaseResponse = {
   isValid: boolean | string
+  errorCode: number,
   issuerData: issuerData
   patientData: patientData
   vaccinationData: vaccinationData[]

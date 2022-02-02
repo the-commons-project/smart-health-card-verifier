@@ -11,6 +11,7 @@ import { Props, BaseResponse } from '../types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
+import { InvalidError } from '../utils/InvalidError'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -136,6 +137,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
     let validationResult: BaseResponse = {
       isValid: false,
+      errorCode:0,
       issuerData: {
         iss: '',
         logo_uri: '',
@@ -161,6 +163,15 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
     } catch (error: any) {
+
+      if (error instanceof InvalidError) {
+        validationResult.isValid = false
+        validationResult.errorCode = error.errorCode
+        navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
+        return
+      }
+
+
       if (error.toString() === 'Error: Failed to download issuer JWK set') {
         validationResult.isValid = false
 
