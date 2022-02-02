@@ -33,6 +33,9 @@ const ResultBanner = ({ validationResult}: ValidationResult ) => {
     text = t("Result.NotVerified",'Not Verified');
     color = '#C33E38' //red
     validityText = t("Result.NotVerifiedText",'This SMART Health Card cannot be verified. It may have been corrupted.');
+    if( validationResult.errorCode > 0 ) {
+      validityText += ` (${validationResult.errorCode})`
+    }
     validityColor = '#C33E38' // red
   }
 

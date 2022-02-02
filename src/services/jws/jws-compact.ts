@@ -1,6 +1,7 @@
 import pako from 'pako'
 import jose from 'react-native-jose'
 
+import { InvalidError } from '../../utils/InvalidError'
 import { ErrorCode } from '../error'
 import { KeySet, KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
@@ -73,7 +74,13 @@ export async function validate(jws: string): Promise<any> {
     return
   }
 
-  await extractKeyURL(payload)
+  try { 
+    await extractKeyURL(payload)
+  } catch (err) {
+    if (err instanceof InvalidError) throw err;
+    return 
+  }
+
 
   let result = false
   if (!headerJson) {
@@ -141,6 +148,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
 
       return keySet
     } catch (err) {
+      if( err instanceof InvalidError ) throw err;
       console.log(
         "Can't parse downloaded issuer JWK set: " + (err as Error).toString(),
         ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
@@ -148,6 +156,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
       return undefined
     }
   } catch (err) {
+    if( err instanceof InvalidError ) throw err;
     console.log(
       'Failed to download issuer JWK set: ' + (err as Error).toString(),
       ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
