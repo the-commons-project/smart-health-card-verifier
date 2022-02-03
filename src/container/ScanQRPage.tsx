@@ -19,7 +19,7 @@ const images = {
   switchCamera: require('../../assets/img/scanqr/switch-camera.png'),
 }
 
-const isAndroid = Platform.OS?.toLowerCase() == 'android'
+const isAndroid = Platform.OS?.toLowerCase() === 'android'
 const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA
 
 interface markerPosition {
@@ -55,13 +55,13 @@ const ScanQRPage = ({ navigation }: Props) => {
   })
 
   const updateConnection = ()=>{
-    console.log( "isInternetReachable: " + isInternetReachable )
+    console.log( `isInternetReachable: ${isInternetReachable}` )
     setHasConnection( !( isInternetReachable === false ) )
   }
 
-  const configureMarkerSizes = ( width: number, height: number) => {
-    windowWidth = width
-    windowHeight = height
+  const configureMarkerSizes = ( _width: number, _height: number) => {
+    windowWidth  = _width
+    windowHeight = _height
     let ratio = windowWidth / markerLayerWidth
     let tmpMarkerLayerHeight    = ( markerLayerHeight * ratio )
     let tmpMarkerLayerWidth     = windowWidth
@@ -69,10 +69,10 @@ const ScanQRPage = ({ navigation }: Props) => {
     markerLayerOffsetTop =  (windowHeight - tmpMarkerLayerHeight) / 2
     if ( markerLayerOffsetTop > 0  ) {
       markerLayerOffsetTop = 0 
-      ratio = height / markerLayerHeight
+      ratio = _height / markerLayerHeight
       tmpMarkerLayerWidth     = markerLayerWidth * ratio
-      tmpMarkerLayerHeight    = height
-      markerLayerOffsetLeft = ( width - tmpMarkerLayerWidth ) / 2
+      tmpMarkerLayerHeight    = _height
+      markerLayerOffsetLeft = ( _width - tmpMarkerLayerWidth ) / 2
     }
     const shiftPosition = { 
       'left': Math.floor(markerLayerOffsetLeft), 
@@ -83,8 +83,8 @@ const ScanQRPage = ({ navigation }: Props) => {
   }
 
   useEffect(() => {
-    updateConnection();
-  }, [ isInternetReachable ] );
+    updateConnection()
+  }, [ isInternetReachable ] )
  
   useEffect(() => {
 
@@ -93,7 +93,7 @@ const ScanQRPage = ({ navigation }: Props) => {
     (async () => {
       if ( isAndroid ) {
         var result = await check(cameraPermissionType) 
-        if ( result != RESULTS.GRANTED) {
+        if ( result !== RESULTS.GRANTED) {
           Alert.alert(
             t('Scan.CameraPermission', 'Camera Permission'),
             t('Scan.CameraPermissionText', 'Camera Permission Description'),
@@ -209,8 +209,8 @@ const ScanQRPage = ({ navigation }: Props) => {
         { renderAccessError() }
 
         { !hasConnection && (
-          <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
-        )}
+          <NotificationOverlay type={ 'noInternetConnection' } navigation={ navigation } />
+        ) }
 
         { scanned && (
           <Animated.Image
@@ -228,9 +228,9 @@ const ScanQRPage = ({ navigation }: Props) => {
             />
             <View style={ styles.markerLayerContaier }>
               { ( markerShift.left < 0 ) ?
-                  ( <MarkerLayerSVG  height={ markerShift.height } width={ markerShift.width } style={ { 'left': markerShift.left } } /> )
+                ( <MarkerLayerSVG  height={ markerShift.height } width={ markerShift.width } style={ { 'left': markerShift.left } } /> )
                 :
-                  ( <MarkerLayerSVG height={ markerShift.height } width={ markerShift.width } style={ { 'top': markerShift.top } } /> )
+                ( <MarkerLayerSVG height={ markerShift.height } width={ markerShift.width } style={ { 'top': markerShift.top } } /> )
               }
             </View>
             <View style={ [styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top) }] }>
