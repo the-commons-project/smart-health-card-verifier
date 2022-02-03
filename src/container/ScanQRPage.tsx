@@ -32,11 +32,14 @@ interface markerPosition {
 const ScanQRPage = ({ navigation }: Props) => {
   const { t } = useTranslation()
   const { height, width }   = useWindowDimensions()
+  const [ hasConnection, setHasConnection ] = useState<boolean>( true )
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
   const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0, width:width, height:height })
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
+  const { isInternetReachable } = useNetInfo()
+  const showCamera = hasCameraPermission && isInternetReachable && !scanned
 
   const insets = useSafeAreaInsets()
   let windowWidth  = 0
@@ -50,6 +53,11 @@ const ScanQRPage = ({ navigation }: Props) => {
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   })
+
+  const updateConnection = ()=>{
+    console.log( "isInternetReachable: " + isInternetReachable )
+    setHasConnection( !( isInternetReachable === false ) )
+  }
 
   const configureMarkerSizes = ( width: number, height: number) => {
     windowWidth = width
@@ -75,7 +83,11 @@ const ScanQRPage = ({ navigation }: Props) => {
   }
 
   useEffect(() => {
-    
+    updateConnection();
+  }, [ isInternetReachable ] );
+ 
+  useEffect(() => {
+
     configureMarkerSizes(width, height);
 
     (async () => {
@@ -186,10 +198,6 @@ const ScanQRPage = ({ navigation }: Props) => {
     }
   }
 
-  const { isInternetReachable } = useNetInfo()
-
-  const showCamera = hasCameraPermission && isInternetReachable && !scanned
-
   const renderAccessError = () => {
     if (!hasCameraPermission)
       return <NotificationOverlay type={ 'noCameraAccess' } navigation={ navigation } />
@@ -200,9 +208,9 @@ const ScanQRPage = ({ navigation }: Props) => {
       <View style={ styles.scannerContainer }>
         { renderAccessError() }
 
-        { isInternetReachable === false && (
-          <NotificationOverlay type={ 'noInternetConnection' } navigation={ navigation } />
-        ) }
+        { !hasConnection && (
+          <NotificationOverlay type={'noInternetConnection'} navigation={navigation} />
+        )}
 
         { scanned && (
           <Animated.Image

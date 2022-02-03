@@ -13,7 +13,7 @@
     "generateAndroid": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
-    "@react-native-community/netinfo": "^6.1.0",
+    "@react-native-community/netinfo": "^7.1.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "ajv": "^8.7.1",
