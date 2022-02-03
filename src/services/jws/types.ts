@@ -26,7 +26,7 @@ interface FhirBundle {
   entry: BundleEntry[]
 }
 
-type Resource = { resourceType: string; meta?: { security?: unknown[] } } & Record<string, unknown>
+type Resource = { resourceType: string, meta?: { security?: unknown[] } } & Record<string, unknown>
 
 interface BundleEntry {
   id?: string
@@ -48,14 +48,14 @@ interface Schema {
     propertyName: string
     mapping: Record<string, string>
   }
-  oneOf?: { $ref: string }[]
+  oneOf?: Array<{ $ref: string }>
   definitions: Record<string, SchemaProperty>
 }
 
 interface SchemaProperty {
   properties?: Record<string, SchemaProperty>
   items?: { $ref: string } | { enum: string[] } // SchemaProperty (more general)
-  oneOf?: { $ref: string }[] //SchemaProperty[] (more general)
+  oneOf?: Array<{ $ref: string }> // SchemaProperty[] (more general)
   pattern?: string
   type?: string
   description?: string

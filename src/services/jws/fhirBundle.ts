@@ -16,11 +16,11 @@ export class FhirOptions {
   static ValidationProfile: ValidationProfiles = ValidationProfiles.any
 }
 
-export function validate(fhirBundleText: string): Boolean {
+export function validate (fhirBundleText: string): Boolean {
   const profile: ValidationProfiles = FhirOptions.ValidationProfile
 
   if (fhirBundleText.trim() !== fhirBundleText) {
-    console.log(`FHIR bundle has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
+    console.log('FHIR bundle has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     fhirBundleText = fhirBundleText.trim()
   }
 
@@ -55,7 +55,7 @@ export function validate(fhirBundleText: string): Boolean {
   return ValidationProfilesFunctions['usa-covid19-immunization'](fhirBundle.entry)
 }
 
-function validateFhirBundle(fhirBundle: FhirBundle) {
+function validateFhirBundle (fhirBundle: FhirBundle) {
   if (fhirBundle === undefined) {
     console.log('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return false
@@ -76,7 +76,7 @@ function validateFhirBundle(fhirBundle: FhirBundle) {
   return true
 }
 
-function validateFhirBundleEntry(entry: any, i: number) {
+function validateFhirBundleEntry (entry: any, i: number) {
   const resource = entry.resource
   if (resource == null) {
     console.log(`Schema: entry[${i.toString()}].resource missing`)
@@ -130,8 +130,8 @@ function validateFhirBundleEntry(entry: any, i: number) {
   }
 }
 
-function validatePropType(propType: string, i: number, path: string[], o: Record<string, unknown>) {
-  if (propType === 'CodeableConcept' && o['text']) {
+function validatePropType (propType: string, i: number, path: string[], o: Record<string, unknown>) {
+  if (propType === 'CodeableConcept' && o.text) {
     console.log(
       'fhirBundle.entry[' +
         i.toString() +
@@ -143,7 +143,7 @@ function validatePropType(propType: string, i: number, path: string[], o: Record
     )
   }
 
-  if (propType === 'Coding' && o['display']) {
+  if (propType === 'Coding' && o.display) {
     console.log(
       'fhirBundle.entry[' +
         i.toString() +
@@ -155,7 +155,7 @@ function validatePropType(propType: string, i: number, path: string[], o: Record
     )
   }
 
-  if (propType === 'Reference' && o['reference'] && !/[^:]+:\d+/.test(o['reference'] as string)) {
+  if (propType === 'Reference' && o.reference && !/[^:]+:\d+/.test(o.reference as string)) {
     console.log(
       'fhirBundle.entry[' +
         i.toString() +
@@ -224,9 +224,9 @@ const ValidationProfilesFunctions = {
 
       if (entry.resource.resourceType === 'Immunization') {
         // verify that valid codes are used see : https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html
-        const code = (entry.resource?.vaccineCode as { coding: { code: string }[] })?.coding[0]
+        const code = (entry.resource?.vaccineCode as { coding: Array<{ code: string }> })?.coding[0]
           ?.code
-        const cvxCodes = getAcceptedCodes() //['207', '208', '210', '211', '212']
+        const cvxCodes = getAcceptedCodes() // ['207', '208', '210', '211', '212']
 
         if (code && !cvxCodes.includes(code)) {
           console.log(
@@ -238,7 +238,7 @@ const ValidationProfilesFunctions = {
         }
 
         // check for properties that are forbidden by the dm-profiles
-        ;(immunizationDM as { path: string }[]).forEach((constraint) => {
+        ;(immunizationDM as Array<{ path: string }>).forEach((constraint) => {
           utils.propPath(entry.resource, constraint.path) &&
             console.log(
               `Profile : ${profileName} : entry[${index.toString()}].resource.${
@@ -251,7 +251,7 @@ const ValidationProfilesFunctions = {
 
       if (entry.resource.resourceType === 'Patient') {
         // check for properties that are forbidden by the dm-profiles
-        ;(patientDM as { path: string }[]).forEach((constraint) => {
+        ;(patientDM as Array<{ path: string }>).forEach((constraint) => {
           utils.propPath(entry.resource, constraint.path) &&
             console.log(
               `Profile : ${profileName} : entry[${index.toString()}].resource.${

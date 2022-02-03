@@ -4,11 +4,9 @@ import AppButton from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'
-import { Props } from '../types'
+import { Props, BaseResponse } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
-import { BaseResponse } from '../types'
 import { useTranslation } from '../services/i18n/i18nUtils'
-
 
 const images = {
   qrError: require('../../assets/img/error/qr-error.png'),
@@ -16,51 +14,51 @@ const images = {
 }
 
 const canShowResult = ( result: BaseResponse): Boolean => {
-  return( result.isValid == true ) ;
+  return ( result.isValid == true ) 
 }
 
 const initiallyShowRecord = ( result: BaseResponse )=>{
   const isIssuerRecognized = !!result?.issuerData?.name
-  return ( result.isValid && isIssuerRecognized );
+  return ( result.isValid && isIssuerRecognized )
 }
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
   const data = route.params
   const { validationResult } = data
-  const canToggleResult = canShowResult( validationResult );
+  const canToggleResult = canShowResult( validationResult )
   const [ showResult, setShowResult ] = useState(initiallyShowRecord( validationResult ) )
 
   const resultBannerClicked = ()=>{
-    if( canToggleResult ) {
+    if ( canToggleResult ) {
       setShowResult( !showResult)
     }
   }  
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   return ( 
-    <View style={styles.flexContainer}>
-      <View style={styles.backButtonContainer}>
+    <View style={ styles.flexContainer }>
+      <View style={ styles.backButtonContainer }>
         <AppClickableImage
-          styles={styles.leftCaretImage}
-          source={images.leftCaret}
-          onPress={() => navigation.navigate('Welcome')}
+          styles={ styles.leftCaretImage }
+          source={ images.leftCaret }
+          onPress={ () => navigation.navigate('Welcome') }
         />
         <Text
-          style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
-          onPress={() => navigation.navigate('Welcome')}
+          style={ [styles.backButtonText, FontStyle.Poppins_700Bold] }
+          onPress={ () => navigation.navigate('Welcome') }
         >
-          {t("Result.ResultTitle","Verification Result")}
+          { t('Result.ResultTitle', 'Verification Result') }
         </Text>
       </View>
       <ScrollView>
         <Pressable onPress={ resultBannerClicked } >
-          <ResultBanner validationResult={validationResult} />
+          <ResultBanner validationResult={ validationResult } />
         </Pressable>
-        {showResult && validationResult.isValid && <ResultRecord data={data} />}
+        { showResult && validationResult.isValid && <ResultRecord data={ data } /> }
       </ScrollView>
       <AppButton
-        title={t("Common.ScanNext","Scan next vaccination record")}
-        onPress={() => navigation.navigate('ScanQR')}
+        title={ t('Common.ScanNext', 'Scan next vaccination record') }
+        onPress={ () => navigation.navigate('ScanQR') }
         backgroundColor="#255DCB"
       />
     </View>

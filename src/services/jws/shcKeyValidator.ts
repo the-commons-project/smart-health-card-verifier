@@ -3,7 +3,6 @@ import { ErrorCode } from '../error'
 import { KeySet, KeysStore } from './keys'
 import { InvalidError } from '../../utils/InvalidError'
 
-
 export const verifyAndImportHealthCardIssuerKey = async (
   keySet: KeySet,
   expectedSubjectAltName = '',
@@ -61,12 +60,12 @@ export const verifyAndImportHealthCardIssuerKey = async (
           }
         })
         .catch((err: Error) => {
-          if( err instanceof InvalidError ) throw err;
+          if ( err instanceof InvalidError ) throw err
           console.log(
             keyName +
               ': ' +
               'Failed to calculate issuer key thumbprint : ' +
-              (err as Error).message,
+              (err ).message,
             ErrorCode.INVALID_KEY_UNKNOWN,
           )
         })
@@ -102,6 +101,5 @@ export const verifyAndImportHealthCardIssuerKey = async (
       )
     }
   }
-
-  return
+  
 }

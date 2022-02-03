@@ -1,5 +1,5 @@
 // Import path for resolving file paths
-var path = require('path');
+const path = require('path')
 // module.exports = {
 //   // Specify the entry point for our app.
 //   entry: [
@@ -21,8 +21,6 @@ var path = require('path');
 //   }
 // }
 
-
-
 module.exports = {
   entry: ['./src/index.js'],
   target: 'node',
@@ -31,4 +29,4 @@ module.exports = {
     filename: 'index.js',
     libraryTarget: 'umd'
   }
-};
+}

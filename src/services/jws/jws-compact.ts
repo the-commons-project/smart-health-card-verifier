@@ -22,11 +22,11 @@ export const JwsValidationOptions = {
 
 const MAX_JWS_SINGLE_CHUNK_LENGTH = 1195
 
-export async function validate(jws: string): Promise<any> {
+export async function validate (jws: string): Promise<any> {
   KeysStore.resetStore()
 
   if (jws.trim() !== jws) {
-    console.log(`JWS has leading or trailing spaces`, ErrorCode.TRAILING_CHARACTERS)
+    console.log('JWS has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     jws = jws.trim()
   }
   if (jws.length > MAX_JWS_SINGLE_CHUNK_LENGTH) {
@@ -77,17 +77,16 @@ export async function validate(jws: string): Promise<any> {
   try { 
     await extractKeyURL(payload)
   } catch (err) {
-    if (err instanceof InvalidError) throw err;
+    if (err instanceof InvalidError) throw err
     return 
   }
 
-
-  let result = false
+  const result = false
   if (!headerJson) {
     return result
   }
 
-  const isValid = await verifyJws(jws, headerJson['kid'])
+  const isValid = await verifyJws(jws, headerJson.kid)
   const issuer = getIssuerFromFhir(payload)
   const issuerData = await getIssuerData(issuer)
   const { message } = issuerData
@@ -109,16 +108,16 @@ export async function validate(jws: string): Promise<any> {
   return document
 }
 
-async function fetchWithTimeout(url: string, options: any, timeout: number, timeoutError: string) {
-  return Promise.race([
+async function fetchWithTimeout (url: string, options: any, timeout: number, timeoutError: string) {
+  return await Promise.race([
     fetch(url, options),
 
     new Promise((_, reject) => setTimeout(() => reject(new Error(timeoutError)), timeout)),
   ])
 }
 
-async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefined> {
-  var timer = new Timer()
+async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefined> {
+  const timer = new Timer()
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
@@ -134,7 +133,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
       timeoutError,
     )
     const keySet = await responseRaw.json()
-    var loadingTime = timer.stop()
+    let loadingTime = timer.stop()
     console.log(`loading issure key: ${loadingTime.toFixed(2)}sec`)
     if (!keySet) {
       throw 'Failed to parse JSON KeySet schema'
@@ -148,7 +147,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
 
       return keySet
     } catch (err) {
-      if( err instanceof InvalidError ) throw err;
+      if ( err instanceof InvalidError ) throw err
       console.log(
         "Can't parse downloaded issuer JWK set: " + (err as Error).toString(),
         ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
@@ -156,7 +155,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
       return undefined
     }
   } catch (err) {
-    if( err instanceof InvalidError ) throw err;
+    if ( err instanceof InvalidError ) throw err
     console.log(
       'Failed to download issuer JWK set: ' + (err as Error).toString(),
       ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
@@ -167,7 +166,7 @@ async function downloadAndImportKey(issuerURL: string): Promise<KeySet | undefin
   }
 }
 
-function checkJwsHeader(header: string) {
+function checkJwsHeader (header: string) {
   let headerBytes
   let errString
 
@@ -187,7 +186,7 @@ function checkJwsHeader(header: string) {
   let headerJson
 
   if (headerBytes) {
-    headerJson = parseJson<{ kid: string; alg: string; zip: string }>(headerBytes.toString())
+    headerJson = parseJson<{ kid: string, alg: string, zip: string }>(headerBytes.toString())
     if (headerJson == null) {
       console.log(
         ["Can't parse JWS header as JSON.", errString].join('\n'),
@@ -198,17 +197,17 @@ function checkJwsHeader(header: string) {
 
       if (!headerKeys.includes('alg')) {
         console.log("JWS header missing 'alg' property.", ErrorCode.JWS_HEADER_ERROR)
-      } else if (headerJson['alg'] !== 'ES256') {
+      } else if (headerJson.alg !== 'ES256') {
         console.log(
-          `Wrong value for JWS header property 'alg' property expected: "ES256", actual: "${headerJson['alg']}".`,
+          `Wrong value for JWS header property 'alg' property expected: "ES256", actual: "${headerJson.alg}".`,
           ErrorCode.JWS_HEADER_ERROR,
         )
       }
       if (!headerKeys.includes('zip')) {
         console.log("JWS header missing 'zip' property.", ErrorCode.JWS_HEADER_ERROR)
-      } else if (headerJson['zip'] !== 'DEF') {
+      } else if (headerJson.zip !== 'DEF') {
         console.log(
-          `Wrong value for JWS header property 'zip' property expected: "DEF", actual: "${headerJson['zip']}".`,
+          `Wrong value for JWS header property 'zip' property expected: "DEF", actual: "${headerJson.zip}".`,
           ErrorCode.JWS_HEADER_ERROR,
         )
       }
@@ -223,7 +222,7 @@ function checkJwsHeader(header: string) {
   return headerJson
 }
 
-function checkJwsSignatureFormat(key: string) {
+function checkJwsSignatureFormat (key: string) {
   let sigBytes
   try {
     sigBytes = Buffer.from(key, 'base64')
@@ -262,7 +261,7 @@ function checkJwsSignatureFormat(key: string) {
       .toString('base64')
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
-      .replace(/=/g, '')
+      .replace(/[=]/g, '')
     key = newSig
 
     console.log('jws-signature converted from DER form to r||s form: ' + newSig)
@@ -275,7 +274,7 @@ function checkJwsSignatureFormat(key: string) {
   return key
 }
 
-function checkJwsPayload(rawPayload: string) {
+function checkJwsPayload (rawPayload: string) {
   // check payload
   let b64DecodedPayloadBuffer
   let b64DecodedPayloadString
@@ -317,7 +316,7 @@ function checkJwsPayload(rawPayload: string) {
   return { inflatedPayload, b64DecodedPayloadString }
 }
 
-async function extractKeyURL(payload: any) {
+async function extractKeyURL (payload: any) {
   if (payload.iss) {
     if (typeof payload.iss === 'string') {
       if (payload.iss.slice(0, 8) !== 'https://') {
@@ -342,7 +341,7 @@ async function extractKeyURL(payload: any) {
   }
 }
 
-async function verifyJws(jws: string, kid: string): Promise<boolean> {
+async function verifyJws (jws: string, kid: string): Promise<boolean> {
   const verifier: jose.JWS.Verifier = jose.JWS.createVerify(KeysStore.store)
 
   if (kid && !KeysStore.store.get(kid)) {

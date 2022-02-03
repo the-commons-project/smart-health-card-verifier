@@ -1,7 +1,7 @@
 import { ErrorCode } from '../error'
 import { vaccineNameLookUpUrl } from '../constants'
 const codesData = require(  '../../models/accepted_code.json' )
-const vaccineCodes = codesData['covid_19_vaccine_codes']
+const vaccineCodes = codesData.covid_19_vaccine_codes
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   
@@ -14,7 +14,6 @@ export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash
 }
 
-export const getAcceptedCodes = (): Array<string> => {
-  return vaccineCodes.map((item:any)=> item["code"])
+export const getAcceptedCodes = (): string[] => {
+  return vaccineCodes.map((item: any)=> item.code)
 }
-

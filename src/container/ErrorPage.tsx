@@ -12,31 +12,31 @@ const images = {
 }
 
 const ErrorPage = ({ navigation }: Props) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   return (
-    <View style={styles.flexContainer}>
-      <View style={styles.backButtonContainer}>
+    <View style={ styles.flexContainer }>
+      <View style={ styles.backButtonContainer }>
         <AppClickableImage
-          styles={styles.leftCaretImage}
-          source={images.leftCaret}
-          onPress={() => navigation.navigate('ScanQR')}
+          styles={ styles.leftCaretImage }
+          source={ images.leftCaret }
+          onPress={ () => navigation.navigate('ScanQR') }
         />
         <Text
-          style={[styles.backButtonText, FontStyle.Poppins_700Bold]}
-          onPress={() => navigation.navigate('ScanQR')}
+          style={ [styles.backButtonText, FontStyle.Poppins_700Bold] }
+          onPress={ () => navigation.navigate('ScanQR') }
         >
-          {t("ErrorPage.UnsupportedQR","Unsupported QR")}
+          { t('ErrorPage.UnsupportedQR', 'Unsupported QR') }
         </Text>
       </View>
-      <View style={styles.imageContainer}>
-        <Image style={styles.imageStyle} source={images.qrError} />
-        <Text style={[styles.message,  FontStyle.Poppins_600SemiBold]}>
-          {t('ErrorPage.OnlyValidText','Only valid vaccine SMART® Health Cards are currently supported')}
+      <View style={ styles.imageContainer }>
+        <Image style={ styles.imageStyle } source={ images.qrError } />
+        <Text style={ [styles.message,  FontStyle.Poppins_600SemiBold] }>
+          { t('ErrorPage.OnlyValidText', 'Only valid vaccine SMART® Health Cards are currently supported') }
         </Text>
       </View>
       <AppButton
-        title={t("Common.ScanNext")}
-        onPress={() => navigation.navigate('ScanQR')}
+        title={ t('Common.ScanNext') }
+        onPress={ () => navigation.navigate('ScanQR') }
         backgroundColor="#255DCB"
       />
     </View>

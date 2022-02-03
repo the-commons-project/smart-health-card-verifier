@@ -21,7 +21,7 @@ export const getIssuerData = async (issuer: string): Promise<any> => {
   } catch (error) {
     throw ErrorCode.SERVER_ERROR
   }
-  let loadingTime = timer.stop()
+  const loadingTime = timer.stop()
   console.log(`loading issuer took:  ${loadingTime.toFixed(2)}sec`)
 
   const okOrNotFound = response.status === 200 || response.status === 404
@@ -30,5 +30,5 @@ export const getIssuerData = async (issuer: string): Promise<any> => {
     throw ErrorCode.SERVER_ERROR
   }
 
-  return response.json()
+  return await response.json()
 }

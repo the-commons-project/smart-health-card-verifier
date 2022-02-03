@@ -13,10 +13,10 @@ export const validate = async (qr: string[]): Promise<any> => {
     return undefined
   }
 
-  return jws.validate(jwsString)
+  return await jws.validate(jwsString)
 }
 
-function shcChunksToJws(shc: string[]): JWS | undefined {
+function shcChunksToJws (shc: string[]): JWS | undefined {
   const chunkCount = shc.length
   const jwsChunks = new Array<string>(chunkCount)
 
@@ -92,7 +92,7 @@ function shcChunksToJws(shc: string[]): JWS | undefined {
   return jws
 }
 
-function shcToJws(shc: string, chunkCount = 1): { result: JWS; chunkIndex: number } | undefined {
+function shcToJws (shc: string, chunkCount = 1): { result: JWS, chunkIndex: number } | undefined {
   let chunked = chunkCount > 1
   const qrHeader = 'shc:/'
   const positiveIntRegExp = '[1-9][0-9]*'
@@ -160,8 +160,8 @@ function shcToJws(shc: string, chunkCount = 1): { result: JWS; chunkIndex: numbe
   if (chunked) {
     const found = shc.match(new RegExp(`^shc:/(?<chunkIndex>${positiveIntRegExp})`))
     chunkIndex =
-      found && found.groups && found.groups['chunkIndex']
-        ? parseInt(found.groups['chunkIndex'])
+      found && found.groups && found.groups.chunkIndex
+        ? parseInt(found.groups.chunkIndex)
         : -1
     if (chunkIndex < 1 || chunkIndex > chunkCount) {
       console.log('Invalid QR chunk index: ' + chunkIndex, ErrorCode.INVALID_NUMERIC_QR_HEADER)

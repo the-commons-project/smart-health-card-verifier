@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 
-export type RootStackParamList = {
+export interface RootStackParamList {
   Welcome: undefined
   ScanQR: undefined
   VerificationResult: undefined | { validationResult: BaseResponse }
@@ -9,40 +9,39 @@ export type RootStackParamList = {
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList>
 
-export type Props = {
+export interface Props {
   navigation: ProfileScreenNavigationProp
   route: any
 }
 
-export type Data = {
+export interface Data {
   data: ValidationResult
 }
 
-export type ValidationResult = {
+export interface ValidationResult {
   validationResult: BaseResponse
 }
 
-export type BaseResponse = {
+export interface BaseResponse {
   isValid: boolean | string
-  errorCode: number,
+  errorCode: number
   issuerData: issuerData
   patientData: patientData
   vaccinationData: vaccinationData[]
 }
 
 export declare class Timer {
-  constructor();
-  start(): void;
-  stop(): number;
+  constructor ();
+  start (): void;
+  stop (): number;
 }
 
-
-export type localeType = {
-    language: string,
-    region: string
+export interface localeType {
+  language: string
+  region: string
 }
 
-type issuerData = {
+interface issuerData {
   iss: string
   logo_uri: string
   name: string
@@ -50,12 +49,12 @@ type issuerData = {
   url: string
 }
 
-type patientData = {
+interface patientData {
   dateOfBirth: string
   names: string[]
 }
 
-type vaccinationData = {
+interface vaccinationData {
   dose: number
   lotNumber: string
   vaccinationDate: string
