@@ -19,7 +19,7 @@ const images = {
   switchCamera: require('../../assets/img/scanqr/switch-camera.png'),
 }
 
-const isAndroid = Platform.OS?.toLowerCase() == 'android'
+const isAndroid = Platform.OS?.toLowerCase() === 'android'
 const cameraPermissionType = (isAndroid)? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA
 
 interface markerPosition {
@@ -32,11 +32,14 @@ interface markerPosition {
 const ScanQRPage = ({ navigation }: Props) => {
   const { t } = useTranslation()
   const { height, width }   = useWindowDimensions()
+  const [ hasConnection, setHasConnection ] = useState<boolean>( true )
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>(false)
   const [scanned, setScanned] = useState<boolean>(false)
   const [markerShift, setMarkerShift] = useState<markerPosition>({ left: 0, top: 0, width:width, height:height })
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
   const [cameraType, setCameraType] = useState(BarCodeScanner.Constants.Type.back)
+  const { isInternetReachable } = useNetInfo()
+  const showCamera = hasCameraPermission && isInternetReachable && !scanned
 
   const insets = useSafeAreaInsets()
   let windowWidth  = 0
@@ -51,9 +54,14 @@ const ScanQRPage = ({ navigation }: Props) => {
     outputRange: ['0deg', '360deg'],
   })
 
-  const configureMarkerSizes = ( width: number, height: number) => {
-    windowWidth = width
-    windowHeight = height
+  const updateConnection = ()=>{
+    console.log( `isInternetReachable: ${isInternetReachable}` )
+    setHasConnection( !( isInternetReachable === false ) )
+  }
+
+  const configureMarkerSizes = ( _width: number, _height: number) => {
+    windowWidth  = _width
+    windowHeight = _height
     let ratio = windowWidth / markerLayerWidth
     let tmpMarkerLayerHeight    = ( markerLayerHeight * ratio )
     let tmpMarkerLayerWidth     = windowWidth
@@ -61,10 +69,10 @@ const ScanQRPage = ({ navigation }: Props) => {
     markerLayerOffsetTop =  (windowHeight - tmpMarkerLayerHeight) / 2
     if ( markerLayerOffsetTop > 0  ) {
       markerLayerOffsetTop = 0 
-      ratio = height / markerLayerHeight
+      ratio = _height / markerLayerHeight
       tmpMarkerLayerWidth     = markerLayerWidth * ratio
-      tmpMarkerLayerHeight    = height
-      markerLayerOffsetLeft = ( width - tmpMarkerLayerWidth ) / 2
+      tmpMarkerLayerHeight    = _height
+      markerLayerOffsetLeft = ( _width - tmpMarkerLayerWidth ) / 2
     }
     const shiftPosition = { 
       'left': Math.floor(markerLayerOffsetLeft), 
@@ -75,13 +83,17 @@ const ScanQRPage = ({ navigation }: Props) => {
   }
 
   useEffect(() => {
-    
+    updateConnection()
+  }, [ isInternetReachable ] )
+ 
+  useEffect(() => {
+
     configureMarkerSizes(width, height);
 
     (async () => {
       if ( isAndroid ) {
         var result = await check(cameraPermissionType) 
-        if ( result != RESULTS.GRANTED) {
+        if ( result !== RESULTS.GRANTED) {
           Alert.alert(
             t('Scan.CameraPermission', 'Camera Permission'),
             t('Scan.CameraPermissionText', 'Camera Permission Description'),
@@ -186,10 +198,6 @@ const ScanQRPage = ({ navigation }: Props) => {
     }
   }
 
-  const { isInternetReachable } = useNetInfo()
-
-  const showCamera = hasCameraPermission && isInternetReachable && !scanned
-
   const renderAccessError = () => {
     if (!hasCameraPermission)
       return <NotificationOverlay type={ 'noCameraAccess' } navigation={ navigation } />
@@ -200,7 +208,7 @@ const ScanQRPage = ({ navigation }: Props) => {
       <View style={ styles.scannerContainer }>
         { renderAccessError() }
 
-        { isInternetReachable === false && (
+        { !hasConnection && (
           <NotificationOverlay type={ 'noInternetConnection' } navigation={ navigation } />
         ) }
 
@@ -220,9 +228,9 @@ const ScanQRPage = ({ navigation }: Props) => {
             />
             <View style={ styles.markerLayerContaier }>
               { ( markerShift.left < 0 ) ?
-                  ( <MarkerLayerSVG  height={ markerShift.height } width={ markerShift.width } style={ { 'left': markerShift.left } } /> )
+                ( <MarkerLayerSVG  height={ markerShift.height } width={ markerShift.width } style={ { 'left': markerShift.left } } /> )
                 :
-                  ( <MarkerLayerSVG height={ markerShift.height } width={ markerShift.width } style={ { 'top': markerShift.top } } /> )
+                ( <MarkerLayerSVG height={ markerShift.height } width={ markerShift.width } style={ { 'top': markerShift.top } } /> )
               }
             </View>
             <View style={ [styles.backButtonContainer, { top : ( insets.top +  styles.backButtonContainer.top) }] }>
