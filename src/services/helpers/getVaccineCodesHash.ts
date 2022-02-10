@@ -1,5 +1,4 @@
 import { ErrorCode } from '../error'
-import { vaccineNameLookUpUrl } from '../constants'
 const codesData = require(  '../../models/accepted_code.json' )
 const vaccineCodes = codesData.covid_19_vaccine_codes
 
