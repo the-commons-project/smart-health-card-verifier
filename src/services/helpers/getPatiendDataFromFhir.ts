@@ -1,4 +1,4 @@
-import { formatDateOfBirth } from '../utils'
+import { formatDateOfBirth } from '../../utils/utils'
 import constants from '../../models/FHIRFieldConstant'
 const { RESOURCE_TYPES } = constants
 

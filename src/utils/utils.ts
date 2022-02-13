@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import { getUniqueId, getBundleId } from 'react-native-device-info'
 
 import { v5 as uuidv5 } from 'uuid'
-import { uuidNamespace } from './constants'
+import { uuidNamespace } from '../services/constants'
 
 export function parseJson<T> (json: string): T | undefined {
   try {
@@ -129,10 +129,8 @@ export async function getInstallationIdManually () {
   let installationId
 
   const identifierForVendor = await getUniqueId()
-
   const bundleIdentifier = await getBundleId()
   installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
-
   return installationId
 }
 

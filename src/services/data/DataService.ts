@@ -1,9 +1,37 @@
 /* This service handles local data interface */ 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Timer from '../../utils/timer'
+import { fetchWithTimeout } from '../../utils/utils'
+import { ApiTimeout } from '../constants'
 
+
+
+export enum DataKeys {
+  "ISSUERS"     = "ISSUERS",
+  "VACCINECODE" = "VACCINECODE",
+  "LASTUPDATE"  = "LASTUPDATE",
+  "APIVERSION"  = "APIVERSION"
+};
 
 
 class DataService {
+
+  async storeJSON(key: DataKeys, value: object): Promise<boolean> {
+    return await this.storeData( key, JSON.stringify(value));
+  };
+
+  async getJSON(key: DataKeys ): Promise<string|null> {
+    let res = await this.getData( key);
+    if( res != null ) {
+      try {
+        res = JSON.parse( res );
+      } catch {
+        console.error(`JSON Parse for ${key} failed `)
+        res = null;
+      }
+    }
+    return res;
+  };
 
   async storeData(key: DataKeys, value: string): Promise<boolean> {
     try {
@@ -62,12 +90,6 @@ class DataService {
 
 }
 
-export enum DataKeys {
-  "ISSUER"       = "ISSUER",
-  "VACCINECODE" = "VACCINECODE",
-  "LASTUPDATE"  = "LASTUPDATE",
-  "APIVERSION"  = "APIVERSION"
-};
 
 var dataService: DataService | null = null;
 
@@ -76,4 +98,33 @@ export const getDataService = ():DataService=> {
     dataService = new DataService();
   }
   return dataService;
+}
+
+export const loadDataOrRetrieveLocally = async<T>( url:string, key:DataKeys):Promise<T> => {
+  const dataService = getDataService();
+  let response
+  const timer = new Timer()
+  timer.start()
+  try {
+    console.log(`loading ${key}: ${url}` );
+    response = await fetchWithTimeout(url, {}, ApiTimeout, "ErrorLoadingVaccineCodes")
+  } catch (error) {
+    console.log(`ErrorLoading ${key}: ${error}`)
+  }
+  const loadingTime = timer.stop()
+  console.log(`loading ${key} took:  ${loadingTime.toFixed(2)}sec`)
+  var res = null;
+
+  if( response && response.status && response.status === 200 ) {
+    res = await response.json()
+    if( res != null ){
+      console.log("#YF data:-------")
+      console.log( JSON.stringify( res ) )
+      dataService.storeJSON( key, res )
+    }
+  } else {
+    console.log(`try loading local ${key}`)
+    res = dataService.getJSON( key )
+  } 
+  return res as T
 }

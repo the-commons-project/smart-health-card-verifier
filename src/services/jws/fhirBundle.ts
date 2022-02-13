@@ -1,4 +1,4 @@
-import * as utils from '../utils'
+import * as utils from '../../utils/utils'
 import { ErrorCode } from '../error'
 import { validateSchema, objPathToSchema } from './schema'
 import patientDM from '../../schemas/patient-dm.json'

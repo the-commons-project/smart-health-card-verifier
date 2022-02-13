@@ -2,17 +2,19 @@ import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
 import { createContext } from './Context'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { loadIssuers } from '../services/helpers/getIssuerData'
+import { loadVaccineCodes } from '../services/helpers/getVaccineCodesHash'
 import { API_VERSION } from '../config/config'
-import { getDataService } from '../services/data/DataService'
+import { getDataService, DataKeys} from '../services/data/DataService'
 
                     /* day hr   min  sec  mil */
 const lastTimeUpdate = 1 * 24 * 60 * 60 * 1000;
-const dataService = getDataService();
 
-interface remoteDataType {
+
+interface remoteDataType{
   dataInitialized: boolean,
   updatedAt: null | Date,
 }
+
 
 // Declaring the state object globally.
 
@@ -29,6 +31,7 @@ const remoteDataSyncContext = React.createContext({
 })
 
 const resetDataIfNeeded = async (): Promise<boolean> => {
+  const dataService = getDataService();
   const lastUpdateThreshold = ( new Date() ).getTime() - lastTimeUpdate;
   const lastUpdate = await dataService.getLastUpdate();
   const lastApi    = await dataService.getLastAPIVersion();
@@ -44,15 +47,19 @@ const resetDataIfNeeded = async (): Promise<boolean> => {
 }
 
 const synchWithLocal = async (): Promise<boolean> => {
-  var res = false;
+  var res      = false;
+
+  var _issuers = null;
+  var _vcCodes = null;
+  await resetDataIfNeeded();
+
+  /* 1: Load VaccineCods and issuers and attemp to store locally */
   try {
-    await resetDataIfNeeded();
-    const data = await loadIssuers();
-    console.info( '#YFgot issuers: ====================== ')
-    console.info( JSON.stringify( data ) );
+    await Promise.all( [loadIssuers(), loadVaccineCodes()] )
     res = true;
   } catch( error ) {
-    console.log("NetworkError")
+    console.info( `Loading initial data: ${error}`)
+
   }
   return res;
 }
