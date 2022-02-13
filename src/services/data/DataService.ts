@@ -118,8 +118,6 @@ export const loadDataOrRetrieveLocally = async<T>( url:string, key:DataKeys):Pro
   if( response && response.status && response.status === 200 ) {
     res = await response.json()
     if( res != null ){
-      console.log("#YF data:-------")
-      console.log( JSON.stringify( res ) )
       dataService.storeJSON( key, res )
     }
   } else {

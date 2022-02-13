@@ -4,7 +4,7 @@ import { getInstallationIdManually, fetchWithTimeout } from '../../utils/utils'
 import { DataKeys, loadDataOrRetrieveLocally} from '../../services/data/DataService'
 import Timer from '../../utils/timer'
 
-var issuersMap = null;
+var issuersMap: Record<string, any> | null = null;
 
 interface IssuerItemType {
   "iss": string,
@@ -28,31 +28,5 @@ export const loadIssuers = async(): Promise<boolean>=> {
 
 
 export const getIssuerData = async (issuer: string): Promise<any> => {
-  const appUuid = await getInstallationIdManually()
-
-  const appUuidParameter = `appUUID=${appUuid}`
-  const issuerUrlParameter = `issuer=${escape(issuer)}`
-  const issuerStatusParameter = `status=${issuerStatus}`
-
-  const parameters = `?${appUuidParameter}&${issuerUrlParameter}&${issuerStatusParameter}`
-  const url = `${issuerNameLookUpUrl}${parameters}`
-
-  let response
-  const timer = new Timer()
-  timer.start()
-  try {
-    response = await fetch(url)
-  } catch (error) {
-    throw ErrorCode.SERVER_ERROR
-  }
-  const loadingTime = timer.stop()
-  console.log(`loading issuer took:  ${loadingTime.toFixed(2)}sec`)
-
-  const okOrNotFound = response.status === 200 || response.status === 404
-
-  if (!okOrNotFound) {
-    throw ErrorCode.SERVER_ERROR
-  }
-
-  return await response.json()
+  return ((issuersMap||{})[issuer] || null )
 }

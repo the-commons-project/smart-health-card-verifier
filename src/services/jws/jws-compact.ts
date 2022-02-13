@@ -88,8 +88,12 @@ export async function validate (jws: string): Promise<any> {
 
   const isValid = await verifyJws(jws, headerJson.kid)
   const issuer = getIssuerFromFhir(payload)
-  const issuerData = await getIssuerData(issuer)
-  const { message } = issuerData
+  const notFoundIssuer = {
+    message: 'Issuer not found'
+  }
+
+  const issuerData = await getIssuerData(issuer) || notFoundIssuer
+  const { message } = issuerData;
   const isIssuerNotFound = message && message === 'Issuer not found'
   if (isIssuerNotFound) {
     issuerData.url = issuer
