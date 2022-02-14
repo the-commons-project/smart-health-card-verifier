@@ -3,7 +3,6 @@ import RNLocalize from 'react-native-localize'
 import { createContext } from './Context'
 import i18nUtils from '../services/i18n/i18nUtils'
 import LoadingSpinner from '../components/LoadingSpinner'
-
 const i18n = i18nUtils.initailize()
 
 interface localeType {
