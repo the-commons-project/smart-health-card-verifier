@@ -1,8 +1,11 @@
 name: Deploy files to S3
+
 on:
   push:
     tags:
       - v*
+
+  workflow_dispatch:
 
 env:
   S3_BUCKET_DEV: shc-verifier-services-dev
@@ -56,7 +59,7 @@ jobs:
         
   deployProd:
     if: contains(github.ref, '-locale-prod')
-    name: 'Deploy locale file to TCP production
+    name: 'Deploy locale file to TCP production'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
