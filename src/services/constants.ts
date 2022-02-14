@@ -1,14 +1,25 @@
-const apiLookUpHost = 'https://shc.tcp.affinidi.com'
-const localeLoopupUpHost = 'http://192.168.50.154:8080'
-const issuerLookUpPath = '/api/v1/issuers/lookup'
+import {
+  API_HOST, 
+  AFFINIDI_HOST, 
+  API_KEY,
+  API_PATH, /* api/v1 */
+  API_ISSUERS_PATH,
+  API_LOCALE_PATH,
+  API_VCCODE_PATH,
+
+} from '../config/config'
+
+const affinidiHost   = AFFINIDI_HOST
 const vaccineNameLookUpPath = '/api/v1/vaccines'
 
-export { localeLoopupUpHost }
-export const issuerStatus = 'VERIFIED'
-export const issuerNameLookUpUrl = `${apiLookUpHost}${issuerLookUpPath}`
-export const vaccineNameLookUpUrl = `${apiLookUpHost}${vaccineNameLookUpPath}`
+export const ApiTimeout      = 5000;
+export const localeLookUpUrl = [API_HOST,API_PATH,API_LOCALE_PATH].join("/")
+export const issuersUrl      = [API_HOST,API_PATH,API_ISSUERS_PATH].join("/")
+export const vaccineCodesURl = [API_HOST,API_PATH,API_VCCODE_PATH].join("/")
 
-// UUID namespace generated with uuidv5 using '00000000-0000-0000-0000-000000000000' as namespace
-// and health-card-verifier-mobile as text. This generated namespace will be used on all uuidv5
-// calls. => `uuidv5("health-card-verifier-mobile", '00000000-0000-0000-0000-000000000000')`
-export const uuidNamespace = '099ab7c3-b177-5509-bc9f-6118484acefe'
+
+export const issuerStatus = 'VERIFIED'
+export const issuerNameLookUpUrl = `${affinidiHost}/api/v1/issuers/lookup`
+
+
+export const uuidNamespace = API_KEY

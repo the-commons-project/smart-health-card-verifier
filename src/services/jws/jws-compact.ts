@@ -5,7 +5,7 @@ import { InvalidError } from '../../utils/InvalidError'
 import { ErrorCode } from '../error'
 import { KeySet, KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
-import { parseJson } from '../utils'
+import { parseJson } from '../../utils/utils'
 import { validateSchema } from './schema'
 import jwsCompactSchema from '../../schemas/jws-schema.json'
 import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
@@ -88,8 +88,12 @@ export async function validate (jws: string): Promise<any> {
 
   const isValid = await verifyJws(jws, headerJson.kid)
   const issuer = getIssuerFromFhir(payload)
-  const issuerData = await getIssuerData(issuer)
-  const { message } = issuerData
+  const notFoundIssuer = {
+    message: 'Issuer not found'
+  }
+
+  const issuerData = await getIssuerData(issuer) || notFoundIssuer
+  const { message } = issuerData;
   const isIssuerNotFound = message && message === 'Issuer not found'
   if (isIssuerNotFound) {
     issuerData.url = issuer

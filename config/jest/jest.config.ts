@@ -24,14 +24,21 @@ const config: Config.InitialOptions = {
   coveragePathIgnorePatterns: [
     '*node_modules*'
   ],
+  testPathIgnorePatterns: [
+    '<rootDir>/__tests__/__mock__'
+  ],
   rootDir: rootPath,
   setupFiles:[
-    '<rootDir>/config/jest/setup.js',
-    '<rootDir>/config/jest/mock/mockPermissions.js',
-    '<rootDir>/config/jest/mock/barcode.js',
-    '<rootDir>/config/jest/mock/netinfo.js',
+    '<rootDir>/__tests__/__mock__/setup.js',
+    '<rootDir>/__tests__/__mock__/mockPermissions.js',
+    '<rootDir>/__tests__/__mock__/barcode.js',
+    '<rootDir>/__tests__/__mock__/netinfo.js',
     '<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js'
   ],
+  moduleNameMapper:{
+    '@react-native-async-storage/async-storage': "<rootDir>/__tests__/__mock__/@react-native-async-storage/async-storage",
+    'react-native-config': "<rootDir>/__tests__/__mock__/react-native-config/react-native-config"
+  },
   preset: 'react-native',
   moduleFileExtensions: [
     'ts',

@@ -1,4 +1,4 @@
-name: learn-github-actions
+name: 'Linting CI'
 on:
   push:
     types: [opened, synchronize]
@@ -12,3 +12,4 @@ jobs:
           node-version: '16'
       - run: npm install
       - run: npm test
+

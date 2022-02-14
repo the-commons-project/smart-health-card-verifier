@@ -48,10 +48,12 @@ Node **v14.17.X** (LTS/fermium)
 [Android Studio](https://developer.android.com/studio/install)
 Android Studio SDK 30 download through android studio 
 
+### Environment File setup
+copy .env.sample and change it to .env.development
+for API_KEY for production, please contact us. 
+
 
 ### Platform base setup
-
-
 For Android
 make sure you download sdk using android studio SDK 30 
 

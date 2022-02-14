@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import { getUniqueId, getBundleId } from 'react-native-device-info'
 
 import { v5 as uuidv5 } from 'uuid'
-import { uuidNamespace } from './constants'
+import { uuidNamespace } from '../services/constants'
 
 export function parseJson<T> (json: string): T | undefined {
   try {
@@ -129,9 +129,25 @@ export async function getInstallationIdManually () {
   let installationId
 
   const identifierForVendor = await getUniqueId()
-
   const bundleIdentifier = await getBundleId()
   installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
-
   return installationId
 }
+
+
+export async function fetchWithTimeout(url:string, options:any={}, timeout:number, timeoutError: string):Promise<any> {
+  
+  const controller = new AbortController();
+  var   timer        = null;
+  const timerPromise = new Promise((_,reject) => {
+    setTimeout(() => {
+      controller.abort();
+      reject( timeoutError );
+    }, timeout)
+  });
+  return Promise.race( [fetch( url, {
+    ...options,
+    signal: controller.signal  
+  }), timerPromise ] );
+}
+
