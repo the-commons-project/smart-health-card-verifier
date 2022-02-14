@@ -1,4 +1,4 @@
-name: 'Deploy files to S3'
+name: Deploy files to S3
 on:
   push:
     tags:
