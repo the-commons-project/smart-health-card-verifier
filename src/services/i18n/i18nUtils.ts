@@ -2,14 +2,16 @@ import i18next from 'i18next'
 import RNLocalize from 'react-native-localize'
 import { useTranslation as i18nUseTranslation, initReactI18next } from 'react-i18next'
 import  { localeType } from '../../types'
-import { localeLoopupUpHost } from '../constants'
+import { localeLookUpUrl, ApiTimeout } from '../constants'
 import Timer from '../../utils/timer'
 import defaultLocaleResource  from '../../../resources/public/locales/en/default.json'
 import frResource  from '../../../resources/public/locales/fr/default.json'
 import jaResource  from '../../../resources/public/locales/ja/default.json'
 import i18nCache from './i18nCache'
+import { fetchWithTimeout } from '../../utils/utils'
 
 const localeResolutionOnly = true
+const mappedHistory:Record<string, string[] > = {}
 
 interface localeResourcesMapType {
   [key: string]: any 
@@ -21,7 +23,7 @@ const localeResourcesMap: localeResourcesMapType = {
   'ja': jaResource
 }
 
-const localeFetchURL = `${localeLoopupUpHost}/{{lng}}/default.json`
+const localeFetchURL = `${localeLookUpUrl}/{{lng}}/{{region}}.json`
 /* #TODO: Can change to more granular when server side has fallback logic 
   `${localeLoopupUpHost}/{{lng}}/{{region}}/default.json` */
 
@@ -108,44 +110,53 @@ class i18nUtils{
     let key         = defaultState.key
     let _lang       = defaultState.language 
     let _region: any = defaultState.region
+    var found       = false;
 
     const timer = new Timer()
     const   url   =  localeFetchURL
       .replace('{{lng}}', language)
-      .replace('{{region}}', language)
+      .replace('{{region}}', region)
 
     timer.start()
     let res = null
     res = await this.cache.get(language, region )
     if ( res != null ) {
-
       key = this.getKey( language, region )
       _lang = language.toLowerCase()
       _region = region.toLowerCase()
+      found   = true
 
-    } else if ( ( res = this.cache.get( language, 'default') ) != null ){
-      _lang = language.toLowerCase()
-      _region = null
-      key = this.getKey( language, _region )
+    } else if( mappedHistory[url] ) {
+      [ key, _lang, _region ] = mappedHistory[url]; 
+      console.log(`Using mapped history: [${key}, ${_lang}, ${_region}`);
+    } else {
+      try {
+        console.log(`loading ${key}: ${url}` );
+        var response  = await fetchWithTimeout(url, {}, ApiTimeout, "ErrorLoadingVaccineCodes")
+        let loadingTime = timer.stop()
+        console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
 
-    } 
-    // else {
+        if( response && response.status && response.status === 200 ) {
+          res = await response.json()
+          if( res != null ){
+            console.log(`loaded remoteResources=========`)
+            console.log( JSON.stringify( res ) )
+            if( res ) {
+              [ key, _lang, _region ] = this.updateResourceBundle( res );
+               console.info(`url( ${url} } mapped to : [${key}, ${_lang}, ${_region}`)
+              mappedHistory[url] = [ key, _lang, _region ];
+            }
+          }
+        } else {
+          console.log(`try loading local ${key}`)
+        } 
 
-    //   try {
-    //     var tmp = await fetch(url)
-    //     let loadingTime = timer.stop()
-    //     console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
-    //     res = tmp.json()
-    //     if( res ) {
-    //       [ key, _lang, _region ] = this.updateResourceBundle( res );
-    //        console.info(`#YF fetchResource3: From remote${lang}, ${_region}`)
-    //     }
-    //   } catch (error) {
-    //     let loadingTime = timer.stop()
-    //     console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
-    //     return null;
-    //   }
-    // }
+      } catch (error) {
+        let loadingTime = timer.stop()
+        console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
+        return null;
+      }
+    }
     return [ key, _lang, _region ]
   }
 
@@ -154,10 +165,11 @@ class i18nUtils{
     let _region: any
     const [key, namespace, resources, language, region ] = this.parseResult( bundle )
     /* Store data : #TODO to store locally */
-    _lang = language 
-    if ( region == 'default'){
+    _lang   = language
+    _region = region
+    if ( _region == 'default'){
       _region = null
-    }
+    } 
     i18next.addResourceBundle( key, namespace, resources, true, true )
     this.cache.set( _lang, _region, resources )
     return [key, _lang, _region]
