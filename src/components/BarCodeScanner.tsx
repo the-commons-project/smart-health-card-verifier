@@ -19,6 +19,10 @@ const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
       showMarker={ false }
       cameraType={ type }
       cameraStyle={ cameraStyles.camerPreview }
+      cameraProps={ {
+        autoFocus: RNCamera.Constants.AutoFocus.on, 
+        barCodeTypes:[RNCamera.Constants.BarCodeType.qr]
+      } }
       containerStyle={ cameraStyles.cameraContainer }
       onRead={ onBarCodeScanned }
     />
