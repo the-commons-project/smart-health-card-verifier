@@ -37,6 +37,12 @@ module.exports = {
     '@typescript-eslint/require-array-sort-compare': ['error', {
       ignoreStringArrays: true
     }],
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        "allowedNames": ["that"] // Allow `const that= this`; `[]` by default
+      }
+    ],
     'react/jsx-curly-spacing': ['error', {
       when: 'always',
       allowMultiline: true,

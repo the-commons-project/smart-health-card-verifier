@@ -9,6 +9,8 @@
     "start": "export ENVFILE=.env.staging && react-native start",
     "test": "jest -c ./config/jest/jest.config.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lintfile": "eslint", 
+    "lintfile:fix": "eslint --fix", 
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "bundle-service": "tsc-bundle ./resources/apis/src/index.ts --outFile ./resources/apis/output/bundle.js",
     "generateAndroid": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"

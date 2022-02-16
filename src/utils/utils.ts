@@ -134,20 +134,18 @@ export async function getInstallationIdManually () {
   return installationId
 }
 
-
-export async function fetchWithTimeout(url:string, options:any={}, timeout:number, timeoutError: string):Promise<any> {
+export async function fetchWithTimeout (url: string, options: any={}, timeout: number, timeoutError: string): Promise<any> {
   
-  const controller = new AbortController();
-  var   timer        = null;
-  const timerPromise = new Promise((_,reject) => {
+  const controller = new AbortController()
+  const   timer        = null
+  const timerPromise = new Promise((_, reject) => {
     setTimeout(() => {
-      controller.abort();
-      reject( timeoutError );
+      controller.abort()
+      reject( timeoutError )
     }, timeout)
-  });
-  return Promise.race( [fetch( url, {
+  })
+  return await Promise.race( [fetch( url, {
     ...options,
     signal: controller.signal  
-  }), timerPromise ] );
+  }), timerPromise ] )
 }
-

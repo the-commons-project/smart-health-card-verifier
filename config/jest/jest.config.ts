@@ -36,8 +36,8 @@ const config: Config.InitialOptions = {
     '<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js'
   ],
   moduleNameMapper:{
-    '@react-native-async-storage/async-storage': "<rootDir>/__tests__/__mock__/@react-native-async-storage/async-storage",
-    'react-native-config': "<rootDir>/__tests__/__mock__/react-native-config/react-native-config"
+    '@react-native-async-storage/async-storage': '<rootDir>/__tests__/__mock__/@react-native-async-storage/async-storage',
+    'react-native-config': '<rootDir>/__tests__/__mock__/react-native-config/react-native-config'
   },
   preset: 'react-native',
   moduleFileExtensions: [
