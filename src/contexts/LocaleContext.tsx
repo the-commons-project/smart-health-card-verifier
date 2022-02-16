@@ -62,7 +62,9 @@ export function getProvider () {
 
     const udpateLocale = async ()=>{
       const res = await i18n.initializeLocale()
-      setLocale( res )
+      if ( res != null ) {
+        setLocale( res )
+      }      
       return res
     }
 

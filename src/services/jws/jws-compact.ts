@@ -93,7 +93,7 @@ export async function validate (jws: string): Promise<any> {
   }
 
   const issuerData = await getIssuerData(issuer) || notFoundIssuer
-  const { message } = issuerData;
+  const { message } = issuerData
   const isIssuerNotFound = message && message === 'Issuer not found'
   if (isIssuerNotFound) {
     issuerData.url = issuer

@@ -5,6 +5,6 @@ const path = require('path')
 
 it('VaccineCode retrieved Correctly', async () => {
   await loadVaccineCodes()
-  var codes = getVaccineCodesHash();
+  const codes = getVaccineCodesHash()
   expect(codes!=null).toEqual(true)
 })
