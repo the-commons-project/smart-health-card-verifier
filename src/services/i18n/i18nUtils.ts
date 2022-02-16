@@ -111,6 +111,11 @@ class i18nUtils{
     return key
   }
 
+  async hasLocalCache ( language: string, region: any ){
+    const res = await this.cache.get(language, region )
+    return ( res !== null )
+  }
+
   async fetchResource ( language: string, region: string,  ): Promise< any>{
     let key         = defaultState.key
     let _lang       = defaultState.language 
@@ -124,40 +129,46 @@ class i18nUtils{
 
     timer.start()
     let res = null
-    res = await this.cache.get(language, region )
-    if ( res != null ) {
+    res = await this.hasLocalCache(language, region )
+    if ( res ) {
       key = this.getKey( language, region )
       _lang = language.toLowerCase()
       _region = region.toLowerCase()
-      found   = true
-
+      found = true
     } else if ( ( mappedHistory[url] ?? null ) != null ) {
       [ key, _lang, _region ] = mappedHistory[url] 
+      found = true
       console.log(`Using mapped history: ${key}`)
     } else {
       try {
         console.log(`loading ${key}: ${url}` )
-        const response  = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
+        const response  = await fetchWithTimeout('dummy' + url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
         const loadingTime = timer.stop()
         console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
 
         if ( response?.status !== undefined && response.status === 200 ) {
           res = await response.json()
           if ( res != null ){
-            console.log('loaded remoteResources=========')
-            if ( res ) {
-              [ key, _lang, _region ] = this.updateResourceBundle( res )
-              console.info(`url( ${url} } mapped to : [${key}, ${_lang}, ${String(_region)}`)
-              mappedHistory[url] = [ key, _lang, _region ]
-            }
+            [ key, _lang, _region ] = this.updateResourceBundle( res )
+            console.info(`url( ${url} } mapped to : [${key}, ${_lang}, ${String(_region)}`)
+            mappedHistory[url] = [ key, _lang, _region ]
+            found = true
           }
-        } else {
-          console.log(`try loading local ${key}`)
         } 
-
       } catch (error) {
         const loadingTime = timer.stop()
-        console.log(`loading locale Resources ( FAILED! ) :  ${loadingTime.toFixed(2)}sec`)
+      }
+        
+    }
+    if ( !found ) {
+      res = await this.hasLocalCache(language, 'default' )
+      console.log(`try with only language ${language} : ${String(res)}`)
+      if ( res ) {
+        key = this.getKey( language, null )
+        _lang = language.toLowerCase()
+        _region = null
+        found   = true
+      } else {
         return null
       }
     }
