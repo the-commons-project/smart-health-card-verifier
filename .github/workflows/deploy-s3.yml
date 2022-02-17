@@ -19,7 +19,7 @@ env:
   ROLE_SESSION_NAME: GithubActionsECSDev
 
 jobs:
-  deployDev:
+  deployDevLocale:
     if: contains(github.ref, '-locale-dev')
     name: 'Deploy locale file to TCP dev'
     runs-on: ubuntu-latest
@@ -37,6 +37,26 @@ jobs:
     - name: 'Sync locale files to S3'
       run: |
         cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET_DEV }}/${{ env.S3_LOCALE_DIR }}' 
+
+  deployDevVaccineCodes:
+    if: contains(github.ref, '-vaccine-code-dev')
+    name: 'Deploy vaccine-code file to TCP dev'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: 'Configure Dev AWS Role'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.REGION }}
+        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+        role-duration-seconds: 1200
+        role-session-name: ${{ env.ROLE_SESSION_NAME }}
+    - name: 'Sync locale files to S3'
+      run: |
+        cd resources/public/vaccine-codes; aws s3 sync . 's3://${{ env.S3_BUCKET_DEV }}/${{ env.S3_VACCINE_CODES_DIR }}' 
+
   
   deployTest:
     if: contains(github.ref, '-locale-test')

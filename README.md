@@ -50,7 +50,7 @@ Android Studio SDK 30 download through android studio
 
 ### Environment File setup
 copy .env.sample and change it to .env.development
-for API_KEY for production, please contact us. 
+for API_KEY, API_URL,  for production, please contact maintainer. 
 
 
 ### Platform base setup
