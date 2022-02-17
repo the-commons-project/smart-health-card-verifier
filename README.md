@@ -1,7 +1,7 @@
 # SMART Health Card Verifier
 
 SMART Health Card Verifier is a safe, privacy-preserving mobile application, designed to verify
-[SMART Health Card certificate](https://smarthealth.cards/) encoded in a QR code. The app is launched in both the Play store and iOS store. It is built using React Native with Typescript and Expo.
+[SMART Health Card certificate](https://smarthealth.cards/) encoded in a QR code. The app is launched in both the Play store and iOS store. It is built using React Native with Typescript.
 
 ## Table of contents
 
