@@ -2,7 +2,7 @@ import { ErrorCode } from '../error'
 import { vaccineCodesURl, ApiTimeout } from '../constants'
 import { getInstallationIdManually } from '../../utils/utils'
 import { DataKeys, loadDataOrRetrieveLocally } from '../../services/data/DataService'
-const defaultCodesData = require(  '../../models/accepted_code.json' )
+const defaultCodesData = require(  '../../../resources/public/vaccine-codes/accepted_code.json' )
 
 interface VaccineCodeItemType {
   'system': string
