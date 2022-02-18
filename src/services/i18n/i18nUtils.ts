@@ -142,7 +142,7 @@ class i18nUtils{
     } else {
       try {
         console.log(`loading ${key}: ${url}` )
-        const response  = await fetchWithTimeout('dummy' + url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
+        const response  = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
         const loadingTime = timer.stop()
         console.log(`loading locale Resources:  ${loadingTime.toFixed(2)}sec`)
 

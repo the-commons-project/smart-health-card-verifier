@@ -26,6 +26,8 @@ target 'Verifier' do
 
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
+
   target 'VerifierTests' do
     inherit! :complete
     # Pods for testing
