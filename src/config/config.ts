@@ -1,6 +1,5 @@
 import env from 'react-native-config'
 
-console.info('Env: ' + JSON.stringify( env ) )
 const config = {
   api: {
     uri: env.API_URL,
@@ -16,7 +15,6 @@ const config = {
   },
 }
 
-console.info('CONFIG: ' + JSON.stringify( config ) )
 
 const API_HOST     = config.api.uri
 const API_PATH     = `${config.api.path}/${config.api.version}`
