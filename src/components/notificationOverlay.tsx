@@ -1,0 +1,85 @@
+import React from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import AppClickableImage from '../components/customImage'
+import FontStyle from '../utils/FontStyleHelper'
+import { useTranslation } from '../services/i18n/i18nUtils'
+
+interface NotificationOverlayVariables {
+  navigation?: any
+  type?: any
+}
+
+const images = {
+  leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
+}
+
+const NotificationOverlay = ({ type, navigation }: NotificationOverlayVariables) => {
+  const { t } = useTranslation()
+  let title = ''
+  let subtitle = ''
+
+  if (type === 'noInternetConnection') {
+    title = t('Error.NoInterNet', 'No internet connection')
+    subtitle = t('Error.NoInterNetText', 'Please check your internet connection and try again.')
+  } else if (type === 'noCameraAccess') {
+    title = t('Error.NoCamera', 'No access to camera')
+    subtitle = t('Error.NoCameraText', 'To continue, please enable camera access in Settings.')
+  }
+
+  return (
+    <View style={ styles.flexContainer }>
+      <View>
+        <AppClickableImage
+          styles={ styles.leftCaretImage }
+          source={ images.leftCaret }
+          onPress={ () => navigation.navigate('Welcome') }
+        />
+      </View>
+      <View style={ styles.notificationTextContainer }>
+        <Text style={ [styles.notificationTitle, FontStyle.Poppins_600SemiBold] }>
+          { title }
+        </Text>
+        <Text style={ [styles.notificationSubtitle, FontStyle.Poppins_600SemiBold] }>
+          { subtitle }
+        </Text>
+      </View>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    flex: 1,
+    paddingTop: '15%',
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: '#F3F6FF',
+  },
+  notificationTextContainer: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notificationTitle: {
+    textAlign: 'center',
+    fontSize: 17,
+    lineHeight: 22,
+    color: '#000000',
+    paddingBottom: 8,
+  },
+  notificationSubtitle: {
+    textAlign: 'center',
+    fontSize: 13,
+    lineHeight: 18,
+    color: '#000000',
+  },
+  leftCaretImage: {
+    width: 12,
+    height: 19,
+  },
+})
+
+export default NotificationOverlay

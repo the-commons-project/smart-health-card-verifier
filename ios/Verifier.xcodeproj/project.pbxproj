@@ -1,0 +1,812 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00D049D16C7E47F3AC6B932D /* OpenSans_400Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 261D53A2BCB542F3AF2EB704 /* OpenSans_400Regular.ttf */; };
+		00E356F31AD99517003FC87E /* VerifierTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* VerifierTests.m */; };
+		0C61C104773B495D85945738 /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 8603D8DD553F457CB29E26F7 /* warning.png */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		25C2C12877064820903AFC36 /* Poppins_600SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3C01201184E455783C7510C /* Poppins_600SemiBold.ttf */; };
+		28C3890CEFEA42F28EAD412B /* adaptiveSHC.png in Resources */ = {isa = PBXBuildFile; fileRef = 6299476E8BBF4FC5A65C09FA /* adaptiveSHC.png */; };
+		2982A80C602247FB8402E0E8 /* OpenSans_600SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 163EE165C70A4EDCA4309622 /* OpenSans_600SemiBold.ttf */; };
+		2ADCF520B9AE4C1581665F1B /* Poppins_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B8C875982B040BCB7359B5E /* Poppins_700Bold.ttf */; };
+		328548CA05C34BC8A99B4EC3 /* Poppins_500Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8D3F2DB69F64BFC8DEDF6DA /* Poppins_500Medium.ttf */; };
+		3BD53A559DD8473EA7B696BD /* common-trust-verified.png in Resources */ = {isa = PBXBuildFile; fileRef = FB56374F4EF34EBFA943C5D7 /* common-trust-verified.png */; };
+		5BB109E10C4A43F98DE3E8C1 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = E7F8645A595942F78388F944 /* success.png */; };
+		603639C602C84FAD81DA831A /* qr-error.png in Resources */ = {isa = PBXBuildFile; fileRef = BDD31E0857CD4C38BE03AFA7 /* qr-error.png */; };
+		6062EF50CF464998B3ADA9BD /* fail.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B564392E7B44E64891482BA /* fail.png */; };
+		6172F2D35A4C3AA820D92908 /* libPods-Verifier.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-Verifier.a */; };
+		77BDB76A3FA54F0BAE5B4D28 /* warning-cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 90A7C2902D6B4310BDF4ABB1 /* warning-cross.png */; };
+		7EF68E3733C33B6898317E18 /* libPods-Verifier-VerifierTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-Verifier-VerifierTests.a */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8D0EC707D71C485D981A6E49 /* splashSHC.png in Resources */ = {isa = PBXBuildFile; fileRef = CFF849E3515A49B38C0861CA /* splashSHC.png */; };
+		98BCA957B5B04D94BCD5AA52 /* left-caret.png in Resources */ = {isa = PBXBuildFile; fileRef = A3A1C2F79B1E4E06841633E5 /* left-caret.png */; };
+		9F864C3C53AC4A59BFD0F935 /* barcode-scanner.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF003DEAA99426A8554D00F /* barcode-scanner.png */; };
+		A5C50819F2684CB8BE1FDE45 /* switch-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7927F0CEF547C1966FB8E1 /* switch-camera.png */; };
+		A7598E969E7742E38488614F /* OpenSans_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 119CC1FF493C47A9BED2D595 /* OpenSans_700Bold.ttf */; };
+		AF9D63F5917440CD80B13BB7 /* eyes.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAE9212F2664703B7BB2BF1 /* eyes.png */; };
+		B1D966869AC4425C937CB7D5 /* smart-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EE06117D5C1A471B82F82702 /* smart-logo.png */; };
+		B4D704C7D0144920AE3543A2 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 445C38EC735A46519E6C42D0 /* tick.png */; };
+		C233296DA4B94D1692445945 /* icon_shc.svg in Resources */ = {isa = PBXBuildFile; fileRef = 09D9DFCA531743A9899B1786 /* icon_shc.svg */; };
+		C917C146E1AE471C99F95801 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = FB64E84E9ABF4043873F92E9 /* cross.png */; };
+		D14C319C08F4432BAE409AD3 /* iconSHC.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C7CC4379234D80A8C8D207 /* iconSHC.png */; };
+		D82B2A1C125A497881A89C1A /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AF40B96D2C4EB3BFB01839 /* loading.png */; };
+		D9D00F45EA4E41D89ED4450A /* hand-phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 94950809BE4547939618F389 /* hand-phone.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = Verifier;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00E356EE1AD99517003FC87E /* VerifierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VerifierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* VerifierTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VerifierTests.m; sourceTree = "<group>"; };
+		09D9DFCA531743A9899B1786 /* icon_shc.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icon_shc.svg; path = ../assets/img/icon_shc.svg; sourceTree = "<group>"; };
+		119CC1FF493C47A9BED2D595 /* OpenSans_700Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OpenSans_700Bold.ttf; path = ../assets/fonts/OpenSans_700Bold.ttf; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Verifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Verifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Verifier/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Verifier/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Verifier/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Verifier/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Verifier/main.m; sourceTree = "<group>"; };
+		163EE165C70A4EDCA4309622 /* OpenSans_600SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OpenSans_600SemiBold.ttf; path = ../assets/fonts/OpenSans_600SemiBold.ttf; sourceTree = "<group>"; };
+		1AF003DEAA99426A8554D00F /* barcode-scanner.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "barcode-scanner.png"; path = "../assets/img/error/barcode-scanner.png"; sourceTree = "<group>"; };
+		1D0AE47A65C8663E3B452821 /* Pods-Verifier-VerifierTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Verifier-VerifierTests.release.xcconfig"; path = "Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests.release.xcconfig"; sourceTree = "<group>"; };
+		261D53A2BCB542F3AF2EB704 /* OpenSans_400Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OpenSans_400Regular.ttf; path = ../assets/fonts/OpenSans_400Regular.ttf; sourceTree = "<group>"; };
+		445C38EC735A46519E6C42D0 /* tick.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = tick.png; path = ../assets/img/verificationresult/tick.png; sourceTree = "<group>"; };
+		45C7CC4379234D80A8C8D207 /* iconSHC.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = iconSHC.png; path = ../assets/img/iconSHC.png; sourceTree = "<group>"; };
+		4B8C875982B040BCB7359B5E /* Poppins_700Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Poppins_700Bold.ttf; path = ../assets/fonts/Poppins_700Bold.ttf; sourceTree = "<group>"; };
+		4FAE9212F2664703B7BB2BF1 /* eyes.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = eyes.png; path = ../assets/img/verificationresult/eyes.png; sourceTree = "<group>"; };
+		6299476E8BBF4FC5A65C09FA /* adaptiveSHC.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = adaptiveSHC.png; path = ../assets/img/adaptiveSHC.png; sourceTree = "<group>"; };
+		6423831EA8574132BED9D8CC /* libPods-Verifier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Verifier.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B564392E7B44E64891482BA /* fail.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = fail.png; path = ../assets/img/verificationresult/fail.png; sourceTree = "<group>"; };
+		6C97AB639B58BBB4B15BBE30 /* Pods-Verifier-VerifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Verifier-VerifierTests.debug.xcconfig"; path = "Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6DD2F975E86249C18302E2A4 /* favicon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = favicon.png; path = ../assets/img/favicon.png; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Verifier/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AF40B96D2C4EB3BFB01839 /* loading.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = loading.png; path = ../assets/img/error/loading.png; sourceTree = "<group>"; };
+		8603D8DD553F457CB29E26F7 /* warning.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = warning.png; path = ../assets/img/verificationresult/warning.png; sourceTree = "<group>"; };
+		90A7C2902D6B4310BDF4ABB1 /* warning-cross.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "warning-cross.png"; path = "../assets/img/verificationresult/warning-cross.png"; sourceTree = "<group>"; };
+		94950809BE4547939618F389 /* hand-phone.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "hand-phone.png"; path = "../assets/img/main/hand-phone.png"; sourceTree = "<group>"; };
+		A3A1C2F79B1E4E06841633E5 /* left-caret.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "left-caret.png"; path = "../assets/img/verificationresult/left-caret.png"; sourceTree = "<group>"; };
+		ABFE59519B596E51CEFDCCC0 /* libPods-Verifier-VerifierTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Verifier-VerifierTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C01201184E455783C7510C /* Poppins_600SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Poppins_600SemiBold.ttf; path = ../assets/fonts/Poppins_600SemiBold.ttf; sourceTree = "<group>"; };
+		B8D3F2DB69F64BFC8DEDF6DA /* Poppins_500Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Poppins_500Medium.ttf; path = ../assets/fonts/Poppins_500Medium.ttf; sourceTree = "<group>"; };
+		BDD31E0857CD4C38BE03AFA7 /* qr-error.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qr-error.png"; path = "../assets/img/error/qr-error.png"; sourceTree = "<group>"; };
+		C0A881CF5CF3F2B244570E2A /* Pods-Verifier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Verifier.debug.xcconfig"; path = "Target Support Files/Pods-Verifier/Pods-Verifier.debug.xcconfig"; sourceTree = "<group>"; };
+		CB7927F0CEF547C1966FB8E1 /* switch-camera.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "switch-camera.png"; path = "../assets/img/scanqr/switch-camera.png"; sourceTree = "<group>"; };
+		CFF849E3515A49B38C0861CA /* splashSHC.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = splashSHC.png; path = ../assets/img/splashSHC.png; sourceTree = "<group>"; };
+		D00AAFFCFCFDA5787532823F /* Pods-Verifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Verifier.release.xcconfig"; path = "Target Support Files/Pods-Verifier/Pods-Verifier.release.xcconfig"; sourceTree = "<group>"; };
+		E7F8645A595942F78388F944 /* success.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = success.png; path = ../assets/img/verificationresult/success.png; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EE06117D5C1A471B82F82702 /* smart-logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "smart-logo.png"; path = "../assets/img/main/smart-logo.png"; sourceTree = "<group>"; };
+		FB56374F4EF34EBFA943C5D7 /* common-trust-verified.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "common-trust-verified.png"; path = "../assets/img/verificationresult/common-trust-verified.png"; sourceTree = "<group>"; };
+		FB64E84E9ABF4043873F92E9 /* cross.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = cross.png; path = ../assets/img/verificationresult/cross.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00E356EB1AD99517003FC87E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EF68E3733C33B6898317E18 /* libPods-Verifier-VerifierTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6172F2D35A4C3AA820D92908 /* libPods-Verifier.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00E356EF1AD99517003FC87E /* VerifierTests */ = {
+			isa = PBXGroup;
+			children = (
+				00E356F21AD99517003FC87E /* VerifierTests.m */,
+				00E356F01AD99517003FC87E /* Supporting Files */,
+			);
+			path = VerifierTests;
+			sourceTree = "<group>";
+		};
+		00E356F01AD99517003FC87E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				00E356F11AD99517003FC87E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		13B07FAE1A68108700A75B9A /* Verifier */ = {
+			isa = PBXGroup;
+			children = (
+				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				13B07FB71A68108700A75B9A /* main.m */,
+			);
+			name = Verifier;
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				6423831EA8574132BED9D8CC /* libPods-Verifier.a */,
+				ABFE59519B596E51CEFDCCC0 /* libPods-Verifier-VerifierTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6E8550147BED4A23B49A1EDA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6299476E8BBF4FC5A65C09FA /* adaptiveSHC.png */,
+				1AF003DEAA99426A8554D00F /* barcode-scanner.png */,
+				81AF40B96D2C4EB3BFB01839 /* loading.png */,
+				BDD31E0857CD4C38BE03AFA7 /* qr-error.png */,
+				6DD2F975E86249C18302E2A4 /* favicon.png */,
+				45C7CC4379234D80A8C8D207 /* iconSHC.png */,
+				94950809BE4547939618F389 /* hand-phone.png */,
+				EE06117D5C1A471B82F82702 /* smart-logo.png */,
+				CB7927F0CEF547C1966FB8E1 /* switch-camera.png */,
+				CFF849E3515A49B38C0861CA /* splashSHC.png */,
+				FB56374F4EF34EBFA943C5D7 /* common-trust-verified.png */,
+				FB64E84E9ABF4043873F92E9 /* cross.png */,
+				4FAE9212F2664703B7BB2BF1 /* eyes.png */,
+				6B564392E7B44E64891482BA /* fail.png */,
+				A3A1C2F79B1E4E06841633E5 /* left-caret.png */,
+				E7F8645A595942F78388F944 /* success.png */,
+				445C38EC735A46519E6C42D0 /* tick.png */,
+				90A7C2902D6B4310BDF4ABB1 /* warning-cross.png */,
+				8603D8DD553F457CB29E26F7 /* warning.png */,
+				261D53A2BCB542F3AF2EB704 /* OpenSans_400Regular.ttf */,
+				163EE165C70A4EDCA4309622 /* OpenSans_600SemiBold.ttf */,
+				119CC1FF493C47A9BED2D595 /* OpenSans_700Bold.ttf */,
+				B8D3F2DB69F64BFC8DEDF6DA /* Poppins_500Medium.ttf */,
+				B3C01201184E455783C7510C /* Poppins_600SemiBold.ttf */,
+				4B8C875982B040BCB7359B5E /* Poppins_700Bold.ttf */,
+				09D9DFCA531743A9899B1786 /* icon_shc.svg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				13B07FAE1A68108700A75B9A /* Verifier */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* VerifierTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				E233CBF5F47BEE60B243DCF8 /* Pods */,
+				6E8550147BED4A23B49A1EDA /* Resources */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* Verifier.app */,
+				00E356EE1AD99517003FC87E /* VerifierTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E233CBF5F47BEE60B243DCF8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C0A881CF5CF3F2B244570E2A /* Pods-Verifier.debug.xcconfig */,
+				D00AAFFCFCFDA5787532823F /* Pods-Verifier.release.xcconfig */,
+				6C97AB639B58BBB4B15BBE30 /* Pods-Verifier-VerifierTests.debug.xcconfig */,
+				1D0AE47A65C8663E3B452821 /* Pods-Verifier-VerifierTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00E356ED1AD99517003FC87E /* VerifierTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "VerifierTests" */;
+			buildPhases = (
+				A130D646172E58E1D159D8F2 /* [CP] Check Pods Manifest.lock */,
+				00E356EA1AD99517003FC87E /* Sources */,
+				00E356EB1AD99517003FC87E /* Frameworks */,
+				00E356EC1AD99517003FC87E /* Resources */,
+				077E01280D4B4AD18B2E1770 /* [CP] Embed Pods Frameworks */,
+				4E62BDF20514810D028A5FBF /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00E356F51AD99517003FC87E /* PBXTargetDependency */,
+			);
+			name = VerifierTests;
+			productName = VerifierTests;
+			productReference = 00E356EE1AD99517003FC87E /* VerifierTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		13B07F861A680F5B00A75B9A /* Verifier */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Verifier" */;
+			buildPhases = (
+				3E482C27206C4DEF2FE45063 /* [CP] Check Pods Manifest.lock */,
+				FD10A7F022414F080027D42C /* Start Packager */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				C8AC78B0264D0F9F6F6D630E /* [CP] Embed Pods Frameworks */,
+				ADC9DDC32298B72B3CF5DC8E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Verifier;
+			productName = Verifier;
+			productReference = 13B07F961A680F5B00A75B9A /* Verifier.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83CBB9F71A601CBA00E9B192 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1210;
+				TargetAttributes = {
+					00E356ED1AD99517003FC87E = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1120;
+					};
+				};
+			};
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Verifier" */;
+			compatibilityVersion = "Xcode 12.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83CBB9F61A601CBA00E9B192;
+			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				13B07F861A680F5B00A75B9A /* Verifier */,
+				00E356ED1AD99517003FC87E /* VerifierTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		00E356EC1AD99517003FC87E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8E1A680F5B00A75B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				28C3890CEFEA42F28EAD412B /* adaptiveSHC.png in Resources */,
+				9F864C3C53AC4A59BFD0F935 /* barcode-scanner.png in Resources */,
+				D82B2A1C125A497881A89C1A /* loading.png in Resources */,
+				603639C602C84FAD81DA831A /* qr-error.png in Resources */,
+				D14C319C08F4432BAE409AD3 /* iconSHC.png in Resources */,
+				D9D00F45EA4E41D89ED4450A /* hand-phone.png in Resources */,
+				B1D966869AC4425C937CB7D5 /* smart-logo.png in Resources */,
+				A5C50819F2684CB8BE1FDE45 /* switch-camera.png in Resources */,
+				8D0EC707D71C485D981A6E49 /* splashSHC.png in Resources */,
+				3BD53A559DD8473EA7B696BD /* common-trust-verified.png in Resources */,
+				C917C146E1AE471C99F95801 /* cross.png in Resources */,
+				AF9D63F5917440CD80B13BB7 /* eyes.png in Resources */,
+				6062EF50CF464998B3ADA9BD /* fail.png in Resources */,
+				98BCA957B5B04D94BCD5AA52 /* left-caret.png in Resources */,
+				5BB109E10C4A43F98DE3E8C1 /* success.png in Resources */,
+				B4D704C7D0144920AE3543A2 /* tick.png in Resources */,
+				77BDB76A3FA54F0BAE5B4D28 /* warning-cross.png in Resources */,
+				0C61C104773B495D85945738 /* warning.png in Resources */,
+				00D049D16C7E47F3AC6B932D /* OpenSans_400Regular.ttf in Resources */,
+				2982A80C602247FB8402E0E8 /* OpenSans_600SemiBold.ttf in Resources */,
+				A7598E969E7742E38488614F /* OpenSans_700Bold.ttf in Resources */,
+				328548CA05C34BC8A99B4EC3 /* Poppins_500Medium.ttf in Resources */,
+				25C2C12877064820903AFC36 /* Poppins_600SemiBold.ttf in Resources */,
+				2ADCF520B9AE4C1581665F1B /* Poppins_700Bold.ttf in Resources */,
+				C233296DA4B94D1692445945 /* icon_shc.svg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		077E01280D4B4AD18B2E1770 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E482C27206C4DEF2FE45063 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Verifier-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4E62BDF20514810D028A5FBF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Verifier-VerifierTests/Pods-Verifier-VerifierTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A130D646172E58E1D159D8F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Verifier-VerifierTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADC9DDC32298B72B3CF5DC8E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier/Pods-Verifier-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier/Pods-Verifier-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Verifier/Pods-Verifier-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8AC78B0264D0F9F6F6D630E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier/Pods-Verifier-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Verifier/Pods-Verifier-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Verifier/Pods-Verifier-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD10A7F022414F080027D42C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00E356EA1AD99517003FC87E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00E356F31AD99517003FC87E /* VerifierTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F871A680F5B00A75B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FC11A68108700A75B9A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* Verifier */;
+			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00E356F61AD99517003FC87E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C97AB639B58BBB4B15BBE30 /* Pods-Verifier-VerifierTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VerifierTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Verifier.app/Verifier";
+			};
+			name = Debug;
+		};
+		00E356F71AD99517003FC87E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D0AE47A65C8663E3B452821 /* Pods-Verifier-VerifierTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				INFOPLIST_FILE = VerifierTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Verifier.app/Verifier";
+			};
+			name = Release;
+		};
+		13B07F941A680F5B00A75B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0A881CF5CF3F2B244570E2A /* Pods-Verifier.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.39;
+				DEVELOPMENT_TEAM = KZJSZ95597;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Verifier/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.39;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.thecommonsproject.smarthealthcardverifier;
+				PRODUCT_NAME = Verifier;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		13B07F951A680F5B00A75B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D00AAFFCFCFDA5787532823F /* Pods-Verifier.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.0.39;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Verifier/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.39;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.thecommonsproject.smarthealthcardverifier;
+				PRODUCT_NAME = Verifier;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		83CBBA201A601CBA00E9B192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		83CBBA211A601CBA00E9B192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "VerifierTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00E356F61AD99517003FC87E /* Debug */,
+				00E356F71AD99517003FC87E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Verifier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13B07F941A680F5B00A75B9A /* Debug */,
+				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Verifier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83CBBA201A601CBA00E9B192 /* Debug */,
+				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
+}

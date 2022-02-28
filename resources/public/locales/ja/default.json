@@ -1,0 +1,57 @@
+{
+  "key":"ja",
+  "language":"ja",
+  "region":"default",
+  "data": {
+    "default": {
+      "Common":{
+        "Cancel":"キャンセル",
+        "OK":"OK",
+        "ScanNext":"次のQRコードを読み取る"
+      },
+      "Error": {
+        "ServerError":"サーバーエラー. 再度実行してください。.",
+        "NoInterNet":"インターネット接続できません。",
+        "NoInterNetText":"インターネットの接続確認後、再度実行してください。",
+        "NoCamera":"カメラ機能を使えません。",
+        "NoCameraText": "設定画面で、カメラ機能が有効になっているか、確認後再度実行してください。"
+      },
+      "ErrorPage": {
+        "UnsupportedQR":"QRコードのデータが\n確認できません。",
+        "OnlyValidText":"正しいSMART® Health Cards\nフォーマットのみ確認できます。"
+      },
+      "Welcome":{
+        "Title": "",
+        "SHCV": "SMART® Health Card Verifier",
+        "VerifySmartHealthCard": "SMART® Health Card QR コードを認証しましょう",
+        "ScanVaccinationRecord": "接種証明QRコードを読み取る",
+        "HowTo": "SMART® Health Cardsの確認の仕方",
+        "AboutUs":"組織概要",
+        "PrivacyPolicy":"プライバシーポリシー"
+      },
+      "Scan":{
+        "CameraPermission":"カメラ利用確認",
+        "CameraPermissionText":"このアプリはワクチン接種認証のQRコードをスキャンするためにカメラ機能を使用します。この機能はCOVID-19ワクチンの接種履歴の証明の検証し、表示します。"
+      },
+      "Result":{
+        "ResultTitle":"履歴確認結果",
+        "VaccineRecord":"ワクチン履歴",
+        "IssuerVerified":"発行元確完了",
+        "IssuerNotRecognized":"発行元が確認できません",
+        "NotVerified":"確認できませんでした",
+        "NotVerifiedText":"この SMART Health Card は検証できませんでした。データを確認してください。",
+        "IssureNotRecognized":"発行元が確認できません",
+        "PartialVerifiedText":"SMART® Health Card は確認できましたが、、発行先が CommonTrust Network に登録されていません。",
+        "TapHere":"詳細",
+        "Valid":"有効",
+        "ValidSmartHealthCard":"SMART® Health Cardの内容確認完了",
+        "Verified":"確認完了",
+        "Issuer":"発行者",
+        "Name":"名前",
+        "DOB":"生年月日",
+        "Dose":"{{num}}回目接種",
+        "AlwaysVerify":"必ず政府発行の身分証明書での本人確認をしてください。"
+      }
+    }
+  }
+}
