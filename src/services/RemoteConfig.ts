@@ -1,7 +1,7 @@
 class RemoteConfig {
   
-  async updateRemoteConfig(){
-    console.info('updating remote config');
+  async updateRemoteConfig (){
+    console.info('updating remote config')
     Promise.resolve(true)
   }
 

@@ -29,9 +29,9 @@ export const loadIssuers = async (): Promise<boolean>=> {
 
 export const getIssuerData = async ( issuer: string ):  Promise<any> => {
   if ( remoteConfig.usingLegacy() ) {
-    return _getIssuerDataLegacy( issuer )
+    return await _getIssuerDataLegacy( issuer )
   }
-  return getIssuerData( issuer )
+  return await getIssuerData( issuer )
 }
 
 export const _getIssuerData = async (issuer: string): Promise<any> => {

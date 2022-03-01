@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/require-array-sort-compare': ['error', {
       ignoreStringArrays: true
     }],
+    '@typescript-eslint/indent':['error',2],
     "@typescript-eslint/no-this-alias": [
       "error",
       {

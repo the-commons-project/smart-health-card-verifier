@@ -131,7 +131,7 @@ class i18nUtils{
     timer.start()
     let res = null
     res = await this.hasLocalCache(language, region )
-    console.log(`has local cache for ${language}:${region}=${res}`)
+    console.log(`has local cache for ${language}:${region}=${String(res)}`)
     if ( res ) {
       key = this.getKey( language, region )
       _lang = language.toLowerCase()
@@ -141,7 +141,7 @@ class i18nUtils{
       [ key, _lang, _region ] = mappedHistory[url] 
       found = true
       console.log(`Using mapped history: ${key}`)
-    } else if( !remoteConfig.usingLegacy() ) {
+    } else if ( !remoteConfig.usingLegacy() ) {
       try {
         console.log(`loading ${key}: ${url}` )
         const response  = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
