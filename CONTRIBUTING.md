@@ -2,7 +2,7 @@
 
 ## 1. Read the FAQ
 
-Please [read the KNOWNISSUES](./DOC/FAQ.md) before logging new issues, even if you think you have found a bug.
+Please [read the KNOWNISSUES](./docs/FAQ.md) before logging new issues, even if you think you have found a bug.
 
 Issues that ask questions answered in the FAQ will be closed without elaboration.
 
@@ -88,7 +88,7 @@ Your pull request should:
 
 ## Running the Tests
 
-To run all tests, invoke the `runtests-parallel` target using gulp:
+To run the test, execute jest test. 
 
 ```Shell
 npm run test

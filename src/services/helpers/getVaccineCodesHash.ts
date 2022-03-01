@@ -2,7 +2,7 @@ import { ErrorCode } from '../error'
 import { vaccineCodesURl, ApiTimeout } from '../constants'
 import { getInstallationIdManually } from '../../utils/utils'
 import { DataKeys, loadDataOrRetrieveLocally } from '../../services/data/DataService'
-const defaultCodesData = require(  '../../../resources/public/vaccine-codes/accepted_code.json' )
+import defaultCodesData from '../../../resources/public/vaccine-codes/accepted_code.json'
 
 interface VaccineCodeItemType {
   'system': string
@@ -19,20 +19,20 @@ let vaccineCodesHash: { [key: string]: string } = {}
 let acceptedCodes: string[] = []
 
 export const loadVaccineCodes = async (): Promise<boolean>=> {
-  const appUuid = await getInstallationIdManually()
+  const appUuid: string = await getInstallationIdManually()
   const appUuidParameter = `appUUID=${appUuid}`
   const url = `${vaccineCodesURl}?${appUuidParameter}`
   const res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
   if ( res != null ) {
     codesData = res.covid_19_vaccine_codes
-    loadVaccineCode()
+    updateVaccineCode()
   } else {
     console.log('using default vaccineCodes')
   }
   return ( res != null )
 }
 
-const loadVaccineCode = ()=>{
+const updateVaccineCode = ()=>{
   vaccineCodesHash = {}
   for (const vaccineCode of codesData) {
     const { code, display } = vaccineCode
@@ -40,6 +40,8 @@ const loadVaccineCode = ()=>{
   }
   acceptedCodes = codesData.map((item: any)=> item.code)
 }
+
+updateVaccineCode()
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
 import { createContext } from './Context'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -5,6 +6,7 @@ import { loadIssuers } from '../services/helpers/getIssuerData'
 import { loadVaccineCodes } from '../services/helpers/getVaccineCodesHash'
 import { API_VERSION } from '../config/config'
 import { getDataService, DataKeys } from '../services/data/DataService'
+import remoteConfig from '../services/RemoteConfig'
 
 /* day hr   min  sec  mil */
 const lastTimeUpdate = 1 * 24 * 60 * 60 * 1000
@@ -31,7 +33,7 @@ const resetDataIfNeeded = async (): Promise<boolean> => {
   const lastUpdate = await dataService.getLastUpdate()
   const lastApi    = await dataService.getLastAPIVersion()
   if ( ( lastUpdate !== null && lastUpdate.getTime() < lastUpdateThreshold ) || 
-      ( lastApi !== null && lastApi != API_VERSION  ) ) {
+      ( lastApi !== null && lastApi !== API_VERSION  ) ) {
     console.log('resetting local data.')
     await dataService.resetData()
     return true
@@ -43,17 +45,18 @@ const resetDataIfNeeded = async (): Promise<boolean> => {
 
 const synchWithLocal = async (): Promise<boolean> => {
   let res      = false
-
-  const _issuers = null
-  const _vcCodes = null
-  await resetDataIfNeeded()
-
-  /* 1: Load VaccineCods and issuers and attemp to store locally */
-  try {
-    await Promise.all( [loadIssuers(), loadVaccineCodes()] )
+  await remoteConfig.updateRemoteConfig()
+  if ( remoteConfig.usingLegacy() ) {
     res = true
-  } catch ( error ) {
-    console.info( `Loading initial data: ${error}`)
+  } else {
+    await resetDataIfNeeded()
+    /* 1: Load VaccineCods and issuers and attemp to store locally */
+    try {
+      await Promise.all( [loadIssuers(), loadVaccineCodes()] )
+      res = true
+    } catch ( error ) {
+      console.info( `Loading initial data: ${String(error)}`)
+    }
 
   }
   return res
@@ -81,19 +84,18 @@ export function getProvider () {
       })
 
     }, [])
-    // { if( true ) return( < LoadingSpinner enabled={true} /> )}
 
     return  (
       ( state.dataInitialized )? 
-          (
+        (
           <remoteDataSyncContext.Provider value={ { ...state } } >
-              { 
+            { 
               ( state.dataInitialized ) && children
             }
-            </remoteDataSyncContext.Provider>
-          ):(
+          </remoteDataSyncContext.Provider>
+        ):(
           < LoadingSpinner enabled={ true } /> 
-          )                 
+        )                 
               
     )
   }
