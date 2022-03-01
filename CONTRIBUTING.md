@@ -88,7 +88,7 @@ Your pull request should:
 
 ## Running the Tests
 
-To run all tests, invoke the `runtests-parallel` target using gulp:
+To run the test, execute jest test. 
 
 ```Shell
 npm run test

@@ -25,14 +25,14 @@ export const loadVaccineCodes = async (): Promise<boolean>=> {
   const res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
   if ( res != null ) {
     codesData = res.covid_19_vaccine_codes
-    loadVaccineCode()
+    updateVaccineCode()
   } else {
     console.log('using default vaccineCodes')
   }
   return ( res != null )
 }
 
-const loadVaccineCode = ()=>{
+const updateVaccineCode = ()=>{
   vaccineCodesHash = {}
   for (const vaccineCode of codesData) {
     const { code, display } = vaccineCode
@@ -40,6 +40,9 @@ const loadVaccineCode = ()=>{
   }
   acceptedCodes = codesData.map((item: any)=> item.code)
 }
+
+
+updateVaccineCode();
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash

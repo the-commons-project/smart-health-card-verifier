@@ -11,6 +11,7 @@ import frResource  from '../../../resources/public/locales/fr/default.json'
 import jaResource  from '../../../resources/public/locales/ja/default.json'
 import i18nCache from './i18nCache'
 import { fetchWithTimeout } from '../../utils/utils'
+import remoteConfig from '../RemoteConfig'
 
 const localeResolutionOnly = true
 const mappedHistory: Record<string, string[] > = {}
@@ -130,6 +131,7 @@ class i18nUtils{
     timer.start()
     let res = null
     res = await this.hasLocalCache(language, region )
+    console.log(`has local cache for ${language}:${region}=${res}`)
     if ( res ) {
       key = this.getKey( language, region )
       _lang = language.toLowerCase()
@@ -139,7 +141,7 @@ class i18nUtils{
       [ key, _lang, _region ] = mappedHistory[url] 
       found = true
       console.log(`Using mapped history: ${key}`)
-    } else {
+    } else if( !remoteConfig.usingLegacy() ) {
       try {
         console.log(`loading ${key}: ${url}` )
         const response  = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')

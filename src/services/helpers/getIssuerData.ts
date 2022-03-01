@@ -40,7 +40,6 @@ export const _getIssuerData = async (issuer: string): Promise<any> => {
 }
 
 export const _getIssuerDataLegacy = async (issuer: string): Promise<any> => {
-  console.info(`get legacy shc service : ${issuer}`)
   const appUuid = await getInstallationIdManually()
 
   const appUuidParameter = `appUUID=${String(appUuid)}`
