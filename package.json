@@ -6,6 +6,7 @@
     "android": "export ENVFILE=.env.development && react-native run-android",
     "android:prod": "export ENVFILE=.env.production && react-native run-android",
     "build-dev:android": "export ENVFILE=.env.development && cd android && ./gradlew assembleDebug",
+    "ios": "react-native run-ios --scheme \"Verifier\"",
     "ios:release": "react-native run-ios --scheme \"ReleaseBuild\"",
     "ios:qa": "react-native run-ios --scheme \"Verifier-Test\"",
     "ios:development": "react-native run-ios --scheme \"Verifier\"",
