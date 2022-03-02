@@ -55,7 +55,7 @@ In general, things we find useful when reviewing suggestions are:
 
 ## Get Started
 
-1. Please read  [README](./README.md) for the get started.
+1. Please read  [README](../README.md) for the get started.
 
 
 ## Contributing bug fixes
