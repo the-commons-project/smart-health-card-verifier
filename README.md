@@ -135,11 +135,11 @@ We welcome any contributions for bug fixes and improvements. Below explains how 
 
 ### Code of Conduct
 
-The Common Projects has adopted a Code of Conduct that we expect the community to adhere to. Please see the [document here](./CODE_OF_CONDUCT.md) so that we can maintain a healthy and collaborative community.
+The Common Projects has adopted a Code of Conduct that we expect the community to adhere to. Please see the [document here](./docs/CODE_OF_CONDUCT.md) so that we can maintain a healthy and collaborative community.
 
 ### Contributing Guide
 
-See [contributing guidelines](./CONTRIBUTING.md) for more information.
+See [contributing guidelines](./docs/CONTRIBUTING.md) for more information.
 
 ## License
 
