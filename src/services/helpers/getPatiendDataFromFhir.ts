@@ -1,18 +1,24 @@
 import { formatDateOfBirth } from '../../utils/utils'
 import constants from '../../models/FHIRFieldConstant'
 const { RESOURCE_TYPES } = constants
-
+const acceptedSuffix = ['Jr.',  'Sr.', 'II', 'III', 'IV']
 const resolveName = ( name: any ): string | null  => {
   let res = null
   if ( name.family ) {
-    const familyName = name.family
-    const givenNames = name.given?.join(' ')
+    const familyName: string = name.family
+    let givenNames: string = ''
+    if ( name.given ) {
+      givenNames = name.given?.join(' ')
+      if ( acceptedSuffix.includes( name.suffix || '') ) {
+        givenNames = `${givenNames} ${String( name.suffix)}`
+      } 
+    }
     res = `${familyName} / ${givenNames}`
   } else if ( name.text ) {
-    res = `${name.text}`
+    res = `${String( name.text)}`
   }
   if ( res != null && name.use ){
-    res = `${res} (${name.use})`
+    res = `${String(res)} (${String(name.use)})`
   }
   return res
 }
@@ -26,14 +32,14 @@ export const getPatientDataFromFhir = (credential: any): any => {
 
   let fullName: string = ''
   let dateOfBirth: string = ''
+  let names = []
 
   if ( patientEntry ) {
     const { name, birthDate } = patientEntry
     const nameList = name
-    var names = []
     if ( name ) {
       names = nameList.map( (it: any)=> {
-        fullName = resolveName( it ) || ''
+        fullName = resolveName( it ) ?? ''
         return fullName
       })
     }
