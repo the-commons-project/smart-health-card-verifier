@@ -1,7 +1,7 @@
 import { formatVaccinationDate } from '../../utils/utils'
 import { getVaccineCodesHash, getAcceptedCodes } from './getVaccineCodesHash'
 
-const cvxCodes = getAcceptedCodes() // ['207', '208', '210', '211', '212']
+const cvxCodes = getAcceptedCodes()
 
 export const getVaccinationDataFromFhir = async (credential: any): Promise<any> => {
   const vaccinationData = []

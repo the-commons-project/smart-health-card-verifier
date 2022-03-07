@@ -15,7 +15,6 @@ const config = {
   },
 }
 
-
 const API_HOST     = config.api.uri
 const API_PATH     = `${config.api.path}/${config.api.version}`
 const API_KEY      = config.api.key
