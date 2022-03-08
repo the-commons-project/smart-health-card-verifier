@@ -51,6 +51,13 @@
         "DOB":"生年月日",
         "Dose":"{{num}}回目接種",
         "AlwaysVerify":"必ず政府発行の身分証明書での本人確認をしてください。"
+      },
+      "WelcomeDialog":{
+        "Welcome":"SMART Health Card\nVerifierへようこそ！",
+        "WelcomeDescription1":"このアプリケーションはお店などで、お客様のSMART Health Cards　を承認するために使用します。",
+        "WelcomeDescription2":"このアプリケーションはスキャンした証明書を保存しません。",
+        "PleaseNote":"注意: ",
+        "GetStarted":"スタート"
       }
     }
   }

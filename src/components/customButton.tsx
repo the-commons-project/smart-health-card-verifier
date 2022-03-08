@@ -12,7 +12,7 @@ const images = {
   barcodeScanner: require('../../assets/img/error/barcode-scanner.png'),
 }
 
-const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
+export const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
   return (
     <TouchableOpacity
       onPress={ onPress }
@@ -20,6 +20,17 @@ const AppButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
     >
       <Text style={ [styles.appButtonText, FontStyle.Poppins_600SemiBold] }>{ title }</Text>
       <Image style={ styles.appButtonImage } source={ images.barcodeScanner } />
+    </TouchableOpacity>
+  )
+}
+
+export const GetStartedButton = ({ onPress, title, backgroundColor }: AppButtonVariables) => {
+  return (
+    <TouchableOpacity
+      onPress={ onPress }
+      style={ [styles.appButtonContainer, backgroundColor && { backgroundColor }] }
+    >
+      <Text style={ [styles.appButtonText, FontStyle.Poppins_600SemiBold] }>{ title }</Text>
     </TouchableOpacity>
   )
 }

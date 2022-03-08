@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, ScrollView, StyleSheet, PixelRatio, Pressable } from 'react-native'
-import AppButton from '../components/customButton'
+import { AppButton } from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'
@@ -14,7 +14,7 @@ const images = {
 }
 
 const canShowResult = ( result: BaseResponse): Boolean => {
-  return ( result.isValid == true ) 
+  return ( result.isValid === true ) 
 }
 
 const initiallyShowRecord = ( result: BaseResponse )=>{
