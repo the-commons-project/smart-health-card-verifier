@@ -79,15 +79,15 @@ export function getProvider () {
 
     return  (
       ( initialized )? 
-          (
+        (
           <localeContext.Provider value={ { ...state,  getLocaleString } } >
-              { 
+            { 
               ( state.initialized ) && children
             }
-            </localeContext.Provider>
-          ):(
+          </localeContext.Provider>
+        ):(
           < LoadingSpinner enabled={ true } /> 
-          )                 
+        )                 
               
     )
   }

@@ -70,58 +70,58 @@ const ResultBanner = ({ validationResult }: ValidationResult ) => {
             </Text>
           </View>
         ) : ( !isIssuerRecognized ) ?
-            (
+          (
             <View 
-                style={ { flexDirection: 'column', flexWrap: 'wrap' } }>
-                <View style={ styles.flexRowContainer }>
+              style={ { flexDirection: 'column', flexWrap: 'wrap' } }>
+              <View style={ styles.flexRowContainer }>
                 <Text style={ [
-                    styles.subBannerText,
-                    FontStyle.Poppins_600SemiBold,
-                    { color: verifiedColor, textAlign: 'center' }
-                  ] }
+                  styles.subBannerText,
+                  FontStyle.Poppins_600SemiBold,
+                  { color: verifiedColor, textAlign: 'center' }
+                ] }
                 >
-                    { verifiedIssuerText }
-                  </Text>
+                  { verifiedIssuerText }
+                </Text>
                 <Text
-                    style={ [
+                  style={ [
                     styles.subBannerText,
                     styles.clickHere,
                     FontStyle.Poppins_600SemiBold,
                     { color: verifiedColor },
                   ] }>{ t('Result.TapHere', 'Tap to expand details') }
-                  </Text>
+                </Text>
               </View>
-              </View>
-            ):(
+            </View>
+          ):(
             <View 
-                style={ styles.flexRowContainer }>
-                <View style={ [styles.flexColumnContainer, ,{ width:'100%' }] } >
+              style={ styles.flexRowContainer }>
+              <View style={ [styles.flexColumnContainer, ,{ width:'100%' }] } >
                 <Image style={ styles.subIcon } source={ validityIcon } />
                 <Text
 
-                    style={ [
+                  style={ [
                     styles.subBannerText,
                     FontStyle.Poppins_600SemiBold,
                     { color: validityColor },
                   ] }
                 >
-                    { validityText }
-                  </Text>
+                  { validityText }
+                </Text>
               </View>
-                <View  style={ [styles.flexColumnContainer, ,{ width:'100%' }] } >
+              <View  style={ [styles.flexColumnContainer, ,{ width:'100%' }] } >
                 <Image style={ styles.subIcon } source={ verifiedIssuerIcon } />
                 <Text
-                    style={ [
+                  style={ [
                     styles.subBannerText,
                     FontStyle.Poppins_600SemiBold,
                     { color: verifiedColor, textAlign: 'center' },
                   ] }
                 >
-                    { verifiedIssuerText }
-                  </Text>
+                  { verifiedIssuerText }
+                </Text>
               </View>
-              </View>
-            )
+            </View>
+          )
         }
       </View>
     </View>
