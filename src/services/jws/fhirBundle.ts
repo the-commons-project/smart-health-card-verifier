@@ -6,26 +6,24 @@ import fhirSchema from '../../schemas/fhir-schema.json'
 import immunizationDM from '../../schemas/immunization-dm.json'
 import { getAcceptedCodes } from '../helpers/getVaccineCodesHash'
 
-export enum ValidationProfiles {
-  'any',
-  'usa-covid19-immunization',
-}
-
-export class FhirOptions {
-  static LogOutputPath = ''
-  static ValidationProfile: ValidationProfiles = ValidationProfiles.any
+/* this entry needs to match with ValidationProfilesFunctions keys */
+const enum ValidationProfiles {
+  'any'='any',
+  'usacovid19Immunization' = 'usa-covid19-immunization'
 }
 
 export function validate (fhirBundleText: string): Boolean {
-  const profile: ValidationProfiles = FhirOptions.ValidationProfile
-
+  const profile = ValidationProfiles.usacovid19Immunization
+  let isFhirBundleValid = false
   if (fhirBundleText.trim() !== fhirBundleText) {
     console.log('FHIR bundle has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     fhirBundleText = fhirBundleText.trim()
   }
 
-  const fhirBundle = utils.parseJson<FhirBundle>(fhirBundleText)!
-  const isFhirBundleValid = validateFhirBundle(fhirBundle)
+  const fhirBundle = utils.parseJson<FhirBundle>(fhirBundleText)
+  if ( fhirBundle ) {
+    isFhirBundleValid = validateFhirBundle(fhirBundle)
+  }
   if (!isFhirBundleValid) return false
 
   // Validate each resource of .entry[]
@@ -52,7 +50,7 @@ export function validate (fhirBundleText: string): Boolean {
       )
     }
   }
-  return ValidationProfilesFunctions['usa-covid19-immunization'](fhirBundle.entry)
+  return ValidationProfilesFunctions[profile](fhirBundle.entry)
 }
 
 function validateFhirBundle (fhirBundle: FhirBundle) {
@@ -88,18 +86,15 @@ function validateFhirBundleEntry (entry: any, i: number) {
 
   if (!(fhirSchema.definitions as Record<string, unknown>)[resource.resourceType]) {
     console.log(
-      `Schema: entry[${i.toString()}].resource.resourceType '${resource.resourceType}' unknown`,
+      `Schema: entry[${i.toString()}].resource.resourceType '${String( resource.resourceType )}' unknown`,
     )
   }
 
   // validateSchema({ $ref: 'https://smarthealth.cards/schema/fhir-schema.json#/definitions/' + resource.resourceType }, resource, ['', 'entry', i.toString(), resource.resourceType].join('/'))
   if (resource.id) {
     console.log(
-      'Bundle.entry[' +
-        i.toString() +
-        '].resource[' +
-        resource.resourceType +
-        '] should not include .id elements',
+      `Bundle.entry[${i.toString()}].resource[${String(resource.resourceType)}]\
+       should not include .id elements`,
       ErrorCode.FHIR_SCHEMA_ERROR,
     )
   }
@@ -108,11 +103,8 @@ function validateFhirBundleEntry (entry: any, i: number) {
     // resource.meta.security allowed as special case, however, no other properties may be included on .meta
     if (!resource.meta.security || Object.keys(resource.meta).length > 1) {
       console.log(
-        'Bundle.entry[' +
-          i.toString() +
-          '].resource[' +
-          resource.resourceType +
-          '].meta should only include .security property with an array of identity assurance codes',
+        `Bundle.entry[${i.toString()}].resource[${String(resource.resourceType)}].meta \
+       should only include .security property with an array of identity assurance codes`,
         ErrorCode.FHIR_SCHEMA_ERROR,
       )
     }
@@ -120,11 +112,8 @@ function validateFhirBundleEntry (entry: any, i: number) {
 
   if (resource.text) {
     console.log(
-      'Bundle.entry[' +
-        i.toString() +
-        '].resource[' +
-        resource.resourceType +
-        '] should not include .text elements',
+      `Bundle.entry[${i.toString()}].resource[${String(resource.resourceType)}] \
+         should not include .text elements`,
       ErrorCode.FHIR_SCHEMA_ERROR,
     )
   }
@@ -226,7 +215,7 @@ const ValidationProfilesFunctions = {
         // verify that valid codes are used see : https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html
         const code = (entry.resource?.vaccineCode as { coding: Array<{ code: string }> })?.coding[0]
           ?.code
-        const cvxCodes = getAcceptedCodes() // ['207', '208', '210', '211', '212']
+        const cvxCodes = getAcceptedCodes() 
 
         if (code && !cvxCodes.includes(code)) {
           console.log(
@@ -252,6 +241,7 @@ const ValidationProfilesFunctions = {
       if (entry.resource.resourceType === 'Patient') {
         // check for properties that are forbidden by the dm-profiles
         ;(patientDM as Array<{ path: string }>).forEach((constraint) => {
+          const tmp = utils.propPath(entry.resource, constraint.path)
           utils.propPath(entry.resource, constraint.path) &&
             console.log(
               `Profile : ${profileName} : entry[${index.toString()}].resource.${

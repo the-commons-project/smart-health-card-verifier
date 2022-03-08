@@ -1,0 +1,76 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "resource:0",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "family": "TESTPATIENT",
+            "given": [
+              "ANALYST"
+            ],
+            "suffix":"Jr."
+          }
+        ],
+        "birthDate": "1960-05-19"
+      }
+    },
+    {
+      "fullUrl": "resource:1",
+      "resource": {
+        "resourceType": "Immunization",
+        "status": "completed",
+        "vaccineCode": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/cvx",
+              "code": "208"
+            }
+          ]
+        },
+        "patient": {
+          "reference": "resource:0"
+        },
+        "occurrenceDateTime": "2021-01-06",
+        "lotNumber": "he8rqp39u",
+        "performer": [
+          {
+            "actor": {
+              "display": "Grand Cayman"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "resource:2",
+      "resource": {
+        "resourceType": "Immunization",
+        "status": "completed",
+        "vaccineCode": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/cvx",
+              "code": "208"
+            }
+          ]
+        },
+        "patient": {
+          "reference": "resource:0"
+        },
+        "occurrenceDateTime": "2020-12-16",
+        "lotNumber": "342469563486",
+        "performer": [
+          {
+            "actor": {
+              "display": "Grand Cayman"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
