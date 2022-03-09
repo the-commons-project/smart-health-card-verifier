@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {  StyleSheet, View, Text, Modal, useWindowDimensions, PixelRatio } from 'react-native'
+import {  StyleSheet, View, Text, Modal, useWindowDimensions, PixelRatio, ScrollView } from 'react-native'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import { GetStartedButton } from './customButton'
 import AppLogoSVG from '../../assets/img/icon_shc.svg'
@@ -17,11 +17,11 @@ export default ()=> {
     setOnboarded()
   }
   const deviceHeight = dimension.height
+  const maxScrollable = { maxHeight: ( deviceHeight * 0.6 ) }
   const smallScreen = ( deviceHeight < 800 )
   const imageHeight = ( dimension.height * ( smallScreen ? .05 : .08 ) / PixelRatio.getFontScale() )
   const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.\n\n'
   const msg2 = 'PLEASE NOTE: This app does not save or store your digital credentials.'
-
   return ( <View style={ styles.container }>
     <Modal
       animationType="fade"
@@ -33,20 +33,25 @@ export default ()=> {
     >
       <View style={ styles.centeredView }>
         <View style={ styles.modalView }>
-          <AppLogoSVG height={ imageHeight }  width={ imageHeight }/>
-          <Text style={ [ smallScreen ? styles.welcomeTextSmlScreen : styles.welcomeText, 
-            FontStyle.Poppins_700Bold,
-          ] }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App!') }</Text>
-          <View style={ styles.textContainer }>
-            <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.WelcomeDescription1', msg1) }</Text>
-            <Text style={ [ smallScreen? styles.textStyleSmlScreen :styles.textStyle, FontStyle.OpenSans_400Regular, styles.textBold] }>{ t('WelcomeDialog.PleaseNote', 'Please Note: ') }</Text>
-            <Text style={ [ smallScreen? styles.textStyleSmlScreen :styles.textStyle, FontStyle.OpenSans_400Regular] }>{ t('WelcomeDialog.WelcomeDescription2', msg2) }</Text>
-          </View>
+          <ScrollView style={ [styles.scrollContainer, maxScrollable ] }>
+            <View style={ styles.scrollContents }>
+              <AppLogoSVG height={ imageHeight }  width={ imageHeight }/>
+              <Text style={ [ smallScreen ? styles.welcomeTextSmlScreen : styles.welcomeText, 
+                FontStyle.Poppins_700Bold,
+              ] }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App!') }</Text>
+              <View style={ styles.textContainer }>
+                <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.WelcomeDescription1', msg1) }</Text>
+                <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular, styles.textBold] }>{ t('WelcomeDialog.PleaseNote', 'Please Note: ') }</Text>
+                <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular] }>{ t('WelcomeDialog.WelcomeDescription2', msg2) }</Text>
+              </View>
+            </View>
+          </ScrollView>
           <GetStartedButton
             title={ t('WelcomeDialog.GetStarted', 'Get Started') }
             onPress={ processConfirmation }
             backgroundColor="#255DCB"
           />
+
         </View>
       </View>
     </Modal>
@@ -78,7 +83,17 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    // position:"relative"
+  },
+  scrollContainer: {
+    backgroundColor: 'white',
+  },
+  scrollContents: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22
   },
   welcomeText: {
     marginTop: 20,
@@ -101,7 +116,7 @@ const styles = StyleSheet.create({
   textStyleSmlScreen: {
     color: '#616C8D',
     fontSize: 16,
-    lineHeight: 18,
+    lineHeight: 20,
     textAlign: 'left'
   },
 

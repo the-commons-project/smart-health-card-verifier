@@ -46,7 +46,7 @@ export default class PreferenceService {
 
   isOnboarded (): boolean {
     const data = this.prefData[ PreferenceItemKey.Onborded ] ?? null
-    return ( data !== null )
+    return ( data === null ) ? false : parseInt( data, 10) >= onbordVersion
   } 
 
   setOnboarded () {
