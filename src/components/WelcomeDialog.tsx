@@ -18,7 +18,7 @@ export default ()=> {
   }
   const deviceHeight = dimension.height
   const maxScrollable = { maxHeight: ( deviceHeight * 0.6 ) }
-  const smallScreen = ( deviceHeight < 800 )
+  const smallScreen = ( deviceHeight < 720 )
   const imageHeight = ( dimension.height * ( smallScreen ? .05 : .08 ) / PixelRatio.getFontScale() )
   const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.\n\n'
   const msg2 = 'PLEASE NOTE: This app does not save or store your digital credentials.'
