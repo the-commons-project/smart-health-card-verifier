@@ -81,7 +81,8 @@ import com.android.build.OutputFile
 
 
 project.ext.envConfigFiles = [
-    debug  : ".env.development",
+    debug   : ".env.development",
+    dev     : ".env.staging",
     release : ".env.production"
 ]
 
@@ -141,8 +142,8 @@ def secretProps = file( secretFilePath )
 if (secretProps.exists()) {
     secrets.load(secretProps.newDataInputStream())
 }
+
 def isRunningInGHAction = System.getenv("VERIFIRE_STORE_FILE") != null
-println("isRunningInGHAction: " + isRunningInGHAction )
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -162,7 +163,10 @@ android {
         versionCode rootProject.ext.buildConfigJSON['versionCode']
         versionName rootProject.ext.buildConfigJSON['versionName']
         missingDimensionStrategy 'react-native-camera', 'general'
-        signingConfig {
+    }
+
+    signingConfigs {
+        release {
             if (isRunningInGHAction) {
                 storeFile = file(System.getenv('VERIFIRE_STORE_FILE'))
                 storePassword = System.getenv('VERIFIRE_STORE_PASSWORD')
@@ -176,6 +180,7 @@ android {
             }
         }
     }
+
 
     splits {
         abi {
@@ -194,9 +199,7 @@ android {
                 }
             }
         }
-        dev {
 
-        }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
@@ -205,15 +208,21 @@ android {
         }
 
     }
+
+    flavorDimensions "default"
     productFlavors {
-        debug {
+        devLocal {
+            dimension "default"
             applicationIdSuffix = ".debug"
         }
         dev {
+            dimension "default"
             applicationIdSuffix = ".dev"
         }
-        release{
+        prod {
+            dimension "default"
             applicationIdSuffix = ""
+            signingConfig  = signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
