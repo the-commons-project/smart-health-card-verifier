@@ -23,7 +23,7 @@
                   "given": [
                     "ANALYST"
                   ],
-                  "suffix":"Jr."
+                  "suffix":["Jr.", "DONOTINCLUDE"]
                 }
               ],
               "birthDate": "1960-05-19"
