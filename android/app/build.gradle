@@ -136,7 +136,8 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 Properties secrets = new Properties()
-def secretProps = project.rootProject.file('secrets.properties')
+def secretFilePath  = "${project.rootDir}/secret.properties"
+def secretProps = file( secretFilePath )
 if (secretProps.exists()) {
     secrets.load(secretProps.newDataInputStream())
 }
@@ -161,20 +162,7 @@ android {
         versionCode rootProject.ext.buildConfigJSON['versionCode']
         versionName rootProject.ext.buildConfigJSON['versionName']
         missingDimensionStrategy 'react-native-camera', 'general'
-    }
-
-    splits {
-        abi {
-            reset()
-            enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
-        }
-    }
-    signingConfigs {
-
-        debug {
-
+        signingConfig {
             if (isRunningInGHAction) {
                 storeFile = file(System.getenv('VERIFIRE_STORE_FILE'))
                 storePassword = System.getenv('VERIFIRE_STORE_PASSWORD')
@@ -186,32 +174,48 @@ android {
                 keyAlias = secrets.getProperty('signing_keystore_key_alias')
                 keyPassword = secrets.getProperty('signing_keystore_key_password')
             }
-
-//            storeFile file('debug.keystore')
-//            storePassword 'android'
-//            keyAlias 'androiddebugkey'
-//            keyPassword 'android'
         }
     }
+
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
             if (nativeArchitectures) {
                 ndk {
                     abiFilters nativeArchitectures.split(',')
                 }
             }
         }
+        dev {
+
+        }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
     }
-
+    productFlavors {
+        debug {
+            applicationIdSuffix = ".debug"
+        }
+        dev {
+            applicationIdSuffix = ".dev"
+        }
+        release{
+            applicationIdSuffix = ""
+        }
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
