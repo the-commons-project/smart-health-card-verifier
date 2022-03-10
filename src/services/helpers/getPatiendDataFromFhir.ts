@@ -9,11 +9,14 @@ const resolveName = ( name: any ): string | null  => {
     let givenNames: string = ''
     if ( name.given ) {
       givenNames = name.given?.join(' ')
-      if ( acceptedSuffix.includes( name.suffix || '') ) {
-        givenNames = `${givenNames} ${String( name.suffix)}`
-      } 
+      for( let item  in ( name.suffix ?? [] ) ) {
+        let s = String( item )
+        if ( acceptedSuffix.indexOf( s ) >= 0 ) {
+          givenNames = `${givenNames} ${s}`
+        }
+      }
+      res = `${familyName} / ${givenNames}`
     }
-    res = `${familyName} / ${givenNames}`
   } else if ( name.text ) {
     res = `${String( name.text)}`
   }
