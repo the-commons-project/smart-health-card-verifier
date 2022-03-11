@@ -9,7 +9,7 @@ on:
 env:
   VERIFIRE_STORE_FILE: "${{ github.workspace }}/verifier-keystore"
   STORE_PASSWORD: "${{ secrets.KEYSTORE_PASSWORD }}"
-  GITHUB_TOKEN: "${{ secrets.GH_ACTIONS_SERVICE_TOKEN }}"
+#  GITHUB_TOKEN: "${{ secrets.GH_ACTIONS_SERVICE_TOKEN }}"
   NDK_VERSION: "21.4.7075529" #make sure this will map to ndkVersion in buildGradle
 jobs:
   publishAndroidDev:
@@ -26,6 +26,9 @@ jobs:
       - name: 'Get release tag'
         id: release
         run: echo "::set-output name=tag::$(echo ${GITHUB_REF##*/})"
+      - name: Install npm dependencies
+        run: |
+          npm install
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -36,15 +39,13 @@ jobs:
       - name: 'Decrypt keystore and GCP credentials'
         working-directory: ./android
         run: |
-          echo "${{ secrets.DEV_GCP_CREDS }}" > dev.json.asc
-          echo "${{ secrets.KEYSTORE }}" > phr-keystore.asc
-          gpg --decrypt --passphrase "${{ secrets.GPG_PASSPHRASE }}" --batch dev.json.asc > dev.json
-          gpg --decrypt --passphrase "${{ secrets.GPG_PASSPHRASE }}" --batch phr-keystore.asc > phr-keystore
+          echo "${{ secrets.DEV_KEYSTORE }}" > verifier-keystore.asc
+          gpg --decrypt --passphrase "${{ secrets.GPG_PASSPHRASE }}" --batch verifier-keystore.asc > verifier-keystore
           touch local.properties
       - name: 'Build devRemote'
         working-directory: ./android
         run: ./gradlew :app:bundleDevRelease --info
-      - name: 'Publish devRemote to Play Store'
-        if: success()
-        working-directory: ./android
-        run: ./gradlew app:publishDevReleaseBundle --artifact-dir app/build/outputs/bundle/bundleDevRelease --release-name ${GITHUB_REF##*/}
+#      - name: 'Publish devRemote to Play Store'
+#        if: success()
+#        working-directory: ./android
+#        run: ./gradlew app:publishDevReleaseBundle --artifact-dir app/build/outputs/bundle/bundleDevRelease --release-name ${GITHUB_REF##*/}
