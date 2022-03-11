@@ -31,7 +31,7 @@ export const getIssuerData = async ( issuer: string ):  Promise<any> => {
   if ( remoteConfig.usingLegacy() ) {
     return await _getIssuerDataLegacy( issuer )
   }
-  return await getIssuerData( issuer )
+  return await _getIssuerData( issuer )
 }
 
 export const _getIssuerData = async (issuer: string): Promise<any> => {
