@@ -9,11 +9,19 @@ const resolveName = ( name: any ): string | null  => {
     let givenNames: string = ''
     if ( name.given ) {
       givenNames = name.given?.join(' ')
-      if ( acceptedSuffix.includes( name.suffix || '') ) {
-        givenNames = `${givenNames} ${String( name.suffix)}`
-      } 
+      let suffixes = ( name.suffix ?? [] ).filter( (i:any) => acceptedSuffix.indexOf( String(i)) >= 0 )
+      if( suffixes.length > 0 ) {
+          givenNames = `${givenNames} ${suffixes.join(' ')}`
+      }
+      // for( let i  in ( name.suffix ?? [] ) ) {
+      //   let s = String( item )
+      //   console.log("testing --------------------" + s );
+      //   if ( acceptedSuffix.indexOf( s ) >= 0 ) {
+      //     givenNames = `${givenNames} ${s}`
+      //   }
+      // }
+      res = `${familyName} / ${givenNames}`
     }
-    res = `${familyName} / ${givenNames}`
   } else if ( name.text ) {
     res = `${String( name.text)}`
   }
