@@ -201,14 +201,14 @@ const ResultRecord = ({ data }: Data) => {
               style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }
             >
               { t('Result.IssuerNotRecognized', 'Issuer not recognized') }
-              <View>
-                <Text>
-                  { issuerData?.name || issuerData?.url } 
-                  </Text>
-                </View>
             </Text>
           </View>
         ) } 
+          <View>
+            <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
+              { issuerData?.name || issuerData?.url }
+            </Text>
+        </View>
       </View>
     </View>
   )
