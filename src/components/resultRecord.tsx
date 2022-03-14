@@ -202,13 +202,13 @@ const ResultRecord = ({ data }: Data) => {
             >
               { t('Result.IssuerNotRecognized', 'Issuer not recognized') }
             </Text>
-          </View>
-        ) } 
-          <View>
+            <View>
             <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
               { issuerData?.name || issuerData?.url }
-            </Text>
-        </View>
+             </Text>
+           </View>
+          </View>
+        ) } 
       </View>
     </View>
   )
