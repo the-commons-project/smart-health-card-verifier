@@ -1,4 +1,4 @@
-name: 'Smart Health Card Store Deployment'
+name: 'Smart Health Card Verifier Deployment'
 on:
   push:
     tags:
@@ -7,14 +7,14 @@ on:
 # Environment variables that are common to
 # more than one deployment
 env:
-  VERIFIRE_STORE_FILE: "${{ github.workspace }}/verifier-keystore"
+  VERIFIRE_STORE_FILE: "${{ github.workspace }}/android/verifier-keystore"
   STORE_PASSWORD: "${{ secrets.KEYSTORE_PASSWORD }}"
 #  GITHUB_TOKEN: "${{ secrets.GH_ACTIONS_SERVICE_TOKEN }}"
-  NDK_VERSION: "21.4.7075529" #make sure this will map to ndkVersion in buildGradle
+  NDK_VERSION: "21.4.7075529" #make sure this will map to ndkVersifon in buildGradle
 jobs:
   publishAndroidDev:
     timeout-minutes: 60
-    if: contains(github.ref, 'release-dev')
+    if: contains(github.ref, 'dev') && !contains(github.ref, 'developer')
     name: 'Build and Publish devRemote Bundle'
     runs-on: ubuntu-latest
     env:
