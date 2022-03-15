@@ -7,17 +7,17 @@ on:
 # Environment variables that are common to
 # more than one deployment
 env:
-  VERIFIRE_STORE_FILE: "${{ github.workspace }}/android/verifier-keystore"
-  STORE_PASSWORD: "${{ secrets.KEYSTORE_PASSWORD }}"
+  STORE_FILE: "${{ github.workspace }}/android/verifier-keystore"
 #  GITHUB_TOKEN: "${{ secrets.GH_ACTIONS_SERVICE_TOKEN }}"
   NDK_VERSION: "21.4.7075529" #make sure this will map to ndkVersifon in buildGradle
 jobs:
   publishAndroidDev:
     timeout-minutes: 60
-    if: contains(github.ref, 'dev') && !contains(github.ref, 'developer')
+    if: contains(github.ref, 'release-dev') && !contains(github.ref, 'developer')
     name: 'Build and Publish devRemote Bundle'
     runs-on: ubuntu-latest
     env:
+      STORE_PASSWORD: "${{secrets.DEV_STORE_PASSWORD}}"
       KEY_PASSWORD: "${{ secrets.DEV_KEY_PASSWORD }}"
       KEY_ALIAS: "${{ secrets.DEV_KEY_ALIAS }}"
     steps:
@@ -26,6 +26,9 @@ jobs:
       - name: 'Get release tag'
         id: release
         run: echo "::set-output name=tag::$(echo ${GITHUB_REF##*/})"
+      - name: 'Create env file'
+        run: |
+          echo "${{ secrets.DEV_BUILD_CONFIG }}" >> .env.staging
       - name: Install npm dependencies
         run: |
           npm install
@@ -45,7 +48,3 @@ jobs:
       - name: 'Build devRemote'
         working-directory: ./android
         run: ./gradlew :app:bundleDevRelease --info
-#      - name: 'Publish devRemote to Play Store'
-#        if: success()
-#        working-directory: ./android
-#        run: ./gradlew app:publishDevReleaseBundle --artifact-dir app/build/outputs/bundle/bundleDevRelease --release-name ${GITHUB_REF##*/}
