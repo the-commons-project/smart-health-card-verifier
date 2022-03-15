@@ -144,7 +144,6 @@ if (secretProps.exists()) {
 }
 
 def isRunningInGHAction = System.getenv("STORE_FILE") != null
-println("running with git action: ${isRunningInGHAction}")
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -157,6 +156,7 @@ android {
         println( "packageName: ${rootProject.ext.buildConfigJSON['packageName']}")
         println( "versionCode: ${rootProject.ext.buildConfigJSON['versionCode']}")
         println( "versionName: ${rootProject.ext.buildConfigJSON['versionName']}")
+        println("running with git action: ${isRunningInGHAction}")
 
         applicationId rootProject.ext.buildConfigJSON['packageName']
         minSdkVersion rootProject.ext.minSdkVersion
@@ -204,6 +204,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
