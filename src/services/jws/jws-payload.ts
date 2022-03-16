@@ -2,30 +2,27 @@ import * as utils from '../../utils/utils'
 import { ErrorCode } from '../error'
 import jwsPayloadSchema from '../../schemas/smart-health-card-vc-schema.json'
 import * as fhirBundle from './fhirBundle'
+import { getRecordTypeFromPayload, RecordType} from './fhirTypes'
 
 export const schema = jwsPayloadSchema
 
 export function validate (jwsPayloadText: string): Boolean {
+  console.log(jwsPayloadText)
   if (jwsPayloadText.trim() !== jwsPayloadText) {
     console.log('JWS payload has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     jwsPayloadText = jwsPayloadText.trim()
   }
 
   const jwsPayload = utils.parseJson<JWSPayload>(jwsPayloadText)
-
+  console.info("jwsPayload: =================================")
+  console.info(jwsPayload)
   const isJwsPayloadValid = checkJwsPayload(jwsPayload)
   if (!isJwsPayloadValid) return false
 
   const fhirBundleJson = jwsPayload?.vc.credentialSubject.fhirBundle
-  const fhirBundleText = JSON.stringify(fhirBundleJson)
 
-  const isVaccineBundle = fhirBundleJson?.entry[1]?.resource?.resourceType === 'Immunization'
-  if (!isVaccineBundle) {
-    console.log('This is not a vaccine bundle', ErrorCode.NOT_VACCINE_BUNDLE)
-    throw ErrorCode.NOT_VACCINE_BUNDLE
-  }
-
-  return fhirBundle.validate(fhirBundleText)
+  const recordType:RecordType = getRecordTypeFromPayload(jwsPayload as JWSPayload);
+  return fhirBundle.validate(recordType, fhirBundleJson)
 }
 
 function checkJwsPayload (jwsPayload: JWSPayload | undefined) {

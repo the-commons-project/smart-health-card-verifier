@@ -1,72 +1,70 @@
 import * as utils from '../../utils/utils'
 import { ErrorCode } from '../error'
 import { validateSchema, objPathToSchema } from './schema'
-import patientDM from '../../schemas/patient-dm.json'
 import fhirSchema from '../../schemas/fhir-schema.json'
-import immunizationDM from '../../schemas/immunization-dm.json'
-import { getAcceptedCodes } from '../helpers/getVaccineCodesHash'
 
 /* this entry needs to match with ValidationProfilesFunctions keys */
-const enum ValidationProfiles {
-  'any'='any',
-  'usacovid19Immunization' = 'usa-covid19-immunization'
-}
+import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
+import validateBundleForRecordType from './recordValidator'
 
-export function validate (fhirBundleText: string): Boolean {
-  const profile = ValidationProfiles.usacovid19Immunization
+
+export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): Boolean {
   let isFhirBundleValid = false
-  if (fhirBundleText.trim() !== fhirBundleText) {
-    console.log('FHIR bundle has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
-    fhirBundleText = fhirBundleText.trim()
+  if( typeof fhirBundleJSON != 'undefined') {
+      const fhirBundle = fhirBundleJSON as FhirBundle
+      if ( fhirBundle ) {
+        isFhirBundleValid = validateFhirBundle(fhirBundle)
+      }
+      if (!isFhirBundleValid) return false
+
+      // Validate each resource of .entry[]
+      for (const [index, entry] of fhirBundle.entry.entries()) {
+        validateFhirBundleEntry(entry, index)
+
+        // walks the property tree of this resource object
+        // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
+        // currently, oneOf types will break this system
+        utils.walkProperties(
+          entry.resource as unknown as Record<string, unknown>,
+          [entry.resource.resourceType],
+          (o: Record<string, unknown>, path: string[]) => {
+            const propType = objPathToSchema(path.join('.'))
+            validatePropType(propType, index, path, o)
+          },
+        )
+
+        // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
+        if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
+          console.log(
+            'fhirBundle.entry.fullUrl should be short resource-scheme URIs (e.g., {"fullUrl": "resource:0"}',
+            ErrorCode.FHIR_SCHEMA_ERROR,
+          )
+        }
+      }
+      return validateBundleForRecordType( recordType, fhirBundle )
+      
   }
-
-  const fhirBundle = utils.parseJson<FhirBundle>(fhirBundleText)
-  if ( fhirBundle ) {
-    isFhirBundleValid = validateFhirBundle(fhirBundle)
-  }
-  if (!isFhirBundleValid) return false
-
-  // Validate each resource of .entry[]
-  for (const [index, entry] of fhirBundle.entry.entries()) {
-    validateFhirBundleEntry(entry, index)
-
-    // walks the property tree of this resource object
-    // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
-    // currently, oneOf types will break this system
-    utils.walkProperties(
-      entry.resource as unknown as Record<string, unknown>,
-      [entry.resource.resourceType],
-      (o: Record<string, unknown>, path: string[]) => {
-        const propType = objPathToSchema(path.join('.'))
-        validatePropType(propType, index, path, o)
-      },
-    )
-
-    // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
-    if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
-      console.log(
-        'fhirBundle.entry.fullUrl should be short resource-scheme URIs (e.g., {"fullUrl": "resource:0"}',
-        ErrorCode.FHIR_SCHEMA_ERROR,
-      )
-    }
-  }
-  return ValidationProfilesFunctions[profile](fhirBundle.entry)
+  return false;
 }
 
 function validateFhirBundle (fhirBundle: FhirBundle) {
   if (fhirBundle === undefined) {
+    console.log("validate: 1.1-----------fhirBundle === undefined")
     console.log('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return false
   }
 
   // failures will be recorded in the console.log
   if (!validateSchema(fhirSchema, fhirBundle)) {
+    console.log("validate: 1.2-----------fhirBundle === undefined")
     return false
   }
 
   // to continue validation, we must have a list of resources in .entry[]
   if (!fhirBundle.entry || !(fhirBundle.entry instanceof Array) || fhirBundle.entry.length === 0) {
     // The schema check above will list the expected properties/type
+    console.log( typeof fhirBundle)
+    console.log("validate: 1.3-----------" + (fhirBundle.entry instanceof Array)  )
     console.log('FhirBundle.entry[] required to continue.', ErrorCode.CRITICAL_DATA_MISSING)
     return false
   }
@@ -174,85 +172,3 @@ function validatePropType (propType: string, i: number, path: string[], o: Recor
   }
 }
 
-const ValidationProfilesFunctions = {
-  any: function (entries: BundleEntry[]): boolean {
-    return true || entries
-  },
-
-  'usa-covid19-immunization': function (entries: BundleEntry[]): boolean {
-    const profileName = 'usa-covid19-immunization'
-    const patients = entries.filter((entry) => entry.resource.resourceType === 'Patient')
-
-    if (patients.length !== 1) {
-      console.log(
-        `Profile : ${profileName} : requires exactly 1 ${'Patient'} resource. Actual : ${patients.length.toString()}`,
-        ErrorCode.PROFILE_ERROR,
-      )
-    }
-
-    const immunizations = entries.filter((entry) => entry.resource.resourceType === 'Immunization')
-
-    if (immunizations.length === 0) {
-      console.log(
-        `Profile : ${profileName} : requires 1 or more Immunization resources. Actual : ${immunizations.length.toString()}`,
-        ErrorCode.PROFILE_ERROR,
-      )
-    }
-
-    const expectedResources = ['Patient', 'Immunization']
-
-    entries.forEach((entry, index) => {
-      if (!expectedResources.includes(entry.resource.resourceType)) {
-        console.log(
-          `Profile : ${profileName} : resourceType: ${entry.resource.resourceType} is not allowed.`,
-          ErrorCode.PROFILE_ERROR,
-        )
-        expectedResources.push(entry.resource.resourceType) // prevent duplicates
-        return
-      }
-
-      if (entry.resource.resourceType === 'Immunization') {
-        // verify that valid codes are used see : https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html
-        const code = (entry.resource?.vaccineCode as { coding: Array<{ code: string }> })?.coding[0]
-          ?.code
-        const cvxCodes = getAcceptedCodes() 
-
-        if (code && !cvxCodes.includes(code)) {
-          console.log(
-            `Profile : ${profileName} : Immunization.vaccineCode.code requires valid COVID-19 code (${cvxCodes.join(
-              ',',
-            )}).`,
-            ErrorCode.PROFILE_ERROR,
-          )
-        }
-
-        // check for properties that are forbidden by the dm-profiles
-        ;(immunizationDM as Array<{ path: string }>).forEach((constraint) => {
-          utils.propPath(entry.resource, constraint.path) &&
-            console.log(
-              `Profile : ${profileName} : entry[${index.toString()}].resource.${
-                constraint.path
-              } should not be present.`,
-              ErrorCode.PROFILE_ERROR,
-            )
-        })
-      }
-
-      if (entry.resource.resourceType === 'Patient') {
-        // check for properties that are forbidden by the dm-profiles
-        ;(patientDM as Array<{ path: string }>).forEach((constraint) => {
-          const tmp = utils.propPath(entry.resource, constraint.path)
-          utils.propPath(entry.resource, constraint.path) &&
-            console.log(
-              `Profile : ${profileName} : entry[${index.toString()}].resource.${
-                constraint.path
-              } should not be present.`,
-              ErrorCode.PROFILE_ERROR,
-            )
-        })
-      }
-    })
-
-    return true
-  },
-}

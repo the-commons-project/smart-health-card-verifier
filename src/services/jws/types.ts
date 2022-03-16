@@ -1,6 +1,10 @@
 type JWS = string
 type SHC = string
 
+
+interface ValidateFunc {
+  (entry:BundleEntry[]): boolean;
+}
 interface HealthCard {
   verifiableCredential: JWS[]
 }
@@ -16,11 +20,11 @@ interface JWSPayload {
   }
 }
 interface FhirBundle {
-  text: string
-  Coding: { display: unknown }
-  CodeableConcept: { text: unknown }
-  meta: unknown
-  id: unknown
+  text?: string
+  Coding?: { display: unknown }
+  CodeableConcept?: { text: unknown }
+  meta?: unknown
+  id?: unknown
   resourceType: string
   type: string
   entry: BundleEntry[]
@@ -38,6 +42,9 @@ interface BundleEntry {
   search?: unknown
   request?: unknown
   response?: unknown
+  lotNumber?: unknown
+  performer?: unknown
+
 }
 
 interface Schema {
