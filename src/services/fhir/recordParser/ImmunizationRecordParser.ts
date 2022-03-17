@@ -1,18 +1,16 @@
-import { formatVaccinationDate } from '../../utils/utils'
-import { getVaccineCodesHash, getAcceptedCodes } from './getVaccineCodesHash'
+import { formatVaccinationDate } from '../../../utils/utils'
+import { getVaccineCodesHash, getAcceptedCodes } from '../../helpers/getVaccineCodesHash'
+import { ResourceType } from '.'
 
 const cvxCodes = getAcceptedCodes()
 
-export const getVaccinationDataFromFhir = async (credential: any): Promise<any> => {
+const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=> {
   const vaccinationData = []
-  const entries = credential?.vc?.credentialSubject?.fhirBundle?.entry
+  const entries = jwsPayload?.vc?.credentialSubject?.fhirBundle?.entry
 
   const immunizationEntries = entries
     ?.filter((entry: any) => {
-      const isTypeImmunization = entry?.resource?.resourceType === 'Immunization'
-      if (isTypeImmunization) {
-        return entry
-      }
+      return ( entry?.resource?.resourceType === ResourceType.Immunization )
     })
     .map((entry: any) => entry.resource)
 
@@ -25,12 +23,12 @@ export const getVaccinationDataFromFhir = async (credential: any): Promise<any> 
     const isVaccineShotDone = status === 'completed'
     if (!isValidVaccinationCode) {
       console.log(
-        `Immunization.vaccineCode.code (${code}) requires valid COVID-19 code (${cvxCodes.join(',')}).`,
+        `Immunization.vaccineCode.code (${String(code)}) requires valid COVID-19 code (${String(cvxCodes.join(','))}).`,
       )
     }
 
     if (!isVaccineShotDone) {
-      console.log(`Immunization.status should be "completed", but it is ${status}`)
+      console.log(`Immunization.status should be "completed", but it is ${String(status)}`)
     }
 
     const dose = index + 1
@@ -66,3 +64,5 @@ const sortDosesByDate = (vaccinationData: any[]) => {
     dose.dose = index + 1
   }
 }
+
+export default parse

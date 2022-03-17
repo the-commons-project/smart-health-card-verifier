@@ -6,14 +6,14 @@ import 'react-native'
 import React from 'react'
 
 import { validate } from '../src/services/qr'
-import { validate as fhirValidate } from '../src/services/jws/fhirBundle'
-import { getPatientDataFromFhir } from '../src/services/helpers/getPatiendDataFromFhir'
+import { validate as fhirValidate } from '../src/services/fhir/fhirBundle'
+import { getPatientDataFromFhir } from '../src/services/fhir/getPatiendDataFromFhir'
 import immunizationSuffixData from './fixtures/fhirBundle.json'
 import fhirData from './fixtures/fhir.json'
 import suffixImmumnization from './fixtures/fhir-with-accepted-suffix.json'
 import covid19LabResult from './fixtures/covid19LabResult.json'
 import notCovid19LabResult from './fixtures/notCovid19LabResult.json'
-import { RecordType, getRecordTypeFromPayload } from '../src/services/jws/fhirTypes'
+import { RecordType, getRecordTypeFromPayload } from '../src/services/fhir/fhirTypes'
 const fs = require('fs')
 const path = require('path')
 

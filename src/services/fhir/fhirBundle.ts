@@ -1,62 +1,92 @@
 import * as utils from '../../utils/utils'
 import { ErrorCode } from '../error'
-import { validateSchema, objPathToSchema } from './schema'
+import { validateSchema, objPathToSchema } from '../jws/schema'
 import fhirSchema from '../../schemas/fhir-schema.json'
-
+import { getPatientDataFromFhir } from './getPatiendDataFromFhir'
+import getRecordData from '../fhir/recordParser'
+import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
+import { getIssuerData } from '../helpers/getIssuerData'
 /* this entry needs to match with ValidationProfilesFunctions keys */
 import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
 
+export async function getRecord (payload: JWSPayload): Promise<any>{
+
+  const issuer = getIssuerFromFhir(payload)
+  const notFoundIssuer = {
+    message: 'Issuer not found'
+  }
+
+  const issuerData = await getIssuerData(issuer) || notFoundIssuer
+  const { message } = issuerData
+  const isIssuerNotFound = message && message === 'Issuer not found'
+  if (isIssuerNotFound) {
+    issuerData.url = issuer
+    issuerData.name = undefined
+  }
+
+  const patientData = getPatientDataFromFhir(payload)
+  const recordType  = getRecordTypeFromPayload(payload)
+  console.log('getRecordTypeFromPayload: ' + recordType )
+  const vaccinationData = await getRecordData(recordType, payload)
+
+  const document = {
+    issuerData,
+    patientData,
+    vaccinationData,
+  }
+  return document
+}
 
 export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): Boolean {
   let isFhirBundleValid = false
-  if( typeof fhirBundleJSON != 'undefined') {
-      const fhirBundle = fhirBundleJSON as FhirBundle
-      if ( fhirBundle ) {
-        isFhirBundleValid = validateFhirBundle(fhirBundle)
-      }
-      if (!isFhirBundleValid) return false
+  if ( typeof fhirBundleJSON !== 'undefined') {
+    const fhirBundle = fhirBundleJSON as FhirBundle
+    if ( fhirBundle ) {
+      isFhirBundleValid = validateFhirBundle(fhirBundle)
+    }
+    if (!isFhirBundleValid) return false
 
-      // Validate each resource of .entry[]
-      for (const [index, entry] of fhirBundle.entry.entries()) {
-        validateFhirBundleEntry(entry, index)
+    // Validate each resource of .entry[]
+    for (const [index, entry] of fhirBundle.entry.entries()) {
+      validateFhirBundleEntry(entry, index)
 
-        // walks the property tree of this resource object
-        // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
-        // currently, oneOf types will break this system
-        utils.walkProperties(
-          entry.resource as unknown as Record<string, unknown>,
-          [entry.resource.resourceType],
-          (o: Record<string, unknown>, path: string[]) => {
-            const propType = objPathToSchema(path.join('.'))
-            validatePropType(propType, index, path, o)
-          },
+      // walks the property tree of this resource object
+      // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
+      // currently, oneOf types will break this system
+      utils.walkProperties(
+        entry.resource as unknown as Record<string, unknown>,
+        [entry.resource.resourceType],
+        (o: Record<string, unknown>, path: string[]) => {
+          const propType = objPathToSchema(path.join('.'))
+          validatePropType(propType, index, path, o)
+        },
+      )
+
+      // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
+      if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
+        console.log(
+          'fhirBundle.entry.fullUrl should be short resource-scheme URIs (e.g., {"fullUrl": "resource:0"}',
+          ErrorCode.FHIR_SCHEMA_ERROR,
         )
-
-        // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
-        if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
-          console.log(
-            'fhirBundle.entry.fullUrl should be short resource-scheme URIs (e.g., {"fullUrl": "resource:0"}',
-            ErrorCode.FHIR_SCHEMA_ERROR,
-          )
-        }
       }
-      return validateBundleForRecordType( recordType, fhirBundle )
+    }
+    return validateBundleForRecordType( recordType, fhirBundle )
       
   }
-  return false;
+  return false
 }
 
 function validateFhirBundle (fhirBundle: FhirBundle) {
   if (fhirBundle === undefined) {
-    console.log("validate: 1.1-----------fhirBundle === undefined")
+    console.log('validate: 1.1-----------fhirBundle === undefined')
     console.log('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return false
   }
 
   // failures will be recorded in the console.log
   if (!validateSchema(fhirSchema, fhirBundle)) {
-    console.log("validate: 1.2-----------fhirBundle === undefined")
+    console.log('validate: 1.2-----------fhirBundle === undefined')
     return false
   }
 
@@ -64,7 +94,6 @@ function validateFhirBundle (fhirBundle: FhirBundle) {
   if (!fhirBundle.entry || !(fhirBundle.entry instanceof Array) || fhirBundle.entry.length === 0) {
     // The schema check above will list the expected properties/type
     console.log( typeof fhirBundle)
-    console.log("validate: 1.3-----------" + (fhirBundle.entry instanceof Array)  )
     console.log('FhirBundle.entry[] required to continue.', ErrorCode.CRITICAL_DATA_MISSING)
     return false
   }
@@ -171,4 +200,3 @@ function validatePropType (propType: string, i: number, path: string[], o: Recor
     )
   }
 }
-

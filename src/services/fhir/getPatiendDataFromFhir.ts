@@ -9,9 +9,9 @@ const resolveName = ( name: any ): string | null  => {
     let givenNames: string = ''
     if ( name.given ) {
       givenNames = name.given?.join(' ')
-      let suffixes = ( name.suffix ?? [] ).filter( (i:any) => acceptedSuffix.indexOf( String(i)) >= 0 )
-      if( suffixes.length > 0 ) {
-          givenNames = `${givenNames} ${suffixes.join(' ')}`
+      const suffixes = ( name.suffix ?? [] ).filter( (i: any) => acceptedSuffix.includes( String(i)) )
+      if ( suffixes.length > 0 ) {
+        givenNames = `${String(givenNames)} ${String(suffixes.join(' '))}`
       }
       // for( let i  in ( name.suffix ?? [] ) ) {
       //   let s = String( item )
@@ -38,6 +38,7 @@ export const getPatientDataFromFhir = (credential: any): any => {
     (entry: any) => entry?.resource?.resourceType === RESOURCE_TYPES.PATIENT,
   ).resource
 
+  console.log( 'patientEntry: ' + JSON.stringify( patientEntry ) )
   let fullName: string = ''
   let dateOfBirth: string = ''
   let names = []
