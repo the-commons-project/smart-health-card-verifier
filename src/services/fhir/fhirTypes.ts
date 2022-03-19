@@ -6,6 +6,15 @@ export const enum RecordType {
   'covid19LabResult'    = 'covid19-lab-result'
 }
 
+
+export const enum ResourceType {
+  Unknown     = 'Unknown',
+  Immunization = "Immunization",
+  Patient     = 'Patient',
+  Observation = 'Observation'
+}
+
+
 export const availableRecordTypes: RecordType[] = [ 
   RecordType.covid19Immunization,
   RecordType.covid19LabResult

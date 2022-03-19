@@ -8,6 +8,7 @@ import { InvalidError } from '../../utils/InvalidError'
 export const schema = jwsPayloadSchema
 
 export function validate (jwsPayloadText: string): Boolean {
+
   if (jwsPayloadText.trim() !== jwsPayloadText) {
     console.log('JWS payload has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     jwsPayloadText = jwsPayloadText.trim()
@@ -16,9 +17,9 @@ export function validate (jwsPayloadText: string): Boolean {
   const jwsPayload = utils.parseJson<JWSPayload>(jwsPayloadText)
   const isJwsPayloadValid = checkJwsPayload(jwsPayload)
   if (!isJwsPayloadValid) return false
-
+ 
   const fhirBundleJson = jwsPayload?.vc.credentialSubject.fhirBundle
-
+    
   const recordType: RecordType = getRecordTypeFromPayload(jwsPayload as JWSPayload)
   return fhirBundle.validate(recordType, fhirBundleJson)
 }

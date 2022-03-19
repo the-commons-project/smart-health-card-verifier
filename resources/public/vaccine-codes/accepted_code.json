@@ -55,5 +55,17 @@
       "code": "502",
       "display": "Bharat Biotech"
     }
+  ],
+  "covid_19_lab_result_codes": [
+    {
+      "system": "http://loinc.org",
+      "code": "50548-7",
+      "display": "Respiratory virus DNA+RNA [Identifier] in Specimen by NAA with probe detection"
+    },
+    {
+      "system": "http://loinc.org",
+      "code": "94759-8",
+      "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Nasopharynx by NAA with probe detection"
+    }
   ]
 }

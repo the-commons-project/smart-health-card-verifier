@@ -1,6 +1,6 @@
 import * as utils from '../../../utils/utils'
 import { ErrorCode } from '../../error'
-import { getAcceptedCodes } from '../../helpers/getVaccineCodesHash'
+import { getAcceptedVaccineCodes } from '../../helpers/getVaccineCodesHash'
 import immunizationDM from '../../../schemas/immunization-dm.json'
 import patientDM from '../../../schemas/patient-dm.json'
 import { RecordType } from '../fhirTypes'
@@ -41,7 +41,7 @@ const validate: ValidateFunction  = (entries: BundleEntry[])=> {
       // verify that valid codes are used see : https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html
       const code = (entry.resource?.vaccineCode as { coding: Array<{ code: string }> })?.coding[0]
         ?.code
-      const cvxCodes = getAcceptedCodes() 
+      const cvxCodes = getAcceptedVaccineCodes() 
 
       if (code && !cvxCodes.includes(code)) {
         console.log(

@@ -39,6 +39,9 @@ export enum ErrorCode {
   // config errors
   OPENSSL_NOT_AVAILABLE = 300,
 
+  //FHIR Error
+  SYSTEM_CODE_ERROR = 400,
+
   // Custom error
   NOT_VACCINE_BUNDLE,
 

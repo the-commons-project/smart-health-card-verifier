@@ -7,11 +7,12 @@ import getRecordData from '../fhir/recordParser'
 import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
 import { getIssuerData } from '../helpers/getIssuerData'
 /* this entry needs to match with ValidationProfilesFunctions keys */
-import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
+import { RecordType, getRecordTypeFromPayload, ResourceType } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
 
 export async function getRecord (payload: JWSPayload): Promise<any>{
-
+  console.log("fhirBundlegetRecord##############################")
+  console.log(payload);
   const issuer = getIssuerFromFhir(payload)
   const notFoundIssuer = {
     message: 'Issuer not found'
@@ -38,6 +39,10 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
   return document
 }
 
+export function isResourceType( entry: BundleEntry, resourceType: ResourceType ): boolean {
+  return ( entry?.resource?.resourceType.toLowerCase() === resourceType.toLowerCase() )
+}
+
 export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): Boolean {
   let isFhirBundleValid = false
   if ( typeof fhirBundleJSON !== 'undefined') {
@@ -45,7 +50,9 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
     if ( fhirBundle ) {
       isFhirBundleValid = validateFhirBundle(fhirBundle)
     }
-    if (!isFhirBundleValid) return false
+    if (!isFhirBundleValid) {
+      return false
+    }
 
     // Validate each resource of .entry[]
     for (const [index, entry] of fhirBundle.entry.entries()) {

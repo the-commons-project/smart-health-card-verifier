@@ -1,7 +1,6 @@
 import { formatVaccinationDate } from '../../../utils/utils'
 import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getVaccineCodesHash'
-import { ResourceType } from '../fhirTypes'
-import { isResourceType } from '../fhirBundle'
+import { ResourceType } from '.'
 
 const cvxCodes = getAcceptedVaccineCodes()
 
@@ -11,7 +10,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=>
 
   const immunizationEntries = entries
     ?.filter((entry: any) => {
-      return isResourceType( entry, ResourceType.Immunization );
+      return ( entry?.resource?.resourceType === ResourceType.Immunization )
     })
     .map((entry: any) => entry.resource)
 

@@ -10,13 +10,29 @@ interface VaccineCodeItemType {
   'display': string
 } 
 
-interface VaccineCodesTypes {
-  covid_19_vaccine_codes: VaccineCodeItemType[]
+interface SystemCodeItemType {
+  'system': string
+  'code': string
+  'display': string
 } 
 
-let codesData = defaultCodesData.covid_19_vaccine_codes
+
+interface VaccineCodesTypes {
+  covid_19_vaccine_codes?: VaccineCodeItemType[]
+  covid_19_lab_result_codes?:SystemCodeItemType[]
+} 
+
+let vaccineCodesData   = defaultCodesData.covid_19_vaccine_codes
+let labResultCodesData = defaultCodesData.covid_19_lab_result_codes
+let labResultSystemCodes = []
+
 let vaccineCodesHash: { [key: string]: string } = {}
-let acceptedCodes: string[] = []
+let acceptedVaccineCodes: string[] = []
+
+let labResultCodesHash: { [key: string]: string } = {}
+let acceptedSystemCodes: string[] = []
+let acceptedLabResultCodes = []
+
 
 export const loadVaccineCodes = async (): Promise<boolean>=> {
   const appUuid: string = await getInstallationIdManually()
@@ -24,29 +40,58 @@ export const loadVaccineCodes = async (): Promise<boolean>=> {
   const url = `${vaccineCodesURl}?${appUuidParameter}`
   const res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
   if ( res != null ) {
-    codesData = res.covid_19_vaccine_codes
-    updateVaccineCode()
+    vaccineCodesData   = res.covid_19_vaccine_codes ?? vaccineCodesData
+    labResultCodesData = res.covid_19_lab_result_codes ?? labResultCodesData
+    updateCodes()
   } else {
     console.log('using default vaccineCodes')
   }
   return ( res != null )
 }
 
-const updateVaccineCode = ()=>{
-  vaccineCodesHash = {}
-  for (const vaccineCode of codesData) {
-    const { code, display } = vaccineCode
-    vaccineCodesHash[code] = display
-  }
-  acceptedCodes = codesData.map((item: any)=> item.code)
+const updateCodes = () => {
+    updateVaccineCode()
+    updateLabResultSystemCode()
+
 }
 
-updateVaccineCode()
+const updateVaccineCode = ()=>{
+  vaccineCodesHash = {}
+  acceptedVaccineCodes = []
+  for (const vaccineCode of vaccineCodesData) {
+    const { code, display } = vaccineCode
+    acceptedVaccineCodes.push( code )
+    vaccineCodesHash[code] = display
+
+  }
+}
+
+const updateLabResultSystemCode = ()=>{
+  labResultCodesHash = {}
+  acceptedSystemCodes = []
+  for (const vaccineCode of labResultCodesData) {
+    const { code, display, system } = vaccineCode
+    acceptedLabResultCodes.push( code )
+    labResultCodesHash[code] = display
+    if( acceptedSystemCodes.indexOf( system ) < 0 ) {
+      acceptedSystemCodes.push( system )
+    }
+  }
+  acceptedLabResultCodes = vaccineCodesData.map((item: any)=> item.code)
+}
+
+
+
+updateCodes()
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash
 }
 
-export const getAcceptedCodes = (): string[] => {
-  return acceptedCodes
+export const getAcceptedSystemCodes = (): string [] => {
+  return acceptedSystemCodes;
+}
+
+export const getAcceptedVaccineCodes = (): string[] => {
+  return acceptedVaccineCodes
 }
