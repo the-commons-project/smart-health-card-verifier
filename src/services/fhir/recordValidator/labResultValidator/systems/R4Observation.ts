@@ -1,6 +1,6 @@
 import { ErrorCode } from '../../../../error'
 import { InvalidError } from '../../../../../utils/InvalidError'
-import { getAcceptedSystemCodes } from '../../../../helpers/getVaccineCodesHash'
+import { getAcceptedSystemCodes } from '../../../../helpers/getFHIRCodes'
 
 class R4Observation implements ObservationValidator {
 

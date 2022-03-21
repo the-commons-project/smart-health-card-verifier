@@ -1,5 +1,5 @@
 
-import { getVaccineCodesHash, loadVaccineCodes, getAcceptedSystemCodes } from '../src/services/helpers/getVaccineCodesHash'
+import { getVaccineCodesHash, loadVaccineCodes, getAcceptedSystemCodes } from '../src/services/helpers/getFHIRCodes'
 
 it('VaccineCode retrieved Correctly', async () => {
   await loadVaccineCodes()

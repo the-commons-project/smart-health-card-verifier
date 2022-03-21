@@ -1,5 +1,5 @@
 import { formatVaccinationDate } from '../../../utils/utils'
-import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getVaccineCodesHash'
+import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
 import { ResourceType } from '.'
 
 const cvxCodes = getAcceptedVaccineCodes()
