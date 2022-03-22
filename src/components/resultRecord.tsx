@@ -17,8 +17,8 @@ const ResultRecord = ({ data }: Data) => {
   const { t } = useTranslation()
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
-  const { issuerData, patientData, vaccinationData } = validationResult
-
+  const { issuerData, patientData, recordType, recordEntries } = validationResult
+  const vaccinationData = recordEntries
   const { names, dateOfBirth } = patientData
   const userFieldTitle = [t('Result.Name', 'Name')]
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
@@ -149,7 +149,7 @@ const ResultRecord = ({ data }: Data) => {
         </Text>
       </View>
       { vaccinationData.map((doseObject, key) => {
-        const { dose, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
+        const { index, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
         const dosageFieldTitleRowOne = [
           insertTextToTable(vaccineName, lotNumber),
           dateParser(vaccinationDate),
@@ -159,7 +159,7 @@ const ResultRecord = ({ data }: Data) => {
           <View key={ key }>
             <View style={ styles.doseDividerContainer }>
               <Text style={ [styles.dosageText, FontStyle.OpenSans_700Bold] }>
-                { t('Result.Dose', `Dose ${dose}`, { num:dose }) }
+                { t('Result.Dose', `Dose ${index}`, { num:index }) }
               </Text>
               <View style={ styles.doseDivider } />
             </View>

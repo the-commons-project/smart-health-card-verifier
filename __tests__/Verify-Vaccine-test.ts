@@ -8,7 +8,7 @@ import React from 'react'
 import { validate } from '../src/services/qr'
 import { validate as fhirValidate } from '../src/services/fhir/fhirBundle'
 import { getPatientDataFromFhir } from '../src/services/fhir/getPatiendDataFromFhir'
-import immunizationSuffixData from './fixtures/fhirBundle.json'
+import immunizationSuffixData from './fixtures/ImmunizationFhirBundle.json'
 import fhirData from './fixtures/fhir.json'
 import suffixImmumnization from './fixtures/fhir-with-accepted-suffix.json'
 import covid19LabResult from './fixtures/covid19LabResult.json'
@@ -45,5 +45,5 @@ it('Gets proper SHCRecord Type', ()=> {
   recordType = getRecordTypeFromPayload( covid19LabResult as JWSPayload );
   expect(recordType).toEqual( RecordType.covid19LabResult)
   recordType = getRecordTypeFromPayload( notCovid19LabResult as JWSPayload );
-  expect(recordType).toEqual( RecordType.any)
+  expect(recordType).toEqual( RecordType.unknown)
 })

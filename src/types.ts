@@ -22,12 +22,27 @@ export interface ValidationResult {
   validationResult: BaseResponse
 }
 
+export interface RecordEntry {
+  index?: unknown
+  resourceType: string
+  /* immunization */
+  lotNumber?: unknown
+  vaccinator?: unknown
+  vaccineName?: unknown
+  vaccinationDate?: unknown
+  /* labResult */
+  performer?: string
+  observationDate?: string
+  systemName?:string
+}
+
 export interface BaseResponse {
   isValid: boolean | string
   errorCode: number
   issuerData: issuerData
   patientData: patientData
-  vaccinationData: vaccinationData[]
+  recordType: string
+  recordEntries?: RecordEntry[]
 }
 
 export declare class Timer {
@@ -54,10 +69,14 @@ interface patientData {
   names: string[]
 }
 
-interface vaccinationData {
-  dose: number
+interface VaccinationData {
+  index: number
   lotNumber: string
   vaccinationDate: string
   vaccinator: string
   vaccineName: string
+}
+
+interface LabResultData {
+  index: number
 }

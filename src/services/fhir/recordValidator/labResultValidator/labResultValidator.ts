@@ -3,7 +3,10 @@ import R4Observation from './systems/R4Observation'
 import { isResourceType } from '../../fhirBundle'
 
 const observationValidators= [ R4Observation ].map((cls) => new cls());
-const validate: ValidateFunction = (entries: BundleEntry[])=> {
+
+const validate: ValidateFunction = (entries: BundleEntry[]):boolean => {
+  console.info("labResults: entries  " + JSON.stringify( entries ));
+
   const profileName = RecordType.covid19LabResult
   /* checks for each entry 
      1. If the type is observation
@@ -19,8 +22,6 @@ const validate: ValidateFunction = (entries: BundleEntry[])=> {
        patientKeys.push( entry.fullUrl )
      }
      if( isResourceType( entry, ResourceType.Observation )) {
-        console.log(" This is observation ###################### ")
-        console.log(JSON.stringify( entry ))
         /* get the first observation validator */ 
         let observation = observationValidators.find(( observation )=> {
            return observation.isSystem( entry );
@@ -30,11 +31,12 @@ const validate: ValidateFunction = (entries: BundleEntry[])=> {
         } 
      }
   })
-  console.log("LabResultValidateFunction patientKeys: " + JSON.stringify( patientKeys ))
-  console.log("Valified lab result: " + JSON.stringify( labResults ))
+
+  console.info("patientKeys:  " + JSON.stringify( patientKeys ));
   /* 4. make sure there is a patient mapped with fullURl */
   labResults = labResults.filter( (item ) => {
-    if ( patientKeys.indexOf( item?.resource?.subject?.reference ) >= 0 ){
+    console.log("item?.resource?.subject?.reference: " + item?.resource?.subject?.reference  + "(" + patientKeys.indexOf(item?.resource?.subject?.reference)  + ")");
+    if ( patientKeys.indexOf(item?.resource?.subject?.reference) >= 0 ){
       return true;
     }
     console.log(`Profile : ${profileName} :  Patient reference does not match`)
@@ -43,5 +45,5 @@ const validate: ValidateFunction = (entries: BundleEntry[])=> {
   return ( labResults.length > 0 )
 }
 
-
+console.info("labResultsValidators/labresultValidator" + typeof validate)
 export default validate

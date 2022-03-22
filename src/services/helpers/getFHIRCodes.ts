@@ -2,6 +2,7 @@ import { ErrorCode } from '../error'
 import { vaccineCodesURl, ApiTimeout } from '../constants'
 import { getInstallationIdManually } from '../../utils/utils'
 import { DataKeys, loadDataOrRetrieveLocally } from '../../services/data/DataService'
+import RemoteConfig from '../RemoteConfig'
 import defaultCodesData from '../../../resources/public/vaccine-codes/accepted_code.json'
 
 interface VaccineCodeItemType {
@@ -83,6 +84,10 @@ const updateLabResultSystemCode = ()=>{
 
 
 updateCodes()
+
+export const getSystemCodeLabel = ( code: string ): string | null => {
+  return ( labResultCodesHash[code] ?? null );
+}
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash

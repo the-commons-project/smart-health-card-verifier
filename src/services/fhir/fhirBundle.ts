@@ -29,13 +29,16 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
   const patientData = getPatientDataFromFhir(payload)
   const recordType  = getRecordTypeFromPayload(payload)
   console.log('getRecordTypeFromPayload: ' + recordType )
-  const vaccinationData = await getRecordData(recordType, payload)
+  const recordEntries = await getRecordData(recordType, payload)
 
   const document = {
     issuerData,
     patientData,
-    vaccinationData,
+    recordType,
+    recordEntries,
   }
+  console.log("fhirBundlegetRecord returning##############################")
+  console.log(JSON.stringify( document ))
   return document
 }
 
@@ -43,10 +46,13 @@ export function isResourceType( entry: BundleEntry, resourceType: ResourceType )
   return ( entry?.resource?.resourceType.toLowerCase() === resourceType.toLowerCase() )
 }
 
-export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): Boolean {
+export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): boolean {
   let isFhirBundleValid = false
+
   if ( typeof fhirBundleJSON !== 'undefined') {
     const fhirBundle = fhirBundleJSON as FhirBundle
+    console.info("fireBundleValidate1 ====\r\n" + JSON.stringify( fhirBundle ) );
+
     if ( fhirBundle ) {
       isFhirBundleValid = validateFhirBundle(fhirBundle)
     }
@@ -57,6 +63,8 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
     // Validate each resource of .entry[]
     for (const [index, entry] of fhirBundle.entry.entries()) {
       validateFhirBundleEntry(entry, index)
+      console.info("fireBundleValidate2 ====");
+
 
       // walks the property tree of this resource object
       // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
@@ -69,6 +77,7 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
           validatePropType(propType, index, path, o)
         },
       )
+       console.info("fireBundleValidate3======");
 
       // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
       if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
@@ -78,6 +87,7 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
         )
       }
     }
+    console.info("fireBundleValidate =====(RecordType: "+recordType +") " + JSON.stringify( fhirBundle ));
     return validateBundleForRecordType( recordType, fhirBundle )
       
   }
@@ -85,6 +95,7 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
 }
 
 function validateFhirBundle (fhirBundle: FhirBundle) {
+  console.info("validateFhirBundle======\r\n" + JSON.stringify( fhirBundle ))
   if (fhirBundle === undefined) {
     console.log('validate: 1.1-----------fhirBundle === undefined')
     console.log('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)

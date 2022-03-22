@@ -21,6 +21,7 @@ export function validate (jwsPayloadText: string): Boolean {
   const fhirBundleJson = jwsPayload?.vc.credentialSubject.fhirBundle
     
   const recordType: RecordType = getRecordTypeFromPayload(jwsPayload as JWSPayload)
+  console.log("JWS-payload validate ======================= : \r\n" + JSON.stringify( fhirBundleJson  ))
   return fhirBundle.validate(recordType, fhirBundleJson)
 }
 

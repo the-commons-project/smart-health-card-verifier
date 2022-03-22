@@ -1,68 +1,62 @@
-import { formatVaccinationDate } from '../../../utils/utils'
-import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
-import { ResourceType } from '.'
+import { formatFHIRRecordDate, sortRecordByDateField } from '../../../utils/utils'
+import { getVaccineCodesHash, getAcceptedVaccineCodes, getSystemCodeLabel} from '../../helpers/getFHIRCodes'
+import { ResourceType } from '../fhirTypes'
+import { RecordEntry } from "../../../types"
 
 const cvxCodes = getAcceptedVaccineCodes()
 
-const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=> {
-  const vaccinationData = []
-  const entries = jwsPayload?.vc?.credentialSubject?.fhirBundle?.entry
+const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
+  const labResultData = []
+  const unknownSystem   = "UNKNOWN"
+  const entries:any[] = jwsPayload?.vc?.credentialSubject?.fhirBundle?.entry
 
-  const immunizationEntries = entries
+  /* 1. get the patient 
+     2. get the lab result record for the first patient */
+  const patient = entries?.find((entry: any) => {
+      return ( entry?.resource?.resourceType === ResourceType.Patient )
+    })
+    .map((entry: any) => entry.resource)
+
+  const observationEntries = entries
     ?.filter((entry: any) => {
-      return ( entry?.resource?.resourceType === ResourceType.Immunization )
+      return ( entry?.resource?.resourceType === ResourceType.Observation &&
+               entry?.subject?.reference == patient.fullURL )
     })
     .map((entry: any) => entry.resource)
 
   const vaccineCodesHash: { [key: string]: string } = getVaccineCodesHash()
 
-  for (const [index, entry] of immunizationEntries.entries()) {
-    const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry
-    const { code } = vaccineCode?.coding[0]
-    const isValidVaccinationCode = code && cvxCodes.includes(code)
-    const isVaccineShotDone = status === 'completed'
-    if (!isValidVaccinationCode) {
-      console.log(
-        `Immunization.vaccineCode.code (${String(code)}) requires valid COVID-19 code (${String(cvxCodes.join(','))}).`,
-      )
-    }
+  for (const [index, entry] of observationEntries.entries()) {
+    var { status, code, performer, meta, valueCodeableConcept, effectiveDateTime } = entry
+    const acceptedStatuses = ['final','amended', 'corrected']
+    const isObservationCompleteStatus = acceptedStatuses.indexOf( status  ) >= 0;
 
-    if (!isVaccineShotDone) {
-      console.log(`Immunization.status should be "completed", but it is ${String(status)}`)
+    if (!isObservationCompleteStatus) {
+      console.log(`Observation.status should be "final, amended, corrected", but it is ${String(status)}`)
+      continue;
     }
+    const systemName = getSystemCodeLabel( code?.coding[0].code ) ?? unknownSystem
 
-    const dose = index + 1
-    const vaccineName = vaccineCodesHash[code]
-    const vaccinationDate = formatVaccinationDate(occurrenceDateTime)
-
-    let vaccinator = ''
-    if (performer) {
-      vaccinator = performer[0]?.actor?.display || ''
+    if( systemName == unknownSystem){
+      console.log(`Observation.system`)
+      continue;
     }
+    const observationDate = formatFHIRRecordDate(effectiveDateTime)
 
-    if (isVaccineShotDone && isValidVaccinationCode) {
-      vaccinationData.push({
-        dose,
-        lotNumber,
-        vaccinator,
-        vaccineName,
-        vaccinationDate,
-      })
-    }
+    performer = performer[0]?.actor?.display || ''
+  
+    labResultData.push({
+      index: ( index + 1 ),
+      resourceType: ResourceType.Observation,
+      performer,
+      systemName,
+      observationDate,
+    })
   }
+  sortRecordByDateField("observationDate", labResultData)
 
-  sortDosesByDate(vaccinationData)
-
-  return vaccinationData
+  return labResultData
 }
 
-const sortDosesByDate = (vaccinationData: any[]) => {
-  // earliest -> latest
-  vaccinationData.sort((a, b) => Date.parse(a.vaccinationDate) - Date.parse(b.vaccinationDate))
-  // set correct dose number if dose objects are swapped
-  for (const [index, dose] of vaccinationData.entries()) {
-    dose.dose = index + 1
-  }
-}
 
 export default parse

@@ -1,17 +1,17 @@
 import _ from 'lodash'
 
 export const enum RecordType {
-  'any'='any',
+  'unknown'='unknown',
   'covid19Immunization' = 'covid19-immunization',
   'covid19LabResult'    = 'covid19-lab-result'
 }
 
 
 export const enum ResourceType {
-  Unknown     = 'Unknown',
+  Unknown      = 'Unknown',
   Immunization = "Immunization",
-  Patient     = 'Patient',
-  Observation = 'Observation'
+  Patient      = 'Patient',
+  Observation  = 'Observation'
 }
 
 
@@ -32,10 +32,10 @@ export const acceptedVCType: Record<string, string[]> = {
 
 /* this will check if it's validatable types per payload. 
    it also assumes that per each payload it has one record type
-   exclusively, or it fallback to any.
+   exclusively, or it fallback to unknown.
 */
 export function getRecordTypeFromPayload ( fhirJWSPayload: JWSPayload ): RecordType  {
-  let res = RecordType.any
+  let res = RecordType.unknown
   const types = fhirJWSPayload?.vc?.type
   if ( Array.isArray( types ) ) {
     for ( let i=0; i < availableRecordTypes.length; i++ ) {

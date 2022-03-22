@@ -1,11 +1,12 @@
-import { formatVaccinationDate } from '../../../utils/utils'
+import { formatFHIRRecordDate, sortRecordByDateField } from '../../../utils/utils'
 import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
 import { ResourceType } from '../fhirTypes'
 import { isResourceType } from '../fhirBundle'
+import { RecordEntry } from "../../../types"
 
 const cvxCodes = getAcceptedVaccineCodes()
 
-const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=> {
+const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
   const vaccinationData = []
   const entries = jwsPayload?.vc?.credentialSubject?.fhirBundle?.entry
 
@@ -34,7 +35,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=>
 
     const dose = index + 1
     const vaccineName = vaccineCodesHash[code]
-    const vaccinationDate = formatVaccinationDate(occurrenceDateTime)
+    const vaccinationDate = formatFHIRRecordDate(occurrenceDateTime)
 
     let vaccinator = ''
     if (performer) {
@@ -43,7 +44,8 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=>
 
     if (isVaccineShotDone && isValidVaccinationCode) {
       vaccinationData.push({
-        dose,
+        index: ( index + 1),
+        resourceType: 
         lotNumber,
         vaccinator,
         vaccineName,
@@ -52,18 +54,9 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): VaccineRecord[] | null=>
     }
   }
 
-  sortDosesByDate(vaccinationData)
+  sortRecordByDateField("vaccinationDate", vaccinationData)
 
   return vaccinationData
-}
-
-const sortDosesByDate = (vaccinationData: any[]) => {
-  // earliest -> latest
-  vaccinationData.sort((a, b) => Date.parse(a.vaccinationDate) - Date.parse(b.vaccinationDate))
-  // set correct dose number if dose objects are swapped
-  for (const [index, dose] of vaccinationData.entries()) {
-    dose.dose = index + 1
-  }
 }
 
 export default parse

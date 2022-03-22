@@ -1,6 +1,6 @@
 import * as utils from '../../../utils/utils'
 import { ErrorCode } from '../../error'
-import { getAcceptedVaccineCodes } from '../../helpers/getVaccineCodesHash'
+import { getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
 import immunizationDM from '../../../schemas/immunization-dm.json'
 import patientDM from '../../../schemas/patient-dm.json'
 import { RecordType } from '../fhirTypes'

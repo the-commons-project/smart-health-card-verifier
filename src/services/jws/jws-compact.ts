@@ -85,8 +85,7 @@ export async function validate (jws: string): Promise<any> {
   }
 
   const isValid = await verifyJws(jws, headerJson.kid)
-  conele.log("JWS-compact:###########3")
-  conele.log(payload);
+
   let document = await getRecord( payload )
 
   document = {

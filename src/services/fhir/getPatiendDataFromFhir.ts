@@ -55,5 +55,9 @@ export const getPatientDataFromFhir = (credential: any): any => {
 
     dateOfBirth = formatDateOfBirth(birthDate)
   }
-  return { names, dateOfBirth }
+  return { 
+    names,
+    dateOfBirth,
+    resourceType:RESOURCE_TYPES.PATIENT
+  }
 }

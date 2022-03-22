@@ -1,17 +1,11 @@
 type JWS = string
 type SHC = string
 
-type ParserFunction = (jwsPayload: JWSPayload) => VaccineRecord[] | any | null
+type ParserFunction = (jwsPayload: JWSPayload) => RecordEntry[] | any | null
 
 type ValidateFunction = (entry: BundleEntry[]) => boolean
 
-interface VaccineRecord {
-  dose?: unknown
-  lotNumber?: unknown
-  vaccinator?: unknown
-  vaccineName?: unknown
-  vaccinationDate?: unknown
-}
+
 
 interface HealthCard {
   verifiableCredential: JWS[]
