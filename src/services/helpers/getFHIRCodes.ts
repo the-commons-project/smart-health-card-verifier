@@ -20,19 +20,22 @@ interface SystemCodeItemType {
 
 interface VaccineCodesTypes {
   covid_19_vaccine_codes?: VaccineCodeItemType[]
-  covid_19_lab_result_codes?:SystemCodeItemType[]
+  covid_19_lab_test_codes?:SystemCodeItemType[]
 } 
 
 let vaccineCodesData   = defaultCodesData.covid_19_vaccine_codes
-let labResultCodesData = defaultCodesData.covid_19_lab_result_codes
+let labResultCodesData = defaultCodesData.covid_19_lab_test_codes
 let labResultSystemCodes = []
 
 let vaccineCodesHash: { [key: string]: string } = {}
 let acceptedVaccineCodes: string[] = []
 
-let labResultCodesHash: { [key: string]: string } = {}
+let labResultCodesHash: { [key: string]: {
+  code: string
+  display: string
+} } = {}
 let acceptedSystemCodes: string[] = []
-let acceptedLabResultCodes = []
+let acceptedLabResultSystemCodes = []
 
 
 export const loadVaccineCodes = async (): Promise<boolean>=> {
@@ -42,7 +45,7 @@ export const loadVaccineCodes = async (): Promise<boolean>=> {
   const res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
   if ( res != null ) {
     vaccineCodesData   = res.covid_19_vaccine_codes ?? vaccineCodesData
-    labResultCodesData = res.covid_19_lab_result_codes ?? labResultCodesData
+    labResultCodesData = res.covid_19_lab_test_codes ?? labResultCodesData
     updateCodes()
   } else {
     console.log('using default vaccineCodes')
@@ -67,36 +70,39 @@ const updateVaccineCode = ()=>{
   }
 }
 
+const getLabResultSystemKey = (system: string, code: string ):string => {
+  return `${system}#${code}`
+}
+
 const updateLabResultSystemCode = ()=>{
   labResultCodesHash = {}
-  acceptedSystemCodes = []
   for (const vaccineCode of labResultCodesData) {
     const { code, display, system } = vaccineCode
-    acceptedLabResultCodes.push( code )
-    labResultCodesHash[code] = display
-    if( acceptedSystemCodes.indexOf( system ) < 0 ) {
-      acceptedSystemCodes.push( system )
+    labResultCodesHash[ getLabResultSystemKey( system, code )] = {
+      code, 
+      display
     }
   }
-  acceptedLabResultCodes = vaccineCodesData.map((item: any)=> item.code)
 }
 
 
 
 updateCodes()
 
-export const getSystemCodeLabel = ( code: string ): string | null => {
-  return ( labResultCodesHash[code] ?? null );
-}
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash
 }
 
-export const getAcceptedSystemCodes = (): string [] => {
-  return acceptedSystemCodes;
+export const getAcceptedVaccineCodes = (): string [] => {
+  return acceptedVaccineCodes;
 }
 
-export const getAcceptedVaccineCodes = (): string[] => {
-  return acceptedVaccineCodes
+export const getSystemCodeLabel = ( system: string, code: string ): string | null => {
+  return ( labResultCodesHash[getLabResultSystemKey( system, code ) ] ?? null ).display;
+}
+
+
+export const isAcceptedLabResult =( system: string, code: string ): boolean => {
+  return !!labResultCodesHash[getLabResultSystemKey( system, code)]
 }

@@ -1,23 +1,14 @@
 import immunizationValidator from './immunizationValidator'
-import validate  from './labResultValidator'
+import labResultValidator  from './labResultValidator'
 import { RecordType } from '../fhirTypes'
 
 
-console.info("validator labresult: " + typeof validate)
 
 const validators: Record< RecordType, ValidateFunction> = {
   [RecordType.unknown]: ()=>{ return false },
   [RecordType.covid19Immunization]: immunizationValidator,
-  [RecordType.covid19LabResult]: validate
+  [RecordType.covid19LabResult]: labResultValidator
 }
-
-let keys = Object.keys( validators )
-for( var i in keys ) {
-  console.log( "validator["+ keys[i] +" = " + typeof validators[keys[i]] )
-}
-
-console.log("validators[]=" + typeof validators[RecordType.covid19LabResult])
-
 
 export default function validateBundleForRecordType ( recordType: RecordType, fireBundle: FhirBundle  ): boolean{
   

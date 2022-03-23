@@ -25,7 +25,10 @@ const config: Config.InitialOptions = {
     '*node_modules*'
   ],
   testPathIgnorePatterns: [
-    '<rootDir>/__tests__/__mock__'
+    '<rootDir>/__tests__/__mock__',
+    '<rootDir>/config',
+    '<rootDir>/resources',
+    '<rootDir>/tools'
   ],
   rootDir: rootPath,
   setupFiles:[

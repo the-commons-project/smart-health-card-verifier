@@ -1,12 +1,10 @@
 import { RecordType, ResourceType } from '../../fhirTypes'
-import R4Observation from './systems/R4Observation'
+import R4Observation from './versions/R4Observation'
 import { isResourceType } from '../../fhirBundle'
 
 const observationValidators= [ R4Observation ].map((cls) => new cls());
 
 const validate: ValidateFunction = (entries: BundleEntry[]):boolean => {
-  console.info("labResults: entries  " + JSON.stringify( entries ));
-
   const profileName = RecordType.covid19LabResult
   /* checks for each entry 
      1. If the type is observation
@@ -24,7 +22,7 @@ const validate: ValidateFunction = (entries: BundleEntry[]):boolean => {
      if( isResourceType( entry, ResourceType.Observation )) {
         /* get the first observation validator */ 
         let observation = observationValidators.find(( observation )=> {
-           return observation.isSystem( entry );
+           return observation.canSupport( entry );
          }) ?? null;
         if ( observation != null && observation.validate( entry ) ){
           labResults.push( entry )

@@ -4,7 +4,10 @@ import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
-import { Trans, useTranslation } from '../services/i18n/i18nUtils'
+import { useTranslation } from '../services/i18n/i18nUtils'
+import ImmunizationRecordRow from './ImmunizationRecordRow'
+import LabResultRecordRow from './LabResultRecordRow'
+import { RecordType } from '../services/fhir/fhirTypes'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -18,7 +21,6 @@ const ResultRecord = ({ data }: Data) => {
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
   const { issuerData, patientData, recordType, recordEntries } = validationResult
-  const vaccinationData = recordEntries
   const { names, dateOfBirth } = patientData
   const userFieldTitle = [t('Result.Name', 'Name')]
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
@@ -45,69 +47,6 @@ const ResultRecord = ({ data }: Data) => {
             setBoolBirthDate(!boolBirthDate)
           } }
         />
-      </View>
-    )
-  }
-
-  function insertTextToTable (vaccineName: string, lotNumber: string) {
-    return (
-      <View style={ { flexDirection: 'row', alignItems: 'center' } }>
-        <Text
-          style={ [
-            styles.fieldValue,
-            styles.increaseFont,
-            FontStyle.OpenSans_700Bold, 
-            { marginRight: 7 },
-          ] }
-        >
-          { vaccineName }
-        </Text>
-        <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>
-          Lot { lotNumber }
-        </Text>
-      </View>
-    )
-  }
-
-  function vaccinatorParser (vaccinator: string) {
-    let newText = '-'
-    if (vaccinator) {
-      newText = vaccinator.split(' | ').join(', ')
-    }
-
-    return (
-      <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>{ newText }</Text>
-    )
-  }
-
-  function dateParser (date: string) {
-    return (
-      <Text
-        style={ [
-          styles.fieldTitle,
-          styles.increaseFont,
-          styles.dosageTextAlign,
-          FontStyle.OpenSans_700Bold,
-        ] }
-      >
-        { date }
-      </Text>
-    )
-  }
-
-  function rowAdapter (dosageFieldTitleRowOne) {
-    return (
-      <View style={ { flexWrap: 'wrap', alignItems: 'flex-end', justifyContent:'space-between', flexDirection: 'row' } }>
-        <View style={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }>
-          { dosageFieldTitleRowOne[0] }
-        </View>
-        <View style={ [
-          styles.fieldValue,
-          styles.increaseFont,
-          FontStyle.OpenSans_700Bold
-        ] }>
-          { dosageFieldTitleRowOne[1] }
-        </View>
       </View>
     )
   }
@@ -148,38 +87,12 @@ const ResultRecord = ({ data }: Data) => {
           { t('Result.AlwaysVerify', 'Always verify identity with a government-issued I.D.') }
         </Text>
       </View>
-      { vaccinationData.map((doseObject, key) => {
-        const { index, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
-        const dosageFieldTitleRowOne = [
-          insertTextToTable(vaccineName, lotNumber),
-          dateParser(vaccinationDate),
-        ]
-        const dosageFieldValueRowOne = [vaccinatorParser(vaccinator), '']
-        return (
-          <View key={ key }>
-            <View style={ styles.doseDividerContainer }>
-              <Text style={ [styles.dosageText, FontStyle.OpenSans_700Bold] }>
-                { t('Result.Dose', `Dose ${index}`, { num:index }) }
-              </Text>
-              <View style={ styles.doseDivider } />
-            </View>
-            <Table borderStyle={ styles.tableStyle }>
-              <Row
-                data={ [rowAdapter(dosageFieldTitleRowOne)] }
-                textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
-              />
-              <Row
-                data={ dosageFieldValueRowOne }
-                textStyle={ [
-                  styles.fieldValue,
-                  styles.increaseFont,
-                  FontStyle.OpenSans_700Bold,
-                ] }
-              />
-            </Table>
-          </View>
-        )
-      }) }
+      { recordType == RecordType.covid19Immunization && 
+        <ImmunizationRecordRow recordEntries={recordEntries}></ImmunizationRecordRow>
+      }
+      { recordType == RecordType.covid19LabResult && 
+        <LabResultRecordRow recordEntries={recordEntries}></LabResultRecordRow>
+      }
       <View style={ styles.divider } />
       <View>
         <Text style={ [styles.fieldTitle,  FontStyle.OpenSans_400Regular] }>{ t('Result.Issuer', 'Issuer') }</Text>
@@ -272,28 +185,6 @@ const styles = StyleSheet.create({
     marginTop: 14,
     marginBottom: 14,
   },
-  doseDividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 7,
-    marginBottom: 7,
-  },
-  doseDivider: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#C6C6C6',
-    marginTop: 5,
-  },
-  dosageText: {
-    paddingTop: 4,
-    fontSize: 12,
-    lineHeight: 17,
-    color: '#255DCB',
-    marginRight: 10,
-  },
-  dosageTextAlign: {
-    textAlign: 'right',
-  },
   verifierContainer: {
     flex: 1,
     flexWrap: 'wrap',
@@ -328,7 +219,7 @@ const styles = StyleSheet.create({
   tableStyle: {
     borderWidth: 1,
     borderColor: 'transparent',
-  },
+  }
 })
 
 export default ResultRecord

@@ -31,6 +31,7 @@ export interface RecordEntry {
   vaccineName?: unknown
   vaccinationDate?: unknown
   /* labResult */
+  securityCode?: string
   performer?: string
   observationDate?: string
   systemName?:string

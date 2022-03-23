@@ -1,9 +1,8 @@
 import { formatFHIRRecordDate, sortRecordByDateField } from '../../../utils/utils'
-import { getVaccineCodesHash, getAcceptedVaccineCodes, getSystemCodeLabel} from '../../helpers/getFHIRCodes'
+import { getSystemCodeLabel } from '../../helpers/getFHIRCodes'
 import { ResourceType } from '../fhirTypes'
 import { RecordEntry } from "../../../types"
 
-const cvxCodes = getAcceptedVaccineCodes()
 
 const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
   const labResultData = []
@@ -24,18 +23,17 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     })
     .map((entry: any) => entry.resource)
 
-  const vaccineCodesHash: { [key: string]: string } = getVaccineCodesHash()
 
   for (const [index, entry] of observationEntries.entries()) {
     var { status, code, performer, meta, valueCodeableConcept, effectiveDateTime } = entry
     const acceptedStatuses = ['final','amended', 'corrected']
     const isObservationCompleteStatus = acceptedStatuses.indexOf( status  ) >= 0;
-
+    const securityCode = ( meta?.security?.code ?? "UNKNOWN" )
     if (!isObservationCompleteStatus) {
       console.log(`Observation.status should be "final, amended, corrected", but it is ${String(status)}`)
       continue;
     }
-    const systemName = getSystemCodeLabel( code?.coding[0].code ) ?? unknownSystem
+    const systemName = getSystemCodeLabel( code?.coding[0].system, code?.coding[0].code ) ?? unknownSystem
 
     if( systemName == unknownSystem){
       console.log(`Observation.system`)
@@ -48,6 +46,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     labResultData.push({
       index: ( index + 1 ),
       resourceType: ResourceType.Observation,
+      securityCode,
       performer,
       systemName,
       observationDate,
