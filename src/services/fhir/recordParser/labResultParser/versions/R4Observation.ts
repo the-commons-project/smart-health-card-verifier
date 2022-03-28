@@ -13,19 +13,21 @@ export default class R4Observation implements ObservationParser {
       const systemName = system.display ?? unknownSystem
       const observationDate = effectiveDateTime ? formatFHIRRecordDate(effectiveDateTime ) : ''
       const performerName = this.getPerformerLabel( performer );
-      const systemKey  = systemCoding?.systemKey ?? unknownSystem
-      const systemCode = systemCoding?.code ?? unknownSystem
+      const systemKey  = system?.systemKey ?? unknownSystem
+      const systemCode = system?.code ?? unknownSystem
+      const systemShortDefault = system?.shortDefault ?? null
       var codableConseptKey   = null
       var codableConseptLabel = null
       var codableConseptCode  = null
+      var codeableShortDefault = null
       if( valueCodeableConcept?.coding[0] ) {
         let codableCoding  = valueCodeableConcept?.coding[0];
         const codableSystem = getAcceptedSystemCode( codableCoding.system, codableCoding.code );
         codableConseptLabel = getSystemCodeLabel( codableSystem.system, codableSystem.code )
-        codableConseptKey   = codableSystem.keys
-        codableConseptCode  = code
+        codableConseptKey   = codableSystem.systemKey
+        codableConseptCode  = codableSystem.code
+        codeableShortDefault = codableSystem.codeableShortDefault ?? null
       }
-      const resultCodableConsept = getSystemCodeLabel( valueCodeableConcept?.coding[0].system, valueCodeableConcept?.coding[0].code ) ?? null
 
       return {
         securityCode,
@@ -34,10 +36,12 @@ export default class R4Observation implements ObservationParser {
         systemName,
         systemKey,
         systemCode,
+        systemShortDefault,
         observationDate,
         codableConseptLabel,
         codableConseptKey,
-        codableConseptCode
+        codableConseptCode,
+        codeableShortDefault
       }
 
     } catch( e ) {

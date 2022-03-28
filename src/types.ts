@@ -20,6 +20,7 @@ export interface Data {
 
 export interface ValidationResult {
   validationResult: BaseResponse
+  showContent: boolean
 }
 
 export interface RecordEntry {
@@ -37,15 +38,16 @@ export interface RecordEntry {
   systemName?:string
   systemKey?:string
   systemCode?:string
+  systemShortDefault?:string | null
   codableConseptLabel?:string
   codableConseptKey?:string
   codableConseptCode?:string
-
+  codeableShortDefault?:string | null
 
 }
 
 export interface BaseResponse {
-  isValid: boolean | string
+  isValid: boolean 
   errorCode: number
   issuerData: issuerData
   patientData: patientData

@@ -4,7 +4,52 @@ import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
+import { BaseResponse } from '../types'
+import ImmunizationSVG from '../../assets/img/verificationresult/immunizationIcon.svg'
 
+const imagePadding = 10;
+
+
+export const getResultTitle = ( windowWidth: number, responseData: BaseResponse ):any => {
+    const { t } = useTranslation()
+    const getResultCode = ( responseData: BaseResponse ): string | null => {
+      var res = null
+      let entry = responseData.recordEntries ?? []
+      if( entry.length >= 2  ) {
+        res =  t( `ImmunizationResult.Doses`, {num: entry.length } )
+      } else if ( entry.length == 1 ) {
+        res =  t( `ImmunizationResult.Dose`, {num: 1 } )
+      }
+      return res
+    }
+
+
+    const imageWidth = windowWidth / 4 - ( imagePadding * 2 );
+    const fieldTitle = (<View style={styles.titleRow}> 
+      <Text style={styles.labTitle} >{ t( `ImmunizationResult.Title`, 'Vaccination Record' )}</Text>
+      </View>);
+    const resultCode = getResultCode(responseData);
+
+    const fieldResult = ( <View style={ [styles.titleRow, styles.tagContainer] }>
+        { ( resultCode !== null ) && ( <View key="1"  style={styles.tag}>
+          <Text style={styles.tagContent}>{ getResultCode(responseData) }</Text>
+        </View> ) }
+        <View key="2"  style={styles.tag}>
+          <Text  style={styles.tagContent}>{ t("ImmunizationResult.tagCovid19","COVID-19") }</Text>
+        </View>
+      </View>);
+    return ( <View style={ styles.topTitleContainer }>
+      <View key="1" style={ [ styles.typeIconWrapper ]}>
+        <ImmunizationSVG width={ imageWidth } height={ imageWidth }/>
+      </View>
+      <View  key="2" style={styles.topTitleContent}>
+        <View style={styles.titleTable}>
+          {fieldTitle}
+          {fieldResult}
+        </View>
+      </View>
+    </View> );
+}
 
 export default ( { recordEntries } : RecordEntry[] | any) => {
   const { t } = useTranslation()
@@ -61,10 +106,10 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
   function rowAdapter (dosageFieldTitleRowOne:any) {
     return (
       <View style={ { flexWrap: 'wrap', alignItems: 'flex-end', justifyContent:'space-between', flexDirection: 'row' } }>
-        <View style={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }>
+        <View key="1" style={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }>
           { dosageFieldTitleRowOne[0] }
         </View>
-        <View style={ [
+        <View  key="2"  style={ [
           styles.fieldValue,
           styles.increaseFont,
           FontStyle.OpenSans_700Bold
@@ -112,6 +157,59 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
 };
 
 const styles = StyleSheet.create({
+  titleRow: {
+    flexShrink:1,
+    justifyContent: 'space-evenly',
+    width: "100%",
+    alignItems:"center",
+  },
+  labTitle: {
+    fontSize: 24,
+    color: "#1F2025"
+  },
+  tag: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderRadius: 5,
+    flexShrink:1,
+    alignContent: "space-between",
+    justifyContent: "space-evenly",
+    color: '#FFFFFF',
+    backgroundColor: '#4D72B5'
+  },
+  tagContainer: {
+    paddingTop:10,
+    width:"100%",
+    alignContent:'space-around',
+    flexDirection: 'row'
+  },
+  tagContent: {
+    ...FontStyle.Poppins_700Bold,
+    fontSize: 14,
+    color: '#FFFFFF',
+  },
+  topTitleContainer: {
+    flexDirection: 'row',
+    flex:1
+  },
+  topTitleContent: {
+    flex:1,
+  },
+  titleTable: {
+    width: "100%",
+    height:"100%",
+    flex:1,
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent: 'space-evenly',
+    alignContent:'space-around',
+  },
+  typeIconWrapper: {
+    paddingLeft:imagePadding,
+    paddingRight:imagePadding
+  },
   fieldValue: {
     paddingTop: 4,
     paddingBottom: 4,

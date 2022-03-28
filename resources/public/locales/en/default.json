@@ -53,7 +53,15 @@
         "AlwaysVerify":"Always verify identity with a government-issued I.D."
       },
       "LabResult":{
-        "Title": "title"
+        "tagCovid19":"COVID-19",
+        "Field_observationDate": "_ObservationDate"
+      },
+      "ImmunizationResult":{
+        "Title": "Vaccination Record",
+        "tagCovid19":"COVID-19",
+        "Dose":"{{num}} Dose",
+        "Doses":"{{num}} Doses",
+        "Field_observationDate": "_ObservationDate"
       }
     }
   }

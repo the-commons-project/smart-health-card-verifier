@@ -17,9 +17,9 @@ const canShowResult = ( result: BaseResponse): Boolean => {
   return ( result.isValid == true ) 
 }
 
-const initiallyShowRecord = ( result: BaseResponse )=>{
+const initiallyShowRecord = ( result: BaseResponse ):boolean=>{
   const isIssuerRecognized = !!result?.issuerData?.name
-  return ( result.isValid && isIssuerRecognized )
+  return ( result.isValid == true  && isIssuerRecognized )
 }
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
@@ -52,7 +52,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
       </View>
       <ScrollView>
         <Pressable onPress={ resultBannerClicked } >
-          <ResultBanner validationResult={ validationResult } />
+          <ResultBanner validationResult={ validationResult } showContent={ showResult } />
         </Pressable>
         { showResult && validationResult.isValid && <ResultRecord data={ data } /> }
       </ScrollView>

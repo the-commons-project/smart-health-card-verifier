@@ -59,6 +59,7 @@
   "covid_19_lab_test_codes": [
     {
       "code": "50548-7",
+      "shortDefault": "PCR Test",
       "display": "Respiratory virus DNA+RNA [Identifier] in Specimen by NAA with probe detection",
       "systemKey":"LOINC",
       "system": "http://loinc.org"

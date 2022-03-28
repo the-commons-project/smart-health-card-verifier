@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, View, FlatList, StyleSheet} from 'react-native'
+import React, {useState, useEffect} from 'react'
+import { Text, View, FlatList, StyleSheet, PixelRatio, useWindowDimensions } from 'react-native'
 import { RecordEntry } from '../types'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import { Table, TableWrapper, Cell, Row} from 'react-native-table-component'
@@ -9,38 +9,37 @@ import { toCamel } from '../utils/utils'
 import LabTestSVG from '../../assets/img/verificationresult/labResultIcon.svg'
 
 
+const imagePadding = 10;
 
 
 export const getResultTitle = ( windowWidth: number, responseData: BaseResponse ):any => {
     const { t } = useTranslation()
     const getResultCode = ( responseData: BaseResponse ): string => {
       let resultStr = "UNKNOWN"
-      let resultkey = "UNKNOWN"
+      let resultKey     = "UNKNOWN"
       let entry = responseData.recordEntries ?? []
-      if( entry.length > 0 && entry[0].observationResult  ) {
-        resultStr =  entry[0].codableConseptLabel
+      if( entry.length > 0  ) {
+        resultStr =  entry[0].codeableShortDefault ?? entry[0].codableConseptLabel ?? resultStr
         resultKey =  [entry[0].codableConseptKey, entry[0].codableConseptCode].join("_")
       }
-      console.log("LabResultKey: " + resultKey )
       return t( `LabResult.${resultKey}`, resultStr )
     }
 
-    const getResultTitle = ( responseData: BaseResponse ): string => {
+    const getTitle = ( responseData: BaseResponse ): string => {
       let resultStr = "UNDEFINED";
-      let resultkey = "UNKNOWN"
+      let resultKey = "UNKNOWN"
       let entry = responseData.recordEntries ?? []
       if( entry.length > 0 && entry[0].systemName  ) {
-        resultStr =  entry[0].systemName
+        resultStr =  entry[0].systemShortDefault ?? entry[0].systemName
         resultKey = [entry[0].systemKey, entry[0].systemCode].join("_")
       }
       return t( `LabResult.Title_${resultKey}`, resultStr )
     }
 
-    const imageWidth = windowWidth / 3;
-    console.log( 'imageWidth = ' + imageWidth );
+    const imageWidth = windowWidth / 4 - ( imagePadding * 2 );
     console.log("getResultTitle: get lab Result " + JSON.stringify( responseData ))
     const fieldTitle = (<View style={styles.titleRow}> 
-      <Text style={styles.testTitle} >{getResultTitle( responseData) }</Text>
+      <Text style={styles.testTitle} >{getTitle( responseData) }</Text>
       </View>);
     const fieldResult = ( <View style={ [styles.titleRow, styles.tagContainer] }>
         <View key="1"  style={styles.tag}>
@@ -51,10 +50,10 @@ export const getResultTitle = ( windowWidth: number, responseData: BaseResponse 
         </View>
       </View>);
     return ( <View style={ styles.topTitleContainer }>
-      <View style={ [{ width:imageWidth }]}>
+      <View key="1" style={ [ styles.typeIconWrapper ]}>
         <LabTestSVG width={ imageWidth } height={ imageWidth }/>
       </View>
-      <View style={styles.topTitleContent}>
+      <View  key="2" style={styles.topTitleContent}>
         <View style={styles.titleTable}>
           {fieldTitle}
           {fieldResult}
@@ -64,21 +63,40 @@ export const getResultTitle = ( windowWidth: number, responseData: BaseResponse 
 }
 
 export default ( { recordEntries } : RecordEntry[] | any) => {
+  const smallScreenThreshold = 400
+  const {width} = useWindowDimensions()
+  const fontScale = PixelRatio.getFontScale()
+  const [ isSmallScreen, setIsSmallScreen ] = useState( getIsSmallScreen() )
   const { t } = useTranslation()
   
   const displayField = 
     [
      {
-       'propName': 'status'
+       'propName': 'status',
+       'isFullBigScreen': false
      },
-     { 'propName':'securityCode'
+     { 
+       'propName':'securityCode',
+       'isFullBigScreen': false
      },
      {
-       'propName': 'performer'
+       'propName': 'performer',
+       'isFullBigScreen': false
+     },
+     {
+       'propName': 'observationDate',
+       'isFullBigScreen': false
+     },
+     {
+       'propName': 'systemName',
+       'isFullBigScreen': true
      }
     ];
 
+  useEffect(()=> setIsSmallScreen( getIsSmallScreen()), [])
+
   function cellAdapter( field:any, data: any ):any[]{
+
     return [
       <View key="1">
         <Text
@@ -86,7 +104,7 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
                   styles.fieldTitle,
                   FontStyle.OpenSans_400Regular
                 ] }>
-          {  t(`Result.Lab.${field.propName}`,field.propName ) }
+          {  t(`LabResult.Field_${field.propName}`,field.propName ) }
         </Text>
       </View>,
       <View>
@@ -94,7 +112,7 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
            style={ [
                   styles.fieldValue,
                   styles.increaseFont,
-                  FontStyle.OpenSans_700Bold
+                  FontStyle.OpenSans_400Regular
                 ] }
           >{  data[field.propName] }
         </Text>
@@ -102,12 +120,21 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
     ]
   }
 
+  function getIsSmallScreen(){
+    console.log("( width "+width+"/ fontScale "+fontScale+") = ("+( width / fontScale) +")" + ( width / fontScale) + "," + smallScreenThreshold + "," + ( ( width / fontScale) <= smallScreenThreshold ))
+    return( ( width / fontScale) <= smallScreenThreshold )
+  }
+
   function recordAdapter( data:any ) {
     const { securityCode, performer, observationDate, systemName, index } = data
+
     return (
          displayField.map(( field:any, key:any ) => {
+          const cellStyle = (( !field.isFullBigScreen && !isSmallScreen ) ? 
+                    styles.cellHalf : styles.cellFull )
+    
           return (  
-            <View key={key}>
+            <View style={cellStyle} key={key}>
               { cellAdapter(field, data ) }
             </View> )
         })
@@ -116,9 +143,8 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
 
 
   return  ( 
-    <View>
-      <View style={ styles.divider } />
-
+    <View style={styles.cellWrapper} >
+      <View key="-1" style={ styles.divider } />
       { recordEntries.map((entry:any, key: any )=>{
          return recordAdapter( entry)
       })}
@@ -127,7 +153,12 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
 }
 
 const styles = StyleSheet.create({
+  typeIconWrapper: {
+    paddingLeft:imagePadding,
+    paddingRight:imagePadding
+  },
   tagContainer: {
+    paddingTop:10,
     width:"100%",
     alignContent:'space-around',
     flexDirection: 'row'
@@ -175,9 +206,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex:1
   },
+  cellWrapper: {
+    paddingTop: 10,
+    flexDirection:'row',
+    flexWrap:'wrap',
+    alignItems:"flex-start"
+  },
   tableStyle: {
     borderWidth: 1,
     borderColor: 'transparent',
+  },
+  cellHalf: {
+    width: "50%"
+  },
+  cellFull: {
+    width: "100%"
   },
   fieldValue: {
     paddingTop: 4,

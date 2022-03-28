@@ -12,9 +12,11 @@ interface VaccineCodeItemType {
 } 
 
 interface SystemCodeItemType {
+  'shortDefault'?:string
   'system': string
   'code': string
   'display': string
+  'systemKey': string
 } 
 
 
@@ -23,17 +25,13 @@ interface VaccineCodesTypes {
   covid_19_lab_test_codes?:SystemCodeItemType[]
 } 
 
-let vaccineCodesData   = defaultCodesData.covid_19_vaccine_codes
-let labResultCodesData = defaultCodesData.covid_19_lab_test_codes
-let labResultSystemCodes = []
+let vaccineCodesData:VaccineCodeItemType[]  = defaultCodesData.covid_19_vaccine_codes
+let labResultCodesData:SystemCodeItemType[] = defaultCodesData.covid_19_lab_test_codes
 
 let vaccineCodesHash: { [key: string]: string } = {}
 let acceptedVaccineCodes: string[] = []
 
-let labResultCodesHash: { [key: string]: {
-  code: string
-  display: string
-} } = {}
+let labResultCodesHash: { [key: string]: SystemCodeItemType } = {}
 let acceptedSystemCodes: string[] = []
 let acceptedLabResultSystemCodes = []
 
@@ -78,11 +76,14 @@ const getLabResultSystemKey = (system: string, code: string ):string => {
 
 const updateLabResultSystemCode = ()=>{
   labResultCodesHash = {}
-  for (const vaccineCode of labResultCodesData) {
-    const { code, display, system } = vaccineCode
+  for (const labCode of labResultCodesData) {
+    const { code, display, system, systemKey, shortDefault } = labCode
     labResultCodesHash[ getLabResultSystemKey( system, code )] = {
       code, 
-      display
+      system,
+      display,
+      systemKey,
+      shortDefault
     }
   }
 }

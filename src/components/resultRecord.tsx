@@ -5,7 +5,7 @@ import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
-import ImmunizationRecordRow from './ImmunizationRecordRow'
+import ImmunizationRecordRow, {getResultTitle as getImmunizationResultTitle } from './ImmunizationRecordRow'
 import LabResultRecordRow, { getResultTitle  as getLabResultTitle } from './LabResultRecordRow'
 import { RecordType } from '../services/fhir/fhirTypes'
 
@@ -28,7 +28,7 @@ const ResultRecord = ({ data }: Data) => {
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
   const userDobValue = [insertImageToTable()]
   const resultTitle  = ( recordType == RecordType.covid19Immunization )?
-     null : (recordType == RecordType.covid19LabResult) ? 
+     getImmunizationResultTitle( windowWidth, validationResult) : (recordType == RecordType.covid19LabResult) ? 
      getLabResultTitle( windowWidth, validationResult ) : null;
 
   function insertImageToTable () {
@@ -58,11 +58,6 @@ const ResultRecord = ({ data }: Data) => {
 
   return (
     <View style={ styles.recordContainer }>
-      <View style={ styles.titleContainer }>
-        <Text style={ [styles.titleText, FontStyle.OpenSans_700Bold] }>
-          { t('Result.VaccineRecord', 'COVID-19 Vaccination Record') }
-        </Text>
-      </View>
       <View>
         { resultTitle != null && resultTitle }
         <Table borderStyle={ styles.tableStyle }>
