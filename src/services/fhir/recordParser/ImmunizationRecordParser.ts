@@ -1,7 +1,6 @@
 import { formatFHIRRecordDate, sortRecordByDateField } from '../../../utils/utils'
 import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
-import { ResourceType } from '../fhirTypes'
-import { isResourceType } from '../fhirBundle'
+import { ResourceType, isResourceType } from '../fhirTypes'
 import { RecordEntry } from "../../../types"
 
 const cvxCodes = getAcceptedVaccineCodes()

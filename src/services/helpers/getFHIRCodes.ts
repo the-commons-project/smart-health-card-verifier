@@ -74,6 +74,8 @@ const getLabResultSystemKey = (system: string, code: string ):string => {
   return `${system}#${code}`
 }
 
+
+
 const updateLabResultSystemCode = ()=>{
   labResultCodesHash = {}
   for (const vaccineCode of labResultCodesData) {
@@ -98,11 +100,16 @@ export const getAcceptedVaccineCodes = (): string [] => {
   return acceptedVaccineCodes;
 }
 
+export const getAcceptedSystemCode =( system: string, code: string ): any | null => {
+  return labResultCodesHash[getLabResultSystemKey( system, code)] ?? null
+}
+
 export const getSystemCodeLabel = ( system: string, code: string ): string | null => {
-  return ( labResultCodesHash[getLabResultSystemKey( system, code ) ] ?? null ).display;
+  return getAcceptedSystemCode( system, code )?.display  ?? null
 }
 
 
+
 export const isAcceptedLabResult =( system: string, code: string ): boolean => {
-  return !!labResultCodesHash[getLabResultSystemKey( system, code)]
+  return !!getAcceptedSystemCode( system, code)
 }

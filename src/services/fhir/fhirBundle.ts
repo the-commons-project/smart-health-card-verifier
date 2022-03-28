@@ -42,16 +42,12 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
   return document
 }
 
-export function isResourceType( entry: BundleEntry, resourceType: ResourceType ): boolean {
-  return ( entry?.resource?.resourceType.toLowerCase() === resourceType.toLowerCase() )
-}
 
 export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): boolean {
   let isFhirBundleValid = false
 
   if ( typeof fhirBundleJSON !== 'undefined') {
     const fhirBundle = fhirBundleJSON as FhirBundle
-    console.info("fireBundleValidate1 ====\r\n" + JSON.stringify( fhirBundle ) );
 
     if ( fhirBundle ) {
       isFhirBundleValid = validateFhirBundle(fhirBundle)
@@ -63,9 +59,6 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
     // Validate each resource of .entry[]
     for (const [index, entry] of fhirBundle.entry.entries()) {
       validateFhirBundleEntry(entry, index)
-      console.info("fireBundleValidate2 ====");
-
-
       // walks the property tree of this resource object
       // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
       // currently, oneOf types will break this system
@@ -77,7 +70,6 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
           validatePropType(propType, index, path, o)
         },
       )
-       console.info("fireBundleValidate3======");
 
       // with Bundle.entry.fullUrl populated with short resource-scheme URIs (e.g., {'fullUrl': 'resource:0})
       if (typeof entry.fullUrl !== 'string' || !/resource:\d+/.test(entry.fullUrl)) {
@@ -87,7 +79,6 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
         )
       }
     }
-    console.info("fireBundleValidate =====(RecordType: "+recordType +") " + JSON.stringify( fhirBundle ));
     return validateBundleForRecordType( recordType, fhirBundle )
       
   }

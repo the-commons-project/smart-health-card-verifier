@@ -33,10 +33,17 @@ interface FhirBundle {
 }
 
 type Resource = { 
-  resourceType: string, 
-  subject?: any,
-  code?: any,
-  meta?: { security?: unknown[] } } & Record<string, unknown>
+  resourceType: string 
+  subject?: any
+  code?: any
+  valueCodeableConcept?: any,
+  status?: string,
+  effectiveDateTime?:string
+  performer?: Record<any, any>[]
+  meta?: { security?: {
+    system:string
+    code: string
+  }[] } } & Record<string, unknown>
 
 interface BundleEntry {
   id?: string

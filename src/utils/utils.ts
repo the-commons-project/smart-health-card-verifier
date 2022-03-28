@@ -24,6 +24,10 @@ export const formatDateOfBirth = (birthDate: string): string => {
   return dateOfBirth
 }
 
+export const toCamel = ( s:string ) => {
+  return s.trim().replace(/\s+./g, (x)=> x[1].toUpperCase() ).replace(/^(.)(.*)$/, (x, y, z )=>  { return ( y.toLowerCase() + z ) } ) 
+}
+
 export const sortRecordByDateField = ( dateFieldName: string, records: any[] ) => {
   records.sort((a, b) => Date.parse(a[dateFieldName]) - Date.parse(b[dateFieldName]))
   // set correct dose number if dose objects are swapped

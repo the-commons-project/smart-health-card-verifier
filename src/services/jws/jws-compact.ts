@@ -119,7 +119,9 @@ async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefi
       { headers: { Origin: requestedOrigin } },
       timeout,
       timeoutError,
-    )
+    ).catch( ( error )=> {
+      throw new InvalidError( ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR )
+    })
     const keySet = await responseRaw.json()
     let loadingTime = timer.stop()
     console.log(`loading issure key: ${loadingTime.toFixed(2)}sec`)
@@ -142,7 +144,7 @@ async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefi
       )
       return undefined
     }
-  } catch (err) {
+  } catch (err: any) {
     if ( err instanceof InvalidError ) throw err
     console.log(
       `Failed to download issuer JWK set:  ${String(err.message)}`,

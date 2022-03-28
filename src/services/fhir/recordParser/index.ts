@@ -5,7 +5,7 @@ import { RecordEntry } from '../../../types'
 
 const recordParsers: Record< RecordType, ParserFunction> = {
   [RecordType.unknown]: ()=>{ return null },
-  [RecordType.covid19LabResult]: ()=> Covid19LabResultRecordParser,
+  [RecordType.covid19LabResult]: Covid19LabResultRecordParser,
   [RecordType.covid19Immunization]: ImmunizationRecordParser,
 }
 

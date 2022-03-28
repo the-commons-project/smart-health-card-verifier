@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio, useWindowDimensions } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import ImmunizationRecordRow from './ImmunizationRecordRow'
-import LabResultRecordRow from './LabResultRecordRow'
+import LabResultRecordRow, { getResultTitle  as getLabResultTitle } from './LabResultRecordRow'
 import { RecordType } from '../services/fhir/fhirTypes'
 
 const images = {
@@ -17,6 +17,8 @@ const images = {
 }
 
 const ResultRecord = ({ data }: Data) => {
+  const windowWidth = useWindowDimensions().width
+
   const { t } = useTranslation()
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
@@ -25,6 +27,9 @@ const ResultRecord = ({ data }: Data) => {
   const userFieldTitle = [t('Result.Name', 'Name')]
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
   const userDobValue = [insertImageToTable()]
+  const resultTitle  = ( recordType == RecordType.covid19Immunization )?
+     null : (recordType == RecordType.covid19LabResult) ? 
+     getLabResultTitle( windowWidth, validationResult ) : null;
 
   function insertImageToTable () {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
@@ -57,9 +62,9 @@ const ResultRecord = ({ data }: Data) => {
         <Text style={ [styles.titleText, FontStyle.OpenSans_700Bold] }>
           { t('Result.VaccineRecord', 'COVID-19 Vaccination Record') }
         </Text>
-        <Image style={ styles.smartLogoImage } source={ images.smartLogo } />
       </View>
       <View>
+        { resultTitle != null && resultTitle }
         <Table borderStyle={ styles.tableStyle }>
           <Row
             data={ userFieldTitle }
@@ -94,34 +99,36 @@ const ResultRecord = ({ data }: Data) => {
         <LabResultRecordRow recordEntries={recordEntries}></LabResultRecordRow>
       }
       <View style={ styles.divider } />
-      <View>
-        <Text style={ [styles.fieldTitle,  FontStyle.OpenSans_400Regular] }>{ t('Result.Issuer', 'Issuer') }</Text>
-        { issuerData.name ? (
-          <View style={ styles.verifierContainer }>
-            <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
-              { issuerData?.name || issuerData?.url }
-            </Text>
-
-            <Image style={ styles.verifierImage } source={ images.commonTrustVerified } />
-            <Text style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }>
-              { t('Result.Verified', 'Verified') }
-            </Text>
-          </View>
-        ) : (
-          <View style={ styles.verifierContainer }>
-            <Image style={ styles.warningCrossImage } source={ images.warningCross } />
-            <Text
-              style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }
-            >
-              { t('Result.IssuerNotRecognized', 'Issuer not recognized') }
-            </Text>
-            <View>
-            <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
-              { issuerData?.name || issuerData?.url }
-             </Text>
-           </View>
-          </View>
-        ) } 
+      <View style={styles.issuerContainer}>
+        <View>
+          <Text style={ [styles.fieldTitle,  FontStyle.OpenSans_400Regular] }>{ t('Result.Issuer', 'Issuer') }</Text>
+          { issuerData.name ? (
+            <View style={ styles.verifierContainer }>
+              <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
+                { issuerData?.name || issuerData?.url }
+              </Text>
+              <Image style={ styles.verifierImage } source={ images.commonTrustVerified } />
+              <Text style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }>
+                { t('Result.Verified', 'Verified') }
+              </Text>
+            </View>
+          ) : (
+            <View style={ styles.verifierContainer }>
+              <Image style={ styles.warningCrossImage } source={ images.warningCross } />
+              <Text
+                style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }
+              >
+                { t('Result.IssuerNotRecognized', 'Issuer not recognized') }
+              </Text>
+              <View>
+                <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
+                  { issuerData?.name || issuerData?.url }
+                 </Text>
+               </View>
+            </View>
+          ) }
+        </View>
+        <Image style={ styles.smartLogoImage } source={ images.smartLogo } />
       </View>
     </View>
   )
@@ -219,6 +226,11 @@ const styles = StyleSheet.create({
   tableStyle: {
     borderWidth: 1,
     borderColor: 'transparent',
+  },
+  issuerContainer:{
+    flex:1,
+    justifyContent:'space-between',
+    flexDirection: "row"
   }
 })
 

@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+
 export const enum RecordType {
   'unknown'='unknown',
   'covid19Immunization' = 'covid19-immunization',
@@ -47,4 +48,8 @@ export function getRecordTypeFromPayload ( fhirJWSPayload: JWSPayload ): RecordT
     } 
   }
   return res
+}
+
+export function isResourceType( entry: BundleEntry, resourceType: ResourceType ): boolean {
+  return ( entry?.resource?.resourceType.toLowerCase() === resourceType.toLowerCase() )
 }

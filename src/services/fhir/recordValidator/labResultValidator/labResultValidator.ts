@@ -1,6 +1,5 @@
-import { RecordType, ResourceType } from '../../fhirTypes'
+import { RecordType, ResourceType, isResourceType } from '../../fhirTypes'
 import R4Observation from './versions/R4Observation'
-import { isResourceType } from '../../fhirBundle'
 
 const observationValidators= [ R4Observation ].map((cls) => new cls());
 

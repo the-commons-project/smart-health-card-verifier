@@ -4,3 +4,6 @@ interface  ObservationValidator {
   validate( entry: BundleEntry ): boolean
 }
 
+interface ObservationParser {
+  parse( entry: BundleEntry ) : any
+}

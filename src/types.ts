@@ -35,6 +35,13 @@ export interface RecordEntry {
   performer?: string
   observationDate?: string
   systemName?:string
+  systemKey?:string
+  systemCode?:string
+  codableConseptLabel?:string
+  codableConseptKey?:string
+  codableConseptCode?:string
+
+
 }
 
 export interface BaseResponse {

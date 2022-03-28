@@ -51,6 +51,9 @@
         "DOB":"Date of Birth",
         "Dose":"Dose {{num}}",
         "AlwaysVerify":"Always verify identity with a government-issued I.D."
+      },
+      "LabResult":{
+        "Title": "title"
       }
     }
   }
