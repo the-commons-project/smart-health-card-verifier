@@ -111,8 +111,6 @@ export default ( { recordEntries } : RecordEntry[] | any) => {
         <Text
            style={ [
                   styles.fieldValue,
-                  styles.increaseFont,
-                  FontStyle.OpenSans_400Regular
                 ] }
           >{  data[field.propName] }
         </Text>
@@ -217,12 +215,14 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   cellHalf: {
+    paddingRight: 4,
     width: "50%"
   },
   cellFull: {
     width: "100%"
   },
   fieldValue: {
+    ...FontStyle.Poppins_600SemiBold,
     paddingTop: 4,
     paddingBottom: 4,
     fontSize: 12,
