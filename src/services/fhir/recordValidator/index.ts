@@ -2,8 +2,6 @@ import immunizationValidator from './immunizationValidator'
 import labResultValidator  from './labResultValidator'
 import { RecordType } from '../fhirTypes'
 
-
-
 const validators: Record< RecordType, ValidateFunction> = {
   [RecordType.unknown]: ()=>{ return false },
   [RecordType.covid19Immunization]: immunizationValidator,
@@ -11,7 +9,6 @@ const validators: Record< RecordType, ValidateFunction> = {
 }
 
 export default function validateBundleForRecordType ( recordType: RecordType, fireBundle: FhirBundle  ): boolean{
-  
 
   let res = false
   if ( Array.isArray( fireBundle.entry )){

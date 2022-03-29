@@ -11,8 +11,6 @@ import { RecordType, getRecordTypeFromPayload, ResourceType } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
 
 export async function getRecord (payload: JWSPayload): Promise<any>{
-  console.log("fhirBundlegetRecord##############################")
-  console.log(payload);
   const issuer = getIssuerFromFhir(payload)
   const notFoundIssuer = {
     message: 'Issuer not found'
@@ -28,7 +26,6 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
 
   const patientData = getPatientDataFromFhir(payload)
   const recordType  = getRecordTypeFromPayload(payload)
-  console.log('getRecordTypeFromPayload: ' + recordType )
   const recordEntries = await getRecordData(recordType, payload)
 
   const document = {
@@ -37,11 +34,8 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
     recordType,
     recordEntries,
   }
-  console.log("fhirBundlegetRecord returning##############################")
-  console.log(JSON.stringify( document ))
   return document
 }
-
 
 export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): boolean {
   let isFhirBundleValid = false
@@ -86,23 +80,18 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
 }
 
 function validateFhirBundle (fhirBundle: FhirBundle) {
-  console.info("validateFhirBundle======\r\n" + JSON.stringify( fhirBundle ))
   if (fhirBundle === undefined) {
-    console.log('validate: 1.1-----------fhirBundle === undefined')
-    console.log('Failed to parse FhirBundle data as JSON.', ErrorCode.JSON_PARSE_ERROR)
     return false
   }
 
   // failures will be recorded in the console.log
   if (!validateSchema(fhirSchema, fhirBundle)) {
-    console.log('validate: 1.2-----------fhirBundle === undefined')
     return false
   }
 
   // to continue validation, we must have a list of resources in .entry[]
   if (!fhirBundle.entry || !(fhirBundle.entry instanceof Array) || fhirBundle.entry.length === 0) {
     // The schema check above will list the expected properties/type
-    console.log( typeof fhirBundle)
     console.log('FhirBundle.entry[] required to continue.', ErrorCode.CRITICAL_DATA_MISSING)
     return false
   }

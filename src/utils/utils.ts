@@ -24,7 +24,7 @@ export const formatDateOfBirth = (birthDate: string): string => {
   return dateOfBirth
 }
 
-export const toCamel = ( s:string ) => {
+export const toCamel = ( s: string ) => {
   return s.trim().replace(/\s+./g, (x)=> x[1].toUpperCase() ).replace(/^(.)(.*)$/, (x, y, z )=>  { return ( y.toLowerCase() + z ) } ) 
 }
 

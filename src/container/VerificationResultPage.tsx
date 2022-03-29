@@ -13,24 +13,28 @@ const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
 }
 
-const canShowResult = ( result: BaseResponse): Boolean => {
-  return ( result.isValid == true ) 
+const canShowResult = ( result: BaseResponse): boolean => {
+  return ( result.isValid ) 
 }
 
-const initiallyShowRecord = ( result: BaseResponse ):boolean=>{
-  const isIssuerRecognized = !!result?.issuerData?.name
-  return ( result.isValid == true  && isIssuerRecognized )
+const issuerRecognized = ( result: BaseResponse): boolean => {
+  return !!result?.issuerData?.name
+}
+
+const initiallyShowRecord = ( result: BaseResponse ): boolean=>{
+  return ( canShowResult( result ) && issuerRecognized( result ) )
 }
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
   const data = route.params
   const { validationResult } = data
-  const canToggleResult = canShowResult( validationResult )
+  const canToggleResult    = canShowResult( validationResult )
+  const isIssuerRecognized = issuerRecognized( validationResult)
   const [ showResult, setShowResult ] = useState(initiallyShowRecord( validationResult ) )
 
   const resultBannerClicked = ()=>{
-    if ( canToggleResult ) {
-      setShowResult( !showResult)
+    if ( canToggleResult && !isIssuerRecognized ) {
+      setShowResult( !showResult )
     }
   }  
   const { t } = useTranslation()

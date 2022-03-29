@@ -2,27 +2,27 @@ import { getSystemCodeLabel, getAcceptedSystemCode } from '../../../../helpers/g
 import { formatFHIRRecordDate } from '../../../../../utils/utils'
 
 export default class R4Observation implements ObservationParser {
-  parse( entry: BundleEntry ): any {
+  parse ( entry: BundleEntry ): any {
 
-    try{
-      const unknownSystem   = "UNKNOWN"
-      var { status, code, performer, meta, valueCodeableConcept, effectiveDateTime } = entry?.resource
-      const systemCoding =  code?.coding[0];
-      const securityCode = meta?.security ? ( meta?.security[0]?.code ?? "UNKNOWN" ) : "UNKNOWN"
-      const system = getAcceptedSystemCode( systemCoding.system, systemCoding.code );
+    try {
+      const unknownSystem   = 'UNKNOWN'
+      const { status, code, performer, meta, valueCodeableConcept, effectiveDateTime } = entry?.resource
+      const systemCoding =  code?.coding[0]
+      const securityCode = meta?.security ? ( meta?.security[0]?.code ?? 'UNKNOWN' ) : 'UNKNOWN'
+      const system = getAcceptedSystemCode( systemCoding.system, systemCoding.code )
       const systemName = system.display ?? unknownSystem
       const observationDate = effectiveDateTime ? formatFHIRRecordDate(effectiveDateTime ) : ''
-      const performerName = this.getPerformerLabel( performer );
+      const performerName = this.getPerformerLabel( performer )
       const systemKey  = system?.systemKey ?? unknownSystem
       const systemCode = system?.code ?? unknownSystem
       const systemShortDefault = system?.shortDefault ?? null
-      var codableConseptKey   = null
-      var codableConseptLabel = null
-      var codableConseptCode  = null
-      var codeableShortDefault = null
-      if( valueCodeableConcept?.coding[0] ) {
-        let codableCoding  = valueCodeableConcept?.coding[0];
-        const codableSystem = getAcceptedSystemCode( codableCoding.system, codableCoding.code );
+      let codableConseptKey   = null
+      let codableConseptLabel = null
+      let codableConseptCode  = null
+      let codeableShortDefault = null
+      if ( valueCodeableConcept?.coding[0] ) {
+        const codableCoding  = valueCodeableConcept?.coding[0]
+        const codableSystem = getAcceptedSystemCode( codableCoding.system, codableCoding.code )
         codableConseptLabel = getSystemCodeLabel( codableSystem.system, codableSystem.code )
         codableConseptKey   = codableSystem.systemKey
         codableConseptCode  = codableSystem.code
@@ -44,17 +44,17 @@ export default class R4Observation implements ObservationParser {
         codeableShortDefault
       }
 
-    } catch( e ) {
+    } catch ( e ) {
       console.info(e)
-
 
     }
   }
-  getPerformerLabel( performers: Record<any,any>[] | undefined ): string {
-    var res = "UNKNOWN"
-    if( performers ) {
-      res = performers[0].display ? performers[0].display : "UNKNOWN" 
+
+  getPerformerLabel ( performers: Array<Record<any, any>> | undefined ): string {
+    let res = 'UNKNOWN'
+    if ( performers ) {
+      res = performers[0].display ? performers[0].display : 'UNKNOWN' 
     } 
-    return res;
+    return res
   }
 }

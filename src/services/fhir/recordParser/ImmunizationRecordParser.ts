@@ -1,7 +1,7 @@
 import { formatFHIRRecordDate, sortRecordByDateField } from '../../../utils/utils'
 import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
 import { ResourceType, isResourceType } from '../fhirTypes'
-import { RecordEntry } from "../../../types"
+import { RecordEntry } from '../../../types'
 
 const cvxCodes = getAcceptedVaccineCodes()
 
@@ -11,7 +11,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
 
   const immunizationEntries = entries
     ?.filter((entry: any) => {
-      return isResourceType( entry, ResourceType.Immunization );
+      return isResourceType( entry, ResourceType.Immunization )
     })
     .map((entry: any) => entry.resource)
 
@@ -53,7 +53,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     }
   }
 
-  sortRecordByDateField("vaccinationDate", vaccinationData)
+  sortRecordByDateField('vaccinationDate', vaccinationData)
 
   return vaccinationData
 }

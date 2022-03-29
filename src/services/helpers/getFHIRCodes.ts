@@ -12,29 +12,27 @@ interface VaccineCodeItemType {
 } 
 
 interface SystemCodeItemType {
-  'shortDefault'?:string
+  'shortDefault'?: string
   'system': string
   'code': string
   'display': string
   'systemKey': string
 } 
 
-
 interface VaccineCodesTypes {
   covid_19_vaccine_codes?: VaccineCodeItemType[]
-  covid_19_lab_test_codes?:SystemCodeItemType[]
+  covid_19_lab_test_codes?: SystemCodeItemType[]
 } 
 
-let vaccineCodesData:VaccineCodeItemType[]  = defaultCodesData.covid_19_vaccine_codes
-let labResultCodesData:SystemCodeItemType[] = defaultCodesData.covid_19_lab_test_codes
+let vaccineCodesData: VaccineCodeItemType[]  = defaultCodesData.covid_19_vaccine_codes
+let labResultCodesData: SystemCodeItemType[] = defaultCodesData.covid_19_lab_test_codes
 
 let vaccineCodesHash: { [key: string]: string } = {}
 let acceptedVaccineCodes: string[] = []
 
 let labResultCodesHash: { [key: string]: SystemCodeItemType } = {}
-let acceptedSystemCodes: string[] = []
-let acceptedLabResultSystemCodes = []
-
+const acceptedSystemCodes: string[] = []
+const acceptedLabResultSystemCodes = []
 
 export const loadVaccineCodes = async (): Promise<boolean>=> {
   const appUuid: string = await getInstallationIdManually()
@@ -52,8 +50,8 @@ export const loadVaccineCodes = async (): Promise<boolean>=> {
 }
 
 const updateCodes = () => {
-    updateVaccineCode()
-    updateLabResultSystemCode()
+  updateVaccineCode()
+  updateLabResultSystemCode()
 
 }
 
@@ -68,11 +66,9 @@ const updateVaccineCode = ()=>{
   }
 }
 
-const getLabResultSystemKey = (system: string, code: string ):string => {
+const getLabResultSystemKey = (system: string, code: string ): string => {
   return `${system}#${code}`
 }
-
-
 
 const updateLabResultSystemCode = ()=>{
   labResultCodesHash = {}
@@ -88,17 +84,14 @@ const updateLabResultSystemCode = ()=>{
   }
 }
 
-
-
 updateCodes()
-
 
 export const getVaccineCodesHash = (): { [key: string]: string } => {
   return vaccineCodesHash
 }
 
 export const getAcceptedVaccineCodes = (): string [] => {
-  return acceptedVaccineCodes;
+  return acceptedVaccineCodes
 }
 
 export const getAcceptedSystemCode =( system: string, code: string ): any | null => {
@@ -108,8 +101,6 @@ export const getAcceptedSystemCode =( system: string, code: string ): any | null
 export const getSystemCodeLabel = ( system: string, code: string ): string | null => {
   return getAcceptedSystemCode( system, code )?.display  ?? null
 }
-
-
 
 export const isAcceptedLabResult =( system: string, code: string ): boolean => {
   return !!getAcceptedSystemCode( system, code)

@@ -105,10 +105,12 @@ Open another terminal
 ```
   npx react-native run-android
 ```
+  This will load any dependent asset that needs to be in the resources folder. 
   Open Android project from ./android folder
-  and run.
+  and if you have phone connected, install the app through Android Studio. 
 
-If you are running on the device, 
+
+Once  you are running on the device, 
 
 When it's started, load will fail. Make sure your android phone is on the same network. 
 
@@ -144,3 +146,7 @@ See [contributing guidelines](./docs/CONTRIBUTING.md) for more information.
 ## License
 
 Smart Health Card Verifier is [MIT licensed](./LICENSE) is derived from [**SMART Health Cards Dev Tools**](https://github.com/smart-on-fhir/health-cards-dev-tools) by (c) Microsoft Corporation
+
+
+##Reference
+VaccineCodes: [https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html ](https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html) 

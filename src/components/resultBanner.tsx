@@ -1,4 +1,4 @@
-import React, { useState, useEffect }from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
 import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
@@ -14,18 +14,16 @@ const images = {
   cross: require('../../assets/img/verificationresult/cross.png'),
 }
 
-
-
 const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
 
   const shouldShowContent = (): boolean  => {
-    if( isDocumentValid && !isIssuerRecognized ) {
-        return !showContent
+    if ( isDocumentValid && !isIssuerRecognized ) {
+      return !showContent
     }
-    return false;
+    return false
   }
 
-  const isDocumentValid = validationResult.isValid === true
+  const isDocumentValid = validationResult.isValid
   const isIssuerRecognized = !!validationResult?.issuerData?.name
   const { t } = useTranslation()
   const [ isShowContent, setShowContent ] = useState( shouldShowContent() )
@@ -39,8 +37,6 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
   let verifiedIssuerIcon = images.tick
   let verifiedColor = '#0E6B23' // green
 
-
-
   if (!isDocumentValid) {
     icon = images.fail
     text = t('Result.NotVerified', 'Not Verified')
@@ -51,7 +47,6 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
     }
     validityColor = '#C33E38' // red
   }
-
 
   if (isDocumentValid && !isIssuerRecognized) {
     icon = images.warning
@@ -68,12 +63,12 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
 
   return (
     <View >
-      <View style={ [styles.bannerContainer, { backgroundColor: color }] }>
+      <View key="1" style={ [styles.bannerContainer, { backgroundColor: color }, !isShowContent && styles.bannerContainerClosed ] }>
         <Image style={ styles.bannerImage } source={ icon } />
         <Text style={ [styles.bannerText, FontStyle.Poppins_600SemiBold] }>{ text }</Text>
       </View>
       { isShowContent && 
-      <View style={ [styles.subBannerContainer, { borderColor: color }] }>
+      <View  key="2"  style={ [styles.subBannerContainer, { borderColor: color }] }>
         { !isDocumentValid ? (
           <View style={ styles.flexRowContainer }>
             <Text
@@ -156,6 +151,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
+  },
+  bannerContainerClosed: {
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4
   },
   bannerImage: {
     marginLeft: 16,

@@ -5,8 +5,8 @@ import AppClickableImage from './customImage'
 import { Data } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
-import ImmunizationRecordRow, {getResultTitle as getImmunizationResultTitle } from './ImmunizationRecordRow'
-import LabResultRecordRow, { getResultTitle  as getLabResultTitle } from './LabResultRecordRow'
+import ImmunizationRecordRow, { GetResultTitle as GetImmunizationResultTitle } from './ImmunizationRecordRow'
+import LabResultRecordRow, { GetResultTitle  as GetLabResultTitle } from './LabResultRecordRow'
 import { RecordType } from '../services/fhir/fhirTypes'
 
 const images = {
@@ -28,8 +28,8 @@ const ResultRecord = ({ data }: Data) => {
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
   const userDobValue = [insertImageToTable()]
   const resultTitle  = ( recordType == RecordType.covid19Immunization )?
-     getImmunizationResultTitle( windowWidth, validationResult) : (recordType == RecordType.covid19LabResult) ? 
-     getLabResultTitle( windowWidth, validationResult ) : null;
+    GetImmunizationResultTitle( windowWidth, validationResult) : (recordType == RecordType.covid19LabResult) ? 
+      GetLabResultTitle( windowWidth, validationResult ) : null
 
   function insertImageToTable () {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
@@ -60,6 +60,8 @@ const ResultRecord = ({ data }: Data) => {
     <View style={ styles.recordContainer }>
       <View>
         { resultTitle != null && resultTitle }
+        <View style={ styles.divider } />
+
         <Table borderStyle={ styles.tableStyle }>
           <Row
             data={ userFieldTitle }
@@ -88,15 +90,20 @@ const ResultRecord = ({ data }: Data) => {
         </Text>
       </View>
       { recordType == RecordType.covid19Immunization && 
-        <ImmunizationRecordRow recordEntries={recordEntries}></ImmunizationRecordRow>
+        <ImmunizationRecordRow recordEntries={ recordEntries } />
       }
       { recordType == RecordType.covid19LabResult && 
-        <LabResultRecordRow recordEntries={recordEntries}></LabResultRecordRow>
+        <LabResultRecordRow recordEntries={ recordEntries } />
       }
-      <View style={ styles.divider } />
-      <View style={styles.issuerContainer}>
-        <View>
-          <Text style={ [styles.fieldTitle,  FontStyle.OpenSans_400Regular] }>{ t('Result.Issuer', 'Issuer') }</Text>
+      <View style={ styles.dividerContainerWithLine }>
+        <Text style={ [styles.containerWithLineTitle, FontStyle.OpenSans_700Bold] }>
+          { t('Result.Issuer', 'Issuer') }
+        </Text>
+        <View style={ styles.containerWithLineDivider } />
+      </View>
+
+      <View style={ styles.issuerContainer }>
+        <View style={ { flex:1 } } >
           { issuerData.name ? (
             <View style={ styles.verifierContainer }>
               <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
@@ -222,10 +229,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
   },
+  dividerContainerWithLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 7,
+    marginBottom: 7
+  },
+  containerWithLineTitle:{
+    paddingTop: 4,
+    fontSize: 12,
+    lineHeight: 17,
+    color: '#255DCB',
+    marginRight: 10,
+  },
+  containerWithLineDivider: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#C6C6C6',
+    marginTop: 5,
+  },
   issuerContainer:{
     flex:1,
     justifyContent:'space-between',
-    flexDirection: "row"
+    flexDirection: 'row'
   }
 })
 

@@ -14,5 +14,3 @@ export default function getRecordData ( recordType: RecordType, jwsPayload: JWSP
   res = recordParsers[recordType]?.call(undefined, jwsPayload) ?? null
   return res
 }
-
-

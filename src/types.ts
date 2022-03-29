@@ -35,14 +35,14 @@ export interface RecordEntry {
   securityCode?: string
   performer?: string
   observationDate?: string
-  systemName?:string
-  systemKey?:string
-  systemCode?:string
-  systemShortDefault?:string | null
-  codableConseptLabel?:string
-  codableConseptKey?:string
-  codableConseptCode?:string
-  codeableShortDefault?:string | null
+  systemName?: string
+  systemKey?: string
+  systemCode?: string
+  systemShortDefault?: string | null
+  codableConseptLabel?: string
+  codableConseptKey?: string
+  codableConseptCode?: string
+  codeableShortDefault?: string | null
 
 }
 

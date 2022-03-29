@@ -166,7 +166,7 @@ const ScanQRPage = ({ navigation }: Props) => {
     try {
       setScanned(true)
       validationResult = await validate([data])
-      if (!validationResult || validationResult.isValid === false ) {
+      if (!validationResult || !validationResult.isValid ) {
         navigation.navigate('Error')
         return
       }

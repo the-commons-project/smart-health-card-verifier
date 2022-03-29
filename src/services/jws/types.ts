@@ -5,8 +5,6 @@ type ParserFunction = (jwsPayload: JWSPayload) => RecordEntry[] | any | null
 
 type ValidateFunction = (entry: BundleEntry[]) => boolean
 
-
-
 interface HealthCard {
   verifiableCredential: JWS[]
 }
@@ -36,14 +34,14 @@ type Resource = {
   resourceType: string 
   subject?: any
   code?: any
-  valueCodeableConcept?: any,
-  status?: string,
-  effectiveDateTime?:string
-  performer?: Record<any, any>[]
-  meta?: { security?: {
-    system:string
+  valueCodeableConcept?: any
+  status?: string
+  effectiveDateTime?: string
+  performer?: Array<Record<any, any>>
+  meta?: { security?: Array<{
+    system: string
     code: string
-  }[] } } & Record<string, unknown>
+  }> } } & Record<string, unknown>
 
 interface BundleEntry {
   id?: string

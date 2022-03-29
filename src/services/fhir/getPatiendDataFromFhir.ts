@@ -38,7 +38,6 @@ export const getPatientDataFromFhir = (credential: any): any => {
     (entry: any) => entry?.resource?.resourceType === RESOURCE_TYPES.PATIENT,
   ).resource
 
-  console.log( 'patientEntry: ' + JSON.stringify( patientEntry ) )
   let fullName: string = ''
   let dateOfBirth: string = ''
   let names = []

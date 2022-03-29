@@ -42,6 +42,11 @@
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "221",
+      "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
       "code": "510",
       "display": "Sinopharm-Biotech"
     },
@@ -59,339 +64,388 @@
   "covid_19_lab_test_codes": [
     {
       "code": "50548-7",
-      "shortDefault": "PCR Test",
+      "shortDefault": "Molecular Test",
       "display": "Respiratory virus DNA+RNA [Identifier] in Specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "68993-5",
+      "shortDefault": "Molecular Test",
       "display": "Human RNase P RNA [Presence] in Specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "82159-5",
+      "shortDefault": "Molecular Test",
       "display": "Respiratory pathogens DNA and RNA panel - Nasopharynx by NAA with non-probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94306-8",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA panel - Specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94307-6",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Specimen by Nucleic acid amplification using CDC primer-probe set N1",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94308-4",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Specimen by Nucleic acid amplification using CDC primer-probe set N2",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94309-2",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94500-6",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94502-2",
+      "shortDefault": "Molecular Test",
       "display": "SARS-related coronavirus RNA [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94503-0",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) Ab panel - Serum, Plasma or Blood by Rapid immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94504-8",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) Ab panel - Serum or Plasma by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94507-1",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgG Ab [Presence] in Serum, Plasma or Blood by Rapid immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94508-9",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgM Ab [Presence] in Serum, Plasma or Blood by Rapid immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94531-1",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA panel - Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94533-7",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94534-5",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RdRp gene [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94547-7",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgG+IgM Ab [Presence] in Serum or Plasma by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94558-4",
+      "shortDefault": "Antigen Test",
       "display": "SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94559-2",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) ORF1ab region [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94562-6",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgA Ab [Presence] in Serum or Plasma by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94563-4",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgG Ab [Presence] in Serum or Plasma by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94564-2",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgM Ab [Presence] in Serum or Plasma by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94565-9",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Nasopharynx by NAA with non-probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94640-0",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) S gene [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94661-6",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) Ab [Interpretation] in Serum or Plasma",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94756-4",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Respiratory specimen by Nucleic acid amplification using CDC primer-probe set N1",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94757-2",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Respiratory specimen by Nucleic acid amplification using CDC primer-probe set N2",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94758-0",
+      "shortDefault": "Molecular Test",
       "display": "SARS-related coronavirus E gene [Presence] in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94759-8",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Nasopharynx by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94760-6",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Nasopharynx by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94761-4",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgG Ab [Presence] in DBS by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94762-2",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) Ab [Presence] in Serum or Plasma by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94764-8",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) whole genome [Nucleotide sequence] in Isolate or Specimen by Sequencing",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "94845-5",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Saliva (oral fluid) by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95209-3",
+      "shortDefault": "Antigen Test",
       "display": "SARS-CoV+SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory specimen by Rapid immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95406-5",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Nose by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95409-9",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Nose by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95416-4",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) IgM Ab [Presence] in DBS by Immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95423-0",
+      "shortDefault": "Molecular Test",
       "display": "Influenza virus A and B and SARS-CoV-2 (COVID-19) identified in Respiratory specimen by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95424-8",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by Sequencing",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95425-5",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Saliva (oral fluid) by NAA with probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95542-7",
+      "shortDefault": "Antibody Test",
       "display": "SARS-CoV-2 (COVID-19) Ab [Presence] in Serum, Plasma or Blood by Rapid immunoassay",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95608-6",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) RNA [Presence] in Respiratory specimen by NAA with non-probe detection",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
     {
       "code": "95609-4",
+      "shortDefault": "Molecular Test",
       "display": "SARS-CoV-2 (COVID-19) S gene [Presence] in Respiratory specimen by Sequencing",
-      "systemKey":"LOINC",
+      "systemKey": "LOINC",
       "system": "http://loinc.org"
     },
-
-
-
     {
       "code": "10828004",
+      "shortDefault": "Positive",
       "display": "Positive",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "125154007",
+      "shortDefault": "Specimen unsatisfactory for evaluation",
       "display": "Specimen unsatisfactory for evaluation",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "260373001",
+      "shortDefault": "Detected",
       "display": "Detected",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "260385009",
+      "shortDefault": "Negative",
       "display": "Negative",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "260408008",
+      "shortDefault": "Weakly positive",
       "display": "Weakly positive",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "260415000",
+      "shortDefault": "Not detected",
       "display": "Not detected",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "419984006",
+      "shortDefault": "Inconclusive",
       "display": "Inconclusive",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "42425007",
+      "shortDefault": "Equivocal",
       "display": "Equivocal",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "455371000124106",
+      "shortDefault": "Invalid result",
       "display": "Invalid result",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "720735008",
+      "shortDefault": "Presumptive positive",
       "display": "Presumptive positive",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     },
     {
       "code": "82334004",
+      "shortDefault": "Indeterminate",
       "display": "Indeterminate",
-      "systemKey":"SNOMED",
+      "systemKey": "SNOMED",
       "system": "http://snomed.info/sct"
     }
-
-
   ]
 }
