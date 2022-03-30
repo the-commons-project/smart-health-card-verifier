@@ -51,7 +51,15 @@
         "DOB":"Date de naissance",
         "Dose":"Dose {{num}}",
         "AlwaysVerify":"Vérifiez toujours votre identité avec une pièce d'identité délivrée par le gouvernement."
-     }
+      },
+      "WelcomeDialog":{
+        "Welcome":"Bienvenue dans l'application\ndu vérificateur de la\nSMART Health Card Verifier App!",
+        "WelcomeDescription1":"Utilisez cette application pour vérifier la SMART Health Card de vos clients et employés de vos clients ou de vos employés",
+        "WelcomeDescription2":"Cette application n'enregistre ni ne stocke vos informations d'identification numériques.",
+        "PleaseNote":"Veuillez noter: ",
+        "GetStarted":"Commencez"
+      }
+
     }
   }
 }

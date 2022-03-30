@@ -12,11 +12,13 @@ import {
   PixelRatio
 } from 'react-native'
 import { Props } from '../types'
-import AppButton from '../components/customButton'
+import WelcomeDialog from '../components/WelcomeDialog'
+import { AppButton } from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
 import { version }  from '../../package.json'
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg'
 import { useTranslation } from '../services/i18n/i18nUtils'
+import { usePreferenceContext } from '../contexts/PreferenceContext'
 
 const dimension = Dimensions.get('window')
 const images = {
@@ -28,6 +30,9 @@ const imageHeight = ( dimension.height * .30 / PixelRatio.getFontScale() )
 
 const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
+  const prefState = usePreferenceContext()
+  const [ dialogVisible, setDialogVisible ] = useState(false)
+
   const { t } = useTranslation()
   const deviceHeight = useWindowDimensions().height
   const minHeight = 800
@@ -38,104 +43,118 @@ const WelcomePage = ({ navigation }: Props) => {
       setShowVersion(false)
     }, 1000)
   }
-
   return (
-    <ScrollView style={ styles.container }>
-      <View style={ styles.scrollerContents }>
-        <Image style={ styles.smartLogoImage } source={ images.smartLogo } />
-        <View style={ styles.screenContainer }>
-          <View>
-            <Text
-              style={ [
-                deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
-                FontStyle.Poppins_700Bold,
-              ] }
-            >
-              { t('Welcome.Title', 'Welcome!') }
-            </Text>
-            <Text style={ [styles.mainTitle, FontStyle.Poppins_700Bold] }>
-              { t('Welcome.SHCV', 'SMART® Health Card Verifier') }
-            </Text>
-          </View>
+    <View style={ styles.container }>
+      <ScrollView style={ styles.scrollContainer }>
+        <View style={ styles.scrollerContents }>
+          <Image style={ styles.smartLogoImage } source={ images.smartLogo } />
+          <View style={ styles.screenContainer }>
+            <View>
+              <Text
+                style={ [
+                  deviceHeight < minHeight ? styles.welcomeTextMobile : styles.welcomeText,
+                  FontStyle.Poppins_700Bold,
+                ] }
+              >
+                { t('Welcome.Title', 'Welcome!') }
+              </Text>
+              <Text style={ [styles.mainTitle, FontStyle.Poppins_700Bold] }>
+                { t('Welcome.SHCV', 'SMART® Health Card Verifier') }
+              </Text>
+            </View>
 
-          <TouchableWithoutFeedback onLongPress={ showAppVersion }>
-            <View style={ ( deviceHeight > minHeight && PixelRatio.getFontScale() <= 1 ) ? { paddingTop: (40/PixelRatio.getFontScale()), paddingBottom:(40/PixelRatio.getFontScale()) }:{} }>
-              { showVersion && <Text style={ styles.appVersion }>{ version }</Text> }
-              <Image
-                style={ deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage }
-                source={ images.handPhone }
+            <TouchableWithoutFeedback onLongPress={ showAppVersion }>
+              <View style={ ( deviceHeight > minHeight && PixelRatio.getFontScale() <= 1 ) ? { paddingTop: (40/PixelRatio.getFontScale()), paddingBottom:(40/PixelRatio.getFontScale()) }:{} }>
+                { showVersion && <Text style={ styles.appVersion }>{ version }</Text> }
+                <Image
+                  style={ deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage }
+                  source={ images.handPhone }
+                />
+              </View>
+            </TouchableWithoutFeedback>
+
+            <View style={ styles.textContainer }>
+              <Text style={ [styles.subTitle, FontStyle.OpenSans_400Regular] }>
+                { t('Welcome.VerifySmartHealthCard', 'Verify SMART® Health Card QR codes in a safe and privacy-preserving way') }
+              </Text>
+              <AppButton
+                title={ t('Welcome.ScanVaccinationRecord', 'Scan vaccination record') }
+                onPress={ () => navigation.navigate('ScanQR') }
+                backgroundColor="#255DCB"
               />
+              <View style={ styles.learnMoreContainer }>
+                <Text
+                  style={ [
+                    deviceHeight < minHeight ? styles.textMobile : styles.text,
+                    styles.link,
+                    styles.colorBlue,
+                    FontStyle.Poppins_600SemiBold
+                  ] }
+                  onPress={ async () =>
+                    await Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
+                  }
+                >
+                  { t('Welcome.HowTo', 'How to verify SMART® Health Cards') }
+                </Text>
+              </View>
+              <View
+                style={ styles.aboutUsFlex }
+              >
+                <Text
+                  style={ [
+                    styles.text,
+                    styles.link,
+                    styles.colorBlue,
+                    styles.aboutUsFlexSpacing,
+                    FontStyle.Poppins_600SemiBold,
+                  ] }
+                  onPress={ async () =>
+                    await Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
+                  }
+                >
+                  { t('Welcome.AboutUs', 'About us') }
+                </Text>
+                <Text
+                  style={ [
+                    styles.text,
+                    styles.link,
+                    styles.colorBlue,
+                    FontStyle.Poppins_600SemiBold,
+                  ] }
+                  onPress={ async () => await Linking.openURL('https://thecommonsproject.org/verifier-privacy/') }
+                >
+                  { t('Welcome.PrivacyPolicy', 'Privacy policy') }
+                </Text>
+              </View>
             </View>
-          </TouchableWithoutFeedback>
+            <View style={ styles.logoContainer }>
+              <CompanyLogoSVG style={ styles.logo } height={ 60 } />
+            </View>
 
-          <View style={ styles.textContainer }>
-            <Text style={ [styles.subTitle, FontStyle.OpenSans_400Regular] }>
-              { t('Welcome.VerifySmartHealthCard', 'Verify SMART® Health Card QR codes in a safe and privacy-preserving way') }
-            </Text>
-            <AppButton
-              title={ t('Welcome.ScanVaccinationRecord', 'Scan vaccination record') }
-              onPress={ () => navigation.navigate('ScanQR') }
-              backgroundColor="#255DCB"
-            />
-            <View style={ styles.learnMoreContainer }>
-              <Text
-                style={ [
-                  deviceHeight < minHeight ? styles.textMobile : styles.text,
-                  styles.link,
-                  styles.colorBlue,
-                  FontStyle.Poppins_600SemiBold
-                ] }
-                onPress={ async () =>
-                  await Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
-                }
-              >
-                { t('Welcome.HowTo', 'How to verify SMART® Health Cards') }
-              </Text>
-            </View>
-            <View
-              style={ styles.aboutUsFlex }
-            >
-              <Text
-                style={ [
-                  styles.text,
-                  styles.link,
-                  styles.colorBlue,
-                  styles.aboutUsFlexSpacing,
-                  FontStyle.Poppins_600SemiBold,
-                ] }
-                onPress={ async () =>
-                  await Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
-                }
-              >
-                { t('Welcome.AboutUs', 'About us') }
-              </Text>
-              <Text
-                style={ [
-                  styles.text,
-                  styles.link,
-                  styles.colorBlue,
-                  FontStyle.Poppins_600SemiBold,
-                ] }
-                onPress={ async () => await Linking.openURL('https://thecommonsproject.org/verifier-privacy/') }
-              >
-                { t('Welcome.PrivacyPolicy', 'Privacy policy') }
-              </Text>
-            </View>
           </View>
-          <View style={ styles.logoContainer }>
-            <CompanyLogoSVG style={ styles.logo } height={ 60 } />
-          </View>
-
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      { !prefState.isOnboarded && <WelcomeDialog /> }
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
+    position:'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height:'100%',
+    backgroundColor: '#FF0000',
+    padding: 0
+  },
+  scrollContainer: {
+    position:'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height:'100%',
     backgroundColor: '#F3F6FF',
     paddingTop: 0,
     paddingStart: 12,
@@ -235,11 +254,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 0,
     paddingBottom: 2,
-  },
-  privacyText: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: '#000000',
   },
   colorBlue: {
     color: '#255DCB',
