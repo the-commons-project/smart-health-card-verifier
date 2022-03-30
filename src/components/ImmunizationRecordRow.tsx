@@ -15,7 +15,7 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     const entry = responseData.recordEntries ?? []
     if ( entry.length >= 2  ) {
       res =  t( 'ImmunizationResult.Doses', { num: entry.length } )
-    } else if ( entry.length == 1 ) {
+    } else if ( entry.length === 1 ) {
       res =  t( 'ImmunizationResult.Dose', { num: 1 } )
     }
     return res
@@ -53,13 +53,13 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
 
   function insertTextToTable (vaccineName: string, lotNumber: string) {
     return (
-      <View style={ { flexDirection: 'row', alignItems: 'center' } }>
+      <View style={ styles.recordEntries }>
         <Text
           style={ [
             styles.fieldValue,
             styles.increaseFont,
             FontStyle.OpenSans_700Bold, 
-            { marginRight: 7 },
+            styles.recordEntriesTextField
           ] }
         >
           { vaccineName }
@@ -99,7 +99,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
 
   function rowAdapter (dosageFieldTitleRowOne: any) {
     return (
-      <View style={ { flexWrap: 'wrap', alignItems: 'flex-end', justifyContent:'space-between', flexDirection: 'row' } }>
+      <View style={ styles.rowItem }>
         <View key="1" style={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }>
           { dosageFieldTitleRowOne[0] }
         </View>
@@ -126,7 +126,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
         <View key={ key }>
           <View style={ styles.doseDividerContainer }>
             <Text style={ [styles.dosageText, FontStyle.OpenSans_700Bold] }>
-              { t('Result.Dose', `Dose ${index}`, { num:index }) }
+              { t('Result.Dose', `Dose ${String( index )}`, { num:index }) }
             </Text>
             <View style={ styles.doseDivider } />
           </View>
@@ -158,6 +158,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   labTitle: {
+    ...FontStyle.OpenSans_700Bold,
+    width: '100%',
     fontSize: 24,
     color: '#1F2025'
   },
@@ -200,9 +202,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignContent:'space-around',
   },
+  recordEntries:{
+    flexDirection: 'row', 
+    alignItems: 'center'
+  },
+  recordEntriesTextField: {
+    marginRight: 7 
+  },
   typeIconWrapper: {
     paddingLeft:imagePadding,
     paddingRight:imagePadding
+  },
+  rowItem: {
+    flexWrap: 'wrap', 
+    alignItems: 'flex-end', 
+    justifyContent:'space-between', 
+    flexDirection: 'row'
   },
   fieldValue: {
     paddingTop: 4,
