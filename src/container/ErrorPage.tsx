@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, Image, StyleSheet } from 'react-native'
-import AppButton from '../components/customButton'
+import { AppButton } from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, ScrollView, StyleSheet, PixelRatio, Pressable } from 'react-native'
-import AppButton from '../components/customButton'
+import { AppButton } from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
 import ResultRecord from '../components/resultRecord'

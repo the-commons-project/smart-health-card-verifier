@@ -65,6 +65,13 @@
         "tagCovid19":"COVID-19",
         "Dose":"{{num}}回目接種",
         "Doses":"{{num}}回目接種"
+      },
+      "WelcomeDialog":{
+        "Welcome":"SMART Health Card\nVerifierへようこそ！",
+        "WelcomeDescription1":"このアプリケーションはお店などで、お客様のSMART Health Cards　を承認するために使用します。",
+        "WelcomeDescription2":"このアプリケーションはスキャンした証明書を保存しません。",
+        "PleaseNote":"注意: ",
+        "GetStarted":"スタート"
       }
     }
   }

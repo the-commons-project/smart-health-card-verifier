@@ -1,8 +1,8 @@
 /* This service handles local data interface */ 
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import Timer from '../../utils/timer'
 import { fetchWithTimeout } from '../../utils/utils'
 import { ApiTimeout } from '../constants'
+import { getStorage, KVStorage } from './Storage'
 
 export enum DataKeys {
   'ISSUERS'     = 'ISSUERS',
@@ -13,39 +13,42 @@ export enum DataKeys {
 
 class DataService {
 
+  storage: KVStorage
+  constructor (){
+    this.storage = getStorage()
+  }
+
   async storeJSON (key: DataKeys, value: object): Promise<boolean> {
-    return await this.storeData( key, JSON.stringify(value))
+    return await this.storage.setJSON( key, value )
   };
 
-  async getJSON (key: DataKeys ): Promise<string|null> {
-    let res = await this.getData( key)
-    if ( res != null ) {
-      try {
-        res = JSON.parse( res )
-      } catch {
-        console.error(`JSON Parse for ${key} failed `)
-        res = null
-      }
+  async getJSON (key: DataKeys ): Promise<object|null> {
+    let res = null 
+    try {
+      res = await this.storage.getJSON( key)
+    } catch ( error ) {
+      console.error(`JSON Parse for ${key} failed `)
+      res = null
     }
     return res
   };
 
   async storeData (key: DataKeys, value: string): Promise<boolean> {
     try {
-      await AsyncStorage.setItem( key, value)
+      await this.storage.setData( key, value)
       return true 
     } catch (error) {
-      console.error( 'Storing Error: ' + error )  
+      console.error( `Storing Error: ${String(error)}` )  
     }
     return false
   };
 
   async getData ( key: DataKeys ): Promise<string|null>{
     try {
-      const value = await AsyncStorage.getItem(key)
+      const value = await this.storage.getData(key)
       return value 
     } catch (error) {
-      console.error( 'Retrieving local storage Error: ' + error )  
+      console.error( `etrieving local storage Error: ${String(error)}` )  
     }
     return null
 
@@ -54,7 +57,7 @@ class DataService {
   async resetData (): Promise<boolean>{
     try {
       for (const value in DataKeys) {
-        await AsyncStorage.removeItem(value)
+        await this.storage.removeItem(value)
       }
     } catch ( error ) {
 
@@ -105,13 +108,13 @@ export const loadDataOrRetrieveLocally = async<T>( url: string, key: DataKeys): 
     console.log(`loading ${key}: ${url}` )
     response = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
   } catch (error) {
-    console.log(`ErrorLoading ${key}: ${error}`)
+    console.log(`Error Loading ${String(key)}: ${String(error)}`)
   }
   const loadingTime = timer.stop()
   console.log(`loading ${key} took:  ${loadingTime.toFixed(2)}sec`)
   let res = null
 
-  if ( response && response.status && response.status === 200 ) {
+  if ( response?.status === 200 ) {
     res = await response.json()
     if ( res != null ){
       dataService.storeJSON( key, res )

@@ -65,6 +65,13 @@
         "tagCovid19":"COVID-19",
         "Dose":"{{num}} Dose",
         "Doses":"{{num}} Doses"
+      },
+      "WelcomeDialog":{
+        "Welcome":"Welcome to the\nSMART Health Card\nVerifier App!",
+        "WelcomeDescription1":"Use this app to verify the SMART Health Cards of your customers or employees at your business.",
+        "WelcomeDescription2":"This app does not save or store your digital credentials.",
+        "PleaseNote":"Please Note: ",
+        "GetStarted":"Get Started"
       }
     }
   }
