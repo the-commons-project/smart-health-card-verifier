@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
 import { InvalidError } from '../utils/InvalidError'
+import { RecordType } from '../services/fhir/fhirTypes'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -146,6 +147,7 @@ const ScanQRPage = ({ navigation }: Props) => {
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
     let validationResult: BaseResponse = {
       isValid: false,
+      recordType: RecordType.unknown,
       errorCode:0,
       issuerData: {
         iss: '',
@@ -158,14 +160,13 @@ const ScanQRPage = ({ navigation }: Props) => {
         dateOfBirth: '',
         names: [],
       },
-      vaccinationData: [],
+      recordEntries: [],
     }
 
     try {
       setScanned(true)
       validationResult = await validate([data])
-
-      if (!validationResult || validationResult.isValid === false ) {
+      if (!validationResult || !validationResult.isValid ) {
         navigation.navigate('Error')
         return
       }

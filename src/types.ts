@@ -20,14 +20,39 @@ export interface Data {
 
 export interface ValidationResult {
   validationResult: BaseResponse
+  showContent: boolean
+}
+
+export interface RecordEntry {
+  index?: unknown
+  resourceType: string
+  /* immunization */
+  lotNumber?: unknown
+  vaccinator?: unknown
+  vaccineName?: unknown
+  vaccinationDate?: unknown
+  /* labResult */
+  securityCode?: string
+  performer?: string
+  observationDate?: string
+  systemName?: string
+  systemKey?: string
+  systemCode?: string
+  systemShortDefault?: string | null
+  codableConseptLabel?: string
+  codableConseptKey?: string
+  codableConseptCode?: string
+  codeableShortDefault?: string | null
+
 }
 
 export interface BaseResponse {
-  isValid: boolean | string
+  isValid: boolean 
   errorCode: number
   issuerData: issuerData
   patientData: patientData
-  vaccinationData: vaccinationData[]
+  recordType: string
+  recordEntries?: RecordEntry[]
 }
 
 export declare class Timer {
@@ -54,10 +79,14 @@ interface patientData {
   names: string[]
 }
 
-interface vaccinationData {
-  dose: number
+interface VaccinationData {
+  index: number
   lotNumber: string
   vaccinationDate: string
   vaccinator: string
   vaccineName: string
+}
+
+interface LabResultData {
+  index: number
 }

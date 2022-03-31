@@ -49,8 +49,22 @@
         "Issuer":"Issuer",
         "Name":"Name",
         "DOB":"Date of Birth",
-        "Dose":"Dose {{num}}",
         "AlwaysVerify":"Always verify identity with a government-issued I.D."
+      },
+      "LabResult":{
+        "title":"Test Result",
+        "tagCovid19":"COVID-19",
+        "Field_securityCode": "Security",
+        "Field_observationDate": "Result Published",
+        "Field_performer": "Performed By",
+        "Field_status": "Observation Status",
+        "Field_systemName": "Test Type"
+      },
+      "ImmunizationResult":{
+        "Title": "Vaccination Record",
+        "tagCovid19":"COVID-19",
+        "Dose":"{{num}} Dose",
+        "Doses":"{{num}} Doses"
       },
       "WelcomeDialog":{
         "Welcome":"Welcome to the\nSMART Health Card\nVerifier App!",

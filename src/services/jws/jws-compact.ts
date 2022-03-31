@@ -1,3 +1,4 @@
+/* eslint no-catch-shadow: off, no-shadow: off */
 import pako from 'pako'
 import jose from 'react-native-jose'
 
@@ -9,12 +10,9 @@ import { parseJson } from '../../utils/utils'
 import { validateSchema } from './schema'
 import jwsCompactSchema from '../../schemas/jws-schema.json'
 import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
-import { getPatientDataFromFhir } from '../helpers/getPatiendDataFromFhir'
-import { getVaccinationDataFromFhir } from '../helpers/getVaccinationDataFromFhir'
-import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
-import { getIssuerData } from '../helpers/getIssuerData'
 import Timer from '../../utils/timer'
-
+import { getRecordTypeFromPayload } from '../fhir/fhirTypes'
+import { getRecord } from '../fhir/fhirBundle'
 export const JwsValidationOptions = {
   skipJwksDownload: false,
   jwksDownloadTimeOut: 5000,
@@ -87,26 +85,12 @@ export async function validate (jws: string): Promise<any> {
   }
 
   const isValid = await verifyJws(jws, headerJson.kid)
-  const issuer = getIssuerFromFhir(payload)
-  const notFoundIssuer = {
-    message: 'Issuer not found'
-  }
 
-  const issuerData = await getIssuerData(issuer) || notFoundIssuer
-  const { message } = issuerData
-  const isIssuerNotFound = message && message === 'Issuer not found'
-  if (isIssuerNotFound) {
-    issuerData.url = issuer
-    issuerData.name = undefined
-  }
+  let document = await getRecord( payload )
 
-  const patientData = getPatientDataFromFhir(payload)
-  const vaccinationData = await getVaccinationDataFromFhir(payload)
-  const document = {
+  document = {
     isValid,
-    issuerData,
-    patientData,
-    vaccinationData,
+    ...document
   }
 
   return document
@@ -116,7 +100,7 @@ async function fetchWithTimeout (url: string, options: any, timeout: number, tim
   return await Promise.race([
     fetch(url, options),
 
-    new Promise((_, reject) => setTimeout(() => reject(new Error(timeoutError)), timeout)),
+    new Promise((resolve, reject) => setTimeout(() => reject(new Error(timeoutError)), timeout)),
   ])
 }
 
@@ -135,12 +119,14 @@ async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefi
       { headers: { Origin: requestedOrigin } },
       timeout,
       timeoutError,
-    )
+    ).catch( ( error )=> {
+      throw new InvalidError( ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR )
+    })
     const keySet = await responseRaw.json()
     let loadingTime = timer.stop()
     console.log(`loading issure key: ${loadingTime.toFixed(2)}sec`)
     if (!keySet) {
-      throw 'Failed to parse JSON KeySet schema'
+      throw new Error('Failed to parse JSON KeySet schema')
     }
 
     try {
@@ -150,18 +136,18 @@ async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefi
       console.log(`verification took:  ${loadingTime.toFixed(2)}sec`)
 
       return keySet
-    } catch (err) {
+    } catch ( err ) {
       if ( err instanceof InvalidError ) throw err
       console.log(
-        "Can't parse downloaded issuer JWK set: " + (err as Error).toString(),
+        `Can't parse downloaded issuer JWK set: ${String(err.message)}`,
         ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
       )
       return undefined
     }
-  } catch (err) {
+  } catch (err: any) {
     if ( err instanceof InvalidError ) throw err
     console.log(
-      'Failed to download issuer JWK set: ' + (err as Error).toString(),
+      `Failed to download issuer JWK set:  ${String(err.message)}`,
       ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
     )
     // return undefined
@@ -347,7 +333,6 @@ async function extractKeyURL (payload: any) {
 
 async function verifyJws (jws: string, kid: string): Promise<boolean> {
   const verifier: jose.JWS.Verifier = jose.JWS.createVerify(KeysStore.store)
-
   if (kid && !KeysStore.store.get(kid)) {
     console.log(
       `JWS verification failed: can't find key with 'kid' = ${kid} in issuer set`,
@@ -358,9 +343,10 @@ async function verifyJws (jws: string, kid: string): Promise<boolean> {
   }
 
   try {
-    const result = await verifier.verify(jws)
 
+    const result = await verifier.verify(jws)
     return !!result
+
   } catch (error) {
     // The error message is always 'no key found', regardless if a key is missing or
     // if the signature was tempered with. Don't return the node-jose error message.

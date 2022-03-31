@@ -49,8 +49,22 @@
         "Issuer":"Émettrice",
         "Name":"Nom",
         "DOB":"Date de naissance",
-        "Dose":"Dose {{num}}",
         "AlwaysVerify":"Vérifiez toujours votre identité avec une pièce d'identité délivrée par le gouvernement."
+      },
+      "LabResult":{
+        "title":"Résultat du test",
+        "tagCovid19":"COVID-19",
+        "Field_securityCode": " Sécurité",
+        "Field_observationDate": "Résultat publié",
+        "Field_performer": "Interprété par",
+        "Field_status": "Statut de l'observation",
+        "Field_systemName": "Type d'essai"
+      },
+      "ImmunizationResult":{
+        "Title": "Carnet de vaccination",
+        "tagCovid19":"COVID-19",
+        "Dose":"{{num}} Dose",
+        "Doses":"{{num}} Doses"
       },
       "WelcomeDialog":{
         "Welcome":"Bienvenue dans l'application\ndu vérificateur de la\nSMART Health Card Verifier App!",
@@ -59,7 +73,6 @@
         "PleaseNote":"Veuillez noter: ",
         "GetStarted":"Commencez"
       }
-
     }
   }
 }

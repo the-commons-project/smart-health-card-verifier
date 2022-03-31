@@ -49,8 +49,22 @@
         "Issuer":"発行者",
         "Name":"名前",
         "DOB":"生年月日",
-        "Dose":"{{num}}回目接種",
         "AlwaysVerify":"必ず政府発行の身分証明書での本人確認をしてください。"
+      },
+      "LabResult":{
+        "title":"検査結果",
+        "tagCovid19":"COVID-19",
+        "Field_securityCode": "セキュリティ",
+        "Field_observationDate": "結果発行日",
+        "Field_performer": "検査実行機関",
+        "Field_status": "結果",
+        "Field_systemName": "テストタイプ"
+      },
+      "ImmunizationResult":{
+        "Title": "ワクチン履歴",
+        "tagCovid19":"COVID-19",
+        "Dose":"{{num}}回目接種",
+        "Doses":"{{num}}回目接種"
       },
       "WelcomeDialog":{
         "Welcome":"SMART Health Card\nVerifierへようこそ！",
