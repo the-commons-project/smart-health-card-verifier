@@ -1,6 +1,6 @@
 name: 'Linting CI'
 on:
-  push:
+  pull_request_target:
     types: [opened, synchronize]
 jobs:
   check-code-readiness:

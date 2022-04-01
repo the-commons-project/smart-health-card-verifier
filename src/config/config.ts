@@ -4,7 +4,7 @@ const config = {
   api: {
     uri: env.API_URL,
     key: env.API_KEY,
-    backupURL: env.AFFINIDI_SERVICE_SERVICE_URL,
+    backupURL: env.LEGACY_SERVICE_SERVICE_URL,
     version: env.API_VERSION,
     path: env.API_PATH,
     services: {
@@ -19,7 +19,7 @@ const API_HOST     = config.api.uri
 const API_PATH     = `${config.api.path}/${config.api.version}`
 const API_KEY      = config.api.key
 const API_VERSION  = config.api.version
-const AFFINIDI_HOST = env.AFFINIDI_SERVICE_SERVICE_URL
+const AFFINIDI_HOST = env.LEGACY_SERVICE_SERVICE_URL
 const API_ISSUERS_PATH = config.api.services.issuers
 const API_LOCALE_PATH  = config.api.services.locale
 const API_VCCODE_PATH  = config.api.services.vaccienCodes

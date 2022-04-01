@@ -81,7 +81,8 @@ import com.android.build.OutputFile
 
 
 project.ext.envConfigFiles = [
-    debug  : ".env.development",
+    debug   : ".env.development",
+    dev     : ".env.staging",
     release : ".env.production"
 ]
 
@@ -136,12 +137,13 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 Properties secrets = new Properties()
-def secretProps = project.rootProject.file('secrets.properties')
+def secretFilePath  = "${project.rootDir}/secret.properties"
+def secretProps = file( secretFilePath )
 if (secretProps.exists()) {
     secrets.load(secretProps.newDataInputStream())
 }
-def isRunningInGHAction = System.getenv("VERIFIRE_STORE_FILE") != null
-println("isRunningInGHAction: " + isRunningInGHAction )
+
+def isRunningInGHAction = System.getenv("STORE_FILE") != null
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -154,6 +156,7 @@ android {
         println( "packageName: ${rootProject.ext.buildConfigJSON['packageName']}")
         println( "versionCode: ${rootProject.ext.buildConfigJSON['versionCode']}")
         println( "versionName: ${rootProject.ext.buildConfigJSON['versionName']}")
+        println("running with git action: ${isRunningInGHAction}")
 
         applicationId rootProject.ext.buildConfigJSON['packageName']
         minSdkVersion rootProject.ext.minSdkVersion
@@ -163,6 +166,23 @@ android {
         missingDimensionStrategy 'react-native-camera', 'general'
     }
 
+    signingConfigs {
+        release {
+            if (isRunningInGHAction) {
+                storeFile = file(System.getenv('STORE_FILE'))
+                storePassword = System.getenv('STORE_PASSWORD')
+                keyAlias = System.getenv('KEY_ALIAS')
+                keyPassword = System.getenv('KEY_PASSWORD') || null
+            } else if (secretProps.exists() && secrets.getProperty('signing_keystore_location') != null) {
+                storeFile = file(secrets.getProperty('signing_keystore_location'))
+                storePassword = secrets.getProperty('signing_keystore_password')
+                keyAlias = secrets.getProperty('signing_keystore_key_alias')
+                keyPassword = secrets.getProperty('signing_keystore_key_password')
+            }
+        }
+    }
+
+
     splits {
         abi {
             reset()
@@ -171,47 +191,42 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
-    signingConfigs {
 
-        debug {
-
-            if (isRunningInGHAction) {
-                storeFile = file(System.getenv('VERIFIRE_STORE_FILE'))
-                storePassword = System.getenv('VERIFIRE_STORE_PASSWORD')
-                keyAlias = System.getenv('VERIFIRE_KEY_ALIAS')
-                keyPassword = System.getenv('VERIFIRE_KEY_PASSWORD') || null
-            } else if (secretProps.exists() && secrets.getProperty('signing_keystore_location') != null) {
-                storeFile = file(secrets.getProperty('signing_keystore_location'))
-                storePassword = secrets.getProperty('signing_keystore_password')
-                keyAlias = secrets.getProperty('signing_keystore_key_alias')
-                keyPassword = secrets.getProperty('signing_keystore_key_password')
-            }
-
-//            storeFile file('debug.keystore')
-//            storePassword 'android'
-//            keyAlias 'androiddebugkey'
-//            keyPassword 'android'
-        }
-    }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
             if (nativeArchitectures) {
                 ndk {
                     abiFilters nativeArchitectures.split(',')
                 }
             }
         }
+
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            minifyEnabled true
+            signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            dimension "default"
+            versionNameSuffix "-dev"
+            applicationIdSuffix = ".dev"
+            signingConfig = signingConfigs.release
+        }
+        prod {
+            dimension "default"
+            versionNameSuffix ""
+            applicationIdSuffix = ""
+            signingConfig = signingConfigs.release
+        }
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->

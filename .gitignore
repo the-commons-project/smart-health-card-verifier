@@ -25,7 +25,7 @@ android/secret.properties
 
 # Android/IntelliJ
 #
-
+android/app/release/
 build/
 .idea
 .gradle
@@ -69,3 +69,4 @@ buck-out/
 #env
 .env.development
 .env.production
+.env.staging
