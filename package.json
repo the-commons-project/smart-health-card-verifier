@@ -5,7 +5,8 @@
   "scripts": {
     "android": "export ENVFILE=.env.development && react-native run-android",
     "android:prod": "export ENVFILE=.env.production && react-native run-android",
-    "build-dev:android": "export ENVFILE=.env.development && cd android && ./gradlew assembleDebug",
+    "android:dev": "export ENVFILE=.env.development && cd android && ./gradlew assembleDevDebug",
+    "android:devRelease": "cd android && ./gradlew assembleDevRelease",
     "ios": "react-native run-ios --scheme \"Verifier\"",
     "ios:release": "react-native run-ios --scheme \"ReleaseBuild\"",
     "ios:qa": "react-native run-ios --scheme \"Verifier-Test\"",
@@ -16,9 +17,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lintfile": "eslint",
     "lintfile:fix": "eslint --fix",
-    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "bundle-service": "tsc-bundle ./resources/apis/src/index.ts --outFile ./resources/apis/output/bundle.js",
-    "generateAndroid": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.16.1",
