@@ -33,7 +33,7 @@ const WelcomePage = ({ navigation }: Props) => {
   const prefState = usePreferenceContext()
   const [ dialogVisible, setDialogVisible ] = useState(false)
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const deviceHeight = useWindowDimensions().height
   const minHeight = 800
   const showAppVersion = () => {
@@ -91,7 +91,7 @@ const WelcomePage = ({ navigation }: Props) => {
                     FontStyle.Poppins_600SemiBold
                   ] }
                   onPress={ async () =>
-                    await Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier')
+                    await Linking.openURL(`https://thecommonsproject.org/smart-health-card-verifier?lang=${i18n.language}`)
                   }
                 >
                   { t('Welcome.HowTo', 'How to verify SMART® Health Cards') }
@@ -109,10 +109,10 @@ const WelcomePage = ({ navigation }: Props) => {
                     FontStyle.Poppins_600SemiBold,
                   ] }
                   onPress={ async () =>
-                    await Linking.openURL('https://thecommonsproject.org/smart-health-card-verifier#shcv-1')
+                    await Linking.openURL(`https://thecommonsproject.org/smart-health-card-verifier#shcv-1?lang=${i18n.language}` )
                   }
                 >
-                  { t('Welcome.AboutUs', 'About us') }
+                  { t('Welcome.AboutUs', 'About us' ) }
                 </Text>
                 <Text
                   style={ [
@@ -121,7 +121,7 @@ const WelcomePage = ({ navigation }: Props) => {
                     styles.colorBlue,
                     FontStyle.Poppins_600SemiBold,
                   ] }
-                  onPress={ async () => await Linking.openURL('https://thecommonsproject.org/verifier-privacy/') }
+                  onPress={ async () => await Linking.openURL(`https://thecommonsproject.org/verifier-privacy/?lang=${i18n.language}`) }
                 >
                   { t('Welcome.PrivacyPolicy', 'Privacy policy') }
                 </Text>
