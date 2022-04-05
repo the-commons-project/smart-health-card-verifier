@@ -4,6 +4,7 @@ on:
     types: [opened, synchronize]
 jobs:
   check-code-readiness:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -17,6 +17,8 @@ const config: Config.InitialOptions = {
   // [...]
   // Replace `ts-jest` with the preset you want to use
   // from the above list
+  "timers": "fake",
+  "testEnvironment": "jsdom",
   transformIgnorePatterns: [
     // `node_modules/(?!(${transformIgnoreModules.join('|')})/)`,
     'node_modules\/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation)'
