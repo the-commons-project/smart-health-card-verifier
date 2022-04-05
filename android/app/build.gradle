@@ -87,7 +87,9 @@ project.ext.envConfigFiles = [
 ]
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: false,
+    bundleInDebug: false,
+    bundleInRelease: true
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
