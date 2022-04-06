@@ -1,5 +1,7 @@
-import env from 'react-native-config'
+import Config from 'react-native-config'
+console.info("env ============ : \r\n" + JSON.stringify( Config ))
 
+const env = Config;
 const config = {
   api: {
     uri: env.API_URL,
@@ -24,6 +26,7 @@ const API_ISSUERS_PATH = config.api.services.issuers
 const API_LOCALE_PATH  = config.api.services.locale
 const API_VCCODE_PATH  = config.api.services.vaccienCodes
 
+console.log(`config = ${JSON.stringify( config )}`)
 export {
   API_PATH,
   API_HOST,

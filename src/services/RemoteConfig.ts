@@ -6,7 +6,7 @@ class RemoteConfig {
   }
 
   usingLegacy () {
-    return true
+    return false
   }
 }
 
