@@ -81,9 +81,9 @@ import com.android.build.OutputFile
 
 
 project.ext.envConfigFiles = [
-    debug   : ".env.development",
-    dev     : ".env.staging",
-    release : ".env.production"
+    devdebug : ".env.development",
+    devrelease: ".env.staging",
+    prodrelease : ".env.production"
 ]
 
 project.ext.react = [
@@ -166,6 +166,9 @@ android {
         versionCode rootProject.ext.buildConfigJSON['versionCode']
         versionName rootProject.ext.buildConfigJSON['versionName']
         missingDimensionStrategy 'react-native-camera', 'general'
+        manifestPlaceholders.appLabel  = "Verifier"
+        resValue "string", "build_config_package", "${rootProject.ext.buildConfigJSON['packageName']}"
+
     }
 
     signingConfigs {
@@ -221,12 +224,15 @@ android {
             versionNameSuffix "-dev"
             applicationIdSuffix = ".dev"
             signingConfig = signingConfigs.release
+            manifestPlaceholders.appLabel = "Verifier Dev"
+            resValue "string", "build_config_package", "${rootProject.ext.buildConfigJSON['packageName']}"
         }
         prod {
             dimension "default"
             versionNameSuffix ""
             applicationIdSuffix = ""
             signingConfig = signingConfigs.release
+            manifestPlaceholders.appLabel = "Verifier"
         }
     }
     // applicationVariants are e.g. debug, release
