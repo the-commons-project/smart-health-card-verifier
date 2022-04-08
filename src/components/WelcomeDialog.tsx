@@ -86,21 +86,6 @@ export default ()=> {
                 
                 />
                 
-                {/* { <View style={ styles.textContainer }>
-                <AppLogoSVG height={ imageHeight }  width={ imageHeight }/>
-              <Text style={ [ smallScreen ? styles.welcomeTextSmlScreen : styles.welcomeText, 
-                FontStyle.Poppins_700Bold,
-              ] }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App!') }</Text>
-              
-                <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.WelcomeDescription1', msg1) }</Text>
-                <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular, styles.textBold] }>{ t('WelcomeDialog.PleaseNote', 'Please Note: ') }</Text>
-                <Text style={ [ smallScreen? styles.textStyleSmlScreen : styles.textStyle, FontStyle.OpenSans_400Regular] }>{ t('WelcomeDialog.WelcomeDescription2', msg2) }</Text>
-              </View>
-                 }
-           */}
-            
-            
-            
           <Paginator data={slides} scrollX={scrollX} />
           <GetStartedButton
             title={ t('WelcomeDialog.GetStarted', 'Get Started') }
