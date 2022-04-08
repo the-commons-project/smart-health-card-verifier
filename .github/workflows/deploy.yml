@@ -32,6 +32,9 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
+      - name: Install google play dependencies
+        run: |
+          npm install -g publish-aab-google-play
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -53,15 +56,18 @@ jobs:
             ${{ runner.os }}-gradle-caches-
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-      - name: Generate App APK
-        run: |
-          cd android && ./gradlew assembleRelease --no-daemon
+
       - name: 'Decrypt keystore and GCP credentials'
         working-directory: ./android
         run: |
           echo "${{ secrets.DEV_KEYSTORE }}" > verifier-keystore.asc
           gpg --decrypt --passphrase "${{ secrets.GPG_PASSPHRASE }}" --batch verifier-keystore.asc > verifier-keystore
           touch local.properties
+
+      - name: Generate App APK
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+
       - name: 'Build devRemote'
         working-directory: ./android
-        run: ./gradlew :app:bundleDevRelease --info
+        run: ./gradlew :app:bundleDevRelease  --no-daemon --info
