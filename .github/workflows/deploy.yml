@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       STORE_PASSWORD: "${{secrets.DEV_STORE_PASSWORD}}"
-      KEY_PASSWORD: "${{ secrets.DEV_KEY_PASSWORD }}"
-      KEY_ALIAS: "${{ secrets.DEV_KEY_ALIAS }}"
+      KEY_PASSWORD: "${{secrets.DEV_KEY_PASSWORD}}"
+      KEY_ALIAS: "${{secrets.DEV_KEY_ALIAS}}"
     steps:
       - name: 'Checkout to branch'
         uses: actions/checkout@v2
