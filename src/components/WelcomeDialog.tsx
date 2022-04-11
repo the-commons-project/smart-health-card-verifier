@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useCallback, useRef, ReactComponentElement } from 'react'
 import {  StyleSheet, View, Text, Modal, useWindowDimensions, PixelRatio, ScrollView, FlatList, Animated } from 'react-native'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import { GetStartedButton } from './customButton'
@@ -12,41 +12,83 @@ import WelcomeDialogInner1 from './WelcomeDialogInner1'
 import WelcomeDialogInner2 from './WelcomeDialogInner2'
 import WelcomeDialogInner3 from './WelcomeDialogInner3'
 
-const width=300 
 export default ()=> {
-
   const { setOnboarded } = usePreferenceContext()
   const { t } = useTranslation()
+  const getStartText = t('WelcomeDialog.GetStarted', 'Get Started')
+  const nextText = t('WelcomeDialog.Next', 'Next')
+  const [ nextButtonText, setNextButtonText ] = useState( nextText )
   const [ modalVisible, setModalVisible ]= useState(true)
+  const [ sliderWidth, setSliderWidth ] = useState(0)
   const dimension = useWindowDimensions()
-  //const { width } = useWindowDimensions()
   const processConfirmation = ()=> {
+    if ( currentIndex.current !== 3 ) {
+      return processToNext()
+    } 
     setOnboarded()
   }
-  const deviceHeight = dimension.height
-  const maxScrollable = { maxHeight: ( deviceHeight * 0.6 ) }
-  const smallScreen = ( deviceHeight < 720 )
-  const imageHeight = ( dimension.height * ( smallScreen ? .05 : .08 ) / PixelRatio.getFontScale() )
-  const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.\n\n'
-  const msg2 = 'PLEASE NOTE: This app does not save or store your digital credentials.'
-  type slideItemType = { id: number }
-  const slides: slideItemType[] = [
-    {id:0},
-    {id:1}, 
-    {id:2},
-    {id:3}
-    ]; 
-  const viewableItems = slides[0];
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const slidesRef = useRef(null);
-  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
-  
-  const viewableItemsChanged = useRef(({ viewableItems }) => {
-        setCurrentIndex(viewableItems[0].index);
-        }).current; 
+  const updateText = ( index: number )=> {
+    if ( index === 3 ) {
+      setNextButtonText( getStartText ) 
+    } else {
+      setNextButtonText( nextText )
+    }
+  }
 
-  
+  const processToNext = ()=>{
+    if ( currentIndex.current < 3 ) {
+      slidesRef.current?.scrollToIndex({ index: ++currentIndex.current, animated: true })      
+    }
+  }
+  interface slideItemType { id: number }
+  const slides: slideItemType[] = [
+    { id:0 },
+    { id:1 }, 
+    { id:2 },
+    { id:3 }
+  ] 
+  const scrollX = useRef(new Animated.Value(0)).current
+  const slidesRef = useRef(null)
+  const currentIndex = useRef<number>(0)
+  const measureInner = 
+    ( { nativeEvent }: any ) => {
+      setSliderWidth( nativeEvent.layout.width - ( 35 * 2 ))
+    }
+  const viewabilityConfig = {
+    waitForInteraction: true,
+    viewAreaCoveragePercentThreshold: 95,
+    itemVisiblePercentThreshold: 75
+  }
+  const viewableItemsChanged = 
+    ({ viewableItems }:{ viewableItems: { item: slideItemType } []}) => {
+      if (viewableItems.length === 0) {
+        return
+      }
+      const index =  viewableItems[0].item.id
+      updateText( index )
+      currentIndex.current = index
+    }
+  const viewabilityConfigCallbackPairs = useRef([
+    { onViewableItemsChanged:viewableItemsChanged,
+      viewabilityConfig: {
+        itemVisiblePercentThreshold: 55,
+      }
+    },
+  ])
+
+  const getItem = ( id: number  ): JSX.Element => {
+    switch ( id ) {
+      case 0:
+        return  <WelcomeDialogInner0 width={ sliderWidth } />
+      case 1:
+        return <WelcomeDialogInner1 width={ sliderWidth } />
+      case 2: 
+        return <WelcomeDialogInner2 width={ sliderWidth } />
+      default:
+        return <WelcomeDialogInner3 width={ sliderWidth } />
+    }
+  }
+
   return ( <View style={ styles.container }>
     <Modal
       animationType="fade"
@@ -57,43 +99,34 @@ export default ()=> {
       } }
     >
       <View style={ styles.centeredView }>
-        <View style={ styles.modalView }> 
-          {/* <View style={ { flex: 3 }}> */}
+        <View style={ styles.modalView }
+          onLayout={ measureInner }> 
           <FlatList 
-                data={slides} 
-                style={ [styles.flatlist, {width: width} ] }
-                contentContainerStyle = {{justifyContent:'center',}}
-                //renderItem={({ item }) => <OnboardingItem item={item} />} 
-                renderItem= {({ item }) => ( item.id === 0 ? <WelcomeDialogInner0 width={width} /> : (  item.id === 1 ? <WelcomeDialogInner1 width={width} /> : ( item.id===2 ?  <WelcomeDialogInner2 width={width} /> : <WelcomeDialogInner3 width={width} /> ) )) } 
-                
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled 
-                bounces={false} 
-                keyExtractor={(_, index) => index.toString() } 
-                onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } } ],
-                { useNativeDriver: false })}
-                scrollEventThrottle={16}
-                onViewableItemsChanged={viewableItemsChanged}
-                viewabilityConfig={viewConfig}
-                ref={slidesRef}
-                decelerationRate={0}
-                snapToInterval={slides.height}
-                snapToAlignment="start"
-                
+            data={ slides } 
+            style={ styles.flatlist }
+            renderItem= { ({ item }) =>  getItem( item.id ) } 
+            horizontal={ true }
+            showsHorizontalScrollIndicator={ false }
+            pagingEnabled 
+            bounces={ false } 
+            keyExtractor={ (item) => item.id.toString() } 
+            onScroll={ Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } } ],
+              { useNativeDriver: false }) }
+            scrollEventThrottle={ 16 }
+            viewabilityConfigCallbackPairs={ viewabilityConfigCallbackPairs.current }
+            ref={ slidesRef }
+            decelerationRate={ 0.8 }
+            snapToInterval={ sliderWidth } // your element width
+            snapToAlignment={ 'start' }
 
-                
-                
-                />
-                
-          <Paginator data={slides} scrollX={scrollX} />
+          />
+          <Paginator data={ slides } scrollX={ scrollX } width={ sliderWidth } />
           <GetStartedButton
-            title={ t('WelcomeDialog.GetStarted', 'Get Started') }
+            title={ nextButtonText }
             onPress={ processConfirmation }
             backgroundColor="#255DCB"
           />
-          </View>
-        {/* </View> */}
+        </View>
       </View>
     </Modal>
   </View>
@@ -103,13 +136,12 @@ export default ()=> {
 
 const styles = StyleSheet.create({
   container:
-    commonStyles.dialogShade,
+  commonStyles.dialogShade,
 
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22
   },
   modalView: {
     margin: 20,
@@ -126,63 +158,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    // position:"relative"
-  },
-  scrollContainer: {
-    backgroundColor: 'white',
-  },
-  scrollContents: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22
-  },
-  welcomeText: {
-    marginTop: 20,
-    fontSize: 28,
-    lineHeight: 32,
-    color: '#000000',
-    textAlign: 'left',
-  },
-  welcomeTextSmlScreen: {
-    marginTop: 20,
-    fontSize: 20,
-    lineHeight: 24,
-    color: '#000000',
-    textAlign: 'left',
-  },
-  textContainer: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  textStyleSmlScreen: {
-    color: '#616C8D',
-    fontSize: 16,
-    lineHeight: 20,
-    textAlign: 'left'
-  },
-
-  textStyle: {
-    color: '#616C8D',
-    fontSize: 18,
-    lineHeight: 24,
-    textAlign: 'left'
-  },
-  textBold: {
-    marginTop: 20,
-    fontWeight: 'bold'
   },
   flatlist: {
-    backgroundColor: '#FF000',
-    width: 300,
+    backgroundColor: '#FFFFFF',
     flex: 1
-    //contentContainerStyle = justifyContent:'center'
-  },
-  innerComponent: {
-    backgroundColor: '#0000FF',
-    flex: 1,
-    alignItems: 'center',
-    width: '100%'
-}
-
+  }
 })

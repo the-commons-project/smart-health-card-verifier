@@ -3,11 +3,10 @@ import { View, StyleSheet, Animated, useWindowDimensions } from 'react-native';
 
   
 
-export default Paginator = ({ data, scrollX }) => {
-    const { width } = useWindowDimensions(); 
+export default ({ data, scrollX, width }:{data:any[], scrollX:any, width:number}) => {
     
     return (
-        <View style={{ flexDirection: 'row', height: 64 }}> 
+        <View style={{ flexDirection: 'row', height: 20 }}> 
         {data.map((_item: any, i: number) => {
             const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
 
