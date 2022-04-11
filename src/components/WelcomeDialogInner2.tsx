@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio } from 'react-native';
-const width = 300;
 import { useTranslation } from '../services/i18n/i18nUtils' 
 import FontStyle from '../utils/FontStyleHelper'
-const warningColor = '#EA6300'
+
 const images = {
   test: require('../../assets/img/testResultIcon.png'),
   vaccine: require('../../assets/img/vaccineIcon.png'),
   
 }
+const warningColor = '#EA6300'
 
 export default WelcomeDialogInner2 = ({ width }:{width: number})=> {
     const { t } = useTranslation()

@@ -6,7 +6,7 @@ import { useTranslation } from '../services/i18n/i18nUtils'
 
 const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.\n\n'
 const msg2 = 'PLEASE NOTE: This app does not save or store your digital credentials.'
-const width = 300
+
 
 export default WelcomeDialogInner0 = ({ width }:{width: number})=> {
     const { t } = useTranslation()

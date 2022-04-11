@@ -11,7 +11,6 @@ const images = {
     tick: require('../../assets/img/verificationresult/tick.png'),
     cross: require('../../assets/img/verificationresult/cross.png'),
   }
-const width = 300 
 
 export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
     const { t } = useTranslation()
@@ -63,8 +62,8 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
             </View>
             <Text style={styles.description}> { t('WelcomeDialog.PartiallyVerifiedWelcomeDialog', "The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.")} </Text>
             <View>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor } ] }>
-            <View style={ [styles.flexColumnContainer, ,{ width:width }] } >
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor }, { width:width } ] }>
+            <View style={ [styles.flexColumnContainer, { width:width }] } >
             <Image style={ styles.bannerImage } source={ images.fail } />
                 <Text
 
@@ -130,7 +129,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#67AC5B',
         borderTopLeftRadius: 4,
         borderTopRightRadius: 4,
-        width: 300,
         minHeight: 56,
         alignItems: 'center',
         flexDirection: 'row',
@@ -139,7 +137,6 @@ const styles = StyleSheet.create({
       bannerContainerClosed: {
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
-        width: 300,
         marginLeft: 10,
         marginRight: 10
       },

@@ -6,7 +6,6 @@ const images = {
     icon: require('../../assets/img/onboardingIcon.png')
 }
 export default WelcomeDialogInner3 = ({width}:{width: number})=> {
-    //const { width } = useWindowDimensions();
     const { t } = useTranslation()
     return (
         <View style={[styles.container, { width }]}>
