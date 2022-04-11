@@ -20,7 +20,7 @@ export default WelcomeDialogInner2 = ({ width }:{width: number})=> {
                     <Text style={styles.description}> { t('WelcomeDialog.WelcomeInner2Description1', "Scanning a SMART Health Card will show the type of record and relevant information") } </Text>
                 <View style={[styles.titleInner, styles.testRecord ]}>
                 <Text style={styles.title}>{ t('WelcomeDialog.TestRecord', "Test Record") } </Text>
-                <View style={ [styles.flexColumnContainer, { width:width }] } >
+                <View style={ [styles.flexColumnContainer, { width }] } >
                 <Image style={ styles.recordImage }source={ images.test } />
                     <Text style={ styles.innerTestRecord }> { t('LabResult.title', "Test Result") }</Text>
                     <Text style={ styles.innerTestRecord }> { t('LabResult.tagCovid19', "COVID-19") }</Text>
@@ -30,7 +30,7 @@ export default WelcomeDialogInner2 = ({ width }:{width: number})=> {
             </View>
             <View style={[styles.titleInner, styles.testRecord ]}>
                 <Text style={styles.title}> { t('ImmunizationResult.Title', "Vaccination Record") }</Text>
-                <View style={ [styles.flexColumnContainer, { width:width }] } >
+                <View style={ [styles.flexColumnContainer, { width }] } >
                 <Image style = { styles.recordImage }source={ images.vaccine } />
                 <View>
                 <Text style={[ styles.innerTestRecord ]}> { t('ImmunizationResult.Title', "Vaccination Record") }</Text>

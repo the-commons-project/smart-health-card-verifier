@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils' 
 
@@ -24,8 +24,8 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
             <Text style={styles.title}> { t('WelcomeDialog.HowItWorks', 'How it works') }</Text>
             <View>
             <Text style={styles.description}>{ t('WelcomeDialog.WelcomeInner1Description1', "Scan a SMART Health Card and one of three results will appear:" ) }</Text>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: verifiedColor } ] }>
-            <View style={ [styles.flexColumnContainer, ,{ width:width }] } >
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: verifiedColor }, { width } ] }>
+            <View style={ [styles.flexColumnContainer, ,{ width }] } >
             <Image style={ styles.bannerImage } source={ images.success } />
                 <Text
 
@@ -43,8 +43,8 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
             <View>
             </View>
             <Text style={styles.description}>{ t('WelcomeDialog.VerifiedWelcomeDialog', "The SMART Health Card is valid and issued by a provider in the CommonTrust Network.") }</Text>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: warningColor } ] }>
-            <View style={ [styles.flexColumnContainer, ,{ width:width }] } >
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: warningColor }, { width } ] }>
+            <View style={ [styles.flexColumnContainer] } >
             <Image style={ styles.bannerImage } source={ images.warning } />
                 <Text
 
@@ -62,8 +62,8 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
             </View>
             <Text style={styles.description}> { t('WelcomeDialog.PartiallyVerifiedWelcomeDialog', "The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.")} </Text>
             <View>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor }, { width:width } ] }>
-            <View style={ [styles.flexColumnContainer, { width:width }] } >
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor }, { width } ] }>
+            <View style={ [styles.flexColumnContainer, { width }] } >
             <Image style={ styles.bannerImage } source={ images.fail } />
                 <Text
 
