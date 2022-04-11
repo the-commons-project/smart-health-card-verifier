@@ -71,7 +71,17 @@
         "WelcomeDescription1":"このアプリケーションはお店などで、お客様のSMART Health Cards　を承認するために使用します。",
         "WelcomeDescription2":"このアプリケーションはスキャンした証明書を保存しません。",
         "PleaseNote":"注意: ",
-        "GetStarted":"スタート"
+        "GetStarted":"スタート",
+        "HowItWorks":"How it works",
+        "VerifiedWelcomeDialog":"The SMART Health Card is valid and issued by a provider in the CommonTrust Network.",
+        "PartiallyVerifiedWelcomeDialog":"The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.",
+        "NotVerifiedWelcomeDialog":"The SMART Health Card could not be verified. It may have been corrupted or tampered with.",
+        "WelcomeInner1Description1":"Scan a SMART Health Card and one of three results will appear:",
+        "WelcomeInner2Description1":"Scanning a SMART Health Card will show the type of record and relevant information",
+        "WelcomeInner3Title":"Don't forget!",
+        "WelcomeInner3Description": "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.",
+        "DoseNumber":"Dose Number",
+        "TestRecord": "Test Record"
       }
     }
   }

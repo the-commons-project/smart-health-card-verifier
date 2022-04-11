@@ -71,7 +71,18 @@
         "WelcomeDescription1":"Use this app to verify the SMART Health Cards of your customers or employees at your business.",
         "WelcomeDescription2":"This app does not save or store your digital credentials.",
         "PleaseNote":"Please Note: ",
-        "GetStarted":"Get Started"
+        "GetStarted":"Get Started",
+        "HowItWorks":"How it works",
+        "VerifiedWelcomeDialog":"The SMART Health Card is valid and issued by a provider in the CommonTrust Network.",
+        "PartiallyVerifiedWelcomeDialog":"The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.",
+        "NotVerifiedWelcomeDialog":"The SMART Health Card could not be verified. It may have been corrupted or tampered with.",
+        "WelcomeInner1Description1":"Scan a SMART Health Card and one of three results will appear:",
+        "WelcomeInner2Description1":"Scanning a SMART Health Card will show the type of record and relevant information",
+        "WelcomeInner3Title":"Don't forget!",
+        "WelcomeInner3Description": "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.",
+        "DoseNumber":"Dose Number",
+        "TestRecord": "Test Record"
+        
       }
     }
   }

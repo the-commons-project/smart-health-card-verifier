@@ -6,17 +6,16 @@ import { useTranslation } from '../services/i18n/i18nUtils'
 
 const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.\n\n'
 const msg2 = 'PLEASE NOTE: This app does not save or store your digital credentials.'
-const width =300
+
 
 export default WelcomeDialogInner0 = ({ width }:{width: number})=> {
-    //const { width } = useWindowDimensions();
     const { t } = useTranslation()
     return (
         <View style={[styles.container, { width }]}> 
         <View style={styles.container }>
         <AppLogoSVG height={ 75 }  width={ 75 }  />
         <View >
-              <Text style={ [ styles.welcomeTextSmlScreen, styles.welcomeText, 
+              <Text style={ [ styles.welcomeTextSmlScreen, styles.welcomeText,
                 FontStyle.Poppins_700Bold,
               ] }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App!') }</Text>
               
@@ -90,18 +89,13 @@ const styles = StyleSheet.create({
         fontSize: 28,
         lineHeight: 32,
         color: '#000000',
-        textAlign: 'left',
+        textAlign: 'center',
       },
     welcomeTextSmlScreen: {
         marginTop: 20,
         fontSize: 20,
         lineHeight: 24,
         color: '#000000',
-        textAlign: 'left',
-      },
-    textContainer: {
-        marginTop: 20,
-        marginBottom: 20,
       },
     textStyleSmlScreen: {
         color: '#616C8D',
@@ -109,12 +103,11 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         textAlign: 'left'
       },
-    
     textStyle: {
         color: '#616C8D',
         fontSize: 18,
         lineHeight: 24,
-        textAlign: 'left'
+        textAlign: 'center'
       },
     textBold: {
         marginTop: 20,
