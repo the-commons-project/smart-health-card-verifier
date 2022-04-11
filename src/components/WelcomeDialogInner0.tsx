@@ -23,7 +23,7 @@ export default WelcomeDialogInner0 = ({ width }:{width: number})=> {
                 <Text style={ [ styles.textStyleSmlScreen, styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.PleaseNote', 'Please Note: ') }</Text>
                 <Text style={ [ styles.textStyleSmlScreen, styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.WelcomeDescription2', msg2) }</Text>
               </View>
-              </View>
+            </View>
         </View>
     
     
