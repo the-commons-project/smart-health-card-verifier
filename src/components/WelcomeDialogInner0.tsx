@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 300
     },
     image: {
         flex: 0.7,
