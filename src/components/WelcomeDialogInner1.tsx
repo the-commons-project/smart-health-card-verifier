@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils' 
 
@@ -12,6 +12,8 @@ const images = {
     cross: require('../../assets/img/verificationresult/cross.png'),
   }
 
+let msg1 = 'Issuer Not \n Recognized'
+
 export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
     const { t } = useTranslation()
     let verifiedColor = '#0E6B23'
@@ -19,12 +21,13 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
     let notVerifiedColor = '#C33E38'
     
     return (
+        <ScrollView style={ styles.scrollView }>
         <View style={[styles.container, { width }]}>
         <View>
             <Text style={styles.title}> { t('WelcomeDialog.HowItWorks', 'How it works') }</Text>
             <View>
             <Text style={styles.description}>{ t('WelcomeDialog.WelcomeInner1Description1', "Scan a SMART Health Card and one of three results will appear:" ) }</Text>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: verifiedColor }, { width } ] }>
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: verifiedColor }, { maxWidth: 300 } ] }>
             <View style={ [styles.flexColumnContainer, ,{ width }] } >
             <Image style={ styles.bannerImage } source={ images.success } />
                 <Text
@@ -40,10 +43,10 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
                 </Text>
                 </View>
             </View>
-            <View>
-            </View>
+            
+            
             <Text style={styles.description}>{ t('WelcomeDialog.VerifiedWelcomeDialog', "The SMART Health Card is valid and issued by a provider in the CommonTrust Network.") }</Text>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: warningColor }, { width } ] }>
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: warningColor }, { maxWidth: 300 } ] }>
             <View style={ [styles.flexColumnContainer] } >
             <Image style={ styles.bannerImage } source={ images.warning } />
                 <Text
@@ -52,28 +55,29 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
                     styles.bannerText,
                     FontStyle.Poppins_600SemiBold,
                     { backgroundColor: warningColor },
+                    { maxWidth:200}
                   ] }
                 >
                     
-                   { t('Result.IssuerNotRecognized', 'Issuer Not Recognized') }
+                   { t('Result.IssuerNotRecognized', msg1) }
                 </Text>
                 </View>
             </View>
             </View>
             <Text style={styles.description}> { t('WelcomeDialog.PartiallyVerifiedWelcomeDialog', "The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.")} </Text>
             <View>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor }, { width } ] }>
+            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor }, { maxWidth: 300 } ] }>
             <View style={ [styles.flexColumnContainer, { width }] } >
             <Image style={ styles.bannerImage } source={ images.fail } />
                 <Text
-
+                
                   style={ [
                     styles.bannerText,
                     FontStyle.Poppins_600SemiBold,
                     { backgroundColor: notVerifiedColor },
                   ] }
                 >
-                    
+
                    { t('Result.NotVerified', 'Not Verified') }
                 </Text>
                 </View>
@@ -83,7 +87,7 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
             </View>
         </View>
     </View>
-
+    </ScrollView>
         
     );
 };
@@ -92,7 +96,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        //alignItems: 'center',
+        
     },
     title: {
         fontWeight: '700',
@@ -105,8 +110,8 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         color: '#62656b',
         textAlign: 'center',
-        paddingHorizontal: 12,
-        paddingTop: 10
+        paddingHorizontal: 8,
+        
     },
     innerComponent: {
         backgroundColor: `#7fffd4`,
@@ -132,27 +137,29 @@ const styles = StyleSheet.create({
         minHeight: 56,
         alignItems: 'center',
         flexDirection: 'row',
-        marginTop: 16,
+        marginTop: 4,
       },
-      bannerContainerClosed: {
+    bannerContainerClosed: {
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
       },
-      bannerImage: {
+    bannerImage: {
         marginLeft: 16,
         marginRight: 16,
         height: 40,
         width: 40,
       },
-      bannerText: {
+    bannerText: {
         fontSize: 20,
         color: '#FFFFFF',
-        lineHeight: 33,
+        lineHeight: 24,
         alignSelf: 'center',
+        paddingTop: 5,
+        paddingBottom: 5
       },
-      subBannerContainer: {
+    subBannerContainer: {
         backgroundColor: '#FFFFFF',
         borderColor: '#000',
         borderStyle: 'solid',
@@ -166,7 +173,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
         paddingRight: 16,
       },
-      subBannerText: {
+    subBannerText: {
         fontSize: 14,
         color: '#FFFFFF',
         lineHeight: 21,
@@ -174,9 +181,15 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 3,
       },
-      flexColumnContainer: {
+    flexColumnContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-      }
+        marginTop: 5,
+        marginBottom: 5,
+        
+      },
+    scrollView: {
+        alignSelf: 'center'
+    }
 });
