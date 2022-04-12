@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, useWindowDimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, useWindowDimensions, ScrollView } from 'react-native';
 import { useTranslation } from '../services/i18n/i18nUtils' 
 
 const images = {
@@ -8,6 +8,7 @@ const images = {
 export default WelcomeDialogInner3 = ({width}:{width: number})=> {
     const { t } = useTranslation()
     return (
+        <ScrollView style={ styles.scrollView }>
         <View style={[styles.container, { width }]}>
              <View style={{ flex: .5 }}>
                 <Text style={styles.title}> { t('WelcomeDialog.WelcomeInner3Title', "Don't forget!")} </Text>
@@ -15,6 +16,7 @@ export default WelcomeDialogInner3 = ({width}:{width: number})=> {
                 <Text style={styles.description}> { t('WelcomeDialog.WelcomeInner3Description', "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.")} </Text>
             </View>
         </View>
+        </ScrollView>
     );
 };
 
@@ -50,6 +52,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         width: '100%'
-        
+    },
+    scrollView: {
+        alignSelf: 'center'
     }
 });

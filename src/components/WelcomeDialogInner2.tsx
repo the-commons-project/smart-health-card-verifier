@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio } from 'react-native';
+import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio, ScrollView } from 'react-native';
 import { useTranslation } from '../services/i18n/i18nUtils' 
 import FontStyle from '../utils/FontStyleHelper'
 
@@ -14,6 +14,7 @@ export default WelcomeDialogInner2 = ({ width }:{width: number})=> {
     const { t } = useTranslation()
     
     return (
+        <ScrollView style={ styles.scrollView }>
         <View style={[styles.container, { width }, { flex: 1 } ]}>
             <View >
                     <Text style={styles.title}> { t('WelcomeDialog.HowItWorks', 'How it works') } </Text>
@@ -39,6 +40,7 @@ export default WelcomeDialogInner2 = ({ width }:{width: number})=> {
             </View>
             </View>
     </View>
+    </ScrollView>
     );
 };
 
@@ -47,7 +49,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+
     },
     image: {
         flex: 0.7,
@@ -71,7 +74,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         width: 300,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        maxWidth: 300 
         
     },
     description: {
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
-        width: '100%',
+        maxWidth: 200,
         minHeight: 74,
         flexDirection: 'column',
         paddingTop: 8,
@@ -170,5 +174,8 @@ const styles = StyleSheet.create({
     recordImage: {
         paddingLeft: 30,
         margin: 10
-      }
+      },
+    scrollView: {
+        alignSelf: 'center'
+    }
 });

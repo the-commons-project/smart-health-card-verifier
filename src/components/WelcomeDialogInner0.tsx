@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio } from 'react-native';
+import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio, ScrollView } from 'react-native';
 import AppLogoSVG from '../../assets/img/icon_shc.svg'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
@@ -11,6 +11,7 @@ const msg2 = 'PLEASE NOTE: This app does not save or store your digital credenti
 export default WelcomeDialogInner0 = ({ width }:{width: number})=> {
     const { t } = useTranslation()
     return (
+        <ScrollView style={ styles.scrollView }>
         <View style={[styles.container, { width }]}> 
         <View style={styles.container }>
         <AppLogoSVG height={ 75 }  width={ 75 }  />
@@ -25,7 +26,7 @@ export default WelcomeDialogInner0 = ({ width }:{width: number})=> {
               </View>
             </View>
         </View>
-    
+    </ScrollView>
     
         
     );
@@ -113,4 +114,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontWeight: 'bold'
       },
+    scrollView: {
+        alignSelf: 'center'
+    }
 });
