@@ -78,7 +78,7 @@
         "WelcomeInner1Description1":"Scan a SMART Health Card and one of three results will appear:",
         "WelcomeInner2Description1":"Scanning a SMART Health Card will show the type of record and relevant information",
         "WelcomeInner3Title":"Don't forget!",
-        "WelcomeInner3Description": "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.",
+        "WelcomeInner3Description": "Always verify identity of the SMART Health Card holder with a government-issued I.D.",
         "DoseNumber":"Dose Number",
         "TestRecord": "Test Record",
         "GetStarted":"Start",

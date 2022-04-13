@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
         fontSize: 20 / PixelRatio.getFontScale(),
         lineHeight: 28 / PixelRatio.getFontScale(),
         marginBottom: 20,
-        marginTop:20
-
+        marginTop:20,
+        alignSelf: 'flex-start'
     },
     descriptionSmlScreen: {
         ...FontStyle.OpenSans_400Regular,
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
         color: '#616C8D',
         fontSize: 16,
         lineHeight: 20,
+        alignSelf: 'flex-start'
     },
     verificationResults: {
         alignItems: 'center',
