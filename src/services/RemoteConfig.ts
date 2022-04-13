@@ -4,7 +4,7 @@ import { remoteConfigURl } from './constants'
 import { loadDataOrRetrieveLocally, DataKeys } from './data/DataService' 
 type RemoteConfigType =  Record<string, any >
 
-var remoteConfigData:RemoteConfigType = defaultConfig
+let remoteConfigData: RemoteConfigType = defaultConfig
 
 class RemoteConfig {
   
@@ -21,11 +21,14 @@ class RemoteConfig {
     Promise.resolve(true)
   }
 
+  shouldUpdateFromRemote (): boolean{
+    return remoteConfigData.remoteConfigEnabled ?? false
+  }
 
-  usingLegacy():boolean{
-    const res = ( remoteConfigData.usingLegacy ?? false );
-    console.info( `usingLegacy = ${res}`)
-    return res;
+  useLegacy (): boolean{
+    const res = ( remoteConfigData.useLegacy ?? false )
+    console.debug( `usingLegacy = ${String(res)}`)
+    return res
   }
 }
 

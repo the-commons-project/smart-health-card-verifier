@@ -141,7 +141,7 @@ class i18nUtils{
       [ key, _lang, _region ] = mappedHistory[url] 
       found = true
       console.log(`Using mapped history: ${key}`)
-    } else if ( !remoteConfig.usingLegacy() ) {
+    } else if ( !remoteConfig.useLegacy() ) {
       try {
         console.log(`loading ${key}: ${url}` )
         const response  = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
