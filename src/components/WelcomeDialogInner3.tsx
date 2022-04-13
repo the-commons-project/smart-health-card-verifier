@@ -1,20 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, useWindowDimensions, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Image, useWindowDimensions, ScrollView, PixelRatio } from 'react-native';
 import { useTranslation } from '../services/i18n/i18nUtils' 
+import FontStyle from '../utils/FontStyleHelper'
+import OnboardingSVG from '../../assets/img/welcomeDialog/onboardingIcon.svg'
 
-const images = {
-    icon: require('../../assets/img/onboardingIcon.png')
-}
-export default WelcomeDialogInner3 = ({width}:{width: number})=> {
+export default ({ style, width, isSmallScreen }:{style: any, width: number, isSmallScreen:boolean})=> {
     const { t } = useTranslation()
+    const onboardingIconWidth = Math.floor( width * 0.3 ) 
+
     return (
-        <ScrollView style={ styles.scrollView }>
+        <ScrollView  style={ styles.scrollView }>
         <View style={[styles.container, { width }]}>
-             <View style={{ flex: .5 }}>
-                <Text style={styles.title}> { t('WelcomeDialog.WelcomeInner3Title', "Don't forget!")} </Text>
-                <Image style={{ alignSelf: 'center' } }source={ images.icon } />
-                <Text style={styles.description}> { t('WelcomeDialog.WelcomeInner3Description', "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.")} </Text>
-            </View>
+            <Text style={isSmallScreen? styles.titleSmlScreen :  styles.title}> { t('WelcomeDialog.WelcomeInner3Title', "Don't forget!")} </Text>
+            <OnboardingSVG style={{ alignSelf: 'center' } } width={onboardingIconWidth} height={onboardingIconWidth} />
+            <Text style={isSmallScreen? styles.descriptionSmlScreen : styles.description }> { t('WelcomeDialog.WelcomeInner3Description', "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.")} </Text>
         </View>
         </ScrollView>
     );
@@ -29,29 +28,46 @@ const styles = StyleSheet.create({
         marginTop: 100
     },
     image: {
-        flex: 0.7,
         justifyContent: 'center'
     }, 
     title: {
-        fontWeight: '800',
-        fontSize: 28,
-        marginBottom: 10,
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 36,
+        lineHeight: 40,
         color: '#052049',
         textAlign: 'center',
-        justifyContent: 'center'
+        marginBottom: 25,
+        paddingTop: 5
+      },
+    titleSmlScreen: {
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 20,
+        lineHeight: 28,
+        color: '#052049',
+        textAlign: "center",
+        alignSelf:"center",
+        marginBottom: 20,
+        paddingTop: 5
     },
+
     description: {
-        fontWeight: '300',
-        color: '#62656b',
-        textAlign: 'center',
-        paddingHorizontal: 28,
-        paddingTop: 10
+        ...FontStyle.OpenSans_400Regular,
+        flexShrink: 1,
+        flexWrap: 'wrap',
+        color: '#616C8D',
+        fontSize: 20 / PixelRatio.getFontScale(),
+        lineHeight: 28 / PixelRatio.getFontScale(),
+        marginTop: 25,
+        padding: 5
     },
-    innerComponent: {
-        backgroundColor: `#7fff00`,
-        flex: 1,
-        alignItems: 'center',
-        width: '100%'
+
+    descriptionSmlScreen: {
+        ...FontStyle.OpenSans_400Regular,
+        marginTop: 20,
+        marginBottom: 20,
+        color: '#616C8D',
+        fontSize: 16,
+        lineHeight: 20,
     },
     scrollView: {
         alignSelf: 'center'

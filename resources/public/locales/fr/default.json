@@ -71,18 +71,18 @@
         "WelcomeDescription1":"Utilisez cette application pour vérifier la SMART Health Card de vos clients et employés de vos clients ou de vos employés",
         "WelcomeDescription2":"Cette application n'enregistre ni ne stocke vos informations d'identification numériques.",
         "PleaseNote":"Veuillez noter: ",
-        "HowItWorks":"How it works",
-        "VerifiedWelcomeDialog":"The SMART Health Card is valid and issued by a provider in the CommonTrust Network.",
-        "PartiallyVerifiedWelcomeDialog":"The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.",
-        "NotVerifiedWelcomeDialog":"The SMART Health Card could not be verified. It may have been corrupted or tampered with.",
-        "WelcomeInner1Description1":"Scan a SMART Health Card and one of three results will appear:",
-        "WelcomeInner2Description1":"Scanning a SMART Health Card will show the type of record and relevant information",
-        "WelcomeInner3Title":"Don't forget!",
-        "WelcomeInner3Description": "Always verifiy identity of the SMART Health Card holder wih a government-issued I.D.",
-        "DoseNumber":"Dose Number",
-        "TestRecord": "Test Record",
-        "GetStarted":"Commencez",
-        "Next": "Next"
+        "HowItWorks":"Comment cela fonctionne",
+        "WelcomeInner1Verified":"La SMART Health Card est valide et émise par un fournisseur du réseau CommonTrust..",
+        "WelcomeInner1PartiallyVerified":"La SMART Health Card est valide mais n'est pas délivrée par un prestataire du réseau CommonTrust. Procédez avec précaution.",
+        "WelcomeInner1NotVerified":"La SMART Health Card n'a pas pu être vérifiée. Elle peut avoir été corrompue ou altérée.",
+        "WelcomeInner1Description1":"Scannez une SMART Health Card et l'un des trois résultats suivants apparaîtra:",
+        "WelcomeInner2Description1":"Le balayage d'une SMART Health Card indique le type d'enregistrement et les informations pertinentes.",
+        "WelcomeInner3Title":"N'oubliez pas !!",
+        "WelcomeInner3Description": "Vérifiez toujours l'identité du titulaire de la SMART Health Card à l'aide d'une pièce d'identité émise par le gouvernement.",
+        "DoseNumber":"Numéro de dose",
+        "TestRecord": "Dossier de test",
+        "GetStarted":"Commencer",
+        "Next": "Suivant"
       }
     }
   }
