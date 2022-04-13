@@ -4,117 +4,83 @@ import AppLogoSVG from '../../assets/img/icon_shc.svg'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 
-const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.\n\n'
-const msg2 = 'PLEASE NOTE: This app does not save or store your digital credentials.'
+const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.'
+const msg2 = 'This app does not save or store your digital credentials.'
 
 
-export default WelcomeDialogInner0 = ({ width }:{width: number})=> {
+export default ({ style, width, isSmallScreen }:{style: any, width: number, isSmallScreen:boolean})=> {
     const { t } = useTranslation()
+    const dimension = useWindowDimensions()
+    const imgSize = isSmallScreen ? 50 : 100
     return (
-        <ScrollView style={ styles.scrollView }>
-        <View style={[styles.container, { width }]}> 
-        <View style={styles.container }>
-        <AppLogoSVG height={ 75 }  width={ 75 }  />
-        <View >
-              <Text style={ [ styles.welcomeTextSmlScreen, styles.welcomeText,
-                FontStyle.Poppins_700Bold,
-              ] }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App!') }</Text>
-              
-                <Text style={ [ styles.textStyleSmlScreen, styles.textStyle, FontStyle.OpenSans_400Regular, ] } >{ t('WelcomeDialog.WelcomeDescription1', msg1) }</Text>
-                <Text style={ [ styles.textStyleSmlScreen, styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.PleaseNote', 'Please Note: ') }</Text>
-                <Text style={ [ styles.textStyleSmlScreen, styles.textStyle, FontStyle.OpenSans_400Regular, ] }>{ t('WelcomeDialog.WelcomeDescription2', msg2) }</Text>
-              </View>
+        <ScrollView style={ [ style, styles.scrollView ] }>
+            <View style={[styles.container, { width }]}> 
+                <AppLogoSVG height={ imgSize }  width={ imgSize } style={[{marginTop:( isSmallScreen ? "10%" : "20%" )}]} />
+                <Text style={ [ ( isSmallScreen ? styles.welcomeTextSmlScreen : styles.welcomeText ), {textAlign: "center"}] }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App!') }</Text>
+                <View style={styles.contents }>
+                    <Text style={ [ ( isSmallScreen ? styles.textStyleSmlScreen : styles.textStyle ), ] } >{ t('WelcomeDialog.WelcomeDescription1', msg1) }</Text>
+                    <Text style={ [ ( isSmallScreen ? styles.textStyleSmlScreen :  styles.textStyle ), FontStyle.OpenSans_700Bold, {marginTop: 20}] }>{ t('WelcomeDialog.PleaseNote', 'Please Note:') }</Text>
+                    <Text style={ [ ( isSmallScreen ? styles.textStyleSmlScreen : styles.textStyle ) ] }>{ t('WelcomeDialog.WelcomeDescription2', msg2) }</Text>
+                </View>
             </View>
-        </View>
-    </ScrollView>
-    
+        </ScrollView>
         
-    );
+            
+        );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        padding: 10,
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
     image: {
         flex: 0.7,
         justifyContent: 'center'
     },
-    title: {
-        fontWeight: '800',
-        fontSize: 28,
-        marginBottom: 10,
-        color: '#493d8a',
-        textAlign: 'center'
+    contents: {
+        flexDirection: 'row',
+        flexWrap:'wrap',
+        alignItems: "flex-start"
     },
-    description: {
-        fontWeight: '300',
-        color: '#62656b',
-        textAlign: 'center',
-        paddingHorizontal: 64
-    },
-    innerComponent: {
-        backgroundColor: `#7fffd4`,
-        flex: 1,
-        alignItems: 'center',
-        width: '100%'
-    },
-    textContainer: {
-        marginTop: 20,
-        marginBottom: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
-      },
-    logoSVG: {
-        width: 150, height: 150, resizeMode: 'contain'
-    },
-    verificationResults: {
-        
-        alignItems: 'center',
-        resizeMode: 'contain',
-        justifyContent: 'center',    
-    }, 
-    scrollContainer: {
-        backgroundColor: 'white',
-      },
-    scrollContents: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-      },
     welcomeText: {
-        marginTop: 20,
-        fontSize: 28,
-        lineHeight: 32,
-        color: '#000000',
+        ...FontStyle.Poppins_700Bold, 
+        marginTop: 35,
+        marginBottom: 30,
+        fontSize: 30,
+        lineHeight: 40,
+        color: '#052049',
         textAlign: 'center',
       },
     welcomeTextSmlScreen: {
+        ...FontStyle.Poppins_700Bold, 
         marginTop: 20,
+        marginBottom: 20,
         fontSize: 20,
-        lineHeight: 24,
-        color: '#000000',
+        lineHeight: 28,
+        color: '#052049',
       },
     textStyleSmlScreen: {
+        ...FontStyle.OpenSans_400Regular,
+        marginTop: 10,
         color: '#616C8D',
         fontSize: 16,
         lineHeight: 20,
-        textAlign: 'left'
       },
     textStyle: {
+        ...FontStyle.OpenSans_400Regular,
+        flexShrink: 1,
         color: '#616C8D',
-        fontSize: 18,
-        lineHeight: 24,
-        textAlign: 'center'
+        fontSize: 20 / PixelRatio.getFontScale(),
+        lineHeight: 28 / PixelRatio.getFontScale()
       },
     textBold: {
         marginTop: 20,
         fontWeight: 'bold'
       },
     scrollView: {
-        alignSelf: 'center'
+        alignSelf: 'flex-start'
     }
 });

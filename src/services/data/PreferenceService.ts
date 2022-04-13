@@ -9,7 +9,7 @@ const PreferenceItemKey = {
   'Onborded':'Onborded'
 }
 
-const onbordVersion = 1
+const onbordVersion = 2
 
 export default class PreferenceService {
   static _preference: PreferenceService

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, PixelRatio} from 'react-native';
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils' 
 
@@ -12,81 +12,63 @@ const images = {
     cross: require('../../assets/img/verificationresult/cross.png'),
   }
 
-let msg1 = 'Issuer Not \n Recognized'
 
-export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
+export default ({ style, width, isSmallScreen }:{style: any, width: number, isSmallScreen:boolean})=> {
+    const msg1 = 'Issuer Not \n Recognized'
     const { t } = useTranslation()
-    let verifiedColor = '#0E6B23'
-    let warningColor = '#EA6300'
-    let notVerifiedColor = '#C33E38'
-    
+    const verifiedColor = '#0E6B23'
+    const warningColor = '#EA6300'
+    const notVerifiedColor = '#C33E38'
+    const textStyle = isSmallScreen? styles.descriptionSmlScreen: styles.description
+    const bannerTextStyle = isSmallScreen ? styles.bannerTextSmlScreen:  styles.bannerText
     return (
         <ScrollView style={ styles.scrollView }>
-        <View style={[styles.container, { width }]}>
-        <View>
-            <Text style={styles.title}> { t('WelcomeDialog.HowItWorks', 'How it works') }</Text>
-            <View>
-            <Text style={styles.description}>{ t('WelcomeDialog.WelcomeInner1Description1', "Scan a SMART Health Card and one of three results will appear:" ) }</Text>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: verifiedColor }, { maxWidth: 300 } ] }>
-            <View style={ [styles.flexColumnContainer, ,{ width }] } >
-            <Image style={ styles.bannerImage } source={ images.success } />
-                <Text
+            <View style={[styles.container, { ...style, width} ]}>
+                <Text style={ [ {marginTop: ( isSmallScreen ? "10%":"20%" )}, isSmallScreen?styles.titleSmlScreen: styles.title] }>{ t('WelcomeDialog.HowItWorks', 'How it works') }</Text>
+                <Text style={textStyle}>{ t('WelcomeDialog.WelcomeInner1Description1', "Scan a SMART Health Card and one of three results will appear:" ) }</Text>
+                <View style={[ styles.bannerContainer, { backgroundColor: verifiedColor } ] }>
+                    <Image style={ styles.bannerImage } source={ images.success } />
+                    <Text
 
-                  style={ [
-                    styles.bannerText,
-                    FontStyle.Poppins_600SemiBold,
-                    { backgroundColor: verifiedColor },
-                  ] }
-                >
-                    
-                { t('Result.Verified', 'Verified') }
-                </Text>
+                      style={ [
+                        bannerTextStyle,
+                        { backgroundColor: verifiedColor },
+                      ] }
+                    >
+                    { t('Result.Verified', 'Verified') }
+                    </Text>
                 </View>
-            </View>
-            
-            
-            <Text style={styles.description}>{ t('WelcomeDialog.VerifiedWelcomeDialog', "The SMART Health Card is valid and issued by a provider in the CommonTrust Network.") }</Text>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: warningColor }, { maxWidth: 300 } ] }>
-            <View style={ [styles.flexColumnContainer] } >
-            <Image style={ styles.bannerImage } source={ images.warning } />
-                <Text
-
-                  style={ [
-                    styles.bannerText,
-                    FontStyle.Poppins_600SemiBold,
-                    { backgroundColor: warningColor },
-                    { maxWidth:200}
-                  ] }
-                >
-                    
-                   { t('Result.IssuerNotRecognized', msg1) }
-                </Text>
-                </View>
-            </View>
-            </View>
-            <Text style={styles.description}> { t('WelcomeDialog.PartiallyVerifiedWelcomeDialog', "The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.")} </Text>
-            <View>
-            <View style={[ styles.bannerContainer, styles.bannerContainerClosed, { backgroundColor: notVerifiedColor }, { maxWidth: 300 } ] }>
-            <View style={ [styles.flexColumnContainer, { width }] } >
-            <Image style={ styles.bannerImage } source={ images.fail } />
-                <Text
                 
-                  style={ [
-                    styles.bannerText,
-                    FontStyle.Poppins_600SemiBold,
-                    { backgroundColor: notVerifiedColor },
-                  ] }
-                >
-
-                   { t('Result.NotVerified', 'Not Verified') }
-                </Text>
+                
+                <Text style={textStyle}>{ t('WelcomeDialog.WelcomeInner1Verified', "The SMART Health Card is valid and issued by a provider in the CommonTrust Network.") }</Text>
+                <View style={[ styles.bannerContainer, { backgroundColor: warningColor } ] }>
+                    <Image style={ styles.bannerImage } source={ images.warning } />
+                    <Text
+                      style={ [
+                        bannerTextStyle,
+                        { backgroundColor: warningColor }
+                      ] }
+                    >
+                        
+                       { t('Result.IssuerNotRecognized', msg1) }
+                    </Text>
                 </View>
+                <Text style={textStyle}>{ t('WelcomeDialog.WelcomeInner1PartiallyVerified', "The SMART Health Card is valid but is not issued by a provider in the CommonTrust Network. Proceed with caution.")} </Text>
+                <View style={[ styles.bannerContainer, { backgroundColor: notVerifiedColor } ] }>
+                    <Image style={ styles.bannerImage } source={ images.fail } />
+                    <Text
+                    
+                      style={ [
+                        bannerTextStyle,
+                        { backgroundColor: notVerifiedColor },
+                      ] }
+                    >
+
+                       { t('Result.NotVerified', 'Not Verified') }
+                    </Text>
+                </View>
+                <Text style={textStyle}> { t('WelcomeDialog.WelcomeInner1NotVerified', "The SMART Health Card could not be verified. It may have been corrupted or tampered with.") }</Text>
             </View>
-            <Text style={styles.description}> { t('WelcomeDialog.NotVerifiedWelcomeDialog', "The SMART Health Card could not be verified. It may have been corrupted or tampered with.") }</Text>
-            
-            </View>
-        </View>
-    </View>
     </ScrollView>
         
     );
@@ -94,36 +76,49 @@ export default WelcomeDialogInner1 = ({ width }:{width: number})=> {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
-        //alignItems: 'center',
-        
+        alignItems: 'center',
+        flexWrap:'wrap',
+        paddingBottom: 20
     },
     title: {
-        fontWeight: '700',
-        fontSize: 28,
-        marginBottom: 10,
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 35,
+        lineHeight: 40,
         color: '#052049',
-        textAlign: 'center'
-    },
-    description: {
-        fontWeight: '300',
-        color: '#62656b',
         textAlign: 'center',
-        paddingHorizontal: 8,
-        
+        paddingTop: 5
+      },
+    titleSmlScreen: {
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 20,
+        lineHeight: 28,
+        color: '#052049',
+        textAlign: "center",
+        alignSelf:"center",
+        flexShrink: 1,
+        paddingTop: 5
+      },
+    description: {
+        ...FontStyle.OpenSans_400Regular,
+        flexShrink: 1,
+        flexWrap: 'wrap',
+        color: '#616C8D',
+        fontSize: 20 / PixelRatio.getFontScale(),
+        lineHeight: 28 / PixelRatio.getFontScale(),
+        marginBottom: 20,
+        marginTop:20,
+        alignSelf: 'flex-start'
     },
-    innerComponent: {
-        backgroundColor: `#7fffd4`,
-        flex: 1,
-        alignItems: 'center',
-    },
-    textContainer: {
+    descriptionSmlScreen: {
+        ...FontStyle.OpenSans_400Regular,
         marginTop: 20,
         marginBottom: 20,
-      },
-    logoSVG: {
-        width: 150, height: 150, resizeMode: 'contain'
+        color: '#616C8D',
+        fontSize: 16,
+        lineHeight: 20,
+        alignSelf: 'flex-start'
     },
     verificationResults: {
         alignItems: 'center',
@@ -131,65 +126,45 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     bannerContainer: {
+        width: '90%',
         backgroundColor: '#67AC5B',
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
+        borderRadius: 4,
         minHeight: 56,
         alignItems: 'center',
+        justifyContent:'flex-start',
         flexDirection: 'row',
         marginTop: 4,
-      },
-    bannerContainerClosed: {
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        marginLeft: 10,
-        marginRight: 10,
+        marginBottom: 4,
       },
     bannerImage: {
-        marginLeft: 16,
-        marginRight: 16,
+        marginLeft: 5,
+        marginRight: 10,
         height: 40,
         width: 40,
       },
     bannerText: {
+        ...FontStyle.Poppins_600SemiBold,
+        color: '#FFFFFF',
         fontSize: 20,
-        color: '#FFFFFF',
         lineHeight: 24,
-        alignSelf: 'center',
-        paddingTop: 5,
-        paddingBottom: 5
-      },
-    subBannerContainer: {
-        backgroundColor: '#FFFFFF',
-        borderColor: '#000',
-        borderStyle: 'solid',
-        borderWidth: 1.5,
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        width: '100%',
-        minHeight: 74,
-        flexDirection: 'column',
-        paddingTop: 8,
-        paddingLeft: 16,
-        paddingRight: 16,
-      },
-    subBannerText: {
-        fontSize: 14,
-        color: '#FFFFFF',
-        lineHeight: 21,
         alignSelf:'center',
-        paddingLeft: 10,
+        paddingTop: 3,
+      },
+    bannerTextSmlScreen: {
+        ...FontStyle.Poppins_600SemiBold,
+        color: '#FFFFFF',
+        fontSize: 16 * PixelRatio.getFontScale(),
+        lineHeight: 24 * PixelRatio.getFontScale(),
+        alignSelf:'center',
         paddingTop: 3,
       },
     flexColumnContainer: {
+        flex:1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        marginTop: 5,
-        marginBottom: 5,
-        
       },
     scrollView: {
-        alignSelf: 'center'
+        alignSelf: 'flex-start'
     }
 });

@@ -2,87 +2,116 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio, ScrollView } from 'react-native';
 import { useTranslation } from '../services/i18n/i18nUtils' 
 import FontStyle from '../utils/FontStyleHelper'
+import ImmunizationSVG from '../../assets/img/verificationresult/immunizationIcon.svg'
+import LabResultIconSVG from '../../assets/img/verificationresult/labResultIcon.svg'
 
-const images = {
-  test: require('../../assets/img/testResultIcon.png'),
-  vaccine: require('../../assets/img/vaccineIcon.png'),
-  
-}
 const warningColor = '#EA6300'
 
-export default WelcomeDialogInner2 = ({ width }:{width: number})=> {
+export default ({ style, width, isSmallScreen }:{style: any, width: number, isSmallScreen:boolean})=> {
     const { t } = useTranslation()
-    
+    const titleInner = isSmallScreen ? styles.titleInnerSmlScreen:  styles.titleInner
+    const description = isSmallScreen ? styles.descriptionSmlScreen : styles.description
+    const titleStryle = isSmallScreen ? styles.titleSmlScreen : styles.title
+    const tagStyle = isSmallScreen? styles.tagRecordSmlScreen : styles.tagRecord
+    const tagTitleStyle = isSmallScreen? styles.tagTitleSmlScreen : styles.tagTitle
+    const tagContainerStyle = isSmallScreen? styles.tagContainerSmlScreen : styles.tagContainer
+    const iconSize = Math.floor( width * 0.20 )
     return (
         <ScrollView style={ styles.scrollView }>
-        <View style={[styles.container, { width }, { flex: 1 } ]}>
-            <View >
-                    <Text style={styles.title}> { t('WelcomeDialog.HowItWorks', 'How it works') } </Text>
-                    <Text style={styles.description}> { t('WelcomeDialog.WelcomeInner2Description1', "Scanning a SMART Health Card will show the type of record and relevant information") } </Text>
-                <View style={[styles.titleInner, styles.testRecord ]}>
-                <Text style={styles.title}>{ t('WelcomeDialog.TestRecord', "Test Record") } </Text>
-                <View style={ [styles.flexColumnContainer, { width }] } >
-                <Image style={ styles.recordImage }source={ images.test } />
-                    <Text style={ styles.innerTestRecord }> { t('LabResult.title', "Test Result") }</Text>
-                    <Text style={ styles.innerTestRecord }> { t('LabResult.tagCovid19', "COVID-19") }</Text>
+            <View style={[styles.container, {  ...style, width } ]}>
+                <Text style={ [ {marginTop: ( isSmallScreen ? "10%":"20%" )},titleStryle ] }>{ t('WelcomeDialog.HowItWorks', 'How it works') } </Text>
+                <Text style={description}> { t('WelcomeDialog.WelcomeInner2Description1', "Scanning a SMART Health Card will show the type of record and relevant information") } </Text>
+                <View style={[titleInner, styles.testRecord ]}>
+                    <View style={ [styles.flexColumnContainer] } >
+                        <LabResultIconSVG width={iconSize} height={iconSize}/>
+                        <View style={tagContainerStyle}>
+                            <Text style={ tagTitleStyle}>{ t('WelcomeDialog.TestRecord', "Test Record") }</Text>
+                            <Text style={ [styles.tag, tagStyle] }>{ t('LabResult.title', "Test Result") }</Text>
+                            <Text style={ [styles.tag, tagStyle] }>{ t('LabResult.tagCovid19', "COVID-19") }</Text>
+                        </View>
+                    </View>
+                </View>
+                <Text style={description }> Or </Text>
+                <View style={[titleInner, styles.testRecord ]}>
+                    <View style={ [styles.flexColumnContainer] } >
+                        <ImmunizationSVG width={iconSize} height={iconSize}/>
+                        <View style={tagContainerStyle}>
+                            <Text style={tagTitleStyle}>{ t('ImmunizationResult.Title', "Vaccination Record") }</Text>
+                            <Text style={ [styles.tag, tagStyle] }>{ t('ImmunizationResult.Title', "Vaccination Record") }</Text>
+                            <Text style={ [styles.tag, tagStyle]}>{ t('WelcomeDialog.DoseNumber', "Dose Number") }</Text>
+                        </View>
+                    </View>
                 </View>
             </View>
-            <Text style={ styles.description }> Or </Text>
-            </View>
-            <View style={[styles.titleInner, styles.testRecord ]}>
-                <Text style={styles.title}> { t('ImmunizationResult.Title', "Vaccination Record") }</Text>
-                <View style={ [styles.flexColumnContainer, { width }] } >
-                <Image style = { styles.recordImage }source={ images.vaccine } />
-                <View>
-                <Text style={[ styles.innerTestRecord ]}> { t('ImmunizationResult.Title', "Vaccination Record") }</Text>
-                <Text style={ styles.innerTestRecord }> { t('WelcomeDialog.DoseNumber', "Dose Number") }</Text>
-            </View>
-            </View>
-            </View>
-    </View>
-    </ScrollView>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
+        flexDirection:"column",
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: "#FFFFFF",
-
+        paddingBottom: 20
     },
     image: {
         flex: 0.7,
         justifyContent: 'center'
     }, 
     title: {
-        fontWeight: '700',
-        fontSize: 28,
-        marginBottom: 5,
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 35,
+        lineHeight: 40,
         color: '#052049',
         textAlign: 'center',
-        marginTop: 0
-    },
+        paddingTop: 5
+
+      },
+    titleSmlScreen: {
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 20,
+        lineHeight: 28,
+        color: '#052049',
+        textAlign: "center",
+        alignSelf:"center",
+        paddingTop: 5
+      },
     titleInner: {
-        fontWeight: '800',
-        fontSize: 28,
-        marginBottom: 10,
+        width: "90%",
+        padding: 10,
         color: '#052049',
-        textAlign: 'center',
         borderColor: '#4D72B5',
         borderWidth: 1,
-        borderRadius: 5,
-        width: 300,
+        borderRadius: 10,
         justifyContent: 'center',
-        maxWidth: 300 
-        
+    },
+    titleInnerSmlScreen: {
+        width: "90%",
+        padding: 10,
+        color: '#052049',
+        borderColor: '#4D72B5',
+        borderWidth: 1,
+        borderRadius: 10,
+        justifyContent: 'center',
     },
     description: {
-        fontWeight: '300',
-        color: '#62656b',
-        textAlign: 'center',
-        paddingHorizontal: 0
+        ...FontStyle.OpenSans_400Regular,
+        flexWrap: 'wrap',
+        color: '#616C8D',
+        fontSize: 20 / PixelRatio.getFontScale(),
+        lineHeight: 28 / PixelRatio.getFontScale(),
+        marginBottom: 20,
+        marginTop: 20
+
+
+    },
+    descriptionSmlScreen: {
+        ...FontStyle.OpenSans_400Regular,
+        marginTop: 10,
+        marginBottom: 10,
+        color: '#616C8D',
+        fontSize: 16,
+        lineHeight: 20
     },
     innerComponent: {
         backgroundColor: "#FFFFFF",
@@ -90,92 +119,71 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
-    bannerContainer: {
-        backgroundColor: '#67AC5B',
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
-        width: '100%',
-        minHeight: 56,
-        alignItems: 'center',
-        flexDirection: 'row',
-        marginTop: 16,
-      },
-    bannerContainerClosed: {
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4
-      },
-    bannerImage: {
-        marginLeft: 8,
-        marginRight: 8,
-        height: 40,
-        width: 40,
-        alignSelf: 'center',
-      },
-    bannerText: {
-        fontSize: 22,
-        color: '#FFFFFF',
-        lineHeight: 33,
-        alignSelf: 'center',
-      },
-    subBannerContainer: {
-        backgroundColor: '#FFFFFF',
-        borderColor: '#000',
-        borderStyle: 'solid',
-        borderWidth: 1.5,
-        borderBottomLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        maxWidth: 200,
-        minHeight: 74,
-        flexDirection: 'column',
-        paddingTop: 8,
-        paddingLeft: 16,
-        paddingRight: 16,
-      },
-    subBannerText: {
-        fontSize: 14,
-        color: '#FFFFFF',
-        lineHeight: 21,
-        alignSelf:'center',
-        paddingLeft: 10,
-        paddingTop: 3,
-      },
-    subIcon: {
-        width: 9 * PixelRatio.getFontScale(),
-        height: 7 * PixelRatio.getFontScale(),
-      },
     flexColumnContainer: {
+        width: "100%",
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-      },
-    innerTestRecord: {
-        backgroundColor: '#4D72B5',
-        borderWidth: 1,
-        borderRadius: 4,
-        borderColor: '#4D72B5',
-        overflow: 'hidden',
-        alignItems: 'center',
-        marginTop: 5,
+    },
+    tagContainer: {
+        flexDirection:'row',
+        flexWrap:'wrap',
+        alignItems:'flex-start',
+        flex:1,
+        paddingLeft:10,
+    },
+    tagContainerSmlScreen: {
+        flexDirection:'row',
+        flexWrap:'wrap',
+        alignItems:'flex-start',
+        flex:1,
+        paddingLeft:5,
+    },
+    tag: {
+        marginRight:10,
+        paddingTop: 2,
+        paddingBottom: 2,
+        borderRadius: 5,
+        flexShrink:1,
+        alignContent: 'center',
+        justifyContent: 'center',
+        color: '#FFFFFF',
+        backgroundColor: '#4D72B5'
+    },
+    tagRecordSmlScreen: {
+        ...FontStyle.Poppins_700Bold,
+        fontSize: 10,
+        color: '#FFFFFF',
+        paddingLeft: 5,
+        paddingRight: 5,
+        marginTop: 2
+    },
+    tagRecord: {
+        ...FontStyle.Poppins_700Bold,
         fontSize: 14,
         color: '#FFFFFF',
-        lineHeight: 21,
-        alignSelf:'center',
-        paddingTop: 1,
-        justifyContent: 'space-between',
-        fontWeight: '800',
-        paddingRight: 5,
-        paddingLeft: 5,
-        marginBottom: 5,
-        margin: 5
-      },
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginTop: 2
+    },
+    tagTitle: {
+        ...FontStyle.Poppins_700Bold, 
+        width: "100%",
+        fontSize: 24,
+        lineHeight: 30,
+        color: '#052049',
+    },
+    tagTitleSmlScreen: {
+        ...FontStyle.Poppins_700Bold, 
+        fontSize: 20,
+        lineHeight: 22,
+        color: '#052049',
+
+    },
     testRecord: {
         marginTop: 16
-      },
-    recordImage: {
-        paddingLeft: 30,
-        margin: 10
-      },
+    },
     scrollView: {
-        alignSelf: 'center'
+        alignSelf: 'flex-start'
     }
 });

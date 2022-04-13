@@ -12,15 +12,23 @@ import WelcomeDialogInner1 from './WelcomeDialogInner1'
 import WelcomeDialogInner2 from './WelcomeDialogInner2'
 import WelcomeDialogInner3 from './WelcomeDialogInner3'
 
+const getIsSmallScreen = ( width: number ) => {
+    return ( width / PixelRatio.getFontScale() ) < 350
+}
+
 export default ()=> {
+  const dimension     = useWindowDimensions()
+  const isSmallScreen = getIsSmallScreen( dimension.width )
+  console.log("isSmallScreen= " + isSmallScreen)
+
   const { setOnboarded } = usePreferenceContext()
   const { t } = useTranslation()
   const getStartText = t('WelcomeDialog.GetStarted', 'Get Started')
   const nextText = t('WelcomeDialog.Next', 'Next')
   const [ nextButtonText, setNextButtonText ] = useState( nextText )
   const [ modalVisible, setModalVisible ]= useState(true)
-  const [ sliderWidth, setSliderWidth ] = useState(0)
-  const dimension = useWindowDimensions()
+  const [ sliderWidth, setSliderWidth ]   = useState(0)
+  const [ contentWidth, setContentWidth ] = useState(0)
   const processConfirmation = ()=> {
     if ( currentIndex.current !== 3 ) {
       return processToNext()
@@ -52,13 +60,11 @@ export default ()=> {
   const currentIndex = useRef<number>(0)
   const measureInner = 
     ( { nativeEvent }: any ) => {
-      setSliderWidth( nativeEvent.layout.width - ( 35 * 2 ))
+      let sWidth = nativeEvent.layout.width;
+      setSliderWidth( sWidth  - 5 ) 
+      setContentWidth( sWidth  - ( 5 * 2 ) ) 
     }
-  const viewabilityConfig = {
-    waitForInteraction: true,
-    viewAreaCoveragePercentThreshold: 95,
-    itemVisiblePercentThreshold: 75
-  }
+
   const viewableItemsChanged = 
     ({ viewableItems }:{ viewableItems: { item: slideItemType } []}) => {
       if (viewableItems.length === 0) {
@@ -71,21 +77,22 @@ export default ()=> {
   const viewabilityConfigCallbackPairs = useRef([
     { onViewableItemsChanged:viewableItemsChanged,
       viewabilityConfig: {
-        itemVisiblePercentThreshold: 55,
+        itemVisiblePercentThreshold: 51,
       }
     },
   ])
 
   const getItem = ( id: number  ): JSX.Element => {
+    const style = {paddingLeft: 5, paddingRight: 5 };
     switch ( id ) {
       case 0:
-        return  <WelcomeDialogInner0 width={ sliderWidth } />
+        return  <WelcomeDialogInner0 isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
       case 1:
-        return <WelcomeDialogInner1 width={ sliderWidth } />
+        return <WelcomeDialogInner1  isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
       case 2: 
-        return <WelcomeDialogInner2 width={ sliderWidth } />
+        return <WelcomeDialogInner2  isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
       default:
-        return <WelcomeDialogInner3 width={ sliderWidth } />
+        return <WelcomeDialogInner3  isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
     }
   }
 
@@ -112,10 +119,10 @@ export default ()=> {
             keyExtractor={ (item) => item.id.toString() } 
             onScroll={ Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } } ],
               { useNativeDriver: false }) }
-            scrollEventThrottle={ 16 }
+            scrollEventThrottle={ 30 }
             viewabilityConfigCallbackPairs={ viewabilityConfigCallbackPairs.current }
             ref={ slidesRef }
-            decelerationRate={ 0.8 }
+            decelerationRate={ 0.5 }
             snapToInterval={ sliderWidth } // your element width
             snapToAlignment={ 'start' }
 
@@ -147,7 +154,10 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 5,
+    paddingLeft: 5,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
