@@ -2,7 +2,6 @@ import { ErrorCode } from '../error'
 import { vaccineCodesURl, ApiTimeout } from '../constants'
 import { getInstallationIdManually } from '../../utils/utils'
 import { DataKeys, loadDataOrRetrieveLocally } from '../../services/data/DataService'
-import RemoteConfig from '../RemoteConfig'
 import defaultCodesData from '../../../resources/public/vaccine-codes/accepted_code.json'
 
 interface VaccineCodeItemType {
@@ -52,7 +51,6 @@ export const loadVaccineCodes = async (): Promise<boolean>=> {
 const updateCodes = () => {
   updateVaccineCode()
   updateLabResultSystemCode()
-
 }
 
 const updateVaccineCode = ()=>{

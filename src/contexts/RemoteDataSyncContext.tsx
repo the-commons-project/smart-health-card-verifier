@@ -45,8 +45,10 @@ const resetDataIfNeeded = async (): Promise<boolean> => {
 
 const synchWithLocal = async (): Promise<boolean> => {
   let res      = false
-  await remoteConfig.updateRemoteConfig()
-  if ( remoteConfig.usingLegacy() ) {
+  if ( remoteConfig.shouldUpdateFromRemote() ){
+    await remoteConfig.updateRemoteConfig()
+  }
+  if ( remoteConfig.useLegacy() ) {
     res = true
   } else {
     await resetDataIfNeeded()

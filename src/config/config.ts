@@ -10,7 +10,8 @@ const config = {
     services: {
       issuers: env.ISSUER_PATH,
       locale: env.LOCALE_PATH,
-      vaccienCodes: env.VCCODE_PATH
+      vaccienCodes: env.VCCODE_PATH,
+      remoteConfig: env.REMOTE_CONFIG_PATH
     }
   },
 }
@@ -23,7 +24,7 @@ const AFFINIDI_HOST = env.LEGACY_SERVICE_SERVICE_URL
 const API_ISSUERS_PATH = config.api.services.issuers
 const API_LOCALE_PATH  = config.api.services.locale
 const API_VCCODE_PATH  = config.api.services.vaccienCodes
-
+const API_REMOTE_CONFIG_PATH = config.api.services.remoteConfig
 export {
   API_PATH,
   API_HOST,
@@ -33,6 +34,7 @@ export {
   API_ISSUERS_PATH,
   API_LOCALE_PATH,
   API_VCCODE_PATH,
+  API_REMOTE_CONFIG_PATH
 }
 
 export default config

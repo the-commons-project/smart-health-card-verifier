@@ -7,6 +7,7 @@ import { getStorage, KVStorage } from './Storage'
 export enum DataKeys {
   'ISSUERS'     = 'ISSUERS',
   'VACCINECODE' = 'VACCINECODE',
+  'REMOTECONFIG' = 'REMOTECONFIG',
   'LASTUPDATE'  = 'LASTUPDATE',
   'APIVERSION'  = 'APIVERSION'
 };
@@ -105,8 +106,8 @@ export const loadDataOrRetrieveLocally = async<T>( url: string, key: DataKeys): 
   const timer = new Timer()
   timer.start()
   try {
-    console.log(`loading ${key}: ${url}` )
-    response = await fetchWithTimeout(url, {}, ApiTimeout, 'ErrorLoadingVaccineCodes')
+    console.debug(`loading ${key}: ${url}` )
+    response = await fetchWithTimeout(url, {}, ApiTimeout, `ErrorLoading${key}` )
   } catch (error) {
     console.log(`Error Loading ${String(key)}: ${String(error)}`)
   }
