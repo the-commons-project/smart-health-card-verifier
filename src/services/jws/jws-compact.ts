@@ -13,6 +13,7 @@ import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
 import Timer from '../../utils/timer'
 import { getRecordTypeFromPayload } from '../fhir/fhirTypes'
 import { getRecord } from '../fhir/fhirBundle'
+
 export const JwsValidationOptions = {
   skipJwksDownload: false,
   jwksDownloadTimeOut: 5000,
@@ -104,14 +105,13 @@ async function fetchWithTimeout (url: string, options: any, timeout: number, tim
   ])
 }
 
-async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefined> {
+async function downloadAndImportValidKeys (issuerURL: string): Promise<boolean> {
   const timer = new Timer()
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
 
   const timeoutError = 'Failed to download issuer JWK set'
   const timeout = JwsValidationOptions.jwksDownloadTimeOut
-
   try {
     timer.start()
     const responseRaw: any = await fetchWithTimeout(
@@ -135,14 +135,13 @@ async function downloadAndImportKey (issuerURL: string): Promise<KeySet | undefi
       loadingTime = timer.stop()
       console.log(`verification took:  ${loadingTime.toFixed(2)}sec`)
 
-      return keySet
-    } catch ( err ) {
-      if ( err instanceof InvalidError ) throw err
+      return true
+    } catch ( err : any ) {
       console.log(
         `Can't parse downloaded issuer JWK set: ${String(err.message)}`,
         ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR,
       )
-      return undefined
+      return false
     }
   } catch (err: any) {
     if ( err instanceof InvalidError ) throw err
@@ -319,7 +318,7 @@ async function extractKeyURL (payload: any) {
 
       // download the keys into the keystore. if it fails, continue an try to use whatever is in the keystore.
       if (!JwsValidationOptions.skipJwksDownload) {
-        await downloadAndImportKey(payload.iss)
+        await downloadAndImportValidKeys(payload.iss)
       } else {
         console.log('skipping issuer JWK set download')
       }
@@ -332,18 +331,19 @@ async function extractKeyURL (payload: any) {
 }
 
 async function verifyJws (jws: string, kid: string): Promise<boolean> {
-  const verifier: jose.JWS.Verifier = jose.JWS.createVerify(KeysStore.store)
-  if (kid && !KeysStore.store.get(kid)) {
+  var key = null;
+  if (kid && ! ( key = KeysStore.store.get(kid))) {
     console.log(
       `JWS verification failed: can't find key with 'kid' = ${kid} in issuer set`,
       ErrorCode.JWS_VERIFICATION_ERROR,
     )
-
-    return false
   }
+  if( key.error && key.error instanceof InvalidError ) {
+    throw key.error
+  }
+  const verifier: jose.JWS.Verifier = jose.JWS.createVerify(KeysStore.store)
 
   try {
-
     const result = await verifier.verify(jws)
     return !!result
 
