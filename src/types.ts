@@ -20,7 +20,7 @@ export interface Data {
 
 export interface ValidationResult {
   validationResult: BaseResponse
-  showContent: boolean
+  showDetail: boolean
 }
 
 export interface RecordEntry {

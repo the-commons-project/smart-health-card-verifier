@@ -13,20 +13,11 @@ const images = {
   tick: require('../../assets/img/verificationresult/tick.png'),
   cross: require('../../assets/img/verificationresult/cross.png'),
 }
-
-const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
-
-  const shouldShowContent = (): boolean  => {
-    if ( isDocumentValid && !isIssuerRecognized ) {
-      return !showContent
-    }
-    return false
-  }
-
+/* eslint  react-native/no-inline-styles: "off" */
+const ResultBanner = ({ validationResult, showDetail }: ValidationResult ) => {
   const isDocumentValid = validationResult.isValid
   const isIssuerRecognized = !!validationResult?.issuerData?.name
   const { t } = useTranslation()
-  const [ isShowContent, setShowContent ] = useState( shouldShowContent() )
   let icon = images.success
   let text = t('Result.Verified', 'Verified')
   let color = '#158E00' // green
@@ -57,17 +48,13 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
     verifiedColor = '#CE471C' // orange
   }
 
-  useEffect(()=> {
-    setShowContent( shouldShowContent())
-  })
-
   return (
     <View >
-      <View key="1" style={ [styles.bannerContainer, { backgroundColor: color }, !isShowContent && styles.bannerContainerClosed ] }>
+      <View key="1" style={ [styles.bannerContainer, { backgroundColor: color }, !showDetail && styles.bannerContainerClosed ] }>
         <Image style={ styles.bannerImage } source={ icon } />
         <Text style={ [styles.bannerText, FontStyle.Poppins_600SemiBold] }>{ text }</Text>
       </View>
-      { isShowContent && 
+      { showDetail && 
       <View  key="2"  style={ [styles.subBannerContainer, { borderColor: color }] }>
         { !isDocumentValid ? (
           <View style={ styles.flexRowContainer }>
@@ -84,7 +71,7 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
         ) : ( !isIssuerRecognized ) ?
           (
             <View 
-              style={ { flexDirection: 'column', flexWrap: 'wrap' } }>
+              style={ styles.bannerDetail }>
               <View style={ styles.flexRowContainer }>
                 <Text style={ [
                   styles.subBannerText,
@@ -107,7 +94,7 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
           ):(
             <View 
               style={ styles.flexRowContainer }>
-              <View style={ [styles.flexColumnContainer, ,{ width:'100%' }] } >
+              <View style={ styles.flexColumnContainer } >
                 <Image style={ styles.subIcon } source={ validityIcon } />
                 <Text
 
@@ -120,7 +107,7 @@ const ResultBanner = ({ validationResult, showContent }: ValidationResult ) => {
                   { validityText }
                 </Text>
               </View>
-              <View  style={ [styles.flexColumnContainer, ,{ width:'100%' }] } >
+              <View  style={ styles.flexColumnContainer } >
                 <Image style={ styles.subIcon } source={ verifiedIssuerIcon } />
                 <Text
                   style={ [
@@ -151,6 +138,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
+  },
+  bannerDetail: {
+    flexDirection: 'column', 
+    flexWrap: 'wrap'
   },
   bannerContainerClosed: {
     borderBottomLeftRadius: 4,
@@ -203,6 +194,7 @@ const styles = StyleSheet.create({
   flexColumnContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    width:'100%',
     justifyContent: 'flex-start',
   },
   clickHere:{

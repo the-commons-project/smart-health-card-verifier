@@ -21,20 +21,33 @@ const issuerRecognized = ( result: BaseResponse): boolean => {
   return !!result?.issuerData?.name
 }
 
+const canToggleBannerDetail = ( result: BaseResponse ): boolean => {
+  return ( !issuerRecognized( result ) )
+}
+
 const initiallyShowRecord = ( result: BaseResponse ): boolean=>{
   return ( canShowResult( result ) && issuerRecognized( result ) )
+}
+
+const initiallyShowBannerDetail = ( result: BaseResponse ): boolean=>{
+  return canShowResult(result) ? ( !issuerRecognized( result ) ) : true
 }
 
 const VerificationResultPage = ({ route, navigation }: Props) => {
   const data = route.params
   const { validationResult } = data
-  const canToggleResult    = canShowResult( validationResult )
   const isIssuerRecognized = issuerRecognized( validationResult)
-  const [ showResult, setShowResult ] = useState(initiallyShowRecord( validationResult ) )
+  const isCanToggleResult       = canShowResult( validationResult ) && !isIssuerRecognized 
+  const isCanToggleBannerDetail = canToggleBannerDetail( validationResult )
 
+  const [ showResult, setShowResult ] = useState(initiallyShowRecord( validationResult ) )
+  const [ showBannerDetail, setShowBannerDetail ] = useState(initiallyShowBannerDetail(validationResult))
   const resultBannerClicked = ()=>{
-    if ( canToggleResult && !isIssuerRecognized ) {
+    if ( isCanToggleResult ) {
       setShowResult( !showResult )
+    }
+    if ( isCanToggleBannerDetail ) {
+      setShowBannerDetail( !showBannerDetail )
     }
   }  
   const { t } = useTranslation()
@@ -56,7 +69,7 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
       </View>
       <ScrollView>
         <Pressable onPress={ resultBannerClicked } >
-          <ResultBanner validationResult={ validationResult } showContent={ showResult } />
+          <ResultBanner validationResult={ validationResult } showDetail={ showBannerDetail } />
         </Pressable>
         { showResult && validationResult.isValid && <ResultRecord data={ data } /> }
       </ScrollView>
