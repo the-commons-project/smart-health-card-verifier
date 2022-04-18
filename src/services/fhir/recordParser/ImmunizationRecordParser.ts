@@ -44,7 +44,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     if (isVaccineShotDone && isValidVaccinationCode) {
       vaccinationData.push({
         index: ( index + 1),
-        resourceType: 
+        resourceType:ResourceType.Immunization,
         lotNumber,
         vaccinator,
         vaccineName,
@@ -54,7 +54,6 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
   }
 
   sortRecordByDateField('vaccinationDate', vaccinationData)
-
   return vaccinationData
 }
 
