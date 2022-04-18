@@ -177,7 +177,7 @@ android {
                 storeFile = file(System.getenv('STORE_FILE'))
                 storePassword = System.getenv('STORE_PASSWORD')
                 keyAlias = System.getenv('KEY_ALIAS')
-                keyPassword = System.getenv('KEY_PASSWORD') || null
+                keyPassword = System.getenv('KEY_PASSWORD')
             } else if (secretProps.exists() && secrets.getProperty('signing_keystore_location') != null) {
                 storeFile = file(secrets.getProperty('signing_keystore_location'))
                 storePassword = secrets.getProperty('signing_keystore_password')
