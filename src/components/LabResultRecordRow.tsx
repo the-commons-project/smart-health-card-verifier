@@ -6,11 +6,12 @@ import { Table, TableWrapper, Cell, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
 import { toCamel } from '../utils/utils'
 import LabTestSVG from '../../assets/img/verificationresult/labResultIcon.svg'
+import { getIsSmallScreen } from '../utils/utils'
 
-const imagePadding = 10
 
 export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse ): any => {
   const { t } = useTranslation()
+  const isSmallScreen = getIsSmallScreen( windowWidth )
   const getResultCode = ( responseData: BaseResponse ): string => {
     let resultStr = 'UNKNOWN'
     let resultKey     = 'UNKNOWN'
@@ -33,9 +34,9 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     return t( `LabResult.Title_${resultKey}`, resultStr )
   }
 
-  const imageWidth = windowWidth / 4 - ( imagePadding * 2 )
+  const imageWidth = isSmallScreen ? ( windowWidth / 6 ) : ( windowWidth / 5 )
   const fieldTitle = (<View key="1" style={ styles.titleRow }> 
-    <Text style={ styles.testTitle } >{ getTitle( responseData) }</Text>
+    <Text style={ isSmallScreen ? styles.testTitleSmlScreen : styles.testTitle } >{ getTitle( responseData) }</Text>
   </View>)
   const fieldResult = ( <View key="2" style={ [styles.titleRow, styles.tagContainer] }>
     <View key="1"  style={ styles.tag }>
@@ -46,7 +47,7 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     </View>
   </View>)
   return ( <View style={ styles.topTitleContainer }>
-    <View key="1" style={ styles.typeIconWrapper }>
+    <View key="1" style={ isSmallScreen? styles.typeIconWrapperSmlScreen: styles.typeIconWrapper }>
       <LabTestSVG width={ imageWidth } height={ imageWidth }/>
     </View>
     <View  key="2" style={ styles.topTitleContent }>
@@ -59,10 +60,11 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
 }
 
 export default ( { recordEntries }: RecordEntry[] | any) => {
-  const smallScreenThreshold = 400
+  const dimension     = useWindowDimensions()
+  const isSmallScreen = getIsSmallScreen( dimension.width )
+
   const { width } = useWindowDimensions()
   const fontScale = PixelRatio.getFontScale()
-  const [ isSmallScreen, setIsSmallScreen ] = useState( getIsSmallScreen() )
   const { t } = useTranslation()
   
   const displayField = 
@@ -89,7 +91,6 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
       }
     ]
 
-  useEffect(()=> setIsSmallScreen( getIsSmallScreen()), [])
 
   function cellAdapter ( field: any, data: any ): any[]{
 
@@ -112,9 +113,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
     ]
   }
 
-  function getIsSmallScreen (){
-    return ( ( width / fontScale) <= smallScreenThreshold )
-  }
+
 
   function recordAdapter ( data: any ) {
     const { securityCode, performer, observationDate, systemName, index } = data
@@ -149,19 +148,29 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
 
 const styles = StyleSheet.create({
   typeIconWrapper: {
-    paddingLeft:imagePadding,
-    paddingRight:imagePadding
+    paddingLeft:2,
+    paddingRight:2
+  },
+  typeIconWrapperSmlScreen: {
+    paddingLeft:5,
+    paddingRight:5
   },
   tagContainer: {
-    paddingTop:10,
     width:'100%',
     alignContent:'flex-start',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flexWrap:'wrap'
   },
   testTitle: {
     ...FontStyle.OpenSans_700Bold,
     width: '100%',
     fontSize: 24,
+    color: '#1F2025'
+  },
+  testTitleSmlScreen: {
+    ...FontStyle.OpenSans_700Bold,
+    width: '100%',
+    fontSize: 16,
     color: '#1F2025'
   },
   titleTable: {
@@ -175,19 +184,19 @@ const styles = StyleSheet.create({
     alignContent:'space-around',
   },
   titleRow: {
-    flexShrink:1,
     justifyContent: 'flex-start',
     width: '100%',
     alignItems:'center',
   },
   tag: {
+    marginTop:5,
     marginRight:10,
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 2,
     paddingBottom: 2,
     borderRadius: 5,
-    flexShrink:1,
+    flexWrap:'wrap',
     alignContent: 'center',
     justifyContent: 'center',
     color: '#FFFFFF',
@@ -196,6 +205,7 @@ const styles = StyleSheet.create({
   tagContent: {
     ...FontStyle.Poppins_700Bold,
     fontSize: 14,
+    flexShrink:1,
     color: '#FFFFFF',
   },
   topTitleContent: {

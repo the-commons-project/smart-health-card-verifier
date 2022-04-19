@@ -11,15 +11,11 @@ import WelcomeDialogInner0 from './WelcomeDialogInner0'
 import WelcomeDialogInner1 from './WelcomeDialogInner1'
 import WelcomeDialogInner2 from './WelcomeDialogInner2'
 import WelcomeDialogInner3 from './WelcomeDialogInner3'
-
-const getIsSmallScreen = ( width: number ) => {
-    return ( width / PixelRatio.getFontScale() ) < 350
-}
+import { getIsSmallScreen } from '../utils/utils'
 
 export default ()=> {
   const dimension     = useWindowDimensions()
   const isSmallScreen = getIsSmallScreen( dimension.width )
-  console.log("isSmallScreen= " + isSmallScreen)
 
   const { setOnboarded } = usePreferenceContext()
   const { t } = useTranslation()
@@ -60,13 +56,13 @@ export default ()=> {
   const currentIndex = useRef<number>(0)
   const measureInner = 
     ( { nativeEvent }: any ) => {
-      let sWidth = nativeEvent.layout.width;
+      const sWidth = nativeEvent.layout.width
       setSliderWidth( sWidth  - 5 ) 
       setContentWidth( sWidth  - ( 5 * 2 ) ) 
     }
 
   const viewableItemsChanged = 
-    ({ viewableItems }:{ viewableItems: { item: slideItemType } []}) => {
+    ({ viewableItems }: { viewableItems: Array<{ item: slideItemType }>}) => {
       if (viewableItems.length === 0) {
         return
       }
@@ -81,18 +77,18 @@ export default ()=> {
       }
     },
   ])
-
+  /* eslint  indent: "off" */
   const getItem = ( id: number  ): JSX.Element => {
-    const style = {paddingLeft: 5, paddingRight: 5 };
+    const style = { paddingLeft: 5, paddingRight: 5 }
     switch ( id ) {
       case 0:
-        return  <WelcomeDialogInner0 isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
+        return  <WelcomeDialogInner0 isSmallScreen={ isSmallScreen } style={ style } width={ contentWidth } />
       case 1:
-        return <WelcomeDialogInner1  isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
+        return <WelcomeDialogInner1  isSmallScreen={ isSmallScreen } style={ style } width={ contentWidth } />
       case 2: 
-        return <WelcomeDialogInner2  isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
+        return <WelcomeDialogInner2  isSmallScreen={ isSmallScreen } style={ style } width={ contentWidth } />
       default:
-        return <WelcomeDialogInner3  isSmallScreen={isSmallScreen} style={style} width={ contentWidth } />
+        return <WelcomeDialogInner3  isSmallScreen={ isSmallScreen } style={ style } width={ contentWidth } />
     }
   }
 

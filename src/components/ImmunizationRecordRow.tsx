@@ -1,27 +1,29 @@
 import React from 'react'
 import { RecordEntry, BaseResponse } from '../types'
-import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio, useWindowDimensions } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import ImmunizationSVG from '../../assets/img/verificationresult/immunizationIcon.svg'
+import { getIsSmallScreen } from '../utils/utils'
 
 const imagePadding = 10
 
 export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse ): any => {
   const { t } = useTranslation()
+  const isSmallScreen = getIsSmallScreen( windowWidth )
   const getResultCode = ( responseData: BaseResponse ): string | null => {
     let res = null
     const entry = responseData.recordEntries ?? []
     if ( entry.length >= 2  ) {
-      res =  t( 'ImmunizationResult.Doses', { num: entry.length } )
+      res =  t( 'ImmunizationResult.DosesComplete',  `${String(entry.length)}Doses`, { num: entry.length })
     } else if ( entry.length === 1 ) {
-      res =  t( 'ImmunizationResult.Dose', { num: 1 } )
+      res =  t( 'ImmunizationResult.DoseComplete',  '1 Dose', { num: 1 } )
     }
     return res
   }
 
-  const imageWidth = windowWidth / 4 - ( imagePadding * 2 )
+  const imageWidth = isSmallScreen ? ( windowWidth / 6 ) : ( windowWidth / 5 )
   const fieldTitle = (<View style={ styles.titleRow }> 
     <Text style={ styles.labTitle } >{ t( 'ImmunizationResult.Title', 'Vaccination Record' ) }</Text>
   </View>)
@@ -29,14 +31,14 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
 
   const fieldResult = ( <View style={ [styles.titleRow, styles.tagContainer] }>
     { ( resultCode !== null ) && ( <View key="1"  style={ styles.tag }>
-      <Text style={ styles.tagContent }>{ getResultCode(responseData) }</Text>
+      <Text style={ styles.tagContent }>{ resultCode }</Text>
     </View> ) }
     <View key="2"  style={ styles.tag }>
       <Text  style={ styles.tagContent }>{ t('ImmunizationResult.tagCovid19', 'COVID-19') }</Text>
     </View>
   </View>)
   return ( <View style={ styles.topTitleContainer }>
-    <View key="1" style={ styles.typeIconWrapper }>
+    <View key="1" style={ isSmallScreen? styles.typeIconWrapperSmlScreen : styles.typeIconWrapper }>
       <ImmunizationSVG width={ imageWidth } height={ imageWidth }/>
     </View>
     <View  key="2" style={ styles.topTitleContent }>
@@ -126,7 +128,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
         <View key={ key }>
           <View style={ styles.doseDividerContainer }>
             <Text style={ [styles.dosageText, FontStyle.OpenSans_700Bold] }>
-              { t('Result.Dose', `Dose ${String( index )}`, { num:index }) }
+              { t('ImmunizationResult.Dose', `Dose ${String( index )}`, { num:index }) }
             </Text>
             <View style={ styles.doseDivider } />
           </View>
@@ -152,8 +154,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
 
 const styles = StyleSheet.create({
   titleRow: {
-    flexShrink:1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
     width: '100%',
     alignItems:'center',
   },
@@ -164,26 +165,29 @@ const styles = StyleSheet.create({
     color: '#1F2025'
   },
   tag: {
+    marginTop:5,
+    marginRight:10,
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 2,
     paddingBottom: 2,
     borderRadius: 5,
-    flexShrink:1,
+    flexWrap:'wrap',
     alignContent: 'center',
     justifyContent: 'center',
     color: '#FFFFFF',
     backgroundColor: '#4D72B5'
   },
   tagContainer: {
-    paddingTop:10,
     width:'100%',
-    alignContent:'space-around',
-    flexDirection: 'row'
+    alignContent:'flex-start',
+    flexDirection: 'row',
+    flexWrap:'wrap'
   },
   tagContent: {
     ...FontStyle.Poppins_700Bold,
     fontSize: 14,
+    flexDirection:'row',
     color: '#FFFFFF',
   },
   topTitleContainer: {
@@ -210,8 +214,12 @@ const styles = StyleSheet.create({
     marginRight: 7 
   },
   typeIconWrapper: {
-    paddingLeft:imagePadding,
-    paddingRight:imagePadding
+    paddingLeft:5,
+    paddingRight:10
+  },
+  typeIconWrapperSmlScreen: {
+    paddingLeft:5,
+    paddingRight:5
   },
   rowItem: {
     flexWrap: 'wrap', 
