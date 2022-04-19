@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, Image, StyleSheet, Text, PixelRatio } from 'react-native'
+import { View, Image, StyleSheet, Text, PixelRatio, useWindowDimensions } from 'react-native'
 import { JwsValidationOptions } from '../services/jws/jws-compact'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
+import { getIsSmallScreen } from '../utils/utils'
 
 const warningColor = '#EA6300'
 const images = {
@@ -26,8 +27,9 @@ const ResultBanner = ({ validationResult, showDetail }: ValidationResult ) => {
   let validityColor = '#0E6B23' // green
   let verifiedIssuerText = t('Result.IssuerVerified', 'Issuer Not Recognized')
   let verifiedIssuerIcon = images.tick
-  let verifiedColor = '#0E6B23' // green
-
+  let verifiedColor = '#0E6B23' 
+  const dimension     = useWindowDimensions()
+  const isSmallScreen = getIsSmallScreen( dimension.width )
   if (!isDocumentValid) {
     icon = images.fail
     text = t('Result.NotVerified', 'Not Verified')
@@ -51,8 +53,8 @@ const ResultBanner = ({ validationResult, showDetail }: ValidationResult ) => {
   return (
     <View >
       <View key="1" style={ [styles.bannerContainer, { backgroundColor: color }, !showDetail && styles.bannerContainerClosed ] }>
-        <Image style={ styles.bannerImage } source={ icon } />
-        <Text style={ [styles.bannerText, FontStyle.Poppins_600SemiBold] }>{ text }</Text>
+        <Image style={ isSmallScreen ? styles.bannerImageSmlScreen : styles.bannerImage } source={ icon } />
+        <Text style={ [isSmallScreen ? styles.bannerTextSmlScreen : styles.bannerText, FontStyle.Poppins_600SemiBold] }>{ text }</Text>
       </View>
       { showDetail && 
       <View  key="2"  style={ [styles.subBannerContainer, { borderColor: color }] }>
@@ -138,6 +140,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
+    marginBottom:0,
+    justifyContent: 'flex-start'
   },
   bannerDetail: {
     flexDirection: 'column', 
@@ -148,16 +152,39 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4
   },
   bannerImage: {
-    marginLeft: 16,
-    marginRight: 16,
+    marginLeft: 5,
+    marginRight: 5,
     height: 40,
     width: 40,
     alignSelf: 'center',
   },
+  bannerImageSmlScreen: {
+    marginLeft: 5,
+    marginRight: 5,
+    height: 35,
+    width: 35,
+    alignSelf: 'center',
+  },
   bannerText: {
-    fontSize: 22,
+    flex:1,
+    fontSize: 23,
     color: '#FFFFFF',
-    lineHeight: 33,
+    lineHeight: 30,
+    flexWrap: 'wrap',
+    paddingRight: 5,
+    paddingTop: 5,
+    paddingBottom: 5,
+    alignSelf: 'center'
+  },
+  bannerTextSmlScreen: {
+    flex:1,
+    fontSize: 16,
+    color: '#FFFFFF',
+    lineHeight: 20,
+    flexWrap: 'wrap',
+    paddingRight: 5,
+    paddingTop: 5,
+    paddingBottom: 5,
     alignSelf: 'center',
   },
   subBannerContainer: {
@@ -171,6 +198,7 @@ const styles = StyleSheet.create({
     minHeight: 74,
     flexDirection: 'column',
     paddingTop: 8,
+    marginTop:-1,
     paddingLeft: 16,
     paddingRight: 16,
   },

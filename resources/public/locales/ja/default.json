@@ -64,7 +64,10 @@
         "Title": "ワクチン履歴",
         "tagCovid19":"COVID-19",
         "Dose":"{{num}}回目接種",
-        "Doses":"{{num}}回目接種"
+        "Doses":"{{num}}回目接種",
+        "DoseComplete":"{{num}} 回目接種完了",
+        "DosesComplete":"{{num}} 回目接種完了"
+
       },
       "WelcomeDialog":{
         "Welcome":"SMART Health Card\nVerifierへようこそ！",

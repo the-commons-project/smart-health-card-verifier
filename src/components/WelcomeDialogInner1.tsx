@@ -14,7 +14,7 @@ const images = {
 
 
 export default ({ style, width, isSmallScreen }:{style: any, width: number, isSmallScreen:boolean})=> {
-    const msg1 = 'Issuer Not \n Recognized'
+    const msg1 = 'Issuer Not Recognized'
     const { t } = useTranslation()
     const verifiedColor = '#0E6B23'
     const warningColor = '#EA6300'
@@ -29,10 +29,8 @@ export default ({ style, width, isSmallScreen }:{style: any, width: number, isSm
                 <View style={[ styles.bannerContainer, { backgroundColor: verifiedColor } ] }>
                     <Image style={ styles.bannerImage } source={ images.success } />
                     <Text
-
                       style={ [
-                        bannerTextStyle,
-                        { backgroundColor: verifiedColor },
+                        bannerTextStyle
                       ] }
                     >
                     { t('Result.Verified', 'Verified') }
@@ -45,8 +43,7 @@ export default ({ style, width, isSmallScreen }:{style: any, width: number, isSm
                     <Image style={ styles.bannerImage } source={ images.warning } />
                     <Text
                       style={ [
-                        bannerTextStyle,
-                        { backgroundColor: warningColor }
+                        bannerTextStyle
                       ] }
                     >
                         
@@ -59,8 +56,7 @@ export default ({ style, width, isSmallScreen }:{style: any, width: number, isSm
                     <Text
                     
                       style={ [
-                        bannerTextStyle,
-                        { backgroundColor: notVerifiedColor },
+                        bannerTextStyle
                       ] }
                     >
 
@@ -138,12 +134,13 @@ const styles = StyleSheet.create({
       },
     bannerImage: {
         marginLeft: 5,
-        marginRight: 10,
+        marginRight: 5,
         height: 40,
         width: 40,
       },
     bannerText: {
         ...FontStyle.Poppins_600SemiBold,
+        flex: 1,
         color: '#FFFFFF',
         fontSize: 20,
         lineHeight: 24,
@@ -152,11 +149,13 @@ const styles = StyleSheet.create({
       },
     bannerTextSmlScreen: {
         ...FontStyle.Poppins_600SemiBold,
+        flex: 1,
         color: '#FFFFFF',
-        fontSize: 16 * PixelRatio.getFontScale(),
-        lineHeight: 24 * PixelRatio.getFontScale(),
+        fontSize: 14,
+        lineHeight: 20,
         alignSelf:'center',
         paddingTop: 3,
+        paddingRight: 2,
       },
     flexColumnContainer: {
         flex:1,

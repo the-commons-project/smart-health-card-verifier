@@ -1,5 +1,5 @@
 import pako from 'pako'
-import { Platform } from 'react-native'
+import { Platform, PixelRatio } from 'react-native'
 import { getUniqueId, getBundleId } from 'react-native-device-info'
 
 import { v5 as uuidv5 } from 'uuid'
@@ -12,6 +12,13 @@ export function parseJson<T> (json: string): T | undefined {
     return undefined
   }
 }
+
+const smallScreenThreshold = 360
+
+export const getIsSmallScreen = ( width: number ) => {
+    return ( width / PixelRatio.getFontScale() ) < smallScreenThreshold
+}
+
 
 // NOTE: Timezone affects date presentation, so in US it will be 1 day behind,
 //       that is why `new Date()` is not needed.

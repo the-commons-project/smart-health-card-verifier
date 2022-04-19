@@ -64,7 +64,9 @@
         "Title": "Vaccination Record",
         "tagCovid19":"COVID-19",
         "Dose":"{{num}} Dose",
-        "Doses":"{{num}} Doses"
+        "Doses":"{{num}} Doses",
+        "DoseComplete":"{{num}} Dose",
+        "DosesComplete":"{{num}} Doses"
       },
       "WelcomeDialog":{
         "Welcome":"Welcome to the\nSMART Health Card\nVerifier App!",

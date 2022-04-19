@@ -11,10 +11,7 @@ import WelcomeDialogInner0 from './WelcomeDialogInner0'
 import WelcomeDialogInner1 from './WelcomeDialogInner1'
 import WelcomeDialogInner2 from './WelcomeDialogInner2'
 import WelcomeDialogInner3 from './WelcomeDialogInner3'
-
-const getIsSmallScreen = ( width: number ) => {
-    return ( width / PixelRatio.getFontScale() ) < 350
-}
+import { getIsSmallScreen } from '../utils/utils'
 
 export default ()=> {
   const dimension     = useWindowDimensions()
