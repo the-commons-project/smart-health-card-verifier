@@ -16,6 +16,7 @@ const images = {
   warningCross: require('../../assets/img/verificationresult/warning-cross.png'),
 }
 
+/* eslint  react-native/no-inline-styles: "off" */
 const ResultRecord = ({ data }: Data) => {
   const windowWidth = useWindowDimensions().width
 
@@ -27,10 +28,10 @@ const ResultRecord = ({ data }: Data) => {
   const userFieldTitle = [t('Result.Name', 'Name')]
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
   const userDobValue = [insertImageToTable()]
-  const resultTitle  = ( recordType == RecordType.covid19Immunization )?
-    GetImmunizationResultTitle( windowWidth, validationResult) : (recordType == RecordType.covid19LabResult) ? 
+  const resultTitle  = ( recordType === RecordType.covid19Immunization )?
+    GetImmunizationResultTitle( windowWidth, validationResult) : (recordType === RecordType.covid19LabResult) ? 
       GetLabResultTitle( windowWidth, validationResult ) : null
-
+  
   function insertImageToTable () {
     const date = boolBirthDate ? dateOfBirth : '**/**/****'
     return (
@@ -89,10 +90,10 @@ const ResultRecord = ({ data }: Data) => {
           { t('Result.AlwaysVerify', 'Always verify identity with a government-issued I.D.') }
         </Text>
       </View>
-      { recordType == RecordType.covid19Immunization && 
+      { recordType === RecordType.covid19Immunization && 
         <ImmunizationRecordRow recordEntries={ recordEntries } />
       }
-      { recordType == RecordType.covid19LabResult && 
+      { recordType === RecordType.covid19LabResult && 
         <LabResultRecordRow recordEntries={ recordEntries } />
       }
       <View style={ styles.dividerContainerWithLine }>
@@ -125,8 +126,8 @@ const ResultRecord = ({ data }: Data) => {
               <View>
                 <Text style={ [ { flex: 1 }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
                   { issuerData?.name || issuerData?.url }
-                 </Text>
-               </View>
+                </Text>
+              </View>
             </View>
           ) }
         </View>

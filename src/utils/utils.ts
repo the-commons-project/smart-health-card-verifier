@@ -16,9 +16,8 @@ export function parseJson<T> (json: string): T | undefined {
 const smallScreenThreshold = 360
 
 export const getIsSmallScreen = ( width: number ) => {
-    return ( width / PixelRatio.getFontScale() ) < smallScreenThreshold
+  return ( width / PixelRatio.getFontScale() ) < smallScreenThreshold
 }
-
 
 // NOTE: Timezone affects date presentation, so in US it will be 1 day behind,
 //       that is why `new Date()` is not needed.
@@ -30,7 +29,7 @@ export const formatDateOfBirth = (birthDate: string): string => {
 
   return dateOfBirth
 }
-
+/* eslint   @typescript-eslint/restrict-plus-operands: "off" */
 export const toCamel = ( s: string ) => {
   return s.trim().replace(/\s+./g, (x)=> x[1].toUpperCase() ).replace(/^(.)(.*)$/, (x, y, z )=>  { return ( y.toLowerCase() + z ) } ) 
 }
@@ -144,11 +143,9 @@ export function walkProperties (
 
 // Extracted from https://forums.expo.io/t/constants-installationid-how-to-implement-it-on-your-own/50003/15
 export async function getInstallationIdManually () {
-  let installationId
-
   const identifierForVendor = await getUniqueId()
   const bundleIdentifier = await getBundleId()
-  installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
+  const installationId = uuidv5(`${bundleIdentifier}-${identifierForVendor}`, uuidNamespace)
   return installationId
 }
 
@@ -156,7 +153,7 @@ export async function fetchWithTimeout (url: string, options: any={}, timeout: n
   
   const controller = new AbortController()
   const   timer        = null
-  const timerPromise = new Promise((_, reject) => {
+  const timerPromise = new Promise((resolve, reject) => {
     setTimeout(() => {
       controller.abort()
       reject( timeoutError )

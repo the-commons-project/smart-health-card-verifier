@@ -62,7 +62,7 @@
       },
       "ImmunizationResult":{
         "Title": "Carnet de vaccination",
-        "tagCovid19":"COVID-19",
+        "tagCovid19":"COVI D-19",
         "Dose":"{{num}} Dose",
         "Doses":"{{num}} Doses",
         "DoseComplete":"{{num}} Dose",

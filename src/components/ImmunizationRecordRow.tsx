@@ -16,9 +16,9 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     let res = null
     const entry = responseData.recordEntries ?? []
     if ( entry.length >= 2  ) {
-      res =  t( 'ImmunizationResult.DosesComplete',  `${String(entry.length)}Doses`, { num: entry.length });
+      res =  t( 'ImmunizationResult.DosesComplete',  `${String(entry.length)}Doses`, { num: entry.length })
     } else if ( entry.length === 1 ) {
-      res =  t( 'ImmunizationResult.DoseComplete',  `1 Dose`, { num: 1 } )
+      res =  t( 'ImmunizationResult.DoseComplete',  '1 Dose', { num: 1 } )
     }
     return res
   }
