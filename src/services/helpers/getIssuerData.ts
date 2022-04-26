@@ -7,11 +7,12 @@ import remoteConfig from '../RemoteConfig'
 
 let issuersMap: Record<string, any> | null = null
 
-interface IssuerItemType {
+export interface IssuerItemType {
   'iss': string
   'name': string
   'logo_uri': string
   'updated_at': number
+  'canonical_iss'?: string
 } 
 
 interface IssuerResponse {
@@ -34,9 +35,15 @@ export const getIssuerData = async ( issuer: string ):  Promise<any> => {
   return await _getIssuerData( issuer )
 }
 
-export const _getIssuerData = async (issuer: string): Promise<any> => {
-  console.info(`get new shc service : ${issuer}`)
-  return ((issuersMap??{})[issuer] || null )
+export const _getIssuerData = async (issuer: string): Promise<IssuerItemType|null> => {
+  const _issuerMap = (issuersMap??{})
+  let issuerItem = _issuerMap[issuer]
+
+  if ( issuerItem.canonical_iss ) {
+    console.debug('using canonical_iss')
+    issuerItem = _issuerMap[issuerItem.canonical_iss] || issuerItem
+  }
+  return ( issuerItem || null )
 }
 
 export const _getIssuerDataLegacy = async (issuer: string): Promise<any> => {
