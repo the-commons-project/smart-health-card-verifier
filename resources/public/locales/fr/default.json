@@ -7,7 +7,7 @@
       "Common":{
         "Cancel":"Cancel",
         "OK":"OK",
-        "ScanNext":"Scanner le prochain carnet de vaccination"
+        "ScanNext":"Scanner l'enregistrement suivant"
       },
       "Error": {
         "ServerError":"Server Error. Please try to scan again.",
@@ -18,13 +18,13 @@
       },
       "ErrorPage": {
         "UnsupportedQR":"Code QR non pris en charge",
-        "OnlyValidText":"Seuls les vaccins valides SMART® Health Cards sont actuellement pris en charge"
+        "OnlyValidText":"L'application SMART Health Card Verifier vérifie uniquement les SMART Health Cards® pour les vaccins et les tests COVID-19."
       },
       "Welcome":{
         "Title": "Bienvenue!",
         "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "Vérifier le code QR SMART Health Cards en toute sécurité et dans le respect de la vie privée",
-        "ScanVaccinationRecord": "Scanner le carnet de vaccination",
+        "ScanRecord": "Enregistrement du scan",
         "HowTo": "Comment vérifier SMART Health Cards",
         "AboutUs":"à propos de nous",
         "PrivacyPolicy":"Politique de confidentialité"
@@ -69,7 +69,7 @@
         "DosesComplete":"{{num}} Doses"
       },
       "WelcomeDialog":{
-        "Welcome":"Bienvenue dans l'application\ndu vérificateur de la\nSMART Health Card Verifier App!",
+        "Welcome":"Bienvenue dans l'application\ndu vérificateur de la\nSMART Health Card Verifier App",
         "WelcomeDescription1":"Utilisez cette application pour vérifier la SMART Health Card de vos clients et employés de vos clients ou de vos employés",
         "WelcomeDescription2":"Cette application n'enregistre ni ne stocke vos informations d'identification numériques.",
         "PleaseNote":"Veuillez noter: ",
@@ -79,6 +79,7 @@
         "WelcomeInner1NotVerified":"La SMART Health Card n'a pas pu être vérifiée. Elle peut avoir été corrompue ou altérée.",
         "WelcomeInner1Description1":"Scannez une SMART Health Card et l'un des trois résultats suivants apparaîtra:",
         "WelcomeInner2Description1":"Le balayage d'une SMART Health Card indique le type d'enregistrement et les informations pertinentes.",
+        "WelcomeInner2Covid19":"COVID-19",
         "WelcomeInner3Title":"N'oubliez pas !!",
         "WelcomeInner3Description": "Vérifiez toujours l'identité du titulaire de la SMART Health Card à l'aide d'une pièce d'identité émise par le gouvernement.",
         "DoseNumber":"Numéro de dose",

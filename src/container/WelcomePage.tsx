@@ -78,7 +78,7 @@ const WelcomePage = ({ navigation }: Props) => {
                 { t('Welcome.VerifySmartHealthCard', 'Verify SMART® Health Card QR codes in a safe and privacy-preserving way') }
               </Text>
               <AppButton
-                title={ t('Welcome.ScanVaccinationRecord', 'Scan vaccination record') }
+                title={ t('Welcome.ScanRecord', 'Scan Record') }
                 onPress={ () => navigation.navigate('ScanQR') }
                 backgroundColor="#255DCB"
               />
@@ -216,19 +216,19 @@ const styles = StyleSheet.create({
     width: 71,
     height: 37,
     right: 19,
-    top: 40,
+    top: 20,
   },
   welcomeText: {
     fontSize: 24,
     lineHeight: 36,
     color: '#255DCB',
-    paddingTop: 50,
+    paddingTop: 65,
   },
   welcomeTextMobile: {
     fontSize: 24,
     lineHeight: 36,
     color: '#255DCB',
-    paddingTop: 70,
+    paddingTop: 65,
   },
   mainTitle: {
     fontSize: 32,
