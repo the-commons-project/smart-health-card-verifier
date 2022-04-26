@@ -59,6 +59,41 @@
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "502",
       "display": "Bharat Biotech"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "503",
+      "display": "COVIVAC"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "505",
+      "display": "Sputnik V"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "504",
+      "display": "Sputnik Light"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "509",
+      "display": "EpiVacCorona"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "507",
+      "display": "Anhui Zhifei Longcom Biopharmaceutical + Institute of Microbiology, Chinese Academy of Sciences"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "501",
+      "display": "QAZCOVID-IN"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "506",
+      "display": "CanSino Biological Inc./Beijing Institute of Biotechnology"
     }
   ],
   "covid_19_lab_test_codes": [
