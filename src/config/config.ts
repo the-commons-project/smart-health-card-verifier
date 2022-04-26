@@ -25,6 +25,7 @@ const API_ISSUERS_PATH = config.api.services.issuers
 const API_LOCALE_PATH  = config.api.services.locale
 const API_VCCODE_PATH  = config.api.services.vaccienCodes
 const API_REMOTE_CONFIG_PATH = config.api.services.remoteConfig
+
 export {
   API_PATH,
   API_HOST,

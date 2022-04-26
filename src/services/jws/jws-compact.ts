@@ -13,7 +13,8 @@ import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
 import Timer from '../../utils/timer'
 import { getRecordTypeFromPayload } from '../fhir/fhirTypes'
 import { getRecord } from '../fhir/fhirBundle'
-
+import { getIssuerData, IssuerItemType } from '../helpers/getIssuerData'
+import remoteConfig from '../RemoteConfig'
 export const JwsValidationOptions = {
   skipJwksDownload: false,
   jwksDownloadTimeOut: 5000,
@@ -105,7 +106,7 @@ async function fetchWithTimeout (url: string, options: any, timeout: number, tim
   ])
 }
 
-async function downloadAndImportValidKeys (issuerURL: string): Promise<boolean> {
+async function downloadAndImportValidKeys (issuerURL: string ): Promise<boolean> {
   const timer = new Timer()
   const jwkURL = issuerURL + '/.well-known/jwks.json'
   const requestedOrigin = 'https://example.org' // request bogus origin to test CORS response
@@ -315,10 +316,19 @@ async function extractKeyURL (payload: any) {
       if (payload.iss.slice(-1) === '/') {
         console.log('Issuer URL SHALL NOT include a trailing /', ErrorCode.INVALID_ISSUER_URL)
       }
-
+      // from issuer data in the vci directory, look for issuer data.
+      var iss= payload.iss
+      if( !remoteConfig.useLegacy() ) {
+         //switch to canonical_iss if there is 
+         const issuerItem = await getIssuerData( payload.iss )
+         if( issuerItem ){
+           iss = issuerItem.iss
+         }
+      }
       // download the keys into the keystore. if it fails, continue an try to use whatever is in the keystore.
       if (!JwsValidationOptions.skipJwksDownload) {
-        await downloadAndImportValidKeys(payload.iss)
+
+        await downloadAndImportValidKeys( iss  )
       } else {
         console.log('skipping issuer JWK set download')
       }
