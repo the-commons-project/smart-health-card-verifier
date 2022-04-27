@@ -112,7 +112,7 @@ const ResultRecord = ({ data }: Data) => {
                 { issuerData?.name || issuerData?.url }
               </Text>
               <View style={ styles.verifierImage } >
-                <VerifiedImage width="100%" />
+                <VerifiedImage width="140" height="20" />
               </View>
               <Text style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }>
                 { t('Result.Verified', 'Verified') }

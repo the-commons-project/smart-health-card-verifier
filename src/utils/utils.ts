@@ -45,6 +45,11 @@ export const sortRecordByDateField = ( dateFieldName: string, records: any[] ) =
 //       that is why `new Date()` is not needed.
 //       Vaccination date in FHIR => "occurrenceDateTime": "2020-12-29"
 export const formatFHIRRecordDate = (dateRaw: string): string => {
+  let tmpDate = dateRaw
+  if ( dateRaw.indexOf('T') > 0 ) {
+    const tmp = new Date( dateRaw )
+    tmpDate = [ tmp.getFullYear(), ( tmp.getMonth() + 1 ), tmp.getDate() ].join('-')
+  }
   const monthShortNames = [
     'Jan',
     'Feb',
@@ -60,7 +65,7 @@ export const formatFHIRRecordDate = (dateRaw: string): string => {
     'Dec',
   ]
 
-  const [year, month, day] = dateRaw.split('-')
+  const [year, month, day] = tmpDate.split('-')
   const monthIndex = parseInt(month, 10) - 1 // 08 -> 7
   const monthShortName = monthShortNames[monthIndex]
 

@@ -38,7 +38,7 @@ export function getRecordTypeFromPayload ( fhirJWSPayload: JWSPayload ): RecordT
   if ( Array.isArray( types ) ) {
     for ( let i=0; i < availableRecordTypes.length; i++ ) {
       const recordType = acceptedVCType[availableRecordTypes[i]]
-      if ( _.isEqual(types.sort(), recordType.sort())){
+      if ( _.intersection(types.sort(), recordType.sort()).length === recordType.length ){
         res = availableRecordTypes[i]
         break
       }
