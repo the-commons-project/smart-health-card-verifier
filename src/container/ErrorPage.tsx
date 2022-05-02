@@ -31,7 +31,7 @@ const ErrorPage = ({ navigation }: Props) => {
       <View style={ styles.imageContainer }>
         <Image style={ styles.imageStyle } source={ images.qrError } />
         <Text style={ [styles.message,  FontStyle.Poppins_600SemiBold] }>
-          { t('ErrorPage.OnlyValidText', 'Only valid vaccine SMART® Health Cards are currently supported') }
+          { t('ErrorPage.OnlyValidText', 'The SMART Health Card Verifier App only verifies SMART Health Cards® for COVID-19 vaccination and test records.') }
         </Text>
       </View>
       <AppButton

@@ -10,6 +10,7 @@ interface localeType {
   language: string
   region: string
   initialized: boolean
+  timeZone: ''
 }
 
 // Declaring the state object globally.
@@ -17,7 +18,8 @@ const defaultState = {
   key: 'en',
   language: 'en',
   region: 'US',
-  initialized: false
+  initialized: false,
+  timeZone: ''
 }
 
 type UpdateType = React.Dispatch<
@@ -50,8 +52,9 @@ export function getProvider () {
       console.log('updated Locale: ' + JSON.stringify( locale ))
       const newState = {
         ...state,
-        ...{ initialized: true },
-        ...locale
+        ...locale,
+        initialized: true,
+        timeZone: RNLocalize.getTimeZone() 
       }
       setState( newState )
 
@@ -68,6 +71,7 @@ export function getProvider () {
       return res
     }
 
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect( ()=>{
       udpateLocale().then( ()=> setInitialized( true ) )
       i18n.bindChange( (locale: localeType)=>{

@@ -8,6 +8,7 @@ import { useTranslation } from '../services/i18n/i18nUtils'
 import ImmunizationRecordRow, { GetResultTitle as GetImmunizationResultTitle } from './ImmunizationRecordRow'
 import LabResultRecordRow, { GetResultTitle  as GetLabResultTitle } from './LabResultRecordRow'
 import { RecordType } from '../services/fhir/fhirTypes'
+import VerifiedImage from '../../assets/img/verificationresult/common-trust-verified.svg'
 
 const images = {
   commonTrustVerified: require('../../assets/img/verificationresult/common-trust-verified.png'),
@@ -110,7 +111,9 @@ const ResultRecord = ({ data }: Data) => {
               <Text style={ [ { width:'100%' }, styles.fieldValue, FontStyle.OpenSans_700Bold] }>
                 { issuerData?.name || issuerData?.url }
               </Text>
-              <Image style={ styles.verifierImage } source={ images.commonTrustVerified } />
+              <View style={ styles.verifierImage } >
+                <VerifiedImage width="140" height="20" />
+              </View>
               <Text style={ [styles.verifiedByText, FontStyle.OpenSans_700Bold] }>
                 { t('Result.Verified', 'Verified') }
               </Text>
@@ -208,9 +211,8 @@ const styles = StyleSheet.create({
     color: '#484848',
   },
   verifierImage: {
-    width: 104 * PixelRatio.getFontScale(),
-    height: 18.52 * PixelRatio.getFontScale(),
-    marginRight: 10,
+    width: 140,
+    marginRight: 2,
   },
   warningCrossImage: {
     width: 19,

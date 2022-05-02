@@ -5,13 +5,12 @@ export default class R4Observation implements ObservationParser {
   parse ( entry: BundleEntry ): any {
 
     try {
-      const unknownSystem   = 'UNKNOWN'
+      const unknownSystem   = null
       const { status, code, performer, meta, valueCodeableConcept, effectiveDateTime } = entry?.resource
       const systemCoding =  code?.coding[0]
-      const securityCode = meta?.security ? ( meta?.security[0]?.code ?? 'UNKNOWN' ) : 'UNKNOWN'
+      const securityCode = meta?.security ? ( meta?.security[0]?.code ??  null ) : null
       const system = getAcceptedSystemCode( systemCoding.system, systemCoding.code )
       const systemName = system.display ?? unknownSystem
-      const observationDate = effectiveDateTime ? formatFHIRRecordDate(effectiveDateTime ) : ''
       const performerName = this.getPerformerLabel( performer )
       const systemKey  = system?.systemKey ?? unknownSystem
       const systemCode = system?.code ?? unknownSystem
@@ -37,7 +36,7 @@ export default class R4Observation implements ObservationParser {
         systemKey,
         systemCode,
         systemShortDefault,
-        observationDate,
+        effectiveDateTime,
         codableConseptLabel,
         codableConseptKey,
         codableConseptCode,
@@ -51,9 +50,9 @@ export default class R4Observation implements ObservationParser {
   }
 
   getPerformerLabel ( performers: Array<Record<any, any>> | undefined ): string {
-    let res = 'UNKNOWN'
+    let res = null
     if ( performers ) {
-      res = performers[0].display ? performers[0].display : 'UNKNOWN' 
+      res = performers[0].display ? performers[0].display : null 
     } 
     return res
   }

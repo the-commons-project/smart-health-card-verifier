@@ -5,16 +5,15 @@ import { Table, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import ImmunizationSVG from '../../assets/img/verificationresult/immunizationIcon.svg'
-import { getIsSmallScreen } from '../utils/utils'
-
+import { getIsSmallScreen, formatFHIRRecordDate } from '../utils/utils'
 const imagePadding = 10
 
 export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse ): any => {
   const { t } = useTranslation()
   const isSmallScreen = getIsSmallScreen( windowWidth )
-  const getResultCode = ( responseData: BaseResponse ): string | null => {
+  const getResultCode = ( data: BaseResponse ): string | null => {
     let res = null
-    const entry = responseData.recordEntries ?? []
+    const entry = data.recordEntries ?? []
     if ( entry.length >= 2  ) {
       res =  t( 'ImmunizationResult.DosesComplete',  `${String(entry.length)}Doses`, { num: entry.length })
     } else if ( entry.length === 1 ) {
@@ -83,7 +82,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
           FontStyle.OpenSans_700Bold,
         ] }
       >
-        { date }
+        { formatFHIRRecordDate( date ) }
       </Text>
     )
   }

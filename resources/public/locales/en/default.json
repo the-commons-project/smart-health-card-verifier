@@ -7,7 +7,11 @@
       "Common":{
         "Cancel":"Cancel",
         "OK":"OK",
-        "ScanNext":"Scan next vaccination record"
+        "ScanNext":"Scan next record"
+      },
+      "Utility": {
+        "Month":"Jan,Feb,Mar,Apr,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
+        "Date": "{{month}} {{day}}, {{year}}"
       },
       "Error": {
         "ServerError":"Server Error. Please try to scan again.",
@@ -18,13 +22,13 @@
       },
       "ErrorPage": {
         "UnsupportedQR":"Unsupported QR",
-        "OnlyValidText":"Only valid vaccine SMART® Health Cards are currently supported"
+        "OnlyValidText":"The SMART Health Card Verifier App only verifies SMART Health Cards® for COVID-19 vaccination and test records."
       },
       "Welcome":{
         "Title": "Welcome!",
         "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "Verify SMART® Health Card QR codes in a safe and privacy-preserving way",
-        "ScanVaccinationRecord": "Scan vaccination record",
+        "ScanRecord": "Start scanning",
         "HowTo": "How to verify SMART® Health Cards",
         "AboutUs":"About us",
         "PrivacyPolicy":"Privacy policy"
@@ -55,21 +59,23 @@
         "title":"Test Result",
         "tagCovid19":"COVID-19",
         "Field_securityCode": "Security",
-        "Field_observationDate": "Result Published",
+        "Field_effectiveDateTime": "Specimen Collected",
         "Field_performer": "Performed By",
         "Field_status": "Observation Status",
-        "Field_systemName": "Test Type"
+        "Field_systemName": "Test Type",
+        "CollectedTimeNotFoundTitle":"Time of collection not found",
+        "CollectedTimeNotFound":"The QR code only provided a date of collection, not a time. In this case, we assume the time to be 00:00 GMT."
       },
       "ImmunizationResult":{
         "Title": "Vaccination Record",
         "tagCovid19":"COVID-19",
-        "Dose":"{{num}} Dose",
-        "Doses":"{{num}} Doses",
+        "Dose":"Dose {{num}}",
+        "Doses":"Dose {{num}}",
         "DoseComplete":"{{num}} Dose",
         "DosesComplete":"{{num}} Doses"
       },
       "WelcomeDialog":{
-        "Welcome":"Welcome to the\nSMART Health Card\nVerifier App!",
+        "Welcome":"Welcome to the\nSMART Health Card\nVerifier App",
         "WelcomeDescription1":"Use this app to verify the SMART Health Cards of your customers or employees at your business.",
         "WelcomeDescription2":"This app does not save or store your digital credentials.",
         "PleaseNote":"Please Note: ",
@@ -79,6 +85,7 @@
         "NotVerifiedWelcomeDialog":"The SMART Health Card could not be verified. It may have been corrupted or tampered with.",
         "WelcomeInner1Description1":"Scan a SMART Health Card and one of three results will appear:",
         "WelcomeInner2Description1":"Scanning a SMART Health Card will show the type of record and relevant information",
+        "WelcomeInner2Covid19":"COVID-19",
         "WelcomeInner3Title":"Don't forget!",
         "WelcomeInner3Description": "Always verify identity of the SMART Health Card holder with a government-issued I.D.",
         "DoseNumber":"Dose Number",

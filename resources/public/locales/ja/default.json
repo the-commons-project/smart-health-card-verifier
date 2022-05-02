@@ -9,6 +9,10 @@
         "OK":"OK",
         "ScanNext":"次のQRコードを読み取る"
       },
+      "Utility": {
+        "Month":"１,２,３,４,５,６,７,８,９,１０,１１,１２",
+        "Date": "{{year}}年{{month}}月{{day}}日"
+      },
       "Error": {
         "ServerError":"サーバーエラー. 再度実行してください。.",
         "NoInterNet":"インターネット接続できません。",
@@ -18,13 +22,13 @@
       },
       "ErrorPage": {
         "UnsupportedQR":"QRコードのデータが\n確認できません。",
-        "OnlyValidText":"正しいSMART® Health Cards\nフォーマットのみ確認できます。"
+        "OnlyValidText":"The SMART Health Card Verifier は、\nコロナワクチン履歴、テスト結果の\n正しいSMART® Health Cardsフォーマットのみ認証します。"
       },
       "Welcome":{
         "Title": "",
         "SHCV": "SMART® Health Card Verifier",
         "VerifySmartHealthCard": "SMART® Health Card QR コードを認証しましょう",
-        "ScanVaccinationRecord": "接種証明QRコードを読み取る",
+        "ScanRecord": "スキャンする",
         "HowTo": "SMART® Health Cardsの確認の仕方",
         "AboutUs":"組織概要",
         "PrivacyPolicy":"プライバシーポリシー"
@@ -55,12 +59,14 @@
         "title":"検査結果",
         "tagCovid19":"COVID-19",
         "Field_securityCode": "セキュリティ",
-        "Field_observationDate": "結果発行日",
+        "Field_effectiveDateTime": "検体採取日",
         "Field_performer": "検査実行機関",
         "Field_status": "結果",
-        "Field_systemName": "テストタイプ"
+        "Field_systemName": "テストタイプ",
+        "CollectedTimeNotFoundTitle":"検体採時間情報がありません",
+        "CollectedTimeNotFound":"この QR コードには検体採取日の情報のみ登録されてあります。この場合、TimeZone は 00:00 GMTとみなし表示されます。"
       },
-      "ImmunizationResult":{
+      "ImmunizationResult":{  
         "Title": "ワクチン履歴",
         "tagCovid19":"COVID-19",
         "Dose":"{{num}}回目接種",
@@ -70,7 +76,7 @@
 
       },
       "WelcomeDialog":{
-        "Welcome":"SMART Health Card\nVerifierへようこそ！",
+        "Welcome":"SMART Health Card\nVerifierへようこそ",
         "WelcomeDescription1":"このアプリケーションはお店などで、お客様のSMART Health Cards　を承認するために使用します。",
         "WelcomeDescription2":"このアプリケーションはスキャンした証明書を保存しません。",
         "PleaseNote":"注意: ",
@@ -80,6 +86,7 @@
         "WelcomeInner1NotVerified":"SMART Health Card　は認識できませんでした。QRコードがうまく読め取れないか、データが正しいフォーマットに沿っていません。",
         "WelcomeInner1Description1":"SMART Health Card を読み取るすると下のどれかの結果が出ます:",
         "WelcomeInner2Description1":"SMART Health Card を読み取ると、関連した登録情報を確認できます。",
+        "WelcomeInner2Covid19":"COVID-19",
         "WelcomeInner3Title":"お願い",
         "WelcomeInner3Description": "SMART Health Cardの持ち主のIDを必ず、政府から発行されたドキュメントで個人確認をしてください。",
         "DoseNumber":"接種回数",
