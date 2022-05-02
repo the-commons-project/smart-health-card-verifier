@@ -9,6 +9,10 @@
         "OK":"OK",
         "ScanNext":"次のQRコードを読み取る"
       },
+      "Utility": {
+        "Month":"１,２,３,４,５,６,７,８,９,１０,１１,１２",
+        "Date": "{{year}}年{{month}}月{{day}}日"
+      },
       "Error": {
         "ServerError":"サーバーエラー. 再度実行してください。.",
         "NoInterNet":"インターネット接続できません。",
@@ -55,12 +59,14 @@
         "title":"検査結果",
         "tagCovid19":"COVID-19",
         "Field_securityCode": "セキュリティ",
-        "Field_observationDate": "結果発行日",
+        "Field_effectiveDateTime": "検体採取日",
         "Field_performer": "検査実行機関",
         "Field_status": "結果",
-        "Field_systemName": "テストタイプ"
+        "Field_systemName": "テストタイプ",
+        "CollectedTimeNotFoundTitle":"検体採時間情報がありません",
+        "CollectedTimeNotFound":"この QR コードには検体採取日の情報のみ登録されてあります。この場合、TimeZone は 00:00 GMTとみなし表示されます。"
       },
-      "ImmunizationResult":{
+      "ImmunizationResult":{  
         "Title": "ワクチン履歴",
         "tagCovid19":"COVID-19",
         "Dose":"{{num}}回目接種",

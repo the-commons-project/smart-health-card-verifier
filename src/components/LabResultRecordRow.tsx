@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, FlatList, StyleSheet, PixelRatio, useWindowDimensions } from 'react-native'
+import { Text, View, FlatList, StyleSheet, PixelRatio, useWindowDimensions, Alert, TouchableOpacity } from 'react-native'
 import { RecordEntry, BaseResponse } from '../types'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import { Table, TableWrapper, Cell, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
-import { toCamel } from '../utils/utils'
+import { toCamel, toUpper, getIsSmallScreen, isEmpty } from '../utils/utils'
+import { getLocalDateTimeStringData } from '../utils/timeUtils'
 import LabTestSVG from '../../assets/img/verificationresult/labResultIcon.svg'
-import { getIsSmallScreen } from '../utils/utils'
+import { useLocaleContext } from '../contexts/LocaleContext' 
 
+const getLocalString = ( language: string, region: string | null ): string => {
+  return [language, region].join('-')
+}
 
 export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse ): any => {
   const { t } = useTranslation()
@@ -60,40 +64,106 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
 }
 
 export default ( { recordEntries }: RecordEntry[] | any) => {
-  const dimension     = useWindowDimensions()
+  const { t } = useTranslation()
+  const dimension  = useWindowDimensions()
+  const { timeZone } = useLocaleContext()
+
   const isSmallScreen = getIsSmallScreen( dimension.width )
 
   const { width } = useWindowDimensions()
   const fontScale = PixelRatio.getFontScale()
-  const { t } = useTranslation()
   
   const displayField = 
     [
       {
         'propName': 'status',
-        'isFullBigScreen': false
+        'isFullBigScreen': false,
+        'toUpper': true, 
+        'defaultValue': '-',
+        'type':'string'
       },
       { 
         'propName':'securityCode',
-        'isFullBigScreen': false
+        'isFullBigScreen': false,
+        'toUpper': false, 
+        'defaultValue': '-',
+        'type':'string'
       },
       {
         'propName': 'performer',
-        'isFullBigScreen': false
+        'isFullBigScreen': false,
+        'toUpper': false,
+        'defaultValue': '-',
+        'type':'string'
       },
       {
-        'propName': 'observationDate',
-        'isFullBigScreen': false
+        'propName': 'effectiveDateTime',
+        'isFullBigScreen': false,
+        'toUpper': false, 
+        'defaultValue': null,
+        'type':'date'
       },
       {
         'propName': 'systemName',
-        'isFullBigScreen': true
+        'isFullBigScreen': true,
+        'toUpper': false, 
+        'defaultValue': '-',
+        'type':'string'
       }
     ]
 
+  const alertNoTimeInfo = ()=> {
+    const msg = 'The QR code only provided a date of collection, not a time. In this case, we assume the time to be 00:00 GMT.'
+    Alert.alert(
+      t('LabResult.CollectedTimeNotFoundTitle', 'Time of collection not found'),
+      t('LabResult.CollectedTimeNotFound', msg ),
+      [
+        {
+          text: t('Common.OK'),
+        },
+      ],
+      { cancelable: true },
+    )
+  }
 
   function cellAdapter ( field: any, data: any ): any[]{
+    const upper = ( data[field.propName] !== null && field.toUpper === true ) 
+    let  val =  ( ( field.type === 'string' && isEmpty( data[field.propName]) ) ?  field.defaultValue : data[field.propName] )
+    if ( field.type ==='date' ) {
+      let res = [
+        <Text key="1"
+          style={ [styles.fieldValue, styles.fieldValueInline ] }
+        >{ val.formattedDate }
+        </Text>]
 
+      if ( val.hasTime ) {
+        res.push( <Text key="2"
+          style={ styles.fieldValue }
+        >{ val.time }
+        </Text> )
+      } else {
+        res.push(
+          <Text  key="2" style={ styles.fieldExclamation }>
+            !
+          </Text> )
+
+        res =  [ <TouchableOpacity key="1" onPress={ alertNoTimeInfo } >
+          <View  style={ styles.noTimeZone } >
+            { res }
+          </View>
+        </TouchableOpacity>]
+      }
+      val = res
+
+    } else {
+      if ( upper ) {
+        val = toUpper( val )
+      }
+      val = (  <Text
+        style={ styles.fieldValue }
+      >{ val }
+      </Text> )
+    }
     return [
       <View key="1">
         <Text
@@ -101,23 +171,20 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
             styles.fieldTitle,
             FontStyle.OpenSans_400Regular
           ] }>
-          {  t(`LabResult.Field_${field.propName}`, field.propName ) }
+          {  t(`LabResult.Field_${String(field.propName)}`, field.propName ) }
         </Text>
       </View>,
       <View key="2" >
-        <Text
-          style={ styles.fieldValue }
-        >{  data[field.propName] }
-        </Text>
+        { val }
       </View>
     ]
   }
 
-
-
   function recordAdapter ( data: any ) {
-    const { securityCode, performer, observationDate, systemName, index } = data
-
+    const { securityCode, performer, effectiveDateTime, systemName, index } = data
+    if ( effectiveDateTime ) {
+      data.effectiveDateTime = getLocalDateTimeStringData( '2022-04-20', timeZone )
+    }
     return (
       displayField.map(( field: any, key: any ) => {
         const cellStyle = (( !field.isFullBigScreen && !isSmallScreen ) ? 
@@ -258,6 +325,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 17,
     color: '#484848',
+  },
+  fieldValueInline: {
+    flexShrink:1
+  },
+  fieldExclamation: {
+    backgroundColor:'#C33E38',
+    borderRadius:10,
+    width:20,
+    height:20,
+    alignItems:'center',
+    textAlign:'center',
+    justifyContent:'center',
+    color:'#FFFFFF',
+    marginLeft:5
+  },
+  noTimeZone: {
+    flexDirection: 'row', 
+    alignItems:'center',
+    justifyContent: 'flex-start'
   },
   fieldTitle: {
     fontSize: 12,

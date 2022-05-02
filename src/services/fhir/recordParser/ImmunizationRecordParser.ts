@@ -1,4 +1,4 @@
-import { formatFHIRRecordDate, sortRecordByDateField } from '../../../utils/utils'
+import { sortRecordByDateField } from '../../../utils/utils'
 import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
 import { ResourceType, isResourceType } from '../fhirTypes'
 import { RecordEntry } from '../../../types'
@@ -34,7 +34,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
 
     const dose = index + 1
     const vaccineName = vaccineCodesHash[code]
-    const vaccinationDate = formatFHIRRecordDate(occurrenceDateTime)
+    const vaccinationDate = occurrenceDateTime
 
     let vaccinator = ''
     if (performer) {

@@ -30,7 +30,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     })
   }
 
-  sortRecordByDateField('observationDate', labResultData)
+  sortRecordByDateField('effectiveDateTime', labResultData)
   return labResultData
 }
 

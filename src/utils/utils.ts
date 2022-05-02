@@ -1,7 +1,6 @@
 import pako from 'pako'
 import { Platform, PixelRatio } from 'react-native'
 import { getUniqueId, getBundleId } from 'react-native-device-info'
-
 import { v5 as uuidv5 } from 'uuid'
 import { uuidNamespace } from '../services/constants'
 
@@ -34,6 +33,16 @@ export const toCamel = ( s: string ) => {
   return s.trim().replace(/\s+./g, (x)=> x[1].toUpperCase() ).replace(/^(.)(.*)$/, (x, y, z )=>  { return ( y.toLowerCase() + z ) } ) 
 }
 
+/* eslint   @typescript-eslint/restrict-plus-operands: "off" */
+export const toUpper = ( s: string ) => {
+  if ( ( s || null ) == null ) {
+    return s
+  } else if ( s.length <= 1 ) { 
+    return s
+  }
+  return `${s[0].toUpperCase()}${s.substring(1)}`
+}
+
 export const sortRecordByDateField = ( dateFieldName: string, records: any[] ) => {
   records.sort((a, b) => Date.parse(a[dateFieldName]) - Date.parse(b[dateFieldName]))
   // set correct dose number if dose objects are swapped
@@ -41,12 +50,25 @@ export const sortRecordByDateField = ( dateFieldName: string, records: any[] ) =
     rec.index = index + 1
   }
 }
+
+export const isEmpty = ( val: string | null )  => {
+  return ( ( typeof val === 'undefined') || val === null || val.length === 0 )
+}
+
 // NOTE: Timezone affects date presentation, so in US it will be 1 day behind,
 //       that is why `new Date()` is not needed.
 //       Vaccination date in FHIR => "occurrenceDateTime": "2020-12-29"
 export const formatFHIRRecordDate = (dateRaw: string): string => {
   let tmpDate = dateRaw
+
   if ( dateRaw.indexOf('T') > 0 ) {
+    const options =  {
+      year: 'numeric', month: 'long', day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+      hour12: false }
     const tmp = new Date( dateRaw )
     tmpDate = [ tmp.getFullYear(), ( tmp.getMonth() + 1 ), tmp.getDate() ].join('-')
   }

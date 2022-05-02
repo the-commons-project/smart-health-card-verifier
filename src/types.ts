@@ -34,7 +34,7 @@ export interface RecordEntry {
   /* labResult */
   securityCode?: string
   performer?: string
-  observationDate?: string
+  effectiveDateTime?: string
   systemName?: string
   systemKey?: string
   systemCode?: string

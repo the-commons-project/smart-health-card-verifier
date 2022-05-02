@@ -9,6 +9,10 @@
         "OK":"OK",
         "ScanNext":"Scan next record"
       },
+      "Utility": {
+        "Month":"Jan,Feb,Mar,Apr,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
+        "Date": "{{month}} {{day}}, {{year}}"
+      },
       "Error": {
         "ServerError":"Server Error. Please try to scan again.",
         "NoInterNet":"No internet connection",
@@ -55,10 +59,12 @@
         "title":"Test Result",
         "tagCovid19":"COVID-19",
         "Field_securityCode": "Security",
-        "Field_observationDate": "Result Published",
+        "Field_effectiveDateTime": "Specimen Collected",
         "Field_performer": "Performed By",
         "Field_status": "Observation Status",
-        "Field_systemName": "Test Type"
+        "Field_systemName": "Test Type",
+        "CollectedTimeNotFoundTitle":"Time of collection not found",
+        "CollectedTimeNotFound":"The QR code only provided a date of collection, not a time. In this case, we assume the time to be 00:00 GMT."
       },
       "ImmunizationResult":{
         "Title": "Vaccination Record",
