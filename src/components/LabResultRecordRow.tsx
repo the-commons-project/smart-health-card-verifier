@@ -183,7 +183,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
   function recordAdapter ( data: any ) {
     const { securityCode, performer, effectiveDateTime, systemName, index } = data
     if ( effectiveDateTime ) {
-      data.effectiveDateTime = getLocalDateTimeStringData( '2022-04-20', timeZone )
+      data.effectiveDateTime = getLocalDateTimeStringData( '2022-04-20', timeZone, t )
     }
     return (
       displayField.map(( field: any, key: any ) => {
