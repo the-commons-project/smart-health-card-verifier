@@ -10,7 +10,7 @@
         "ScanNext":"Scanner l'enregistrement suivant"
       },
       "Utility": {
-        "Month":"jan,fév,mar,avril,juin,juil,août,sep,oct,nov,déc",
+        "Month":"jan,fév,mar,avril,mai,juin,juil,août,sep,oct,nov,déc",
         "Date": "{{month}} {{day}}, {{year}}"
       },
       "Error": {
