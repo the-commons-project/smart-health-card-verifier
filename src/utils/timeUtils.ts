@@ -20,6 +20,7 @@ export const  getLocalDateTimeStringData = ( rawData: string, timeZone: string, 
   let day   = null
   let year  = null
   let formattedDate = null
+  const defaultMonths = 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'
 
   if ( rawData.length > 0  ) {
     let d = null
@@ -33,7 +34,8 @@ export const  getLocalDateTimeStringData = ( rawData: string, timeZone: string, 
     time = mmt.tz(timeZone).format('HH:mm Z z')
     formattedDate = mmt.format( 'YYYY-MM-DD' )
     const [_year, _month, _day] = formattedDate.split('-')
-    month = t('Utility.Month').split(',')[ ( parseInt(_month) - 1 ) ]
+    const monthArr = t('Utility.Month', defaultMonths).split(',')
+    month = monthArr[ ( parseInt(_month) - 1 ) ]
     formattedDate = t('Utility.Date', formattedDate, { month, year: _year, day : _day } )
     year = _year
     month = _month
