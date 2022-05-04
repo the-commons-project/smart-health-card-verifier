@@ -59,7 +59,7 @@
         "title":"Test Result",
         "tagCovid19":"COVID-19",
         "Field_securityCode": "Security",
-        "Field_effectiveDateTime": "Specimen Collected",
+        "Field_effectiveDateTimeData": "Specimen Collected",
         "Field_performer": "Performed By",
         "Field_status": "Observation Status",
         "Field_systemName": "Test Type",

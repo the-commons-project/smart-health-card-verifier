@@ -97,7 +97,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
         'type':'string'
       },
       {
-        'propName': 'effectiveDateTime',
+        'propName': 'effectiveDateTimeData',
         'isFullBigScreen': false,
         'toUpper': false, 
         'defaultValue': null,
@@ -143,15 +143,18 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
         </Text> )
       } else {
         res.push(
-          <Text  key="2" style={ styles.fieldExclamation }>
-            !
-          </Text> )
-
-        res =  [ <TouchableOpacity key="1" onPress={ alertNoTimeInfo } >
-          <View  style={ styles.noTimeZone } >
-            { res }
-          </View>
-        </TouchableOpacity>]
+          <View key="2" style={ styles.noTimeZone } >
+            {[
+            <Text key="1" style={[styles.fieldValue, styles.fieldValueInline ] } >
+            { val.time }
+            </Text>,
+            <TouchableOpacity key="2" onPress={ alertNoTimeInfo } >
+                <Text  key="2" style={ styles.fieldExclamation }>
+                !
+              </Text>
+            </TouchableOpacity>
+            ]}
+          </View>)
       }
       val = res
 
@@ -183,7 +186,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
   function recordAdapter ( data: any ) {
     const { securityCode, performer, effectiveDateTime, systemName, index } = data
     if ( effectiveDateTime ) {
-      data.effectiveDateTime = getLocalDateTimeStringData( effectiveDateTime, timeZone, t )
+      data.effectiveDateTimeData = getLocalDateTimeStringData( effectiveDateTime, timeZone, t )
     }
     return (
       displayField.map(( field: any, key: any ) => {
@@ -342,8 +345,9 @@ const styles = StyleSheet.create({
   },
   noTimeZone: {
     flexDirection: 'row', 
-    alignItems:'center',
-    justifyContent: 'flex-start'
+    alignItems:'flex-start',
+    justifyContent: 'flex-start',
+    marginTop:-5
   },
   fieldTitle: {
     fontSize: 12,
