@@ -59,7 +59,7 @@
         "title":"検査結果",
         "tagCovid19":"COVID-19",
         "Field_securityCode": "セキュリティ",
-        "Field_effectiveDateTime": "検体採取日",
+        "Field_effectiveDateTimeData": "検体採取日",
         "Field_performer": "検査実行機関",
         "Field_status": "結果",
         "Field_systemName": "テストタイプ",
