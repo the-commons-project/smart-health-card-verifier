@@ -8,19 +8,18 @@ on:
 # more than one deployment
 env:
   STORE_FILE: "${{ github.workspace }}/android/verifier-keystore"
-#  GITHUB_TOKEN: "${{ secrets.GH_ACTIONS_SERVICE_TOKEN }}"
+  GAPI_FILE_PATH: "${{ github.workspace }}/android/google-api.json"
   NDK_VERSION: "21.4.7075529" #make sure this will map to ndkVersifon in buildGradle
 jobs:
   publishAndroidDev:
     timeout-minutes: 60
-    if: contains(github.ref, 'release-dev') && !contains(github.ref, 'developer')
-    name: 'Build and Publish devRemote Bundle'
+    if: contains(github.ref, 'release-dev')
+    name: 'Build and Publish VerifierDev Bundle'
     runs-on: ubuntu-latest
     env:  
       STORE_PASSWORD: "${{secrets.DEV_STORE_PASSWORD}}"
       KEY_PASSWORD: "${{secrets.DEV_KEY_PASSWORD}}"
       KEY_ALIAS: "${{secrets.DEV_KEY_ALIAS}}"
-      PACKAGE_NAME: "${{secrets.DEV_PACKAGE_NAME}}"
     steps:
       - name: 'Checkout to branch'
         uses: actions/checkout@v2
@@ -32,7 +31,7 @@ jobs:
           echo "${{ secrets.DEV_BUILD_CONFIG }}" >> .env.staging
       - name: 'Create google api file'
         run: |
-          echo "${{ secrets.DEV_GAPI_JSON }}" >> google-api-dev.json
+          echo "${{ secrets.DEV_GAPI_JSON }}" >> "${GAPI_FILE_PATH}"
       - name: Install npm dependencies
         run: |
           npm install
@@ -65,7 +64,7 @@ jobs:
         working-directory: ./android
         run: |
           echo "${{ secrets.DEV_KEYSTORE }}" > verifier-keystore.asc
-          gpg --decrypt --passphrase "${{ secrets.GPG_PASSPHRASE }}" --batch verifier-keystore.asc > verifier-keystore
+          gpg --decrypt --passphrase "${{ secrets.DEV_GPG_PASSPHRASE }}" --batch verifier-keystore.asc > verifier-keystore
           touch local.properties
 
       - name: 'Build devRelease'
@@ -75,8 +74,76 @@ jobs:
       - name: 'Publish to the store'
         run: >
           node tools/deploy/android/androidDeploy.js 
-          --googleApiKeyFilePath ./google-api-dev.json 
+          --googleApiKeyFilePath ${GAPI_FILE_PATH}
           --aabFilePath ./android/app/build/outputs/bundle/devRelease/app-dev-release.aab 
           --env dev  
+          --status draft
+
+  publishAndroidProd:
+    timeout-minutes: 60
+    if: contains(github.ref, 'release-prod')
+    name: 'Build and Publish Verifier Bundle'
+    runs-on: ubuntu-latest
+    env:  
+      STORE_PASSWORD: "${{secrets.PROD_STORE_PASSWORD}}"
+      KEY_PASSWORD: "${{secrets.PROD_KEY_PASSWORD}}"
+      KEY_ALIAS: "${{secrets.PROD_KEY_ALIAS}}"
+    steps:
+      - name: 'Checkout to branch'
+        uses: actions/checkout@v2
+      - name: 'Get release tag'
+        id: release
+        run: echo "::set-output name=tag::$(echo ${GITHUB_REF##*/})"
+      - name: 'Create env file'
+        run: |
+          echo "${{ secrets.PROD_BUILD_CONFIG }}" >> .env.production
+      - name: 'Create google api file'
+        run: |
+          echo "${{ secrets.PROD_GAPI_JSON }}" >> "${GAPI_FILE_PATH}"
+      - name: Install npm dependencies
+        run: |
+          npm install
+      # - name: Install google play dependencies
+      #   run: |
+      #     npx tsc tools/deploy/android/publisher.ts 2>/dev/null
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - name: Install NDK
+        run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;${NDK_VERSION}"
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-caches-
+      - name: Make Gradlew Executable
+        run: cd android && chmod +x ./gradlew
+
+      - name: 'Decrypt keystore and GCP credentials'
+        working-directory: ./android
+        run: |
+          echo "${{ secrets.PROD_KEYSTORE }}" > verifier-keystore.asc
+          gpg --decrypt --passphrase "${{ secrets.PROD_GPG_PASSPHRASE }}" --batch verifier-keystore.asc > verifier-keystore
+          touch local.properties
+
+      - name: 'Build prodRelease'
+        working-directory: ./android
+        run: ./gradlew :app:bundleProdRelease  --no-daemon --info
+
+      - name: 'Publish to the store'
+        run: >
+          node tools/deploy/android/androidDeploy.js 
+          --googleApiKeyFilePath ${GAPI_FILE_PATH}
+          --aabFilePath ./android/app/build/outputs/bundle/prodRelease/app-prod-release.aab 
+          --env prod
           --status draft
 
