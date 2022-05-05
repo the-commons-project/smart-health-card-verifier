@@ -70,3 +70,7 @@ buck-out/
 .env.development
 .env.production
 .env.staging
+
+#gapi
+google-api*.json
+tools/deploy/android/publisher.js
