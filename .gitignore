@@ -73,4 +73,4 @@ buck-out/
 
 #gapi
 google-api*.json
-tools/deploy/android/publisher.js
+#tools/deploy/android/publisher.js

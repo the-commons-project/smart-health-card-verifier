@@ -16,10 +16,11 @@ jobs:
     if: contains(github.ref, 'release-dev') && !contains(github.ref, 'developer')
     name: 'Build and Publish devRemote Bundle'
     runs-on: ubuntu-latest
-    env:
+    env:  
       STORE_PASSWORD: "${{secrets.DEV_STORE_PASSWORD}}"
       KEY_PASSWORD: "${{secrets.DEV_KEY_PASSWORD}}"
       KEY_ALIAS: "${{secrets.DEV_KEY_ALIAS}}"
+      PACKAGE_NAME: "${{secrets.DEV_PACKAGE_NAME}}"
     steps:
       - name: 'Checkout to branch'
         uses: actions/checkout@v2
@@ -35,9 +36,9 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
-      - name: Install google play dependencies
-        run: |
-          npx tsc tools/deploy/android/publisher.ts 2>/dev/null
+      # - name: Install google play dependencies
+      #   run: |
+      #     npx tsc tools/deploy/android/publisher.ts 2>/dev/null
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -76,6 +77,6 @@ jobs:
           node tools/deploy/android/androidDeploy.js 
           --googleApiKeyFilePath ./google-api-dev.json 
           --aabFilePath ./android/app/build/outputs/bundle/devRelease/app-dev-release.aab 
-          --packageName com.thecommonsproject.smarthealthcardverifier.dev  
+          --env dev  
           --status draft
 

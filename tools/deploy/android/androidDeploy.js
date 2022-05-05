@@ -1,12 +1,12 @@
 const process = require('process');
 const { publish } = require("./publisher")
+const { packageName } = require("../../../buildconfig.json")
 const { accessSync, constants } = require('fs');
 var path = require('path');
 const args = require('minimist')(process.argv.slice(2))
 /* Deployment support */
 /* argument 
   --googleApiKeyFilePath=<google api json key file path> \
-  --packageName=<package name> \
   --aabFilePath=<aabFilePath> \ 
   --track=internal
   --status=draft
@@ -47,9 +47,9 @@ const upload = async ()=> {
   try{
     publish({
       keyFile: googleApiKeyFilePath,
-      packageName: packageName,
+      packageName: resolvedPackageName,
       aabFile: aabFilePath,
-      track: track,aabFilePath, 
+      track: track, 
       status: status,
     })
     .then(() => {
@@ -64,17 +64,18 @@ const upload = async ()=> {
 }
 
 const rootPath =  process.cwd();
-const packageName          = args['packageName']
 const googleApiKeyFilePath = args['googleApiKeyFilePath']
 const aabFilePath = args['aabFilePath']
 const track       = args['track'] || 'internal'
 const status      = args['status'] || 'completed'
-
+const env         = args['env'] || 'dev'
+const resolvedPackageName = `${packageName}${env==='dev'?'.dev':''}` 
 console.log(`rootPath:  ${rootPath}` );
-console.log(`Uploading pakcage:  ${packageName}` );
 console.log(`track:  ${track}` );
 console.log(`googleApiKeyFilePath:  ${googleApiKeyFilePath}` );
 console.log(`aabFilePath:  ${aabFilePath}` );
 console.log(`status:  ${status}` );
+console.log(`env:  ${env}` );
+console.log(`resolvedPackageName:  ${resolvedPackageName}`)
 
 upload()
