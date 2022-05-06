@@ -1,4 +1,4 @@
 {
-  "useLegacy": false,
-  "remoteConfigEnabled": true 
+  "useLegacy": true,
+  "remoteConfigEnabled": false
 }
