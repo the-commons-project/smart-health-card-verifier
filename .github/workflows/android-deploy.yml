@@ -2,7 +2,7 @@ name: 'Smart Health Card Verifier Deployment'
 on:
   push:
     tags:
-      - v*
+      - v-android*
 
 # Environment variables that are common to
 # more than one deployment
@@ -31,7 +31,8 @@ jobs:
           echo "${{ secrets.DEV_BUILD_CONFIG }}" >> .env.staging
       - name: 'Create google api file'
         run: |
-          echo "${{ secrets.DEV_GAPI_JSON }}" >> "${GAPI_FILE_PATH}"
+          echo "${{ secrets.DEV_GCP_CREDS }}" > ${GAPI_FILE_PATH}.asc
+          gpg --decrypt --passphrase "${{ secrets.DEV_GPG_PASSPHRASE }}" --batch ${GAPI_FILE_PATH}.asc > ${GAPI_FILE_PATH}
       - name: Install npm dependencies
         run: |
           npm install
@@ -99,7 +100,8 @@ jobs:
           echo "${{ secrets.PROD_BUILD_CONFIG }}" >> .env.production
       - name: 'Create google api file'
         run: |
-          echo "${{ secrets.PROD_GAPI_JSON }}" >> "${GAPI_FILE_PATH}"
+          echo "${{ secrets.PROD_GCP_CREDS }}" > ${GAPI_FILE_PATH}.asc
+          gpg --decrypt --passphrase "${{ secrets.PROD_GPG_PASSPHRASE }}" --batch ${GAPI_FILE_PATH}.asc > ${GAPI_FILE_PATH}
       - name: Install npm dependencies
         run: |
           npm install

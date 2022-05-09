@@ -1,6 +1,8 @@
 const process = require('process');
 const { publish } = require("./publisher")
 const { packageName } = require("../../../buildconfig.json")
+const { private_key } = require("../../../google-api.json")
+
 const { accessSync, constants } = require('fs');
 var path = require('path');
 const args = require('minimist')(process.argv.slice(2))
@@ -12,8 +14,6 @@ const args = require('minimist')(process.argv.slice(2))
   --status=draft
   */
 
-console.info('args = ' + JSON.stringify( args))
-
 function exists(filePath) {  
   var res = false;
   try {
@@ -22,7 +22,6 @@ function exists(filePath) {
   } catch(e) {
     ;;
   }
-  console.info( "res ============ " + res )
   return res;
 }
 
