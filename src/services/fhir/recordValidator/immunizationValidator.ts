@@ -38,6 +38,11 @@ const validate: ValidateFunction  = (entries: BundleEntry[])=> {
     }
 
     if (entry.resource.resourceType === 'Immunization') {
+
+      const status = ( entry.resource?.status ?? '' ).toLowerCase()
+      if ( status !== 'completed') {
+        console.log(`Record #${index} has invalid status code: ${status}`) 
+      }
       // verify that valid codes are used see : https://www.cdc.gov/vaccines/programs/iis/COVID-19-related-codes.html
       const code = (entry.resource?.vaccineCode as { coding: Array<{ code: string }> })?.coding[0]
         ?.code
