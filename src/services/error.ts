@@ -36,6 +36,8 @@ export enum ErrorCode {
   INVALID_KEY_X5C,
   INVALID_KEY_UNKNOWN,
 
+  NO_VALID_RECORD = 250,
+
   // config errors
   OPENSSL_NOT_AVAILABLE = 300,
 

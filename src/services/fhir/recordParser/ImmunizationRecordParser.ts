@@ -21,7 +21,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry
     const { code } = vaccineCode?.coding[0]
     const isValidVaccinationCode = code && cvxCodes.includes(code)
-    const isVaccineShotDone = status === 'completed'
+    const isVaccineShotDone = ( status || '').toLowerCase() === 'completed'
     if (!isValidVaccinationCode) {
       console.log(
         `Immunization.vaccineCode.code (${String(code)}) requires valid COVID-19 code (${String(cvxCodes.join(','))}).`,

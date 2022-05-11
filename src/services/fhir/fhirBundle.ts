@@ -1,5 +1,6 @@
 import * as utils from '../../utils/utils'
 import { ErrorCode } from '../error'
+import { InvalidError } from '../../utils/InvalidError' 
 import { validateSchema, objPathToSchema } from '../jws/schema'
 import fhirSchema from '../../schemas/fhir-schema.json'
 import { getPatientDataFromFhir } from './getPatiendDataFromFhir'
@@ -27,7 +28,9 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
   const patientData = getPatientDataFromFhir(payload)
   const recordType  = getRecordTypeFromPayload(payload)
   const recordEntries = await getRecordData(recordType, payload)
-
+  if ( recordEntries?.length === 0 ) {
+    throw new InvalidError(ErrorCode.NO_VALID_RECORD)
+  }
   const document = {
     issuerData,
     patientData,
