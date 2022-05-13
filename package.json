@@ -1,6 +1,6 @@
 {
   "name": "health-card-verifier-mobile",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "description": "SMART Health Card Verifier",
   "scripts": {
     "android": "export ENVFILE=.env.development && react-native run-android",
