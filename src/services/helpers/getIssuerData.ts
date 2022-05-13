@@ -35,14 +35,20 @@ export const getIssuerData = async ( issuer: string ):  Promise<any> => {
   return await _getIssuerData( issuer )
 }
 
-export const _getIssuerData = async (issuer: string): Promise<IssuerItemType|null> => {
+/* this is used for non-Legacy code to refer to canonical_iss to look for iss */
+export const getIssuerIss = async ( issuer: string ):  Promise<any> => {
   const _issuerMap = (issuersMap??{})
-  let issuerItem = _issuerMap[issuer]
-
-  if ( issuerItem.canonical_iss ) {
+  var issuerItem = await _getIssuerData( issuer )
+  if ( issuerItem && issuerItem.canonical_iss ) {
     console.debug('using canonical_iss')
     issuerItem = _issuerMap[issuerItem.canonical_iss] || issuerItem
   }
+  return ( issuerItem?.iss || null );
+}
+
+export const _getIssuerData = async (issuer: string): Promise<IssuerItemType|null> => {
+  const _issuerMap = (issuersMap??{})
+  let issuerItem = _issuerMap[issuer]
   return ( issuerItem || null )
 }
 

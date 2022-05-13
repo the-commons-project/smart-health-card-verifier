@@ -13,7 +13,7 @@ import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
 import Timer from '../../utils/timer'
 import { getRecordTypeFromPayload } from '../fhir/fhirTypes'
 import { getRecord } from '../fhir/fhirBundle'
-import { getIssuerData, IssuerItemType } from '../helpers/getIssuerData'
+import { getIssuerIss, IssuerItemType } from '../helpers/getIssuerData'
 import remoteConfig from '../RemoteConfig'
 export const JwsValidationOptions = {
   skipJwksDownload: false,
@@ -80,14 +80,12 @@ export async function validate (jws: string): Promise<any> {
     if (err instanceof InvalidError) throw err
     return 
   }
-
   const result = false
   if (!headerJson) {
     return result
   }
 
   const isValid = await verifyJws(jws, headerJson.kid)
-
   let document = await getRecord( payload )
 
   document = {
@@ -320,10 +318,7 @@ async function extractKeyURL (payload: any) {
       var iss= payload.iss
       if( !remoteConfig.useLegacy() ) {
          //switch to canonical_iss if there is 
-         const issuerItem = await getIssuerData( payload.iss )
-         if( issuerItem ){
-           iss = issuerItem.iss
-         }
+         iss = await getIssuerIss( payload.iss ) ?? payload.iss
       }
       // download the keys into the keystore. if it fails, continue an try to use whatever is in the keystore.
       if (!JwsValidationOptions.skipJwksDownload) {
