@@ -1,7 +1,6 @@
 const process = require('process');
 const { publish } = require("./publisher")
 const { packageName } = require("../../../buildconfig.json")
-const { private_key } = require("../../../google-api.json")
 
 const { accessSync, constants } = require('fs');
 var path = require('path');
