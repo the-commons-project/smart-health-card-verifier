@@ -36,6 +36,7 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
+      #    npx  react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.an
       # - name: Install google play dependencies
       #   run: |
       #     npx tsc tools/deploy/android/publisher.ts 2>/dev/null
