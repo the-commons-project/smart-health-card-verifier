@@ -221,7 +221,7 @@ const ScanQRPage = ({ navigation }: Props) => {
         ) }
 
         { showCamera && (
-          <View >
+          <View>
             <BarCodeScanner
               onBarCodeScanned={ scanned ? undefined : handleBarCodeScanned }
               type={ cameraType }
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   },
   scannerContainer: {
     flex: 1,
-    backgroundColor: '#F3F6FF',
+    backgroundColor: '#000000',
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: '100%',
