@@ -74,7 +74,7 @@ PODS:
   - glog (0.3.5)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
-  - Permission-Camera (3.1.0):
+  - Permission-Camera (3.3.1):
     - RNPermissions
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -288,7 +288,7 @@ PODS:
     - React-Core
   - react-native-netinfo (7.1.12):
     - React-Core
-  - react-native-safe-area-context (3.3.2):
+  - react-native-safe-area-context (3.4.1):
     - React-Core
   - React-perflogger (0.66.2)
   - React-RCTActionSheet (0.66.2):
@@ -355,21 +355,21 @@ PODS:
     - React-jsi (= 0.66.2)
     - React-logger (= 0.66.2)
     - React-perflogger (= 0.66.2)
-  - RNCAsyncStorage (1.16.1):
+  - RNCAsyncStorage (1.17.5):
     - React-Core
-  - RNDeviceInfo (8.4.5):
+  - RNDeviceInfo (8.7.1):
     - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNLocalize (2.1.7):
+  - RNLocalize (2.2.1):
     - React-Core
-  - RNPermissions (3.1.0):
+  - RNPermissions (3.3.1):
     - React-Core
-  - RNScreens (3.9.0):
+  - RNScreens (3.13.1):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.1.1):
-    - React
+  - RNSVG (12.3.0):
+    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -440,6 +440,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+  - YogaKit (~> 1.7)
 
 SPEC REPOS:
   trunk:
@@ -563,7 +564,7 @@ SPEC CHECKSUMS:
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
-  Permission-Camera: 1f383e3f9a38ba393c63ba9b09a4726f94eda769
+  Permission-Camera: 273b78e214eae8d734d1c497b67aa0030838c006
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 5e9e85f48da8dd447f5834ce14c6799ea8c7f41a
   RCTTypeSafety: aba333d04d88d1f954e93666a08d7ae57a87ab30
@@ -579,7 +580,7 @@ SPEC CHECKSUMS:
   react-native-camera: 210a872c84d3aa0982a9223047ef9e743ed694fa
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-netinfo: 4bb79fd86e731f85db7d8d132216fa4e9646811c
-  react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
+  react-native-safe-area-context: 5b8a418400eb3d8364aa87300e865c0262cc17b9
   React-perflogger: 5ab487cacfe6ec19bfe3d3f8072bf71eb07d63da
   React-RCTActionSheet: 03f25695e095fb5aa003828620943c74cc281fec
   React-RCTAnimation: eaf82da39f0c36fb0ef2a28df797c5f73a2a98ea
@@ -592,16 +593,16 @@ SPEC CHECKSUMS:
   React-RCTVibration: 3e815c3d2dd2e0e931b68595b5b92d23ba38b3fb
   React-runtimeexecutor: 393e26602c1b248683372051e34db63e359e3b01
   ReactCommon: c0263c1a41509aeb94be3214fa7bc3b71eae5ef6
-  RNCAsyncStorage: c0754b486fec6e532d358bfd7337cb45c8d2c897
-  RNDeviceInfo: 3b3bbe00f478907223daa580b6882f0bae162f72
+  RNCAsyncStorage: e405f7684be5a2066f5418bb1a4729129ae4feb3
+  RNDeviceInfo: af47a7d1a09d64c8cbb8b0c883db9bca422a9813
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNLocalize: b8980509fc4db6895953aa95b90c8d81cb984603
-  RNPermissions: b3588a19e12bff03fe21bc46911fd32343666dc0
-  RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNLocalize: 414c99a0f6625a58dfee7f5780678d98c4ffabc2
+  RNPermissions: 7ad8d93b004e6bc85c89e27a102afcde90e07efa
+  RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
+  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   Yoga: 9a08effa851c1d8cc1647691895540bc168ea65f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 313649a5f1fc2193014cf59a63417d5d9b1cc402
+PODFILE CHECKSUM: cafe9f3265f087b936940d23e3b57a57665de484
 
 COCOAPODS: 1.11.2
