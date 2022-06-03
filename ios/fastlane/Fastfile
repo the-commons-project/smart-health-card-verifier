@@ -1,0 +1,65 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  before_all do |lane|
+    app_store_connect_api_key(
+      key_id: ENV['APP_STORE_KEY_ID'],
+      issuer_id: ENV['APP_STORE_ISSUER_ID'],
+      key_filepath: ENV['API_KEY_PATH'],
+      in_house: true, 
+      duration: 1200,
+    )
+    update_code_signing_settings(
+        path: "Verifier.xcodeproj",
+        use_automatic_signing: false,
+        team_id: ENV['TEAM_ID'],
+        profile_uuid: ENV['PROFILE_UUID'],
+        code_sign_identity: ENV['CODE_SIGN_IDENTITY']
+    )
+  end
+
+  lane :release do |options|
+
+    unlock_keychain(
+      path: ENV['KEYCHAIN_PATH'],
+      password: "keychainPassword",
+      set_default: true
+    )
+
+    build_app(
+      scheme: ENV['XCODE_SCHEME'],
+      output_directory: ENV['OUTPUT_PATH'],
+      output_name: ENV['IPA_OUTPUT_NAME'],
+      silent: false,
+      export_options: {
+        method: "app-store",
+        compileBitcode: false
+      }
+    )
+    app_store_connect_api_key(
+      key_id: ENV['APP_STORE_KEY_ID'],
+      issuer_id: ENV['APP_STORE_ISSUER_ID'],
+      key_filepath: ENV['API_KEY_PATH'],
+      duration: 1200,
+    )
+    # upload_to_testflight
+  end
+
+
+end

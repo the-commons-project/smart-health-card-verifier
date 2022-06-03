@@ -1,0 +1,207 @@
+name: IOS Build
+
+on:
+  push:
+    tags:
+      - v-ios*
+jobs:
+  # iosDevRelease:
+  #   name: 'Build and Publish VerifierDev'
+  #   runs-on: macos-11
+  #   env:
+  #     APP_STORE_ISSUER_ID: "${{ secrets.DEV_IOS_APP_STORE_ISSUER_ID }}"
+  #     APP_STORE_KEY: "${{ secrets.DEV_IOS_APP_STORE_KEY }}"
+  #     APP_STORE_KEY_ID: "${{ secrets.DEV_IOS_APP_STORE_KEY_ID }}"
+  #     TEAM_ID: "${{ secrets.DEV_IOS_TEAM_ID }}"
+  #     PROFILE_UUID: "${{ secrets.DEV_IOS_PROFILE_UUID }}"
+  #     CODE_SIGN_CERTIFICATE_BASE64: "${{ secrets.DEV_IOS_CERTIFICATE_BASE64 }}"
+  #     P12_PASSPHRASE: "${{ secrets.DEV_IOS_PASSPHRASE }}"
+  #     PROVISIONING_PROFILE_BASE64: "${{ secrets.DEV_IOS_PROVISIONING_PROFILE_BASE64 }}"
+  #     ENV_NAME: "dev"
+  #     CERTIFICATE_PATH: ${{ github.workspace }}/build_certificate.p12
+  #     PP_PATH: ${{ github.workspace }}/Github_Actions_iOS.mobileprovision
+  #     KEYCHAIN_PATH: ${{ github.workspace }}/app-signing.keychain-db
+  #     API_PRIVATE_KEYS_DIR: "${{ github.workspace }}/ios/private_keys"
+  #     API_KEY_PATH: "${{ github.workspace }}/ios/private_keys/AuthKey_${{ secrets.DEV_IOS_APP_STORE_KEY_ID }}.p8"
+  #     OUTPUT_PATH: "${{github.workspace}}/ios"
+  #     IPA_OUTPUT_NAME: "VerifierDev.ipa"
+
+  # iosProdRelease:
+  #   name: 'Build and Publish VerifierDev'
+  #   runs-on: macos-11
+  #   env:
+  #     APP_STORE_ISSUER_ID: "${{ secrets.DEV_IOS_APP_STORE_ISSUER_ID }}"
+  #     APP_STORE_KEY: "${{ secrets.DEV_IOS_APP_STORE_KEY }}"
+  #     APP_STORE_KEY_ID: "${{ secrets.DEV_IOS_APP_STORE_KEY_ID }}"
+  #     TEAM_ID: "${{ secrets.DEV_IOS_TEAM_ID }}"
+  #     PROFILE_UUID: "${{ secrets.DEV_IOS_PROFILE_UUID }}"
+  #     CODE_SIGN_CERTIFICATE_BASE64: "${{ secrets.DEV_IOS_CERTIFICATE_BASE64 }}"
+  #     P12_PASSPHRASE: "${{ secrets.DEV_IOS_PASSPHRASE }}"
+  #     PROVISIONING_PROFILE_BASE64: "${{ secrets.DEV_IOS_PROVISIONING_PROFILE_BASE64 }}"
+  #     ENV_NAME: "dev"
+  #     CERTIFICATE_PATH: ${{ github.workspace }}/build_certificate.p12
+  #     PP_PATH: ${{ github.workspace }}/Github_Actions_iOS.mobileprovision
+  #     KEYCHAIN_PATH: ${{ github.workspace }}/app-signing.keychain-db
+  #     API_PRIVATE_KEYS_DIR: "${{ github.workspace }}/ios/private_keys"
+  #     API_KEY_PATH: "${{ github.workspace }}/ios/private_keys/AuthKey_${{ secrets.DEV_IOS_APP_STORE_KEY_ID }}.p8"
+  #     OUTPUT_PATH: "${{github.workspace}}/ios"
+  #     IPA_OUTPUT_NAME: "VerifierDev.ipa"
+
+  iosRelease:
+    name: 'Build and Publish VerifierDev'
+    runs-on: macos-11
+    env:
+      DEV_APP_STORE_KEY: "${{ secrets.DEV_IOS_APP_STORE_KEY }}"
+      PROD_APP_STORE_KEY: "${{ secrets.PROD_IOS_APP_STORE_KEY }}"
+      TEAM_ID: "${{ secrets.DEV_IOS_TEAM_ID }}"
+      CERTIFICATE_PATH: ${{ github.workspace }}/build_certificate.p12
+      PP_PATH: ${{ github.workspace }}/Github_Actions_iOS.mobileprovision
+      KEYCHAIN_PATH: ${{ github.workspace }}/app-signing.keychain-db
+      API_PRIVATE_KEYS_DIR: "${{ github.workspace }}/ios/private_keys"
+      OUTPUT_PATH: "${{github.workspace}}/ios"
+
+    steps:
+      - name: Sets env vars for dev
+        run: |
+          echo "APP_STORE_ISSUER_ID=\"${{ secrets.DEV_IOS_APP_STORE_ISSUER_ID }}\"" >> $GITHUB_ENV
+          echo "APP_STORE_KEY<<EOF" >> $GITHUB_ENV
+          echo "$DEV_APP_STORE_KEY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "APP_STORE_KEY_ID=\"${{ secrets.DEV_IOS_APP_STORE_KEY_ID }}\"" >> $GITHUB_ENV
+          echo "TEAM_ID=${{ secrets.DEV_IOS_TEAM_ID }}" >> $GITHUB_ENV
+          echo "PROFILE_UUID=${{ secrets.DEV_IOS_PROFILE_UUID }}" >> $GITHUB_ENV
+          echo "CODE_SIGN_CERTIFICATE_BASE64<<EOF" >> $GITHUB_ENV
+          echo "${{ secrets.DEV_IOS_CERTIFICATE_BASE64 }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "P12_PASSPHRASE=${{ secrets.DEV_IOS_PASSPHRASE }}" >> $GITHUB_ENV
+          echo "PROVISIONING_PROFILE_BASE64<<EOF" >> $GITHUB_ENV
+          echo "${{ secrets.DEV_IOS_PROVISIONING_PROFILE_BASE64 }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "ENV_NAME=dev" >> $GITHUB_ENV
+          echo "IPA_OUTPUT_NAME=VerifierDev.ipa" >> $GITHUB_ENV
+          echo "API_KEY_PATH=${{ github.workspace }}/ios/private_keys/AuthKey_${{ secrets.DEV_IOS_APP_STORE_KEY_ID }}.p8"  >> $GITHUB_ENV
+          echo "XCODE_SCHEME=VerifierDevReleaseBuild"  >> $GITHUB_ENV
+          echo "CODE_SIGN_IDENTITY=${{ secrets.DEV_IOS_CODE_SIGN_IDENTITY }}" >> $GITHUB_ENV
+        if: contains(github.ref, 'release-dev')
+      - name: Sets env vars for dev
+        run: |
+          echo "APP_STORE_ISSUER_ID=\"${{ secrets.PROD_IOS_APP_STORE_ISSUER_ID }}\"" >> $GITHUB_ENV
+          echo "APP_STORE_KEY<<EOF" >> $GITHUB_ENV
+          echo "$PROD_APP_STORE_KEY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "APP_STORE_KEY_ID=\"${{ secrets.PROD_IOS_APP_STORE_KEY_ID }}\"" >> $GITHUB_ENV
+          echo "TEAM_ID=${{ secrets.PROD_IOS_TEAM_ID }}" >> $GITHUB_ENV
+          echo "PROFILE_UUID=${{ secrets.PROD_IOS_PROFILE_UUID }}" >> $GITHUB_ENV
+          echo "CODE_SIGN_CERTIFICATE_BASE64<<EOF" >> $GITHUB_ENV
+          echo "${{ secrets.PROD_IOS_CERTIFICATE_BASE64 }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "P12_PASSPHRASE=${{ secrets.PROD_IOS_PASSPHRASE }}" >> $GITHUB_ENV
+          echo "PROVISIONING_PROFILE_BASE64<<EOF" >> $GITHUB_ENV
+          echo "${{ secrets.PROD_IOS_PROVISIONING_PROFILE_BASE64 }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "ENV_NAME=prod">> $GITHUB_ENV
+          echo "IPA_OUTPUT_NAME=Verifier.ipa" >> $GITHUB_ENV
+          echo "API_KEY_PATH=${{ github.workspace }}/ios/private_keys/AuthKey_${{ secrets.PROD_IOS_APP_STORE_KEY_ID }}.p8"  >> $GITHUB_ENV
+          echo "XCODE_SCHEME=ReleaseBuild"  >> $GITHUB_ENV
+          echo "CODE_SIGN_IDENTITY=${{ secrets.PROD_IOS_CODE_SIGN_IDENTITY }}" >> $GITHUB_ENV
+        if: contains(github.ref, 'release-prod') 
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Check out Git repository
+        uses: actions/checkout@v2  
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 13.2.1
+      - name: 'Create env file'
+        run: |
+          echo "${{ secrets.DEV_BUILD_CONFIG }}" >> .env.staging
+        if: contains(github.ref, 'release-dev')
+      - name: 'Create env file'
+        run: |
+          echo "${{ secrets.PROD_BUILD_CONFIG }}" >> .env.production
+        if: contains(github.ref, 'release-prod') 
+
+      - name: 'Create api key file'
+        run: |
+          mkdir ${API_PRIVATE_KEYS_DIR}
+          echo "API_KEY_PATH=${API_KEY_PATH}"
+          echo "${APP_STORE_KEY}" >> ${API_KEY_PATH}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - run: npm install
+
+      - name: Restore buildcache
+        uses: mikehardy/buildcache-action@v1
+        continue-on-error: true
+
+      - name: Setup Ruby (bundle)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+          bundler-cache: true
+      - name: Setup Build
+        run: |
+          gem install xcodeproj
+          ruby ./tools/deploy/ios/ios_deploy.rb -e ${ENV_NAME}
+
+
+      - name: Install the Apple certificate and provisioning profile
+        run: |
+          # import certificate and provisioning profile from secrets
+          echo -n "$CODE_SIGN_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$PROVISIONING_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+          # create temporary keychain
+          security create-keychain -p keychainPassword $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p keychainPassword $KEYCHAIN_PATH
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P $P12_PASSPHRASE -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -k keychainPassword $KEYCHAIN_PATH
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - name: Bundle Install
+        working-directory: ./ios
+        run: |
+          bundle config path vendor/bundle
+          bundle check || bundle install
+
+      - name: Restore Pods cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - name: Install Pods
+        run: cd ios &&  pod install && cd ..
+#        run: cd ios && pod install --repo-update && cd ..
+      - name: Run Fastlane
+        working-directory: ./ios
+        run: |
+          bundle exec fastlane release env:$ENV_NAME
+      # - name: Build 
+      #   working-directory: ./ios
+      #   run: |
+      #     xcodebuild -workspace "Verifier.xcworkspace" archive -scheme VerifierDevReleaseBuild -sdk iphoneos -archivePath ./VerifierDev.xcarchive
+      - name: config setting
+        run: |
+          echo "OUTPUT_PATH=${OUTPUT_PATH}"
+          echo "OUTPUT_NAME=${IPA_OUTPUT_NAME}"
+      - name: Upload to TestFlight
+        working-directory: ./ios
+        run: |
+          echo "uploading ${OUTPUT_PATH}/${IPA_OUTPUT_NAME}"
+          xcrun altool --upload-app -f ${OUTPUT_PATH}/${IPA_OUTPUT_NAME} -t ios --apiKey ${APP_STORE_KEY_ID} --apiIssuer ${APP_STORE_ISSUER_ID}
+
+
+

@@ -9,8 +9,8 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Run Env Script"
-               scriptText = "cp &quot;${PROJECT_DIR}/../.env.development&quot; &quot;${PROJECT_DIR}/../.env&quot;  # replace .env.staging for your file&#10;">
+               title = "Run Script"
+               scriptText = "cp &quot;${PROJECT_DIR}/../.env.qa&quot; &quot;${PROJECT_DIR}/../.env&quot;  # replace .env.staging for your file&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
