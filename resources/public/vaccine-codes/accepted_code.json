@@ -47,6 +47,16 @@
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "227",
+      "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "228",
+      "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
       "code": "510",
       "display": "Sinopharm-Biotech"
     },
