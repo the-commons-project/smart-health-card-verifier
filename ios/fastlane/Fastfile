@@ -61,5 +61,18 @@ platform :ios do
     # upload_to_testflight
   end
 
+  lane :uploads3 do |options|
+    aws_s3(
+      # All of these are used to make Shenzhen's `ipa distribute:s3` command
+      access_key: ENV['S3_ACCESS_KEY'],               # Optional - defaults to AWS Instance Profile Creds.
+      secret_access_key: ENV['S3_SECRET_ACCESS_KEY'], # Optional - defaults to AWS Instance Profile Creds.
+      bucket: ENV['S3_BUCKET'],                       # Required from user.
+      region: ENV['S3_REGION'],                       # Required from user.
+      ipa: ENF['IPA_OUTPUT_NAME'],                    # Required (if not uploading an APK).
+      app_directory: 'ios',                           # Optional but nice if you want to put multiple apps in same bucket
+      path: 'v{CFBundleShortVersionString}_b{CFBundleVersion}/', # This is actually the default.
+      upload_metadata: false                          # Upload version.json, plist and HTML. Set to false to skip uploading of these files.
+    )
+  end
 
 end
