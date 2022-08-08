@@ -32,10 +32,10 @@ const WelcomePage = ({ navigation }: Props) => {
   const [showVersion, setShowVersion] = useState(false)
   const prefState = usePreferenceContext()
   const [ dialogVisible, setDialogVisible ] = useState(false)
-
   const { t, i18n } = useTranslation()
   const deviceHeight = useWindowDimensions().height
   const minHeight = 800
+
   const showAppVersion = () => {
     setShowVersion(true)
 

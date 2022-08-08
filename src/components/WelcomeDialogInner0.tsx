@@ -1,9 +1,9 @@
 import React from 'react'
+import { test } from 'verifier-sdk'
 import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio, ScrollView } from 'react-native'
 import AppLogoSVG from '../../assets/img/icon_shc.svg'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
-
 const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.'
 const msg2 = 'This app does not save or store your digital credentials.'
 /* eslint react-native/no-inline-styles: "off" */
@@ -13,11 +13,13 @@ export default ({ style, width, isSmallScreen }: {style: any, width: number, isS
   const imgSize = Math.abs( width / 4 )
   const imgMarginTop = Math.abs( imgSize  )
   const imgMarginBottom = Math.abs( imgSize  / 2 )
+  const testString = test( "test")
+
   return (
     <ScrollView style={ [ style, styles.scrollView ] }>
       <View style={ [styles.container, { width, paddingTop: imgMarginTop }] }> 
         <AppLogoSVG height={ imgSize }  width={ imgSize } style={ { marginBottom: imgMarginBottom } }/>
-        <Text style={ isSmallScreen ? styles.welcomeTextSmlScreen : styles.welcomeText }>{ t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App') }</Text>
+        <Text style={ isSmallScreen ? styles.welcomeTextSmlScreen : styles.welcomeText }>{ testString + t('WelcomeDialog.Welcome', 'Welcome to the\nSMART Health Card\nVerifier App') }</Text>
         <View style={ styles.contents }>
           <Text style={ isSmallScreen ? styles.textStyleSmlScreen : styles.textStyle } >{ t('WelcomeDialog.WelcomeDescription1', msg1) }</Text>
           <Text style={ [ ( isSmallScreen ? styles.textStyleSmlScreen :  styles.textStyle ), FontStyle.OpenSans_700Bold, { marginTop: 20 }] }>{ t('WelcomeDialog.PleaseNote', 'Please Note:') }</Text>

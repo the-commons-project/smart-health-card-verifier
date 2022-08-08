@@ -1,5 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-
+import { RecordEntry }  from 'verifier-sdk'
 export interface RootStackParamList {
   Welcome: undefined
   ScanQR: undefined
@@ -23,28 +23,7 @@ export interface ValidationResult {
   showDetail: boolean
 }
 
-export interface RecordEntry {
-  index?: unknown
-  resourceType: string
-  /* immunization */
-  lotNumber?: unknown
-  vaccinator?: unknown
-  vaccineName?: unknown
-  vaccinationDate?: unknown
-  /* labResult */
-  securityCode?: string
-  performer?: string
-  effectiveDateTime?: string
-  systemName?: string
-  systemKey?: string
-  systemCode?: string
-  systemShortDefault?: string | null
-  codableConseptLabel?: string
-  codableConseptKey?: string
-  codableConseptCode?: string
-  codeableShortDefault?: string | null
 
-}
 
 export interface BaseResponse {
   isValid: boolean 

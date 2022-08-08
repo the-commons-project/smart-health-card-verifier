@@ -26,13 +26,15 @@ const config: Config.InitialOptions = {
   coveragePathIgnorePatterns: [
     '*node_modules*',
     '<rootDir>/config',
-    '<rootDir>/resources'
+    '<rootDir>/resources',
+    '<rootDir>/libs'
   ],
   testPathIgnorePatterns: [
     '<rootDir>/__tests__/__mock__',
     '<rootDir>/config',
     '<rootDir>/resources',
-    '<rootDir>/tools'
+    '<rootDir>/tools',
+    '<rootDir>/libs'
   ],
   rootDir: rootPath,
   setupFiles:[
