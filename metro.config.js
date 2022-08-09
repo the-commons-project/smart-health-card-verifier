@@ -24,7 +24,11 @@ module.exports = ( async () => {
       resolver: {
         sourceExts: ['jsx', 'js', 'ts', 'tsx', 'svg'], //add here
         assetExts: assetExts.filter(ext => ext !== 'svg')    
-      }
+      },
+      watchFolders: [
+        path.resolve(__dirname, 'libs/verifier_sdk'),
+      ],
+
   };
 
 })();

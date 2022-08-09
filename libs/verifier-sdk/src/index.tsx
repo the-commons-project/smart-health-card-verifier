@@ -7,5 +7,4 @@ export function test(payload: string): string {
   return payload
 }
 
-
 export * from './types'

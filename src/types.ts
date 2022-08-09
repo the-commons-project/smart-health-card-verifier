@@ -1,5 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RecordEntry }  from 'verifier-sdk'
+import { RecordEntry, BaseResponse}  from 'verifier-sdk'
 export interface RootStackParamList {
   Welcome: undefined
   ScanQR: undefined
@@ -25,14 +25,7 @@ export interface ValidationResult {
 
 
 
-export interface BaseResponse {
-  isValid: boolean 
-  errorCode: number
-  issuerData: issuerData
-  patientData: patientData
-  recordType: string
-  recordEntries?: RecordEntry[]
-}
+
 
 export declare class Timer {
   constructor ();
@@ -45,18 +38,7 @@ export interface localeType {
   region: string
 }
 
-interface issuerData {
-  iss: string
-  logo_uri: string
-  name: string
-  updated_at: number
-  url: string
-}
 
-interface patientData {
-  dateOfBirth: string
-  names: string[]
-}
 
 interface VaccinationData {
   index: number

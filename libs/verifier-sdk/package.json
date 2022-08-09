@@ -5,9 +5,20 @@
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "react-native": "src/index",
-  "types": "lib/typescript/src/types.d.ts",
+  "source": "src/index",
+  "types": "lib/typescript/src/index",
   "files": [
-    "/lib"
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "!lib/typescript/__tests__",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
   ],
   "scripts": {
     "test": "jest --config ./jest.config.js",
