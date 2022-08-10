@@ -4,6 +4,7 @@
  *
  * @format
  */
+const path = require('path');
 const { getDefaultConfig } = require('metro-config');
 
 module.exports = ( async () => {
@@ -17,7 +18,7 @@ module.exports = ( async () => {
         getTransformOptions: async () => ({
           transform: {
             experimentalImportSupport: false,
-            inlineRequires: false
+            inlineRequires: true
           },
         }),
       },
@@ -26,8 +27,8 @@ module.exports = ( async () => {
         assetExts: assetExts.filter(ext => ext !== 'svg')    
       },
       watchFolders: [
-        path.resolve(__dirname, 'libs/verifier_sdk'),
-      ],
+        path.resolve(__dirname, 'libs/verifier-sdk')
+      ]
 
   };
 

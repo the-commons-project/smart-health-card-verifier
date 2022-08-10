@@ -1,5 +1,5 @@
 const path = require('path');
-const pak = require('libs/verifier-sdk/package.json');
+const pak =  require('./libs/verifier-sdk/package.json');
 
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],

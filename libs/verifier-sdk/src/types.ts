@@ -40,7 +40,6 @@ interface patientData {
   names: string[]
 }
 
-
 export interface BaseResponse {
   isValid: boolean 
   errorCode: number

@@ -3,8 +3,9 @@ import { Text, View, ScrollView, StyleSheet, PixelRatio, Pressable } from 'react
 import { AppButton } from '../components/customButton'
 import AppClickableImage from '../components/customImage'
 import ResultBanner from '../components/resultBanner'
-import ResultRecord from '../components/resultRecord'
-import { Props, BaseResponse } from '../types'
+import ResultRecord from '../components/resultRecord'\
+import { BaseResponse } from 'verifier-sdk'
+import { Props } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 
