@@ -1,5 +1,6 @@
 const path = require('path');
-const pak =  require('./libs/verifier-sdk/package.json');
+const pak_sdk =  require('./libs/verifier-sdk/package.json');
+const pak_shc =  require('./libs/verifier-sdk/package.json');
 
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
@@ -7,9 +8,10 @@ module.exports = {
     [
       'module-resolver',
       {
-        extensions: ['.tsx', '.ts', '.js', '.json'],
+        extensions: ['.tsx', '.ts', '.js', '.json', '.d.ts'],
         alias: {
-          [pak.name]: path.join(__dirname, 'libs','verifier-sdk', pak.source),
+          [pak_sdk.name]: path.join(__dirname, 'libs', pak_sdk.name),
+          [pak_shc.name]: path.join(__dirname, 'libs', pak_shc.name),
         },
       },
     ],

@@ -5,10 +5,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _exportNames = {
   verify: true,
-  test: true
+  test: true,
+  VerifierFactory: true
 };
+Object.defineProperty(exports, "VerifierFactory", {
+  enumerable: true,
+  get: function () {
+    return _VerifierFactory.VerifierFactory;
+  }
+});
 exports.test = test;
 exports.verify = verify;
+
+var _VerifierFactory = require("./factory/VerifierFactory");
 
 var _types = require("./types");
 

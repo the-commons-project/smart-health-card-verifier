@@ -15,7 +15,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { getProvider as getRemoteDataSyncProvider } from './src/contexts/RemoteDataSyncContext'
 import { getProvider as getPreferenceProvider } from './src/contexts/PreferenceContext'
-
+import { getProvider as getModuleProvider } from './src/contexts/ModuleContext'
 import { Buffer } from 'buffer'
 
 import {
@@ -62,26 +62,29 @@ const App = () => {
   const [ LocaleProvider ] = getLocalProvider()
   const [ RemoteDataSyncProvider ] = getRemoteDataSyncProvider()
   const [ PreferenceProvider ] = getPreferenceProvider()
+  const [ ModuleProvider ] = getModuleProvider()
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   }
   return (
-    <RemoteDataSyncProvider>
-      <LocaleProvider> 
-        <PreferenceProvider>
-          <SafeAreaProvider>
-            <NavigationContainer>
-              <Stack.Navigator screenOptions={ { headerShown: false } }>
-                <Stack.Screen name="Welcome" component={ WelcomePage } />
-                <Stack.Screen name="ScanQR" component={ ScanQRPage } />
-                <Stack.Screen name="VerificationResult" component={ VerificationResultPage } />
-                <Stack.Screen name="Error" component={ ErrorPage } />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </SafeAreaProvider>
-        </PreferenceProvider>
-      </LocaleProvider>
-    </RemoteDataSyncProvider>
+    <ModuleProvider> 
+      <RemoteDataSyncProvider>
+        <LocaleProvider> 
+          <PreferenceProvider>
+            <SafeAreaProvider>
+              <NavigationContainer>
+                <Stack.Navigator screenOptions={ { headerShown: false } }>
+                  <Stack.Screen name="Welcome" component={ WelcomePage } />
+                  <Stack.Screen name="ScanQR" component={ ScanQRPage } />
+                  <Stack.Screen name="VerificationResult" component={ VerificationResultPage } />
+                  <Stack.Screen name="Error" component={ ErrorPage } />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </SafeAreaProvider>
+          </PreferenceProvider>
+        </LocaleProvider>
+      </RemoteDataSyncProvider>
+    </ModuleProvider>
   )
 }
 

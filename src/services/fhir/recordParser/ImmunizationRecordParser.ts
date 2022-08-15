@@ -1,7 +1,7 @@
 import { sortRecordByDateField } from '../../../utils/utils'
 import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
 import { ResourceType, isResourceType } from '../fhirTypes'
-import { RecordEntry } from '../../../types'
+import { RecordEntry } from 'verifier-sdk'
 
 const cvxCodes = getAcceptedVaccineCodes()
 

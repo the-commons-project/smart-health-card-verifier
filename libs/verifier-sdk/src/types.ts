@@ -1,7 +1,16 @@
+/* eslint @typescript-eslint/no-empty-interface: "off" */
+export interface VerifierInitOption {
+}
+
+export type IVerifierBaseCls = new ( option: VerifierInitOption ) => IVerifierBase
+
+export interface  IVerifierBase {
+  canVerify: ( payload: string ) => boolean
+}
+
 export interface Result {
   result: boolean
 }
-
 
 export interface RecordEntry {
   index?: unknown
@@ -33,7 +42,6 @@ interface issuerData {
   updated_at: number
   url: string
 }
-
 
 interface patientData {
   dateOfBirth: string

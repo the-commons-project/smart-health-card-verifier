@@ -1,7 +1,7 @@
 import ImmunizationRecordParser from './ImmunizationRecordParser'
 import Covid19LabResultRecordParser from './Covid19LabResultRecordParser'
 import { RecordType } from '../fhirTypes'
-import { RecordEntry } from '../../../types'
+import { RecordEntry } from 'verifier-sdk'
 
 const recordParsers: Record< RecordType, ParserFunction> = {
   [RecordType.unknown]: ()=>{ return null },

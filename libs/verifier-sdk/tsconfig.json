@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "verifier-sdk": ["./src/index"],
-      "@": ["./src"]
+      "~/*": ["./src/*"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -24,6 +23,7 @@
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
+    "declarationMap": true,
     "target": "esnext"
   }
 }

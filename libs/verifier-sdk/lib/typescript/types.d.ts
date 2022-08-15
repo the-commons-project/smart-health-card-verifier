@@ -1,3 +1,9 @@
+export interface VerifierInitOption {
+}
+export declare type IVerifierBaseCls = new (option: VerifierInitOption) => IVerifierBase;
+export interface IVerifierBase {
+    canVerify: (payload: string) => boolean;
+}
 export interface Result {
     result: boolean;
 }
@@ -40,3 +46,4 @@ export interface BaseResponse {
     recordEntries?: RecordEntry[];
 }
 export {};
+//# sourceMappingURL=types.d.ts.map
