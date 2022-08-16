@@ -167,9 +167,9 @@ const ScanQRPage = ({ navigation }: Props) => {
 
     try {
       setScanned(true)
-      // console.log("#YF1----------------------")
-      // const verifier = await ModuleService.getModuleService().getVerifier([data])
-      // console.log("#YF2----------------------")
+      console.log("#YF1----------------------")
+      const verifier = await ModuleService.getModuleService().getVerifier([data])
+      console.log("#YF2----------------------verifier" + JSON.stringify( verifier ))
       validationResult = await validate([data])
       if (!validationResult || !validationResult.isValid ) {
         navigation.navigate('Error')

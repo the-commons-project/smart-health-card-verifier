@@ -22,6 +22,6 @@ export class ModuleService {
     const promises = Object.keys( verifiers ).map((key:string)=>
       verifiers[key].canVerify( payloads )
     );
-    return Promise.any(promises)
+    return promiseAny(promises)
   }
 }
