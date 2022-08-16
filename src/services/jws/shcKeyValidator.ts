@@ -62,7 +62,7 @@ const addIfKeyIsValidSHCFormat = async ( key: JWK.Key ): Promise< boolean > => {
     const jwkKey = await KeysStore.store.add(key)
     const tpDigest: any = await jwkKey.thumbprint('SHA-256')
     const thumbprint = jose.util.base64url.encode(tpDigest)
-
+    console.log("jwkThumbprint : " + thumbprint )
     if (key.kid !== thumbprint) {
       console.log(
         `${keyName}:'kid' does not match thumbprint in issuer key. expected: \

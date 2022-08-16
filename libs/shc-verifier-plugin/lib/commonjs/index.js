@@ -12,10 +12,15 @@ class SHCVerifier {
     _defineProperty(this, "option", void 0);
 
     this.option = option;
+    console.info("SHCVerifier: initialized");
   }
 
-  canVerify(payload) {
-    return payload.length > 4 && payload.startsWith("shc:/");
+  canVerify(payloads) {
+    if (payloads.length > 0 && payloads[1].length > 4 && payloads[0].startsWith("shc:/")) {
+      return Promise.resolve(this);
+    }
+
+    return Promise.reject(null);
   }
 
 }

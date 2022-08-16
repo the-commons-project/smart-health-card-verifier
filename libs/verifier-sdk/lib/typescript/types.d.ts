@@ -2,7 +2,7 @@ export interface VerifierInitOption {
 }
 export declare type IVerifierBaseCls = new (option: VerifierInitOption) => IVerifierBase;
 export interface IVerifierBase {
-    canVerify: (payload: string) => boolean;
+    canVerify: (payloads: string[]) => Promise<null | IVerifierBase>;
 }
 export interface Result {
     result: boolean;

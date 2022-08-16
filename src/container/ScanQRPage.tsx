@@ -14,6 +14,7 @@ import { useTranslation } from '../services/i18n/i18nUtils'
 import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
 import { InvalidError } from '../utils/InvalidError'
 import { RecordType } from '../services/fhir/fhirTypes'
+import { ModuleService } from '../services/module/ModuleService'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -166,6 +167,9 @@ const ScanQRPage = ({ navigation }: Props) => {
 
     try {
       setScanned(true)
+      // console.log("#YF1----------------------")
+      // const verifier = await ModuleService.getModuleService().getVerifier([data])
+      // console.log("#YF2----------------------")
       validationResult = await validate([data])
       if (!validationResult || !validationResult.isValid ) {
         navigation.navigate('Error')
@@ -174,7 +178,7 @@ const ScanQRPage = ({ navigation }: Props) => {
 
       navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
     } catch (error: any) {
-
+      console.info("#YF3: Error : " + error )
       if (error instanceof InvalidError) {
         validationResult.isValid = false
         validationResult.errorCode = error.errorCode

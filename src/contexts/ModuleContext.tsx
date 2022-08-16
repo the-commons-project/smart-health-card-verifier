@@ -2,7 +2,6 @@
 import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
 import { ModuleService } from '../services/module/ModuleService' 
 import LoadingSpinner from '../components/LoadingSpinner'
-
 interface ModuleDataType{
   isLoaded: boolean
 }
@@ -21,6 +20,7 @@ export const useModuleContext = ()=>{
   return useContext( moduleContext )
 }
 
+
 export function getProvider () {
   interface Props {
     children: React.ReactNode
@@ -31,8 +31,11 @@ export function getProvider () {
     const moduleService = ModuleService.getModuleService()
 
     useEffect( ()=>{
+      console.info("#YF1 initializing Module Context")
       moduleService.initialize()
       .then( ()=> {
+          console.info("#YF1 Done Initialized")
+
           setState({
             ...state,
             isLoaded: true

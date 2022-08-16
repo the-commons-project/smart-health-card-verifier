@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _exportNames = {
-  verify: true,
-  test: true,
   VerifierFactory: true
 };
 Object.defineProperty(exports, "VerifierFactory", {
@@ -14,8 +12,6 @@ Object.defineProperty(exports, "VerifierFactory", {
     return _VerifierFactory.VerifierFactory;
   }
 });
-exports.test = test;
-exports.verify = verify;
 
 var _VerifierFactory = require("./factory/VerifierFactory");
 
@@ -32,12 +28,4 @@ Object.keys(_types).forEach(function (key) {
     }
   });
 });
-
-function verify(payload) {
-  return payload.length > 0;
-}
-
-function test(payload) {
-  return payload;
-}
 //# sourceMappingURL=index.js.map

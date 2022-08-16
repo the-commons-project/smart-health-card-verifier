@@ -2,13 +2,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 export class VerifierFactory {
   static register(key, VerifierCls) {
-    if (this.Verifiers[key]) {
+    if (!!!this.Verifiers[key]) {
       const option = {};
       this.Verifiers[key] = new VerifierCls(option);
     }
   }
 
+  static getVerifiers() {
+    return this.Verifiers;
+  }
+
 }
 
-_defineProperty(VerifierFactory, "Verifiers", void 0);
+_defineProperty(VerifierFactory, "Verifiers", {});
 //# sourceMappingURL=VerifierFactory.js.map
