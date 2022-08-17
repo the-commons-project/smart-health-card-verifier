@@ -2,19 +2,17 @@
 import pako from 'pako'
 import jose from 'react-native-jose'
 
-import { InvalidError } from '../../utils/InvalidError'
-import { ErrorCode } from '../error'
+import { InvalidError, Utils, Timer } from 'verifier-sdk'
+import { ErrorCode } from 'verifier-sdk'
 import { KeySet, KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
-import { parseJson } from '../../utils/utils'
 import { validateSchema } from './schema'
-import jwsCompactSchema from '../../schemas/jws-schema.json'
+import jwsCompactSchema from '../schemas/jws-schema.json'
 import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
-import Timer from '../../utils/timer'
 import { getRecordTypeFromPayload } from '../fhir/fhirTypes'
 import { getRecord } from '../fhir/fhirBundle'
-import { getIssuerIss, IssuerItemType } from '../helpers/getIssuerData'
-import remoteConfig from '../RemoteConfig'
+import { getIssuerIss, IssuerItemType } from '../../helpers/getIssuerData'
+import remoteConfig from '../../../../../src/services/RemoteConfig'
 export const JwsValidationOptions = {
   skipJwksDownload: false,
   jwksDownloadTimeOut: 5000,
@@ -22,7 +20,7 @@ export const JwsValidationOptions = {
 
 const MAX_JWS_SINGLE_CHUNK_LENGTH = 1195
 
-export async function validate (jws: string): Promise<any> {
+export async function validate (jws: string, useLegacy: boolean ): Promise<any> {
   KeysStore.resetStore()
 
   if (jws.trim() !== jws) {
@@ -68,14 +66,14 @@ export async function validate (jws: string): Promise<any> {
   // if we did not get a payload back, it failed to be parsed and we cannot extract the key url
   // so we can stop. The jws-payload child will contain the parse errors.
   // The payload validation may have a Fatal error
-  const payload = parseJson<JWSPayload>(inflatedPayload || b64DecodedPayloadString || rawPayload)
+  const payload = Utils.parseJson<JWSPayload>(inflatedPayload || b64DecodedPayloadString || rawPayload)
   if (!payload) {
     console.log('NO PAYLOAD!!')
     return
   }
 
   try { 
-    await extractKeyURL(payload)
+    await extractKeyURL(payload, useLegacy)
   } catch (err) {
     if (err instanceof InvalidError) throw err
     return 
@@ -304,7 +302,7 @@ function checkJwsPayload (rawPayload: string) {
   return { inflatedPayload, b64DecodedPayloadString }
 }
 
-async function extractKeyURL (payload: any) {
+async function extractKeyURL (payload: any, useLegacy: boolean) {
   if (payload.iss) {
     if (typeof payload.iss === 'string') {
       if (payload.iss.slice(0, 8) !== 'https://') {
@@ -316,7 +314,7 @@ async function extractKeyURL (payload: any) {
       }
       // from issuer data in the vci directory, look for issuer data.
       var iss= payload.iss
-      if( !remoteConfig.useLegacy() ) {
+      if( ! useLegacy  ) {
          //switch to canonical_iss if there is 
          iss = await getIssuerIss( payload.iss ) ?? payload.iss
       }

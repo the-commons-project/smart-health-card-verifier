@@ -23,7 +23,6 @@
     "@react-native-community/netinfo": "^7.1.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
-    "ajv": "^8.7.1",
     "buffer": "^6.0.3",
     "i18next": "^21.6.5",
     "ieee754": "^1.2.1",

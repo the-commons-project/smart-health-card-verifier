@@ -1,12 +1,17 @@
 /* eslint @typescript-eslint/no-empty-interface: "off" */
-export interface VerifierInitOption {
-}
+export type VerifierInitOption =  Map<string, any >
 
 export type IVerifierBaseCls = new ( option: VerifierInitOption ) => IVerifierBase
 
+export type ValidationResponse = {
+  isValid: boolean
+}
 export interface  IVerifierBase {
   canVerify: ( payloads: string[] ) => Promise<null|IVerifierBase>
+  validate: (payloads: string[]) => Promise< null | ValidationResponse >
 }
+
+
 
 export interface Result {
   result: boolean

@@ -1,4 +1,4 @@
-import { ErrorCode } from '../services/error'
+import type { ErrorCode } from '../constants/error'
 
 export class InvalidError extends Error {
   errorCode: ErrorCode

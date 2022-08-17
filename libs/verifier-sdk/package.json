@@ -1,7 +1,6 @@
 {
   "name": "verifier-sdk",
   "version": "0.0.1",
-  "type": "module",
   "description": "Verifier SDK for verifying contents in the QR Code ",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",

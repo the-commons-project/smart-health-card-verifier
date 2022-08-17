@@ -67,10 +67,10 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   }
   return (
-    <ModuleProvider> 
-      <RemoteDataSyncProvider>
-        <LocaleProvider> 
-          <PreferenceProvider>
+    <RemoteDataSyncProvider>
+      <LocaleProvider> 
+        <PreferenceProvider>
+          <ModuleProvider> 
             <SafeAreaProvider>
               <NavigationContainer>
                 <Stack.Navigator screenOptions={ { headerShown: false } }>
@@ -81,10 +81,10 @@ const App = () => {
                 </Stack.Navigator>
               </NavigationContainer>
             </SafeAreaProvider>
-          </PreferenceProvider>
-        </LocaleProvider>
-      </RemoteDataSyncProvider>
-    </ModuleProvider>
+          </ModuleProvider>
+        </PreferenceProvider>
+      </LocaleProvider>
+    </RemoteDataSyncProvider>
   )
 }
 

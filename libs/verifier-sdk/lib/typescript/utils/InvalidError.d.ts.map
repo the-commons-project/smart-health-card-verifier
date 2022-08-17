@@ -1,0 +1,1 @@
+{"version":3,"file":"InvalidError.d.ts","sourceRoot":"","sources":["../../../src/utils/InvalidError.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,oBAAoB,CAAA;AAEnD,qBAAa,YAAa,SAAQ,KAAK;IACrC,SAAS,EAAE,SAAS,CAAA;gBACN,SAAS,EAAE,SAAS;CAInC"}

@@ -1,6 +1,6 @@
 {
   "name": "shc-verifier-plugin",
-  "version": "0.0.1", 
+  "version": "0.0.1",
   "description": "SHC Plugin for Verifier",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -32,6 +32,11 @@
   },
   "author": "Yuri Fukuda",
   "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.7.1",
+    "pako": "^2.0.4",
+    "react-native-jose": "github:hellojoko/react-native-jose"
+  },
   "devDependencies": {
     "@react-native-community/eslint-config": "^3.1.0",
     "@release-it/conventional-changelog": "^2.0.0",

@@ -1,7 +1,7 @@
 import jose, { JWK } from 'react-native-jose'
-import { ErrorCode } from '../error'
+import { ErrorCode } from 'verifier-sdk'
 import { KeySet, KeysStore } from './keys'
-import { InvalidError } from '../../utils/InvalidError'
+import { InvalidError } from 'verifier-sdk'
 
 const addIfKeyIsValidSHCFormat = async ( key: JWK.Key ): Promise< boolean > => {
   if ( ! key.kid || typeof key.kid !== 'string') {

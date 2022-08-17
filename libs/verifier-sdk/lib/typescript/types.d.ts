@@ -1,8 +1,11 @@
-export interface VerifierInitOption {
-}
+export declare type VerifierInitOption = Map<string, any>;
 export declare type IVerifierBaseCls = new (option: VerifierInitOption) => IVerifierBase;
+export declare type ValidationResponse = {
+    isValid: boolean;
+};
 export interface IVerifierBase {
     canVerify: (payloads: string[]) => Promise<null | IVerifierBase>;
+    validate: (payloads: string[]) => Promise<null | ValidationResponse>;
 }
 export interface Result {
     result: boolean;
