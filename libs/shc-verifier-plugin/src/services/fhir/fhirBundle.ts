@@ -1,23 +1,21 @@
-import * as utils from '../../utils/utils'
-import { ErrorCode } from '../error'
-import { InvalidError } from '../../utils/InvalidError' 
+import { ErrorCode, Utils, InvalidError } from 'verifier-sdk'
 import { validateSchema, objPathToSchema } from '../jws/schema'
 import fhirSchema from '../../schemas/fhir-schema.json'
 import { getPatientDataFromFhir } from './getPatiendDataFromFhir'
-import getRecordData from '../fhir/recordParser'
-import { getIssuerFromFhir } from '../helpers/getIssuerFromFhir'
-import { getIssuerData } from '../helpers/getIssuerData'
+import getRecordData from './recordParser'
+import { getIssuerFromFhir } from '../../helpers/getIssuerFromFhir'
 /* this entry needs to match with ValidationProfilesFunctions keys */
 import { RecordType, getRecordTypeFromPayload, ResourceType } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
+import { VerifierKey, getVerifierInitOption } from '~/models/Config'
 
 export async function getRecord (payload: JWSPayload): Promise<any>{
   const issuer = getIssuerFromFhir(payload)
   const notFoundIssuer = {
     message: 'Issuer not found'
   }
-
-  const issuerData = await getIssuerData(issuer) || notFoundIssuer
+  const verifierOption = getVerifierInitOption();
+  const issuerData = await verifierOption.getIssuer( VerifierKey, issuer) || notFoundIssuer
   const { message } = issuerData
   const isIssuerNotFound = message && message === 'Issuer not found'
   if (isIssuerNotFound) {
@@ -40,7 +38,7 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
   return document
 }
 
-export function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): boolean {
+export async function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): Promise<boolean> {
   let isFhirBundleValid = false
 
   if ( typeof fhirBundleJSON !== 'undefined') {
@@ -50,7 +48,7 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
       isFhirBundleValid = validateFhirBundle(fhirBundle)
     }
     if (!isFhirBundleValid) {
-      return false
+      return Promise.reject(false)
     }
 
     // Validate each resource of .entry[]
@@ -59,7 +57,7 @@ export function validate ( recordType: RecordType, fhirBundleJSON: object | unde
       // walks the property tree of this resource object
       // the callback receives the child property and it's path objPathToSchema() maps a schema property to a property path
       // currently, oneOf types will break this system
-      utils.walkProperties(
+      Utils.walkProperties(
         entry.resource as unknown as Record<string, unknown>,
         [entry.resource.resourceType],
         (o: Record<string, unknown>, path: string[]) => {

@@ -4,15 +4,13 @@ import jose from 'react-native-jose'
 
 import { InvalidError, Utils, Timer } from 'verifier-sdk'
 import { ErrorCode } from 'verifier-sdk'
-import { KeySet, KeysStore } from './keys'
+import { getVerifierInitOption, VerifierKey } from '~/models/Config'
+import { KeysStore } from './keys'
 import * as jwsPayload from './jws-payload'
 import { validateSchema } from './schema'
-import jwsCompactSchema from '../schemas/jws-schema.json'
+import jwsCompactSchema from '../../schemas/jws-schema.json'
 import { verifyAndImportHealthCardIssuerKey } from './shcKeyValidator'
-import { getRecordTypeFromPayload } from '../fhir/fhirTypes'
 import { getRecord } from '../fhir/fhirBundle'
-import { getIssuerIss, IssuerItemType } from '../../helpers/getIssuerData'
-import remoteConfig from '../../../../../src/services/RemoteConfig'
 export const JwsValidationOptions = {
   skipJwksDownload: false,
   jwksDownloadTimeOut: 5000,
@@ -20,9 +18,8 @@ export const JwsValidationOptions = {
 
 const MAX_JWS_SINGLE_CHUNK_LENGTH = 1195
 
-export async function validate (jws: string, useLegacy: boolean ): Promise<any> {
+export async function validate ( jws: string ): Promise<any> {
   KeysStore.resetStore()
-
   if (jws.trim() !== jws) {
     console.log('JWS has leading or trailing spaces', ErrorCode.TRAILING_CHARACTERS)
     jws = jws.trim()
@@ -55,13 +52,17 @@ export async function validate (jws: string, useLegacy: boolean ): Promise<any> 
 
   jws = [header, rawPayload, key].join('.')
 
-  const isJwsPayloadValid = jwsPayload.validate(
-    inflatedPayload || b64DecodedPayloadString || rawPayload,
-  )
-  if (!isJwsPayloadValid) {
+  try {
+    const isJwsPayloadValid = await jwsPayload.validate(
+      inflatedPayload || b64DecodedPayloadString || rawPayload,
+    )
+    if (!isJwsPayloadValid) {
+      console.log('ERROR at jwsPayload.validate!')
+    }
+  }catch (err) {
     console.log('ERROR at jwsPayload.validate!')
+    //#TODO throw error? 
   }
-
   // try to parse JSON even if it failed validation above
   // if we did not get a payload back, it failed to be parsed and we cannot extract the key url
   // so we can stop. The jws-payload child will contain the parse errors.
@@ -73,7 +74,7 @@ export async function validate (jws: string, useLegacy: boolean ): Promise<any> 
   }
 
   try { 
-    await extractKeyURL(payload, useLegacy)
+    await extractKeyURL(payload)
   } catch (err) {
     if (err instanceof InvalidError) throw err
     return 
@@ -172,7 +173,7 @@ function checkJwsHeader (header: string) {
   let headerJson
 
   if (headerBytes) {
-    headerJson = parseJson<{ kid: string, alg: string, zip: string }>(headerBytes.toString())
+    headerJson = Utils.parseJson<{ kid: string, alg: string, zip: string }>(headerBytes.toString())
     if (headerJson == null) {
       console.log(
         ["Can't parse JWS header as JSON.", errString].join('\n'),
@@ -302,7 +303,7 @@ function checkJwsPayload (rawPayload: string) {
   return { inflatedPayload, b64DecodedPayloadString }
 }
 
-async function extractKeyURL (payload: any, useLegacy: boolean) {
+async function extractKeyURL (payload: any) {
   if (payload.iss) {
     if (typeof payload.iss === 'string') {
       if (payload.iss.slice(0, 8) !== 'https://') {
@@ -314,9 +315,11 @@ async function extractKeyURL (payload: any, useLegacy: boolean) {
       }
       // from issuer data in the vci directory, look for issuer data.
       var iss= payload.iss
+      var useLegacy = getVerifierInitOption().useLegacy
       if( ! useLegacy  ) {
          //switch to canonical_iss if there is 
-         iss = await getIssuerIss( payload.iss ) ?? payload.iss
+         var getIssuerFunc = getVerifierInitOption().getIssuer
+         iss = await getIssuerFunc( VerifierKey, payload.iss ) ?? payload.iss
       }
       // download the keys into the keystore. if it fails, continue an try to use whatever is in the keystore.
       if (!JwsValidationOptions.skipJwksDownload) {
@@ -334,14 +337,14 @@ async function extractKeyURL (payload: any, useLegacy: boolean) {
 }
 
 async function verifyJws (jws: string, kid: string): Promise<boolean> {
-  var key = null;
+  var key: any | null = null;
   if (kid && ! ( key = KeysStore.store.get(kid))) {
     console.log(
       `JWS verification failed: can't find key with 'kid' = ${kid} in issuer set`,
       ErrorCode.JWS_VERIFICATION_ERROR,
     )
   }
-  if( key.error && key.error instanceof InvalidError ) {
+  if( key && key.error && key.error instanceof InvalidError ) {
     throw key.error
   }
   const verifier: jose.JWS.Verifier = jose.JWS.createVerify(KeysStore.store)

@@ -1,14 +1,22 @@
 /* eslint @typescript-eslint/no-empty-interface: "off" */
-export type VerifierInitOption =  Map<string, any >
 
-export type IVerifierBaseCls = new ( option: VerifierInitOption ) => IVerifierBase
+export type VerifierInitOption = {[key: string]: any | undefined };
 
-export type ValidationResponse = {
-  isValid: boolean
+export type IVerifierBaseCls = new ( options: VerifierInitOption ) => IVerifierBase
+
+
+export interface BaseResponse {
+  isValid: boolean 
+  errorCode: number
+  issuerData: issuerData
+  patientData: patientData
+  recordType: string
+  recordEntries?: RecordEntry[]
 }
+
 export interface  IVerifierBase {
   canVerify: ( payloads: string[] ) => Promise<null|IVerifierBase>
-  validate: (payloads: string[]) => Promise< null | ValidationResponse >
+  validate: (payloads: string[]) => Promise< null | BaseResponse >
 }
 
 
@@ -53,11 +61,3 @@ interface patientData {
   names: string[]
 }
 
-export interface BaseResponse {
-  isValid: boolean 
-  errorCode: number
-  issuerData: issuerData
-  patientData: patientData
-  recordType: string
-  recordEntries?: RecordEntry[]
-}

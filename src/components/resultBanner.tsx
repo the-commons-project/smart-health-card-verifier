@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, StyleSheet, Text, PixelRatio, useWindowDimensions } from 'react-native'
-import { JwsValidationOptions } from '../services/jws/jws-compact'
+import { JwsValidationOptions } from '../../libs/shc-verifier-plugin/src/services/jws/jws-compact'
 import { ValidationResult } from '../types'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'

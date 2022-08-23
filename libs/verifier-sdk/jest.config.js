@@ -12,6 +12,9 @@ module.exports = async () => {
       '*node_modules*',
       '<rootDir>/src',
       "<rootDir>/lib/"
-    ]
+    ],
+    moduleNameMapper:{
+      'verifier-sdk': '<rootDir>/src/index.tsx'
+    }
   }
 }

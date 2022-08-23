@@ -3,7 +3,7 @@ type SHC = string
 
 type ParserFunction = (jwsPayload: JWSPayload) => RecordEntry[] | any | null
 
-type ValidateFunction = (entry: BundleEntry[]) => boolean
+type ValidateFunction = (entry: BundleEntry[]) => Promise<boolean>
 
 interface HealthCard {
   verifiableCredential: JWS[]

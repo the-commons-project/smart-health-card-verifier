@@ -8,7 +8,13 @@ var _exportNames = {
   Utils: true,
   Timer: true
 };
-exports.Utils = exports.Timer = void 0;
+Object.defineProperty(exports, "Timer", {
+  enumerable: true,
+  get: function () {
+    return _timer.Timer;
+  }
+});
+exports.Utils = void 0;
 Object.defineProperty(exports, "VerifierFactory", {
   enumerable: true,
   get: function () {
@@ -64,9 +70,7 @@ var _Utils = _interopRequireWildcard(require("./utils/utils"));
 
 exports.Utils = _Utils;
 
-var _Timer = _interopRequireWildcard(require("./utils/timer"));
-
-exports.Timer = _Timer;
+var _timer = require("./utils/timer");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 

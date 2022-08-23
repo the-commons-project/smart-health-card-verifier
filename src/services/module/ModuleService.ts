@@ -1,4 +1,4 @@
-import { VerifierFactory, IVerifierBase } from 'verifier-sdk'
+import { VerifierFactory, IVerifierBase, VerifierInitOption } from 'verifier-sdk'
 import { SHCVerifier } from 'shc-verifier-plugin'
 var promiseAny = require('promise.any');
 
@@ -11,8 +11,8 @@ export class ModuleService {
     return moduleService;
   }
 
-  initialize(): Promise<boolean> {
-    VerifierFactory.register( "shc", SHCVerifier );
+  initialize( option: VerifierInitOption ): Promise<boolean> {
+    VerifierFactory.register( "shc", SHCVerifier, option );
     console.info("#YF: VerifierFactory.Verifiers:" + JSON.stringify( VerifierFactory.getVerifiers() ) )
     return Promise.resolve( true )
   }

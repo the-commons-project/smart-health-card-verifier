@@ -1,0 +1,90 @@
+{
+  "iss": "https://fhir-myrecord.cerner.com/r4/QGFlV8qKdgYu-vPpMAoQW5U4Jb7riiI2",
+  "nbf": 1631022219,
+  "vc": {
+    "type": [
+      "https://smarthealth.cards#health-card",
+      "https://smarthealth.cards#immunization",
+      "https://smarthealth.cards#covid19"
+    ],
+    "credentialSubject": {
+      "fhirVersion": "4.0.0",
+      "fhirBundle": {
+        "resourceType": "Bundle",
+        "type": "collection",
+        "entry": [
+          {
+            "fullUrl": "resource:0",
+            "resource": {
+              "resourceType": "Patient",
+              "name": [
+                {
+                  "family": "TESTPATIENT",
+                  "given": [
+                    "ANALYST"
+                  ],
+                  "suffix":["Jr.", "DONOTINCLUDE"]
+                }
+              ],
+              "birthDate": "1960-05-19"
+            }
+          },
+          {
+            "fullUrl": "resource:1",
+            "resource": {
+              "resourceType": "Immunization",
+              "status": "completed",
+              "vaccineCode": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/sid/cvx",
+                    "code": "208"
+                  }
+                ]
+              },
+              "patient": {
+                "reference": "resource:0"
+              },
+              "occurrenceDateTime": "2021-01-06",
+              "lotNumber": "he8rqp39u",
+              "performer": [
+                {
+                  "actor": {
+                    "display": "Grand Cayman"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl": "resource:2",
+            "resource": {
+              "resourceType": "Immunization",
+              "status": "completed",
+              "vaccineCode": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/sid/cvx",
+                    "code": "208"
+                  }
+                ]
+              },
+              "patient": {
+                "reference": "resource:0"
+              },
+              "occurrenceDateTime": "2020-12-16",
+              "lotNumber": "342469563486",
+              "performer": [
+                {
+                  "actor": {
+                    "display": "Grand Cayman"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

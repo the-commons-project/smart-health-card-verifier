@@ -46,6 +46,7 @@ const config: Config.InitialOptions = {
     '<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js'
   ],
   moduleNameMapper:{
+    '^~/(.*)$': '<rootDir>/src/$1',
     'react-native-config': '<rootDir>/__tests__/__mock__/react-native-config/react-native-config'
   },
   preset: 'react-native',

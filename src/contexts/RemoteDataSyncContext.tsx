@@ -2,11 +2,11 @@
 import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
 import { createContext } from './Context'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { loadIssuers } from '../services/helpers/getIssuerData'
-import { loadVaccineCodes } from '../services/helpers/getFHIRCodes'
+import { loadIssuers } from '~/helpers/getIssuerData'
+import { loadVaccineCodes } from '~/helpers/getFHIRCodes'
 import { API_VERSION } from '../config/config'
 import { getDataService, DataKeys } from '../services/data/DataService'
-import remoteConfig from '../services/RemoteConfig'
+import remoteConfig from '~/models/RemoteConfig'
 
 /* day hr   min  sec  mil */
 const lastTimeUpdate = 1 * 24 * 60 * 60 * 1000

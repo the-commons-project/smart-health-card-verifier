@@ -1,12 +1,14 @@
-import { sortRecordByDateField } from '../../../utils/utils'
-import { getVaccineCodesHash, getAcceptedVaccineCodes } from '../../helpers/getFHIRCodes'
+import { sortRecordByDateField } from '~/utils/utils'
 import { ResourceType, isResourceType } from '../fhirTypes'
-import { RecordEntry } from 'verifier-sdk'
+import type { RecordEntry } from 'verifier-sdk'
+import  { getVerifierInitOption, VerifierKey } from '~/models/Config'
 
-const cvxCodes = getAcceptedVaccineCodes()
+var cvxCodes: string[] | null  = null
+var vaccineCodesHash: { [key: string]: string } | null =  null
 
-const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
-  const vaccinationData = []
+const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEntry[] | null > => {
+  cvxCodes = cvxCodes || await getVerifierInitOption().getAcceptedVaccineCodes( VerifierKey )
+  const vaccinationData: RecordEntry[] = []
   const entries = jwsPayload?.vc?.credentialSubject?.fhirBundle?.entry
 
   const immunizationEntries = entries
@@ -15,7 +17,7 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
     })
     .map((entry: any) => entry.resource)
 
-  const vaccineCodesHash: { [key: string]: string } = getVaccineCodesHash()
+    vaccineCodesHash = vaccineCodesHash || getVerifierInitOption().getVaccineCodesHash()
 
   for (const [index, entry] of immunizationEntries.entries()) {
     const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry
@@ -32,7 +34,6 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
       console.log(`Immunization.status should be "completed", but it is ${String(status)}`)
     }
 
-    const dose = index + 1
     const vaccineName = vaccineCodesHash[code]
     const vaccinationDate = occurrenceDateTime
 

@@ -1,9 +1,8 @@
-import { ErrorCode } from '../error'
-import { issuerNameLookUpUrl, issuerStatus, issuersUrl, ApiTimeout } from '../constants'
-import { getInstallationIdManually, fetchWithTimeout } from '../../utils/utils'
-import { DataKeys, loadDataOrRetrieveLocally } from '../../services/data/DataService'
-import Timer from '../../utils/timer'
-import remoteConfig from '../RemoteConfig'
+import { ErrorCode, Timer} from 'verifier-sdk'
+import { issuerNameLookUpUrl, issuerStatus, issuersUrl, ApiTimeout } from '~/models/constants'
+import { getInstallationIdManually, fetchWithTimeout } from '~/utils/utils'
+import { DataKeys, loadDataOrRetrieveLocally } from '~/services/data/DataService'
+import remoteConfig from '~/models/RemoteConfig'
 
 let issuersMap: Record<string, any> | null = null
 

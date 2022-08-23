@@ -8,10 +8,15 @@ module.exports = async () => {
     verbose: true,
     rootDir: rootPath,
     "preset": "react-native",
+    setupFiles:[
+    ],
     coveragePathIgnorePatterns: [
       '*node_modules*',
       '<rootDir>/src',
       "<rootDir>/lib/"
-    ]
+    ],
+    moduleNameMapper:{
+      '^~/(.*)$': '<rootDir>/src/$1',
+    }
   }
 }

@@ -1,7 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useRef, useEffect, Suspense } from 'react'
-import { ModuleService } from '../services/module/ModuleService' 
-import LoadingSpinner from '../components/LoadingSpinner'
+import { ModuleService } from '~/services/module/ModuleService' 
+import remoteConfig from '~/models/RemoteConfig'
+import LoadingSpinner from '~/components/LoadingSpinner'
+import type { SHCverifierOption, SHCVerifierType } from 'shc-verifier-plugin'
+import { getIssuerData } from "~/helpers/getIssuerData"
+import { getAcceptedVaccineCodes, 
+        getSystemCodeLabel, 
+        getAcceptedSystemCode,
+        isAcceptedLabResult,
+        getVaccineCodesHash,
+       } from '~/helpers/getFHIRCodes'
+
+
 interface ModuleDataType{
   isLoaded: boolean
 }
@@ -32,7 +43,22 @@ export function getProvider () {
 
     useEffect( ()=>{
       console.info("#YF1 initializing Module Context")
-      moduleService.initialize()
+
+      const shcOption  = {
+        useLegacy: remoteConfig.useLegacy,
+        getIssuer: getIssuerData,
+        getAcceptedVaccineCodes: getAcceptedVaccineCodes,
+        getAcceptedSystemCode: getAcceptedSystemCode, 
+        isAcceptedLabResult: isAcceptedLabResult,
+        getSystemCodeLabel: getSystemCodeLabel,
+        getVaccineCodesHash: getVaccineCodesHash
+      } as SHCverifierOption
+
+      let option: SHCVerifierType = {
+        shc: shcOption
+            }
+
+      moduleService.initialize( option )
       .then( ()=> {
           console.info("#YF1 Done Initialized")
 

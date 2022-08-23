@@ -8,11 +8,11 @@
   "source": "src/index",
   "exports": {
     ".": {
-        "types": "./lib/typescript/index.d.ts",
-        "import": "./lib/module/index.js",
-        "require": "./lib/commonjs/index.js"
+      "types": "./lib/typescript/index.d.ts",
+      "import": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js"
     }
-  },  
+  },
   "types": "lib/typescript/index.d.ts",
   "files": [
     "src",
@@ -40,6 +40,7 @@
   "author": "Yuri Fukuda",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-env": "^7.18.10",
     "@react-native-community/eslint-config": "^3.1.0",
     "@release-it/conventional-changelog": "^2.0.0",
     "@types/jest": "^26.0.24",

@@ -1,7 +1,7 @@
-import defaultConfig from '../../resources/public/remote-config/remote_config.json'
-import { getInstallationIdManually } from '../utils/utils'
-import { remoteConfigURl } from './constants'
-import { loadDataOrRetrieveLocally, DataKeys } from './data/DataService' 
+import defaultConfig from '~/../resources/public/remote-config/remote_config.json'
+import { getInstallationIdManually } from '~/utils/utils'
+import { remoteConfigURl } from '~/models/constants'
+import { loadDataOrRetrieveLocally, DataKeys } from '~/services/data/DataService' 
 type RemoteConfigType =  Record<string, any >
 
 let remoteConfigData: RemoteConfigType = defaultConfig

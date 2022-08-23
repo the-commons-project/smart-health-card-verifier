@@ -1,18 +1,17 @@
-import { ErrorCode } from '../../../../error'
-import { InvalidError } from '../../../../../utils/InvalidError'
-import { isAcceptedLabResult } from '../../../../helpers/getFHIRCodes'
+import { getVerifierInitOption } from '~/models/Config'
 
 class R4Observation implements ObservationValidator {
 
   canSupport (entry: BundleEntry): boolean {
     const expectedCodeSystem = 'http://loinc.org'
+    const isAcceptedResult = getVerifierInitOption().isAcceptedLabResult
     const coding = ( entry?.resource?.code?.coding ?? [] ).filter(( item: any ) => {
-      return isAcceptedLabResult( item.system, item.code )
+      return isAcceptedResult( item.system, item.code )
     })
     return ( coding.length > 0 )
   }
     
-  validate ( entry: BundleEntry ): boolean {
+  async validate ( entry: BundleEntry ): Promise<boolean> {
     let res = true
     const acceptedStatuses = ['final', 'amended', 'corrected']
     if ( this.canSupport( entry ) ) {

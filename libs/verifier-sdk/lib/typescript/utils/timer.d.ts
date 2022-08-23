@@ -1,4 +1,4 @@
-export default class Timer {
+export declare class Timer {
     startTime: number;
     timeTook: number;
     constructor();

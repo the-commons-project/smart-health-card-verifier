@@ -1,19 +1,19 @@
-# verifier-sdk module
+# shc-verifier-plugin module
 
-This is the frame module for Verifier app which 
-1. Supply common method.
-2. Define interfaces for other verifier standards to be implemented
+This contains SHC plugin for verifier 
+1. verify SHC format and parse result
+2. Use getIssuer method that are passed by to verify the issuer. 
 
 ## Installation
 
 ```sh
-npm install verifier-sdk
+npm install shc-verifier-plugin
 ```
 
 ## Usage
 
 ```js
-import { test } from "verifier-sdk";
+import { test } from "shc-verifier-plugin";
 
 // ...
 

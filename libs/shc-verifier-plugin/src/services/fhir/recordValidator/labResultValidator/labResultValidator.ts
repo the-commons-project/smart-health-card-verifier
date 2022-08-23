@@ -3,7 +3,7 @@ import R4Observation from './versions/R4Observation'
 
 const observationValidators= [ R4Observation ].map((cls) => new cls())
 
-const validate: ValidateFunction = (entries: BundleEntry[]): boolean => {
+const validate: ValidateFunction = async (entries: BundleEntry[]): Promise<boolean> => {
   const profileName = RecordType.covid19LabResult
   /* checks for each entry 
      1. If the type is observation
@@ -14,7 +14,10 @@ const validate: ValidateFunction = (entries: BundleEntry[]): boolean => {
   const patientKeys: String[]  = []
   let labResults: BundleEntry[] = []
   const entryMap: Record<string, BundleEntry> = {}
-  entries.forEach((entry) => {
+
+  for( var i=0; i< entries.length; i++ ) 
+  {
+    const entry = entries[i];
     if ( isResourceType( entry, ResourceType.Patient ) && entry.fullUrl ) {
       patientKeys.push( entry.fullUrl )
     }
@@ -23,7 +26,21 @@ const validate: ValidateFunction = (entries: BundleEntry[]): boolean => {
       const observation = observationValidators.find(( observation )=> {
         return observation.canSupport( entry )
       }) ?? null
-      if ( observation != null && observation.validate( entry ) ){
+      if ( observation != null && await observation.validate( entry ) ){
+        labResults.push( entry )
+      } 
+    }
+  }
+  entries.forEach( async (entry) => {
+    if ( isResourceType( entry, ResourceType.Patient ) && entry.fullUrl ) {
+      patientKeys.push( entry.fullUrl )
+    }
+    if ( isResourceType( entry, ResourceType.Observation )) {
+      /* get the first observation validator */ 
+      const observation = observationValidators.find(( observation )=> {
+        return observation.canSupport( entry )
+      }) ?? null
+      if ( observation != null && await observation.validate( entry ) ){
         labResults.push( entry )
       } 
     }
@@ -38,6 +55,8 @@ const validate: ValidateFunction = (entries: BundleEntry[]): boolean => {
     console.log(`Profile : ${profileName} :  Patient reference does not match`)
     return false  
   })
+
+  console.info("labResults = " + JSON.stringify( labResults ))
   return ( labResults.length > 0 )
 }
 

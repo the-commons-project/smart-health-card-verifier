@@ -1,11 +1,18 @@
-export declare type VerifierInitOption = Map<string, any>;
-export declare type IVerifierBaseCls = new (option: VerifierInitOption) => IVerifierBase;
-export declare type ValidationResponse = {
-    isValid: boolean;
+export declare type VerifierInitOption = {
+    [key: string]: any | undefined;
 };
+export declare type IVerifierBaseCls = new (options: VerifierInitOption) => IVerifierBase;
+export interface BaseResponse {
+    isValid: boolean;
+    errorCode: number;
+    issuerData: issuerData;
+    patientData: patientData;
+    recordType: string;
+    recordEntries?: RecordEntry[];
+}
 export interface IVerifierBase {
     canVerify: (payloads: string[]) => Promise<null | IVerifierBase>;
-    validate: (payloads: string[]) => Promise<null | ValidationResponse>;
+    validate: (payloads: string[]) => Promise<null | BaseResponse>;
 }
 export interface Result {
     result: boolean;
@@ -39,14 +46,6 @@ interface issuerData {
 interface patientData {
     dateOfBirth: string;
     names: string[];
-}
-export interface BaseResponse {
-    isValid: boolean;
-    errorCode: number;
-    issuerData: issuerData;
-    patientData: patientData;
-    recordType: string;
-    recordEntries?: RecordEntry[];
 }
 export {};
 //# sourceMappingURL=types.d.ts.map

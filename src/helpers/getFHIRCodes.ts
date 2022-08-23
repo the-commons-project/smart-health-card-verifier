@@ -1,8 +1,8 @@
-import { ErrorCode } from '../error'
-import { vaccineCodesURl, ApiTimeout } from '../constants'
-import { getInstallationIdManually } from '../../utils/utils'
-import { DataKeys, loadDataOrRetrieveLocally } from '../../services/data/DataService'
-import defaultCodesData from '../../../resources/public/vaccine-codes/accepted_code.json'
+import { ErrorCode } from 'verifier-sdk'
+import { vaccineCodesURl, ApiTimeout } from '~/models/constants'
+import { getInstallationIdManually } from '~/utils/utils'
+import { DataKeys, loadDataOrRetrieveLocally } from '~/services/data/DataService'
+import defaultCodesData from '~/../resources/public/vaccine-codes/accepted_code.json'
 
 interface VaccineCodeItemType {
   'system': string

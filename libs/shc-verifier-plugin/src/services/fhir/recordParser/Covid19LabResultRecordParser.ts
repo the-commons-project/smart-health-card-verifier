@@ -1,11 +1,11 @@
 import { ResourceType } from '../fhirTypes'
-import { RecordEntry } from '../../../types'
+import type { RecordEntry } from 'verifier-sdk'
 import R4Observation from './labResultParser/versions/R4Observation'
-import { sortRecordByDateField } from '../../../utils/utils'
+import { sortRecordByDateField } from '~/utils/utils'
 
 const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
   const parser: ObservationParser = new R4Observation()
-  const labResultData = []
+  const labResultData:any[] = []
   const entries: any[] = jwsPayload?.vc?.credentialSubject?.fhirBundle?.entry
 
   /* 1. get the patient 

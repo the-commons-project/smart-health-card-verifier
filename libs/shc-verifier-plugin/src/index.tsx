@@ -1,19 +1,16 @@
-import type { IVerifierBase, VerifierInitOption, BaseResponse } from 'verifier-sdk'
-import { validate as jwsValidate } from '~/sevices/jws/jws-compact'
+import type { IVerifierBase, BaseResponse } from 'verifier-sdk'
+import { validate  as qrValidate } from './qr' 
+import type { SHCverifierOption, SHCVerifierType } from './types'
+import { setVerifierInitOption } from "~/models/Config"
+export  * from './types'
 
-interface VerifierType extends VerifierInitOption {
-  useLegacy: boolean;
-}
+
+
+
 export class SHCVerifier implements IVerifierBase {
-  options: VerifierType
-  constructor ( options: VerifierInitOption ) {
-    let defaultOption = {
-      useLegacy: false
-    }
-    this.options = {
-      ...defaultOption,
-      ...options
-    }
+
+  constructor ( options: SHCVerifierType ) {
+    setVerifierInitOption( options.shc as SHCverifierOption )
     console.info("SHCVerifier: initialized")
   }
   
@@ -27,7 +24,7 @@ export class SHCVerifier implements IVerifierBase {
   }
 
   validate(payloads: string[]): Promise< null | BaseResponse > {
-    return jwsValidate(payloads, this.options.useLegacy )
+    return qrValidate( payloads )
   }
 
 }

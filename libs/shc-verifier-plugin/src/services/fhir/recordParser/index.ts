@@ -1,7 +1,7 @@
 import ImmunizationRecordParser from './ImmunizationRecordParser'
 import Covid19LabResultRecordParser from './Covid19LabResultRecordParser'
 import { RecordType } from '../fhirTypes'
-import { RecordEntry } from 'verifier-sdk'
+import type { RecordEntry } from 'verifier-sdk'
 
 const recordParsers: Record< RecordType, ParserFunction> = {
   [RecordType.unknown]: ()=>{ return null },
@@ -9,8 +9,8 @@ const recordParsers: Record< RecordType, ParserFunction> = {
   [RecordType.covid19Immunization]: ImmunizationRecordParser,
 }
 
-export default function getRecordData ( recordType: RecordType, jwsPayload: JWSPayload  ): RecordEntry[] | null {
+export default async function getRecordData ( recordType: RecordType, jwsPayload: JWSPayload  ): Promise< RecordEntry[] | null >{
   let res = null
-  res = recordParsers[recordType]?.call(undefined, jwsPayload) ?? null
+  res = await recordParsers[recordType]?.call(undefined, jwsPayload) ?? null
   return res
 }

@@ -7,7 +7,7 @@ import {
   API_LOCALE_PATH,
   API_VCCODE_PATH,
   API_REMOTE_CONFIG_PATH
-} from '../config/config'
+} from '~/config/config'
 
 const affinidiHost   = AFFINIDI_HOST
 const vaccineNameLookUpPath = '/api/v1/vaccines'

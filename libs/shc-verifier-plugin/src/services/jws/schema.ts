@@ -1,7 +1,7 @@
-import { ErrorCode } from '../error'
+import { ErrorCode } from 'verifier-sdk'
 import Ajv, { AnySchemaObject } from 'ajv'
-import { AnyValidateFunction } from 'ajv/dist/core'
-import { KeySet } from './keys'
+import type { AnyValidateFunction } from 'ajv/dist/core'
+import type { KeySet } from './keys'
 import fhirSchema from '../../schemas/fhir-schema.json'
 
 const schemaCache: Record<string, AnyValidateFunction> = {}
