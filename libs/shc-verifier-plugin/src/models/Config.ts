@@ -3,7 +3,7 @@ import type { SHCverifierOption } from '~/types'
 export const VerifierKey = "SHC"
 const defaultOption = {
     useLegacy: ()=>true,
-    getIssuer: ( verifierKey: string, issuer: String )=>null, 
+    getIssuer: ()=>null, 
     getAcceptedVaccineCodes: ()=>[],
     isAcceptedLabResult: ()=>false,
     isAccgetAcceptedSystemCode: ()=> null,

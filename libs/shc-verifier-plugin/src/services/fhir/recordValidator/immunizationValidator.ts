@@ -3,6 +3,7 @@ import immunizationDM from '~/schemas/immunization-dm.json'
 import patientDM from '~/schemas/patient-dm.json'
 import { RecordType } from '../fhirTypes'
 import { getVerifierInitOption } from '~/models/Config'
+import type { ValidateFunction, BundleEntry } from '../types'
 
 const validate: ValidateFunction  = async (entries: BundleEntry[])=> {
   const profileName = RecordType.covid19Immunization
@@ -72,7 +73,6 @@ const validate: ValidateFunction  = async (entries: BundleEntry[])=> {
     if (entry.resource.resourceType === 'Patient') {
       // check for properties that are forbidden by the dm-profiles
       ;(patientDM as Array<{ path: string }>).forEach((constraint) => {
-        const tmp = Utils.propPath(entry.resource, constraint.path)
         Utils.propPath(entry.resource, constraint.path) &&
             console.log(
               `Profile : ${profileName} : entry[${index.toString()}].resource.${

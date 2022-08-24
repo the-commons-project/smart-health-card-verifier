@@ -25,12 +25,12 @@ it('Verifies incorrectly', async () => {
 
 })
 
-it('GettingCodeHash', ()=> {
+it('GettingCodeHash', async ()=> {
   const observation = new R4Observation()
   var res = observation.canSupport( fhirEntries[1] )
   var wrongStatusEntry = _.cloneDeep( fhirEntries[1]  )
   wrongStatusEntry.resource.status = "wrong"
-  var res = observation.validate( wrongStatusEntry )
+  var res = await observation.validate( wrongStatusEntry )
   expect(res).toEqual(false)
 })
 

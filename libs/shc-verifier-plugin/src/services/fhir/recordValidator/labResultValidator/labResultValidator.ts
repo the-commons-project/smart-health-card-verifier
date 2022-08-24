@@ -1,6 +1,6 @@
 import { RecordType, ResourceType, isResourceType } from '../../fhirTypes'
 import R4Observation from './versions/R4Observation'
-
+import type { ValidateFunction, BundleEntry } from '../../types'
 const observationValidators= [ R4Observation ].map((cls) => new cls())
 
 const validate: ValidateFunction = async (entries: BundleEntry[]): Promise<boolean> => {
@@ -13,7 +13,6 @@ const validate: ValidateFunction = async (entries: BundleEntry[]): Promise<boole
   */ 
   const patientKeys: String[]  = []
   let labResults: BundleEntry[] = []
-  const entryMap: Record<string, BundleEntry> = {}
 
   for( var i=0; i< entries.length; i++ ) 
   {
@@ -56,8 +55,7 @@ const validate: ValidateFunction = async (entries: BundleEntry[]): Promise<boole
     return false  
   })
 
-  console.info("labResults = " + JSON.stringify( labResults ))
-  return ( labResults.length > 0 )
+  return Promise.resolve( labResults.length > 0 )
 }
 
 console.info('labResultsValidators/labresultValidator' + typeof validate)

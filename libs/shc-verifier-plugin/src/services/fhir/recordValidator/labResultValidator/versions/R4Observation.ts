@@ -1,9 +1,8 @@
 import { getVerifierInitOption } from '~/models/Config'
-
+import type { ObservationValidator, BundleEntry } from '../../../types' 
 class R4Observation implements ObservationValidator {
 
   canSupport (entry: BundleEntry): boolean {
-    const expectedCodeSystem = 'http://loinc.org'
     const isAcceptedResult = getVerifierInitOption().isAcceptedLabResult
     const coding = ( entry?.resource?.code?.coding ?? [] ).filter(( item: any ) => {
       return isAcceptedResult( item.system, item.code )
@@ -26,7 +25,7 @@ class R4Observation implements ObservationValidator {
       res = false
       console.log(`Observation.system ${String(entry?.resource?.code?.coding)} should be supported`)
     } 
-    return res
+    return Promise.resolve( res )
   }
 }
 

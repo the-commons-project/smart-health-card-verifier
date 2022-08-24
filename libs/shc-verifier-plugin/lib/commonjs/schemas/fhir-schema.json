@@ -1,0 +1,3348 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://smarthealth.cards/schema/fhir-schema.json",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/Bundle"
+    }
+  ],
+  "definitions": {
+    "ResourceList": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AllergyIntolerance"
+        },
+        {
+          "$ref": "#/definitions/Bundle"
+        },
+        {
+          "$ref": "#/definitions/Condition"
+        },
+        {
+          "$ref": "#/definitions/DiagnosticReport"
+        },
+        {
+          "$ref": "#/definitions/Encounter"
+        },
+        {
+          "$ref": "#/definitions/Immunization"
+        },
+        {
+          "$ref": "#/definitions/Location"
+        },
+        {
+          "$ref": "#/definitions/Medication"
+        },
+        {
+          "$ref": "#/definitions/MedicationRequest"
+        },
+        {
+          "$ref": "#/definitions/Observation"
+        },
+        {
+          "$ref": "#/definitions/Organization"
+        },
+        {
+          "$ref": "#/definitions/Patient"
+        },
+        {
+          "$ref": "#/definitions/Specimen"
+        }
+      ]
+    },
+    "Address": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "use": {
+          "enum": [
+            "home",
+            "work",
+            "temp",
+            "old",
+            "billing"
+          ]
+        },
+        "type": {
+          "enum": [
+            "postal",
+            "physical",
+            "both"
+          ]
+        },
+        "text": {
+          "$ref": "#/definitions/string"
+        },
+        "line": {
+          "items": {
+            "$ref": "#/definitions/string"
+          },
+          "type": "array"
+        },
+        "city": {
+          "$ref": "#/definitions/string"
+        },
+        "district": {
+          "$ref": "#/definitions/string"
+        },
+        "state": {
+          "$ref": "#/definitions/string"
+        },
+        "postalCode": {
+          "$ref": "#/definitions/string"
+        },
+        "country": {
+          "$ref": "#/definitions/string"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Age": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "value": {
+          "$ref": "#/definitions/decimal"
+        },
+        "comparator": {
+          "enum": [
+            "<",
+            "<=",
+            ">=",
+            ">"
+          ]
+        },
+        "unit": {
+          "$ref": "#/definitions/string"
+        },
+        "system": {
+          "$ref": "#/definitions/uri"
+        },
+        "code": {
+          "$ref": "#/definitions/code"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AllergyIntolerance": {
+      "properties": {
+        "resourceType": {
+          "const": "AllergyIntolerance"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "clinicalStatus": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "verificationStatus": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "type": {
+          "enum": [
+            "allergy",
+            "intolerance"
+          ]
+        },
+        "category": {
+          "items": {
+            "enum": [
+              "food",
+              "medication",
+              "environment",
+              "biologic"
+            ]
+          },
+          "type": "array"
+        },
+        "criticality": {
+          "enum": [
+            "low",
+            "high",
+            "unable-to-assess"
+          ]
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "patient": {
+          "$ref": "#/definitions/Reference"
+        },
+        "encounter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "onsetDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "onsetAge": {
+          "$ref": "#/definitions/Age"
+        },
+        "onsetPeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "onsetRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "onsetString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "recordedDate": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "recorder": {
+          "$ref": "#/definitions/Reference"
+        },
+        "asserter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "lastOccurrence": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        },
+        "reaction": {
+          "items": {
+            "$ref": "#/definitions/AllergyIntolerance_Reaction"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "patient",
+        "resourceType"
+      ]
+    },
+    "AllergyIntolerance_Reaction": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "substance": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "manifestation": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "description": {
+          "$ref": "#/definitions/string"
+        },
+        "onset": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "severity": {
+          "enum": [
+            "mild",
+            "moderate",
+            "severe"
+          ]
+        },
+        "exposureRoute": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "manifestation"
+      ]
+    },
+    "Annotation": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "authorReference": {
+          "$ref": "#/definitions/Reference"
+        },
+        "authorString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "time": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "text": {
+          "$ref": "#/definitions/markdown"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Attachment": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "contentType": {
+          "$ref": "#/definitions/code"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "data": {
+          "$ref": "#/definitions/base64Binary"
+        },
+        "url": {
+          "$ref": "#/definitions/url"
+        },
+        "size": {
+          "$ref": "#/definitions/unsignedInt"
+        },
+        "hash": {
+          "$ref": "#/definitions/base64Binary"
+        },
+        "title": {
+          "$ref": "#/definitions/string"
+        },
+        "creation": {
+          "$ref": "#/definitions/dateTime"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bundle": {
+      "properties": {
+        "resourceType": {
+          "const": "Bundle"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "identifier": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "type": {
+          "enum": [
+            "document",
+            "message",
+            "transaction",
+            "transaction-response",
+            "batch",
+            "batch-response",
+            "history",
+            "searchset",
+            "collection"
+          ]
+        },
+        "timestamp": {
+          "$ref": "#/definitions/instant"
+        },
+        "total": {
+          "$ref": "#/definitions/unsignedInt"
+        },
+        "link": {
+          "items": {
+            "$ref": "#/definitions/Bundle_Link"
+          },
+          "type": "array"
+        },
+        "entry": {
+          "items": {
+            "$ref": "#/definitions/Bundle_Entry"
+          },
+          "type": "array"
+        },
+        "signature": {
+          "$ref": "#/definitions/Signature"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "resourceType"
+      ]
+    },
+    "Bundle_Entry": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "link": {
+          "items": {
+            "$ref": "#/definitions/Bundle_Link"
+          },
+          "type": "array"
+        },
+        "fullUrl": {
+          "$ref": "#/definitions/uri"
+        },
+        "resource": {
+          "type": "object"
+        },
+        "search": {
+          "$ref": "#/definitions/Bundle_Search"
+        },
+        "request": {
+          "$ref": "#/definitions/Bundle_Request"
+        },
+        "response": {
+          "$ref": "#/definitions/Bundle_Response"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bundle_Link": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "relation": {
+          "$ref": "#/definitions/string"
+        },
+        "url": {
+          "$ref": "#/definitions/uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bundle_Request": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "method": {
+          "enum": [
+            "GET",
+            "HEAD",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH"
+          ]
+        },
+        "url": {
+          "$ref": "#/definitions/uri"
+        },
+        "ifNoneMatch": {
+          "$ref": "#/definitions/string"
+        },
+        "ifModifiedSince": {
+          "$ref": "#/definitions/instant"
+        },
+        "ifMatch": {
+          "$ref": "#/definitions/string"
+        },
+        "ifNoneExist": {
+          "$ref": "#/definitions/string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bundle_Response": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "status": {
+          "$ref": "#/definitions/string"
+        },
+        "location": {
+          "$ref": "#/definitions/uri"
+        },
+        "etag": {
+          "$ref": "#/definitions/string"
+        },
+        "lastModified": {
+          "$ref": "#/definitions/instant"
+        },
+        "outcome": {
+          "$ref": "#/definitions/ResourceList"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bundle_Search": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "mode": {
+          "enum": [
+            "match",
+            "include",
+            "outcome"
+          ]
+        },
+        "score": {
+          "$ref": "#/definitions/decimal"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CodeableConcept": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "coding": {
+          "items": {
+            "$ref": "#/definitions/Coding"
+          },
+          "type": "array"
+        },
+        "text": {
+          "$ref": "#/definitions/string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Coding": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "system": {
+          "$ref": "#/definitions/uri"
+        },
+        "version": {
+          "$ref": "#/definitions/string"
+        },
+        "code": {
+          "$ref": "#/definitions/code"
+        },
+        "display": {
+          "$ref": "#/definitions/string"
+        },
+        "userSelected": {
+          "$ref": "#/definitions/boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Condition": {
+      "properties": {
+        "resourceType": {
+          "const": "Condition"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "clinicalStatus": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "verificationStatus": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "category": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "severity": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "bodySite": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "subject": {
+          "$ref": "#/definitions/Reference"
+        },
+        "encounter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "onsetDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "onsetAge": {
+          "$ref": "#/definitions/Age"
+        },
+        "onsetPeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "onsetRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "onsetString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "abatementDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "abatementAge": {
+          "$ref": "#/definitions/Age"
+        },
+        "abatementPeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "abatementRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "abatementString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "recordedDate": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "recorder": {
+          "$ref": "#/definitions/Reference"
+        },
+        "asserter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "stage": {
+          "items": {
+            "$ref": "#/definitions/Condition_Stage"
+          },
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/definitions/Condition_Evidence"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "subject",
+        "resourceType"
+      ]
+    },
+    "Condition_Evidence": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "code": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "detail": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Condition_Stage": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "summary": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "assessment": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContactPoint": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "system": {
+          "enum": [
+            "phone",
+            "fax",
+            "email",
+            "pager",
+            "url",
+            "sms",
+            "other"
+          ]
+        },
+        "value": {
+          "$ref": "#/definitions/string"
+        },
+        "use": {
+          "enum": [
+            "home",
+            "work",
+            "temp",
+            "old",
+            "mobile"
+          ]
+        },
+        "rank": {
+          "$ref": "#/definitions/positiveInt"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DiagnosticReport": {
+      "properties": {
+        "resourceType": {
+          "const": "DiagnosticReport"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "basedOn": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "registered",
+            "partial",
+            "preliminary",
+            "final",
+            "amended",
+            "corrected",
+            "appended",
+            "cancelled",
+            "entered-in-error",
+            "unknown"
+          ]
+        },
+        "category": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "subject": {
+          "$ref": "#/definitions/Reference"
+        },
+        "encounter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "effectiveDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "effectivePeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "issued": {
+          "$ref": "#/definitions/instant"
+        },
+        "performer": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "resultsInterpreter": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "specimen": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "result": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "imagingStudy": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "media": {
+          "items": {
+            "$ref": "#/definitions/DiagnosticReport_Media"
+          },
+          "type": "array"
+        },
+        "conclusion": {
+          "$ref": "#/definitions/string"
+        },
+        "conclusionCode": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "presentedForm": {
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "resourceType"
+      ]
+    },
+    "DiagnosticReport_Media": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "comment": {
+          "$ref": "#/definitions/string"
+        },
+        "link": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "link"
+      ]
+    },
+    "Dosage": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "sequence": {
+          "$ref": "#/definitions/integer"
+        },
+        "text": {
+          "$ref": "#/definitions/string"
+        },
+        "additionalInstruction": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "patientInstruction": {
+          "$ref": "#/definitions/string"
+        },
+        "timing": {
+          "$ref": "#/definitions/Timing"
+        },
+        "asNeededBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "asNeededCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "site": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "route": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "method": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "doseAndRate": {
+          "items": {
+            "$ref": "#/definitions/Dosage_DoseAndRate"
+          },
+          "type": "array"
+        },
+        "maxDosePerPeriod": {
+          "$ref": "#/definitions/Ratio"
+        },
+        "maxDosePerAdministration": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "maxDosePerLifetime": {
+          "$ref": "#/definitions/Quantity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Dosage_DoseAndRate": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "doseRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "doseQuantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "rateRatio": {
+          "$ref": "#/definitions/Ratio"
+        },
+        "rateRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "rateQuantity": {
+          "$ref": "#/definitions/Quantity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Duration": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "value": {
+          "$ref": "#/definitions/decimal"
+        },
+        "comparator": {
+          "enum": [
+            "<",
+            "<=",
+            ">=",
+            ">"
+          ]
+        },
+        "unit": {
+          "$ref": "#/definitions/string"
+        },
+        "system": {
+          "$ref": "#/definitions/uri"
+        },
+        "code": {
+          "$ref": "#/definitions/code"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Encounter": {
+      "properties": {
+        "resourceType": {
+          "const": "Encounter"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "arrived",
+            "triaged",
+            "in-progress",
+            "onleave",
+            "finished",
+            "cancelled",
+            "entered-in-error",
+            "unknown"
+          ]
+        },
+        "statusHistory": {
+          "items": {
+            "$ref": "#/definitions/Encounter_StatusHistory"
+          },
+          "type": "array"
+        },
+        "class": {
+          "$ref": "#/definitions/Coding"
+        },
+        "classHistory": {
+          "items": {
+            "$ref": "#/definitions/Encounter_ClassHistory"
+          },
+          "type": "array"
+        },
+        "type": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "serviceType": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "priority": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "subject": {
+          "$ref": "#/definitions/Reference"
+        },
+        "episodeOfCare": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "basedOn": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "participant": {
+          "items": {
+            "$ref": "#/definitions/Encounter_Participant"
+          },
+          "type": "array"
+        },
+        "appointment": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        },
+        "length": {
+          "$ref": "#/definitions/Duration"
+        },
+        "reasonCode": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "reasonReference": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "diagnosis": {
+          "items": {
+            "$ref": "#/definitions/Encounter_Diagnosis"
+          },
+          "type": "array"
+        },
+        "account": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "hospitalization": {
+          "$ref": "#/definitions/Encounter_Hospitalization"
+        },
+        "location": {
+          "items": {
+            "$ref": "#/definitions/Encounter_Location"
+          },
+          "type": "array"
+        },
+        "serviceProvider": {
+          "$ref": "#/definitions/Reference"
+        },
+        "partOf": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "resourceType"
+      ]
+    },
+    "Encounter_ClassHistory": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "class": {
+          "$ref": "#/definitions/Coding"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "period",
+        "class"
+      ]
+    },
+    "Encounter_Diagnosis": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "condition": {
+          "$ref": "#/definitions/Reference"
+        },
+        "use": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "rank": {
+          "$ref": "#/definitions/positiveInt"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "condition"
+      ]
+    },
+    "Encounter_Hospitalization": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "preAdmissionIdentifier": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "origin": {
+          "$ref": "#/definitions/Reference"
+        },
+        "admitSource": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "reAdmission": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "dietPreference": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "specialCourtesy": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "specialArrangement": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "destination": {
+          "$ref": "#/definitions/Reference"
+        },
+        "dischargeDisposition": {
+          "$ref": "#/definitions/CodeableConcept"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Encounter_Location": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "location": {
+          "$ref": "#/definitions/Reference"
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "active",
+            "reserved",
+            "completed"
+          ]
+        },
+        "physicalType": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "location"
+      ]
+    },
+    "Encounter_Participant": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "type": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        },
+        "individual": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Encounter_StatusHistory": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "arrived",
+            "triaged",
+            "in-progress",
+            "onleave",
+            "finished",
+            "cancelled",
+            "entered-in-error",
+            "unknown"
+          ]
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "period"
+      ]
+    },
+    "HumanName": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "use": {
+          "enum": [
+            "usual",
+            "official",
+            "temp",
+            "nickname",
+            "anonymous",
+            "old",
+            "maiden"
+          ]
+        },
+        "text": {
+          "$ref": "#/definitions/string"
+        },
+        "family": {
+          "$ref": "#/definitions/string"
+        },
+        "given": {
+          "items": {
+            "$ref": "#/definitions/string"
+          },
+          "type": "array"
+        },
+        "prefix": {
+          "items": {
+            "$ref": "#/definitions/string"
+          },
+          "type": "array"
+        },
+        "suffix": {
+          "items": {
+            "$ref": "#/definitions/string"
+          },
+          "type": "array"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Identifier": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "use": {
+          "enum": [
+            "usual",
+            "official",
+            "temp",
+            "secondary",
+            "old"
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "system": {
+          "$ref": "#/definitions/uri"
+        },
+        "value": {
+          "$ref": "#/definitions/string"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        },
+        "assigner": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Immunization": {
+      "properties": {
+        "resourceType": {
+          "const": "Immunization"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/definitions/code"
+        },
+        "statusReason": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "vaccineCode": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "patient": {
+          "$ref": "#/definitions/Reference"
+        },
+        "encounter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "occurrenceDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "occurrenceString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "recorded": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "primarySource": {
+          "$ref": "#/definitions/boolean"
+        },
+        "reportOrigin": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "location": {
+          "$ref": "#/definitions/Reference"
+        },
+        "manufacturer": {
+          "$ref": "#/definitions/Reference"
+        },
+        "lotNumber": {
+          "$ref": "#/definitions/string"
+        },
+        "expirationDate": {
+          "$ref": "#/definitions/date"
+        },
+        "site": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "route": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "doseQuantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "performer": {
+          "items": {
+            "$ref": "#/definitions/Immunization_Performer"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        },
+        "reasonCode": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "reasonReference": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "isSubpotent": {
+          "$ref": "#/definitions/boolean"
+        },
+        "subpotentReason": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "education": {
+          "items": {
+            "$ref": "#/definitions/Immunization_Education"
+          },
+          "type": "array"
+        },
+        "programEligibility": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "fundingSource": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "reaction": {
+          "items": {
+            "$ref": "#/definitions/Immunization_Reaction"
+          },
+          "type": "array"
+        },
+        "protocolApplied": {
+          "items": {
+            "$ref": "#/definitions/Immunization_ProtocolApplied"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "patient",
+        "vaccineCode",
+        "resourceType"
+      ]
+    },
+    "Immunization_Education": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "documentType": {
+          "$ref": "#/definitions/string"
+        },
+        "reference": {
+          "$ref": "#/definitions/uri"
+        },
+        "publicationDate": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "presentationDate": {
+          "$ref": "#/definitions/dateTime"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Immunization_Performer": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "function": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "actor": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "actor"
+      ]
+    },
+    "Immunization_ProtocolApplied": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "series": {
+          "$ref": "#/definitions/string"
+        },
+        "authority": {
+          "$ref": "#/definitions/Reference"
+        },
+        "targetDisease": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "doseNumberPositiveInt": {
+          "pattern": "^[1-9][0-9]*$",
+          "type": "number"
+        },
+        "doseNumberString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "seriesDosesPositiveInt": {
+          "pattern": "^[1-9][0-9]*$",
+          "type": "number"
+        },
+        "seriesDosesString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Immunization_Reaction": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "date": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "detail": {
+          "$ref": "#/definitions/Reference"
+        },
+        "reported": {
+          "$ref": "#/definitions/boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Location": {
+      "properties": {
+        "resourceType": {
+          "const": "Location"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "suspended",
+            "inactive"
+          ]
+        },
+        "operationalStatus": {
+          "$ref": "#/definitions/Coding"
+        },
+        "name": {
+          "$ref": "#/definitions/string"
+        },
+        "alias": {
+          "items": {
+            "$ref": "#/definitions/string"
+          },
+          "type": "array"
+        },
+        "description": {
+          "$ref": "#/definitions/string"
+        },
+        "mode": {
+          "enum": [
+            "instance",
+            "kind"
+          ]
+        },
+        "type": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "telecom": {
+          "items": {
+            "$ref": "#/definitions/ContactPoint"
+          },
+          "type": "array"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "physicalType": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "position": {
+          "$ref": "#/definitions/Location_Position"
+        },
+        "managingOrganization": {
+          "$ref": "#/definitions/Reference"
+        },
+        "partOf": {
+          "$ref": "#/definitions/Reference"
+        },
+        "hoursOfOperation": {
+          "items": {
+            "$ref": "#/definitions/Location_HoursOfOperation"
+          },
+          "type": "array"
+        },
+        "availabilityExceptions": {
+          "$ref": "#/definitions/string"
+        },
+        "endpoint": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "resourceType"
+      ]
+    },
+    "Location_HoursOfOperation": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "daysOfWeek": {
+          "items": {
+            "$ref": "#/definitions/code"
+          },
+          "type": "array"
+        },
+        "allDay": {
+          "$ref": "#/definitions/boolean"
+        },
+        "openingTime": {
+          "$ref": "#/definitions/time"
+        },
+        "closingTime": {
+          "$ref": "#/definitions/time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Location_Position": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "longitude": {
+          "$ref": "#/definitions/decimal"
+        },
+        "latitude": {
+          "$ref": "#/definitions/decimal"
+        },
+        "altitude": {
+          "$ref": "#/definitions/decimal"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Medication": {
+      "properties": {
+        "resourceType": {
+          "const": "Medication"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "status": {
+          "$ref": "#/definitions/code"
+        },
+        "manufacturer": {
+          "$ref": "#/definitions/Reference"
+        },
+        "form": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "amount": {
+          "$ref": "#/definitions/Ratio"
+        },
+        "ingredient": {
+          "items": {
+            "$ref": "#/definitions/Medication_Ingredient"
+          },
+          "type": "array"
+        },
+        "batch": {
+          "$ref": "#/definitions/Medication_Batch"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "resourceType"
+      ]
+    },
+    "MedicationRequest": {
+      "properties": {
+        "resourceType": {
+          "const": "MedicationRequest"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/definitions/code"
+        },
+        "statusReason": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "intent": {
+          "$ref": "#/definitions/code"
+        },
+        "category": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "$ref": "#/definitions/code"
+        },
+        "doNotPerform": {
+          "$ref": "#/definitions/boolean"
+        },
+        "reportedBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "reportedReference": {
+          "$ref": "#/definitions/Reference"
+        },
+        "medicationCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "medicationReference": {
+          "$ref": "#/definitions/Reference"
+        },
+        "subject": {
+          "$ref": "#/definitions/Reference"
+        },
+        "encounter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "supportingInformation": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "authoredOn": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "requester": {
+          "$ref": "#/definitions/Reference"
+        },
+        "performer": {
+          "$ref": "#/definitions/Reference"
+        },
+        "performerType": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "recorder": {
+          "$ref": "#/definitions/Reference"
+        },
+        "reasonCode": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "reasonReference": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "instantiatesCanonical": {
+          "items": {
+            "$ref": "#/definitions/canonical"
+          },
+          "type": "array"
+        },
+        "instantiatesUri": {
+          "items": {
+            "$ref": "#/definitions/uri"
+          },
+          "type": "array"
+        },
+        "basedOn": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "groupIdentifier": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "courseOfTherapyType": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "insurance": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        },
+        "dosageInstruction": {
+          "items": {
+            "$ref": "#/definitions/Dosage"
+          },
+          "type": "array"
+        },
+        "dispenseRequest": {
+          "$ref": "#/definitions/MedicationRequest_DispenseRequest"
+        },
+        "substitution": {
+          "$ref": "#/definitions/MedicationRequest_Substitution"
+        },
+        "priorPrescription": {
+          "$ref": "#/definitions/Reference"
+        },
+        "detectedIssue": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "eventHistory": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "subject",
+        "resourceType"
+      ]
+    },
+    "MedicationRequest_DispenseRequest": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "initialFill": {
+          "$ref": "#/definitions/MedicationRequest_InitialFill"
+        },
+        "dispenseInterval": {
+          "$ref": "#/definitions/Duration"
+        },
+        "validityPeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "numberOfRepeatsAllowed": {
+          "$ref": "#/definitions/unsignedInt"
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "expectedSupplyDuration": {
+          "$ref": "#/definitions/Duration"
+        },
+        "performer": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MedicationRequest_InitialFill": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "duration": {
+          "$ref": "#/definitions/Duration"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MedicationRequest_Substitution": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "allowedBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "allowedCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "reason": {
+          "$ref": "#/definitions/CodeableConcept"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Medication_Batch": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "lotNumber": {
+          "$ref": "#/definitions/string"
+        },
+        "expirationDate": {
+          "$ref": "#/definitions/dateTime"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Medication_Ingredient": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "itemCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "itemReference": {
+          "$ref": "#/definitions/Reference"
+        },
+        "isActive": {
+          "$ref": "#/definitions/boolean"
+        },
+        "strength": {
+          "$ref": "#/definitions/Ratio"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Meta": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "versionId": {
+          "$ref": "#/definitions/id"
+        },
+        "lastUpdated": {
+          "$ref": "#/definitions/instant"
+        },
+        "source": {
+          "$ref": "#/definitions/uri"
+        },
+        "profile": {
+          "items": {
+            "$ref": "#/definitions/canonical"
+          },
+          "type": "array"
+        },
+        "security": {
+          "items": {
+            "$ref": "#/definitions/Coding"
+          },
+          "type": "array"
+        },
+        "tag": {
+          "items": {
+            "$ref": "#/definitions/Coding"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Narrative": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "status": {
+          "enum": [
+            "generated",
+            "extensions",
+            "additional",
+            "empty"
+          ]
+        },
+        "div": {
+          "$ref": "#/definitions/xhtml"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "div"
+      ]
+    },
+    "Observation": {
+      "properties": {
+        "resourceType": {
+          "const": "Observation"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "basedOn": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "partOf": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "registered",
+            "preliminary",
+            "final",
+            "amended",
+            "corrected",
+            "cancelled",
+            "entered-in-error",
+            "unknown"
+          ]
+        },
+        "category": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "subject": {
+          "$ref": "#/definitions/Reference"
+        },
+        "focus": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "encounter": {
+          "$ref": "#/definitions/Reference"
+        },
+        "effectiveDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "effectivePeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "effectiveTiming": {
+          "$ref": "#/definitions/Timing"
+        },
+        "effectiveInstant": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))$",
+          "type": "string"
+        },
+        "issued": {
+          "$ref": "#/definitions/instant"
+        },
+        "performer": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "valueQuantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "valueCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "valueString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "valueBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "valueInteger": {
+          "pattern": "^-?([0]|([1-9][0-9]*))$",
+          "type": "number"
+        },
+        "valueRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "valueRatio": {
+          "$ref": "#/definitions/Ratio"
+        },
+        "valueSampledData": {
+          "$ref": "#/definitions/SampledData"
+        },
+        "valueTime": {
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?$",
+          "type": "string"
+        },
+        "valueDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "valuePeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "dataAbsentReason": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "interpretation": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        },
+        "bodySite": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "method": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "specimen": {
+          "$ref": "#/definitions/Reference"
+        },
+        "device": {
+          "$ref": "#/definitions/Reference"
+        },
+        "referenceRange": {
+          "items": {
+            "$ref": "#/definitions/Observation_ReferenceRange"
+          },
+          "type": "array"
+        },
+        "hasMember": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "derivedFrom": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "component": {
+          "items": {
+            "$ref": "#/definitions/Observation_Component"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "resourceType"
+      ]
+    },
+    "Observation_Component": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "valueQuantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "valueCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "valueString": {
+          "pattern": "^[ \\r\\n\\t\\S]+$",
+          "type": "string"
+        },
+        "valueBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "valueInteger": {
+          "pattern": "^-?([0]|([1-9][0-9]*))$",
+          "type": "number"
+        },
+        "valueRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "valueRatio": {
+          "$ref": "#/definitions/Ratio"
+        },
+        "valueSampledData": {
+          "$ref": "#/definitions/SampledData"
+        },
+        "valueTime": {
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?$",
+          "type": "string"
+        },
+        "valueDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "valuePeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "dataAbsentReason": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "interpretation": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "referenceRange": {
+          "items": {
+            "$ref": "#/definitions/Observation_ReferenceRange"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "code"
+      ]
+    },
+    "Observation_ReferenceRange": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "low": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "high": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "appliesTo": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "age": {
+          "$ref": "#/definitions/Range"
+        },
+        "text": {
+          "$ref": "#/definitions/string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Organization": {
+      "properties": {
+        "resourceType": {
+          "const": "Organization"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "active": {
+          "$ref": "#/definitions/boolean"
+        },
+        "type": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "name": {
+          "$ref": "#/definitions/string"
+        },
+        "alias": {
+          "items": {
+            "$ref": "#/definitions/string"
+          },
+          "type": "array"
+        },
+        "telecom": {
+          "items": {
+            "$ref": "#/definitions/ContactPoint"
+          },
+          "type": "array"
+        },
+        "address": {
+          "items": {
+            "$ref": "#/definitions/Address"
+          },
+          "type": "array"
+        },
+        "partOf": {
+          "$ref": "#/definitions/Reference"
+        },
+        "contact": {
+          "items": {
+            "$ref": "#/definitions/Organization_Contact"
+          },
+          "type": "array"
+        },
+        "endpoint": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "resourceType"
+      ]
+    },
+    "Organization_Contact": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "purpose": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "name": {
+          "$ref": "#/definitions/HumanName"
+        },
+        "telecom": {
+          "items": {
+            "$ref": "#/definitions/ContactPoint"
+          },
+          "type": "array"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Patient": {
+      "properties": {
+        "resourceType": {
+          "const": "Patient"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "active": {
+          "$ref": "#/definitions/boolean"
+        },
+        "name": {
+          "items": {
+            "$ref": "#/definitions/HumanName"
+          },
+          "type": "array"
+        },
+        "telecom": {
+          "items": {
+            "$ref": "#/definitions/ContactPoint"
+          },
+          "type": "array"
+        },
+        "gender": {
+          "enum": [
+            "male",
+            "female",
+            "other",
+            "unknown"
+          ]
+        },
+        "birthDate": {
+          "$ref": "#/definitions/date"
+        },
+        "deceasedBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "deceasedDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "address": {
+          "items": {
+            "$ref": "#/definitions/Address"
+          },
+          "type": "array"
+        },
+        "maritalStatus": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "multipleBirthBoolean": {
+          "pattern": "^true|false$",
+          "type": "boolean"
+        },
+        "multipleBirthInteger": {
+          "pattern": "^-?([0]|([1-9][0-9]*))$",
+          "type": "number"
+        },
+        "photo": {
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          },
+          "type": "array"
+        },
+        "contact": {
+          "items": {
+            "$ref": "#/definitions/Patient_Contact"
+          },
+          "type": "array"
+        },
+        "communication": {
+          "items": {
+            "$ref": "#/definitions/Patient_Communication"
+          },
+          "type": "array"
+        },
+        "generalPractitioner": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "managingOrganization": {
+          "$ref": "#/definitions/Reference"
+        },
+        "link": {
+          "items": {
+            "$ref": "#/definitions/Patient_Link"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "resourceType"
+      ]
+    },
+    "Patient_Communication": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "language": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "preferred": {
+          "$ref": "#/definitions/boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "language"
+      ]
+    },
+    "Patient_Contact": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "relationship": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "name": {
+          "$ref": "#/definitions/HumanName"
+        },
+        "telecom": {
+          "items": {
+            "$ref": "#/definitions/ContactPoint"
+          },
+          "type": "array"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "gender": {
+          "enum": [
+            "male",
+            "female",
+            "other",
+            "unknown"
+          ]
+        },
+        "organization": {
+          "$ref": "#/definitions/Reference"
+        },
+        "period": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Patient_Link": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "other": {
+          "$ref": "#/definitions/Reference"
+        },
+        "type": {
+          "enum": [
+            "replaced-by",
+            "replaces",
+            "refer",
+            "seealso"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "other"
+      ]
+    },
+    "Period": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "start": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "end": {
+          "$ref": "#/definitions/dateTime"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Quantity": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "value": {
+          "$ref": "#/definitions/decimal"
+        },
+        "comparator": {
+          "enum": [
+            "<",
+            "<=",
+            ">=",
+            ">"
+          ]
+        },
+        "unit": {
+          "$ref": "#/definitions/string"
+        },
+        "system": {
+          "$ref": "#/definitions/uri"
+        },
+        "code": {
+          "$ref": "#/definitions/code"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Range": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "low": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "high": {
+          "$ref": "#/definitions/Quantity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Ratio": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "numerator": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "denominator": {
+          "$ref": "#/definitions/Quantity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Reference": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "reference": {
+          "$ref": "#/definitions/string"
+        },
+        "type": {
+          "$ref": "#/definitions/uri"
+        },
+        "identifier": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "display": {
+          "$ref": "#/definitions/string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SampledData": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "origin": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "period": {
+          "$ref": "#/definitions/decimal"
+        },
+        "factor": {
+          "$ref": "#/definitions/decimal"
+        },
+        "lowerLimit": {
+          "$ref": "#/definitions/decimal"
+        },
+        "upperLimit": {
+          "$ref": "#/definitions/decimal"
+        },
+        "dimensions": {
+          "$ref": "#/definitions/positiveInt"
+        },
+        "data": {
+          "$ref": "#/definitions/string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "origin"
+      ]
+    },
+    "Signature": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "type": {
+          "items": {
+            "$ref": "#/definitions/Coding"
+          },
+          "type": "array"
+        },
+        "when": {
+          "$ref": "#/definitions/instant"
+        },
+        "who": {
+          "$ref": "#/definitions/Reference"
+        },
+        "onBehalfOf": {
+          "$ref": "#/definitions/Reference"
+        },
+        "targetFormat": {
+          "$ref": "#/definitions/code"
+        },
+        "sigFormat": {
+          "$ref": "#/definitions/code"
+        },
+        "data": {
+          "$ref": "#/definitions/base64Binary"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "who"
+      ]
+    },
+    "Specimen": {
+      "properties": {
+        "resourceType": {
+          "const": "Specimen"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "implicitRules": {
+          "$ref": "#/definitions/uri"
+        },
+        "language": {
+          "$ref": "#/definitions/code"
+        },
+        "text": {
+          "$ref": "#/definitions/Narrative"
+        },
+        "contained": {
+          "items": {
+            "$ref": "#/definitions/ResourceList"
+          },
+          "type": "array"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "accessionIdentifier": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unsatisfactory",
+            "entered-in-error"
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "subject": {
+          "$ref": "#/definitions/Reference"
+        },
+        "receivedTime": {
+          "$ref": "#/definitions/dateTime"
+        },
+        "parent": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "request": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "collection": {
+          "$ref": "#/definitions/Specimen_Collection"
+        },
+        "processing": {
+          "items": {
+            "$ref": "#/definitions/Specimen_Processing"
+          },
+          "type": "array"
+        },
+        "container": {
+          "items": {
+            "$ref": "#/definitions/Specimen_Container"
+          },
+          "type": "array"
+        },
+        "condition": {
+          "items": {
+            "$ref": "#/definitions/CodeableConcept"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/Annotation"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "resourceType"
+      ]
+    },
+    "Specimen_Collection": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "collector": {
+          "$ref": "#/definitions/Reference"
+        },
+        "collectedDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "collectedPeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "duration": {
+          "$ref": "#/definitions/Duration"
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "method": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "bodySite": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "fastingStatusCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "fastingStatusDuration": {
+          "$ref": "#/definitions/Duration"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Specimen_Container": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "identifier": {
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "type": "array"
+        },
+        "description": {
+          "$ref": "#/definitions/string"
+        },
+        "type": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "capacity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "specimenQuantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "additiveCodeableConcept": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "additiveReference": {
+          "$ref": "#/definitions/Reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Specimen_Processing": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "description": {
+          "$ref": "#/definitions/string"
+        },
+        "procedure": {
+          "$ref": "#/definitions/CodeableConcept"
+        },
+        "additive": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "timeDateTime": {
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+          "type": "string"
+        },
+        "timePeriod": {
+          "$ref": "#/definitions/Period"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Timing": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "event": {
+          "items": {
+            "$ref": "#/definitions/dateTime"
+          },
+          "type": "array"
+        },
+        "repeat": {
+          "$ref": "#/definitions/Timing_Repeat"
+        },
+        "code": {
+          "$ref": "#/definitions/CodeableConcept"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Timing_Repeat": {
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/string"
+        },
+        "boundsDuration": {
+          "$ref": "#/definitions/Duration"
+        },
+        "boundsRange": {
+          "$ref": "#/definitions/Range"
+        },
+        "boundsPeriod": {
+          "$ref": "#/definitions/Period"
+        },
+        "count": {
+          "$ref": "#/definitions/positiveInt"
+        },
+        "countMax": {
+          "$ref": "#/definitions/positiveInt"
+        },
+        "duration": {
+          "$ref": "#/definitions/decimal"
+        },
+        "durationMax": {
+          "$ref": "#/definitions/decimal"
+        },
+        "durationUnit": {
+          "enum": [
+            "s",
+            "min",
+            "h",
+            "d",
+            "wk",
+            "mo",
+            "a"
+          ]
+        },
+        "frequency": {
+          "$ref": "#/definitions/positiveInt"
+        },
+        "frequencyMax": {
+          "$ref": "#/definitions/positiveInt"
+        },
+        "period": {
+          "$ref": "#/definitions/decimal"
+        },
+        "periodMax": {
+          "$ref": "#/definitions/decimal"
+        },
+        "periodUnit": {
+          "enum": [
+            "s",
+            "min",
+            "h",
+            "d",
+            "wk",
+            "mo",
+            "a"
+          ]
+        },
+        "dayOfWeek": {
+          "items": {
+            "$ref": "#/definitions/code"
+          },
+          "type": "array"
+        },
+        "timeOfDay": {
+          "items": {
+            "$ref": "#/definitions/time"
+          },
+          "type": "array"
+        },
+        "when": {
+          "items": {
+            "enum": [
+              "MORN",
+              "MORN.early",
+              "MORN.late",
+              "NOON",
+              "AFT",
+              "AFT.early",
+              "AFT.late",
+              "EVE",
+              "EVE.early",
+              "EVE.late",
+              "NIGHT",
+              "PHS",
+              "HS",
+              "WAKE",
+              "C",
+              "CM",
+              "CD",
+              "CV",
+              "AC",
+              "ACM",
+              "ACD",
+              "ACV",
+              "PC",
+              "PCM",
+              "PCD",
+              "PCV"
+            ]
+          },
+          "type": "array"
+        },
+        "offset": {
+          "$ref": "#/definitions/unsignedInt"
+        }
+      },
+      "additionalProperties": false
+    },
+    "base64Binary": {
+      "type": "string"
+    },
+    "boolean": {
+      "pattern": "^true|false$",
+      "type": "boolean"
+    },
+    "canonical": {
+      "pattern": "^\\S*$",
+      "type": "string"
+    },
+    "code": {
+      "pattern": "^[^\\s]+(\\s[^\\s]+)*$",
+      "type": "string"
+    },
+    "date": {
+      "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?$",
+      "type": "string"
+    },
+    "dateTime": {
+      "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
+      "type": "string"
+    },
+    "decimal": {
+      "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+      "type": "number"
+    },
+    "id": {
+      "pattern": "^[A-Za-z0-9\\-\\.]{1,64}$",
+      "type": "string"
+    },
+    "instant": {
+      "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))$",
+      "type": "string"
+    },
+    "integer": {
+      "pattern": "^-?([0]|([1-9][0-9]*))$",
+      "type": "number"
+    },
+    "markdown": {
+      "pattern": "^[ \\r\\n\\t\\S]+$",
+      "type": "string"
+    },
+    "positiveInt": {
+      "pattern": "^[1-9][0-9]*$",
+      "type": "number"
+    },
+    "string": {
+      "pattern": "^[ \\r\\n\\t\\S]+$",
+      "type": "string"
+    },
+    "time": {
+      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?$",
+      "type": "string"
+    },
+    "unsignedInt": {
+      "pattern": "^[0]|([1-9][0-9]*)$",
+      "type": "number"
+    },
+    "uri": {
+      "pattern": "^\\S*$",
+      "type": "string"
+    },
+    "url": {
+      "pattern": "^\\S*$",
+      "type": "string"
+    },
+    "xhtml": {}
+  }
+}

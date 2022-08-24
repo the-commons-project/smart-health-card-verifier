@@ -3,8 +3,36 @@ import Ajv, { AnySchemaObject } from 'ajv'
 import type { AnyValidateFunction } from 'ajv/dist/core'
 import type { KeySet } from './keys'
 import fhirSchema from '../../schemas/fhir-schema.json'
+import type { JWS } from './types' 
+import type { FhirBundle,  JWSPayload, HealthCard, Resource} from '../fhir/types'
 
 const schemaCache: Record<string, AnyValidateFunction> = {}
+
+
+interface Schema {
+  $schema?: string
+  $id?: string
+  description?: string
+  discriminator?: {
+    propertyName: string
+    mapping: Record<string, string>
+  }
+  oneOf?: Array<{ $ref: string }>
+  definitions: Record<string, SchemaProperty>
+}
+
+interface SchemaProperty {
+  properties?: Record<string, SchemaProperty>
+  items?: { $ref: string } | { enum: string[] } // SchemaProperty (more general)
+  oneOf?: Array<{ $ref: string }> // SchemaProperty[] (more general)
+  pattern?: string
+  type?: string
+  description?: string
+  $ref?: string
+  additionalProperties?: boolean
+  enum?: string[]
+  const?: string
+}
 
 export function validateSchema (
   schema: AnySchemaObject,

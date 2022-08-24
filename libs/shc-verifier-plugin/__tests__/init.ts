@@ -10,6 +10,13 @@ const labResultSystem = {
     "system": "http://loinc.org"
   }
 
+const acceptableLoincFromFixtures = [
+  "94759-8", '94558-4'
+]
+const acceptableSystem = [
+  "http://loinc.org"
+]
+
 function initializeConfig(){
   console.info("Setting up intial SHC Config ")
   const shcOption: SHCverifierOption = {
@@ -18,7 +25,15 @@ function initializeConfig(){
       getVaccineCodesHash: ()=>{ return {} },
       getSystemCodeLabel: ( system: string, code: string ) => "Test Label",
       getAcceptedVaccineCodes: ()=>["208"],
-      isAcceptedLabResult: ( system:string, code:string )=> false ,
+      isAcceptedLabResult: ( system:string, code:string )=> {
+        if( acceptableSystem.indexOf(system) >=0　&&
+            acceptableLoincFromFixtures.indexOf(code) >= 0  
+        ) {
+          return true
+        }
+        console.info("wrong  system : " + system + "   code: " + code );
+        return false
+      } ,
       getAcceptedSystemCode: ( system: string, code: string ) => labResultSystem, 
   }
   setVerifierInitOption( shcOption )

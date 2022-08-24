@@ -2,6 +2,7 @@ import ImmunizationRecordParser from './ImmunizationRecordParser'
 import Covid19LabResultRecordParser from './Covid19LabResultRecordParser'
 import { RecordType } from '../fhirTypes'
 import type { RecordEntry } from 'verifier-sdk'
+import type { ParserFunction, JWSPayload } from '../types' 
 
 const recordParsers: Record< RecordType, ParserFunction> = {
   [RecordType.unknown]: ()=>{ return null },

@@ -1,7 +1,8 @@
+import type { FhirBundle } from '../types'
 import immunizationValidator from './immunizationValidator'
 import labResultValidator  from './labResultValidator'
 import { RecordType } from '../fhirTypes'
-
+import type { ValidateFunction } from '../types'
 const validators: Record< RecordType, ValidateFunction> = {
   [RecordType.unknown]: ()=>{ return Promise.resolve(false) },
   [RecordType.covid19Immunization]: immunizationValidator,
@@ -9,7 +10,6 @@ const validators: Record< RecordType, ValidateFunction> = {
 }
 
 export default async function validateBundleForRecordType ( recordType: RecordType, fireBundle: FhirBundle  ): Promise< boolean>{
-
   let res = false
   if ( Array.isArray( fireBundle.entry )){
     const entry = fireBundle.entry

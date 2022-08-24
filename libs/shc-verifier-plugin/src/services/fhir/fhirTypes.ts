@@ -1,5 +1,5 @@
 import _ from 'lodash'
-
+import type {JWSPayload, BundleEntry } from './types'
 export const enum RecordType {
   'unknown'='unknown',
   'covid19Immunization' = 'covid19-immunization',

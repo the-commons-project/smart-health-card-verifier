@@ -83,8 +83,7 @@ const addIfKeyIsValidSHCFormat = async ( key: JWK.Key ): Promise< boolean > => {
 }
 
 export const verifyAndImportHealthCardIssuerKey = async (
-  keySet: KeySet,
-  expectedSubjectAltName = '',
+  keySet: KeySet
 ): Promise<any> => {
   // check that keySet is valid
   if (!(keySet instanceof Object) || !keySet.keys || !(keySet.keys instanceof Array)) {

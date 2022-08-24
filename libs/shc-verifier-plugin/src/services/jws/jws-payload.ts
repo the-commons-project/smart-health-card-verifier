@@ -2,7 +2,7 @@ import { ErrorCode, Utils, InvalidError } from 'verifier-sdk'
 import jwsPayloadSchema from '../../schemas/smart-health-card-vc-schema.json'
 import * as fhirBundle from '../fhir/fhirBundle'
 import { getRecordTypeFromPayload, RecordType } from '../fhir/fhirTypes'
-
+import type { JWSPayload } from '../fhir/types' 
 export const schema = jwsPayloadSchema
 
 

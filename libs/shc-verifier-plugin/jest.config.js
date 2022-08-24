@@ -10,6 +10,9 @@ module.exports = async () => {
     "preset": "react-native",
     setupFiles:[
     ],
+    testPathIgnorePatterns: [
+      '<rootDir>/__tests__/init.ts',
+    ],
     coveragePathIgnorePatterns: [
       '*node_modules*',
       '<rootDir>/src',

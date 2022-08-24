@@ -1,4 +1,5 @@
 import { getVerifierInitOption } from '~/models/Config'
+import type { ObservationParser, BundleEntry } from '../../../types'
 export default class R4Observation implements ObservationParser {
   parse ( entry: BundleEntry ): any {
     const verifierOption = getVerifierInitOption();

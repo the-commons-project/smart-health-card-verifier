@@ -1,5 +1,7 @@
 import type { VerifierInitOption } from 'verifier-sdk'
 
+
+
 type ValidateIssuerReturnType = any | null;
 export interface ValidateIssuerFunction<T = unknown> {
   ( verifierKey: string, issuer: T ): ValidateIssuerReturnType;
@@ -15,16 +17,16 @@ export declare type AnyIssuerValidateFunction<T = any> = ValidateIssuerFunction<
 type CodesReturnType = string [];
 
 
-export interface GetGetAcceptedVaccineCodesFunction<T = unknown> {
+export interface GetGetAcceptedVaccineCodesFunction {
   ( verifierKey: string ): CodesReturnType;
 }
 
-export interface AsyncGetAcceptedVaccineFunction<T = unknown> extends GetGetAcceptedVaccineCodesFunction<T> {
-  (...args: Parameters<ValidateIssuerFunction<T>>): Promise< CodesReturnType >;
+export interface AsyncGetAcceptedVaccineFunction extends GetGetAcceptedVaccineCodesFunction {
+  (...args: Parameters<ValidateIssuerFunction>): Promise< CodesReturnType >;
   $async: true;
 }
 
-export declare type AnyGetAcceptedVaccineCodesFunction<T = any> = GetGetAcceptedVaccineCodesFunction<T> | AsyncGetAcceptedVaccineFunction<T>;
+export declare type AnyGetAcceptedVaccineCodesFunction<T = any> = GetGetAcceptedVaccineCodesFunction | AsyncGetAcceptedVaccineFunction;
 
 
 

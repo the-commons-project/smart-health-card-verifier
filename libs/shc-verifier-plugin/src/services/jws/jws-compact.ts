@@ -3,6 +3,7 @@ import pako from 'pako'
 import jose from 'react-native-jose'
 
 import { InvalidError, Utils, Timer } from 'verifier-sdk'
+import type { JWSPayload } from '../fhir/types'
 import { ErrorCode } from 'verifier-sdk'
 import { getVerifierInitOption, VerifierKey } from '~/models/Config'
 import { KeysStore } from './keys'
@@ -99,7 +100,7 @@ async function fetchWithTimeout (url: string, options: any, timeout: number, tim
   return await Promise.race([
     fetch(url, options),
 
-    new Promise((resolve, reject) => setTimeout(() => reject(new Error(timeoutError)), timeout)),
+    new Promise((_:any, reject) => setTimeout(() => reject(new Error(timeoutError)), timeout)),
   ])
 }
 
@@ -117,7 +118,7 @@ async function downloadAndImportValidKeys (issuerURL: string ): Promise<boolean>
       { headers: { Origin: requestedOrigin } },
       timeout,
       timeoutError,
-    ).catch( ( error )=> {
+    ).catch( ( _:any )=> {
       throw new InvalidError( ErrorCode.ISSUER_KEY_DOWNLOAD_ERROR )
     })
     const keySet = await responseRaw.json()
@@ -129,7 +130,7 @@ async function downloadAndImportValidKeys (issuerURL: string ): Promise<boolean>
 
     try {
       timer.start()
-      await verifyAndImportHealthCardIssuerKey(keySet, issuerURL)
+      await verifyAndImportHealthCardIssuerKey(keySet)
       loadingTime = timer.stop()
       console.log(`verification took:  ${loadingTime.toFixed(2)}sec`)
 
@@ -324,7 +325,7 @@ async function extractKeyURL (payload: any) {
       // download the keys into the keystore. if it fails, continue an try to use whatever is in the keystore.
       if (!JwsValidationOptions.skipJwksDownload) {
 
-        await downloadAndImportValidKeys( iss  )
+        await downloadAndImportValidKeys( iss )
       } else {
         console.log('skipping issuer JWK set download')
       }
