@@ -3,7 +3,7 @@ import pako from 'pako';
 import jose from 'react-native-jose';
 import { InvalidError, Utils, Timer } from 'verifier-sdk';
 import { ErrorCode } from 'verifier-sdk';
-import { getVerifierInitOption, VerifierKey } from '~/models/Config';
+import { getVerifierInitOption, VerifierKey } from '../../models/Config';
 import { KeysStore } from './keys';
 import * as jwsPayload from './jws-payload';
 import { validateSchema } from './schema';

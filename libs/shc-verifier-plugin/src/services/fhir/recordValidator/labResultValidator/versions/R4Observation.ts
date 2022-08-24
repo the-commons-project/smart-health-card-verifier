@@ -1,4 +1,4 @@
-import { getVerifierInitOption } from '~/models/Config'
+import { getVerifierInitOption } from '../../../../../models/Config'
 import type { ObservationValidator, BundleEntry } from '../../../types' 
 class R4Observation implements ObservationValidator {
 

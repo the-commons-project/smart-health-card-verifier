@@ -1,4 +1,4 @@
-import { getVerifierInitOption } from '~/models/Config';
+import { getVerifierInitOption } from '../../../../../models/Config';
 
 class R4Observation {
   canSupport(entry) {

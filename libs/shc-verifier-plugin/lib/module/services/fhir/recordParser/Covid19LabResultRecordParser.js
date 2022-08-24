@@ -1,6 +1,6 @@
 import { ResourceType } from '../fhirTypes';
 import R4Observation from './labResultParser/versions/R4Observation';
-import { sortRecordByDateField } from '~/utils/utils';
+import { sortRecordByDateField } from '../../../utils/utils';
 
 const parse = jwsPayload => {
   var _jwsPayload$vc, _jwsPayload$vc$creden, _jwsPayload$vc$creden2, _entries$find;

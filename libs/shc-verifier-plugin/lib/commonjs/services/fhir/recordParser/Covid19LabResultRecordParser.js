@@ -9,7 +9,7 @@ var _fhirTypes = require("../fhirTypes");
 
 var _R4Observation = _interopRequireDefault(require("./labResultParser/versions/R4Observation"));
 
-var _utils = require("~/utils/utils");
+var _utils = require("../../../utils/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

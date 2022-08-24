@@ -7,7 +7,7 @@ import { getIssuerFromFhir } from '../../helpers/getIssuerFromFhir'
 /* this entry needs to match with ValidationProfilesFunctions keys */
 import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
-import { VerifierKey, getVerifierInitOption } from '~/models/Config'
+import { VerifierKey, getVerifierInitOption } from '../../models/Config'
 import type { JWSPayload, FhirBundle } from './types'
 
 export async function getRecord (payload: JWSPayload): Promise<any>{

@@ -1,4 +1,4 @@
-import type { SHCverifierOption } from '~/types'
+import type { SHCverifierOption } from '../types'
 
 export const VerifierKey = "SHC"
 const defaultOption = {

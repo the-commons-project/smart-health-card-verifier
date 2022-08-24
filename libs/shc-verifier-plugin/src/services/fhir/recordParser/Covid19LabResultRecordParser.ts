@@ -1,7 +1,7 @@
 import { ResourceType } from '../fhirTypes'
 import type { RecordEntry } from 'verifier-sdk'
 import R4Observation from './labResultParser/versions/R4Observation'
-import { sortRecordByDateField } from '~/utils/utils'
+import { sortRecordByDateField } from '../../../utils/utils'
 import type { JWSPayload, ParserFunction, ObservationParser}  from '../types'
 const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
   const parser: ObservationParser = new R4Observation()

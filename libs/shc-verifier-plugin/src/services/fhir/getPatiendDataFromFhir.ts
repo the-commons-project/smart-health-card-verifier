@@ -1,5 +1,5 @@
-import { formatDateOfBirth } from '~/utils/utils'
-import constants from '~/models/FHIRFieldConstant'
+import { formatDateOfBirth } from '../../utils/utils'
+import constants from '../../models/FHIRFieldConstant'
 const { RESOURCE_TYPES } = constants
 const acceptedSuffix = ['Jr.',  'Sr.', 'II', 'III', 'IV']
 const resolveName = ( name: any ): string | null  => {

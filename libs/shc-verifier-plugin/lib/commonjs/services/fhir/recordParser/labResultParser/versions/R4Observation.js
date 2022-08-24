@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _Config = require("~/models/Config");
+var _Config = require("../../../../../models/Config");
 
 class R4Observation {
   parse(entry) {

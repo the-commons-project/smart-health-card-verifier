@@ -12,7 +12,7 @@ var _reactNativeJose = _interopRequireDefault(require("react-native-jose"));
 
 var _verifierSdk = require("verifier-sdk");
 
-var _Config = require("~/models/Config");
+var _Config = require("../../models/Config");
 
 var _keys = require("./keys");
 

@@ -1,7 +1,7 @@
-import { sortRecordByDateField } from '~/utils/utils'
+import { sortRecordByDateField } from '../../../utils/utils'
 import { ResourceType, isResourceType } from '../fhirTypes'
 import type { RecordEntry } from 'verifier-sdk'
-import  { getVerifierInitOption, VerifierKey } from '~/models/Config'
+import  { getVerifierInitOption, VerifierKey } from '../../../models/Config'
 import type { JWSPayload, ParserFunction } from '../types'
 
 var cvxCodes: string[] | null  = null

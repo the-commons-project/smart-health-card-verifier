@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getPatientDataFromFhir = void 0;
 
-var _utils = require("~/utils/utils");
+var _utils = require("../../utils/utils");
 
-var _FHIRFieldConstant = _interopRequireDefault(require("~/models/FHIRFieldConstant"));
+var _FHIRFieldConstant = _interopRequireDefault(require("../../models/FHIRFieldConstant"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

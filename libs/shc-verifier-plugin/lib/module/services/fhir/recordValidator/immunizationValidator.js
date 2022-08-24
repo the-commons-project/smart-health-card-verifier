@@ -1,8 +1,8 @@
 import { ErrorCode, Utils } from 'verifier-sdk';
-import immunizationDM from '~/schemas/immunization-dm.json';
-import patientDM from '~/schemas/patient-dm.json';
+import immunizationDM from '../../../schemas/immunization-dm.json';
+import patientDM from '../../../schemas/patient-dm.json';
 import { RecordType } from '../fhirTypes';
-import { getVerifierInitOption } from '~/models/Config';
+import { getVerifierInitOption } from '../../../models/Config';
 
 const validate = async entries => {
   const profileName = RecordType.covid19Immunization;

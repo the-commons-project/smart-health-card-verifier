@@ -7,13 +7,13 @@ exports.default = void 0;
 
 var _verifierSdk = require("verifier-sdk");
 
-var _immunizationDm = _interopRequireDefault(require("~/schemas/immunization-dm.json"));
+var _immunizationDm = _interopRequireDefault(require("../../../schemas/immunization-dm.json"));
 
-var _patientDm = _interopRequireDefault(require("~/schemas/patient-dm.json"));
+var _patientDm = _interopRequireDefault(require("../../../schemas/patient-dm.json"));
 
 var _fhirTypes = require("../fhirTypes");
 
-var _Config = require("~/models/Config");
+var _Config = require("../../../models/Config");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -1,5 +1,5 @@
 import { ErrorCode } from 'verifier-sdk';
-import { validate as jwsValidate } from '~/services/jws/jws-compact';
+import { validate as jwsValidate } from './services/jws/jws-compact';
 const MAX_QR_CHUNK_LENGTH = 1191;
 export const validate = async qr => {
   const jwsString = shcChunksToJws(qr);

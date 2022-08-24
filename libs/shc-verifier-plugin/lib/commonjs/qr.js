@@ -7,7 +7,7 @@ exports.validate = void 0;
 
 var _verifierSdk = require("verifier-sdk");
 
-var _jwsCompact = require("~/services/jws/jws-compact");
+var _jwsCompact = require("./services/jws/jws-compact");
 
 const MAX_QR_CHUNK_LENGTH = 1191;
 

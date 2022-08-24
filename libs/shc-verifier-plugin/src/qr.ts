@@ -1,6 +1,6 @@
 import { ErrorCode } from 'verifier-sdk'
-import { validate as jwsValidate } from '~/services/jws/jws-compact'
-import type { JWS } from '~/services/jws/types'
+import { validate as jwsValidate } from './services/jws/jws-compact'
+import type { JWS } from './services/jws/types'
 
 const MAX_QR_CHUNK_LENGTH = 1191
 

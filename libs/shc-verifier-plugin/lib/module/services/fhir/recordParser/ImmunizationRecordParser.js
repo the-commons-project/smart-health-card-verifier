@@ -1,6 +1,6 @@
-import { sortRecordByDateField } from '~/utils/utils';
+import { sortRecordByDateField } from '../../../utils/utils';
 import { ResourceType, isResourceType } from '../fhirTypes';
-import { getVerifierInitOption, VerifierKey } from '~/models/Config';
+import { getVerifierInitOption, VerifierKey } from '../../../models/Config';
 var cvxCodes = null;
 var vaccineCodesHash = null;
 

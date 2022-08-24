@@ -10,7 +10,7 @@ exports.SHCVerifier = void 0;
 
 var _qr = require("./qr");
 
-var _Config = require("~/models/Config");
+var _Config = require("./models/Config");
 
 var _types = require("./types");
 

@@ -1,5 +1,5 @@
 import { validate as qrValidate } from './qr';
-import { setVerifierInitOption } from "~/models/Config";
+import { setVerifierInitOption } from "./models/Config";
 export * from './types';
 export class SHCVerifier {
   constructor(options) {

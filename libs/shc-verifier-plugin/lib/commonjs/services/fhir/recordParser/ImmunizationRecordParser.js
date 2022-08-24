@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _utils = require("~/utils/utils");
+var _utils = require("../../../utils/utils");
 
 var _fhirTypes = require("../fhirTypes");
 
-var _Config = require("~/models/Config");
+var _Config = require("../../../models/Config");
 
 var cvxCodes = null;
 var vaccineCodesHash = null;

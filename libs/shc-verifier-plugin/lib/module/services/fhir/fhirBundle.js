@@ -8,7 +8,7 @@ import { getIssuerFromFhir } from '../../helpers/getIssuerFromFhir';
 
 import { getRecordTypeFromPayload } from './fhirTypes';
 import validateBundleForRecordType from './recordValidator';
-import { VerifierKey, getVerifierInitOption } from '~/models/Config';
+import { VerifierKey, getVerifierInitOption } from '../../models/Config';
 export async function getRecord(payload) {
   const issuer = getIssuerFromFhir(payload);
   const notFoundIssuer = {

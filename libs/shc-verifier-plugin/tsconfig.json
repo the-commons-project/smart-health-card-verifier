@@ -2,8 +2,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "verifier-sdk": ["../verifier-sdk/src/index"],
-      "~/*": ["./src/*"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

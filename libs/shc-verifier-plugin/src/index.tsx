@@ -1,7 +1,7 @@
 import type { IVerifierBase, BaseResponse } from 'verifier-sdk'
 import { validate  as qrValidate } from './qr' 
 import type { SHCverifierOption, SHCVerifierType } from './types'
-import { setVerifierInitOption } from "~/models/Config"
+import { setVerifierInitOption } from "./models/Config"
 export  * from './types'
 
 

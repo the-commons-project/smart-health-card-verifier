@@ -22,7 +22,7 @@ var _fhirTypes = require("./fhirTypes");
 
 var _recordValidator = _interopRequireDefault(require("./recordValidator"));
 
-var _Config = require("~/models/Config");
+var _Config = require("../../models/Config");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

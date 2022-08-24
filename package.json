@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/runtime": "^7.16.3",
     "@jest/types": "^27.2.5",
     "@react-native-community/eslint-config": "^3.0.1",

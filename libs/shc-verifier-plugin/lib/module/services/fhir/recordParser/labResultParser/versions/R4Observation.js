@@ -1,4 +1,4 @@
-import { getVerifierInitOption } from '~/models/Config';
+import { getVerifierInitOption } from '../../../../../models/Config';
 export default class R4Observation {
   parse(entry) {
     const verifierOption = getVerifierInitOption();
