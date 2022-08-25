@@ -59,8 +59,6 @@ export function getProvider () {
 
       moduleService.initialize( option )
       .then( ()=> {
-          console.info("#YF1 Done Initialized")
-
           setState({
             ...state,
             isLoaded: true

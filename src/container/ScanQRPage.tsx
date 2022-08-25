@@ -177,7 +177,6 @@ const ScanQRPage = ({ navigation }: Props) => {
       return 
 
     } catch (error: any) {
-      console.info("#YF3: Error : " + error )
       if (error instanceof InvalidError) {
         validationResult.isValid = false
         validationResult.errorCode = error.errorCode

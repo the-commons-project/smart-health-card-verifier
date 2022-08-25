@@ -28,7 +28,6 @@ export const loadIssuers = async (): Promise<boolean>=> {
 }
 
 export const getIssuerData = async ( verifierKey: string, issuer: string ):  Promise<any> => {
-  console.log("#YF Get Issuer : " + issuer )
   if ( remoteConfig.useLegacy() ) {
     return await _getIssuerDataLegacy( issuer )
   }
