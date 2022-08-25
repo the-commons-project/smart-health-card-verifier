@@ -13,7 +13,6 @@ export class ModuleService {
 
   initialize( option: VerifierInitOption ): Promise<boolean> {
     VerifierFactory.register( "shc", SHCVerifier, option );
-    console.info("#YF: VerifierFactory.Verifiers:" + JSON.stringify( VerifierFactory.getVerifiers() ) )
     return Promise.resolve( true )
   }
 

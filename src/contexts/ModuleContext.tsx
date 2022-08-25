@@ -42,7 +42,6 @@ export function getProvider () {
     const moduleService = ModuleService.getModuleService()
 
     useEffect( ()=>{
-      console.info("#YF1 initializing Module Context")
 
       const shcOption  = {
         useLegacy: remoteConfig.useLegacy,

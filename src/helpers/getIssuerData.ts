@@ -27,7 +27,8 @@ export const loadIssuers = async (): Promise<boolean>=> {
   return ( issuersMap != null )
 }
 
-export const getIssuerData = async ( issuer: string ):  Promise<any> => {
+export const getIssuerData = async ( verifierKey: string, issuer: string ):  Promise<any> => {
+  console.log("#YF Get Issuer : " + issuer )
   if ( remoteConfig.useLegacy() ) {
     return await _getIssuerDataLegacy( issuer )
   }
