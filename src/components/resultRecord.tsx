@@ -7,7 +7,7 @@ import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import ImmunizationRecordRow, { GetResultTitle as GetImmunizationResultTitle } from './ImmunizationRecordRow'
 import LabResultRecordRow, { GetResultTitle  as GetLabResultTitle } from './LabResultRecordRow'
-import { RecordType } from '../services/fhir/fhirTypes'
+import { RecordType } from '../../libs/shc-verifier-plugin/src/services/fhir/fhirTypes'
 import VerifiedImage from '../../assets/img/verificationresult/common-trust-verified.svg'
 
 const images = {

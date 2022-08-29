@@ -3,16 +3,16 @@ import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions'
 import { Platform, View, StyleSheet, Animated, Easing, Alert, useWindowDimensions, PixelRatio } from 'react-native'
 import { useNetInfo } from '@react-native-community/netinfo'
 import BarCodeScanner from '../components/BarCodeScanner'
-import { ErrorCode } from '../services/error'
 import AppClickableImage from '../components/customImage'
 import NotificationOverlay from '../components/notificationOverlay'
-import { validate } from '../services/qr'
-import { Props, BaseResponse } from '../types'
+import { BaseResponse, ErrorCode } from 'verifier-sdk'
+import { Props,  } from '../types'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import MarkerLayerSVG from '../../assets/img/scanqr/markerlayer.svg'
-import { InvalidError } from '../utils/InvalidError'
-import { RecordType } from '../services/fhir/fhirTypes'
+import { InvalidError } from 'verifier-sdk'
+import { RecordType } from '../../libs/shc-verifier-plugin/src/services/fhir/fhirTypes'
+import { ModuleService } from '../services/module/ModuleService'
 
 const images = {
   leftCaret: require('../../assets/img/verificationresult/left-caret.png'),
@@ -165,15 +165,18 @@ const ScanQRPage = ({ navigation }: Props) => {
 
     try {
       setScanned(true)
-      validationResult = await validate([data])
-      if (!validationResult || !validationResult.isValid ) {
-        navigation.navigate('Error')
-        return
+      const verifier = await ModuleService.getModuleService().getVerifier([data])
+      if( verifier ) {
+        let validationResult = await verifier.validate([data])
+         if ( validationResult && validationResult.isValid === true ) {
+          navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
+          return
+        }
       }
+      navigation.navigate('Error')
+      return 
 
-      navigation.navigate({ name: 'VerificationResult', params: { validationResult } })
     } catch (error: any) {
-
       if (error instanceof InvalidError) {
         validationResult.isValid = false
         validationResult.errorCode = error.errorCode

@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Image, useWindowDimensions, PixelRatio, ScrollV
 import AppLogoSVG from '../../assets/img/icon_shc.svg'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
-
 const msg1 = 'Use this app to verify the SMART Health Cards of your customers or employees at your business.'
 const msg2 = 'This app does not save or store your digital credentials.'
 /* eslint react-native/no-inline-styles: "off" */
@@ -13,6 +12,7 @@ export default ({ style, width, isSmallScreen }: {style: any, width: number, isS
   const imgSize = Math.abs( width / 4 )
   const imgMarginTop = Math.abs( imgSize  )
   const imgMarginBottom = Math.abs( imgSize  / 2 )
+
   return (
     <ScrollView style={ [ style, styles.scrollView ] }>
       <View style={ [styles.container, { width, paddingTop: imgMarginTop }] }> 

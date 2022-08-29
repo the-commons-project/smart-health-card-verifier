@@ -1,11 +1,11 @@
 import React from 'react'
-import { RecordEntry, BaseResponse } from '../types'
+import { RecordEntry, BaseResponse } from 'verifier-sdk'
 import { View, Image, StyleSheet, Text, PixelRatio, useWindowDimensions } from 'react-native'
 import { Table, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import ImmunizationSVG from '../../assets/img/verificationresult/immunizationIcon.svg'
-import { getIsSmallScreen, formatFHIRRecordDate } from '../utils/utils'
+import { getIsSmallScreen, formatFHIRRecordDate } from '~/utils/utils'
 const imagePadding = 10
 
 export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse ): any => {

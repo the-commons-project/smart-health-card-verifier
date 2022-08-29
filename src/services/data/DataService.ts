@@ -1,7 +1,7 @@
 /* This service handles local data interface */ 
-import Timer from '../../utils/timer'
+import { Timer } from 'verifier-sdk'
 import { fetchWithTimeout } from '../../utils/utils'
-import { ApiTimeout } from '../constants'
+import { ApiTimeout } from '~/models/constants'
 import { getStorage, KVStorage } from './Storage'
 
 export enum DataKeys {

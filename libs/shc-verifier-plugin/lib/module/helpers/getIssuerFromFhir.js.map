@@ -1,0 +1,1 @@
+{"version":3,"names":["getIssuerFromFhir","credential","iss","issuer"],"sources":["getIssuerFromFhir.ts"],"sourcesContent":["export const getIssuerFromFhir = (credential: any): string => {\n  const { iss: issuer } = credential\n  return issuer\n}\n"],"mappings":"AAAA,OAAO,MAAMA,iBAAiB,GAAIC,UAAD,IAA6B;EAC5D,MAAM;IAAEC,GAAG,EAAEC;EAAP,IAAkBF,UAAxB;EACA,OAAOE,MAAP;AACD,CAHM"}

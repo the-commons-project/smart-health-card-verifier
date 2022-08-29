@@ -26,13 +26,15 @@ const config: Config.InitialOptions = {
   coveragePathIgnorePatterns: [
     '*node_modules*',
     '<rootDir>/config',
-    '<rootDir>/resources'
+    '<rootDir>/resources',
+    '<rootDir>/libs'
   ],
   testPathIgnorePatterns: [
     '<rootDir>/__tests__/__mock__',
     '<rootDir>/config',
     '<rootDir>/resources',
-    '<rootDir>/tools'
+    '<rootDir>/tools',
+    '<rootDir>/libs'
   ],
   rootDir: rootPath,
   setupFiles:[
@@ -44,6 +46,7 @@ const config: Config.InitialOptions = {
     '<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js'
   ],
   moduleNameMapper:{
+    '^~/(.*)$': '<rootDir>/src/$1',
     'react-native-config': '<rootDir>/__tests__/__mock__/react-native-config/react-native-config'
   },
   preset: 'react-native',

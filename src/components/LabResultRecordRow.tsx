@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, FlatList, StyleSheet, PixelRatio, useWindowDimensions, Alert, TouchableOpacity } from 'react-native'
-import { RecordEntry, BaseResponse } from '../types'
+import { RecordEntry, BaseResponse } from 'verifier-sdk'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import { Table, TableWrapper, Cell, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
