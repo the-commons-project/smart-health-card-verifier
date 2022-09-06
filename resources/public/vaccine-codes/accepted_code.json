@@ -57,6 +57,21 @@
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "229",
+      "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "300",
+      "display": "Pfizer"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "301",
+      "display": "Pfizer"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
       "code": "510",
       "display": "Sinopharm-Biotech"
     },
