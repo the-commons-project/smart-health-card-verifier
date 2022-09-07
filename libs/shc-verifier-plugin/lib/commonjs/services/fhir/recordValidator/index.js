@@ -17,7 +17,7 @@ const validators = {
   [_fhirTypes.RecordType.unknown]: () => {
     return Promise.resolve(false);
   },
-  [_fhirTypes.RecordType.covid19Immunization]: _immunizationValidator.default,
+  [_fhirTypes.RecordType.immunization]: _immunizationValidator.default,
   [_fhirTypes.RecordType.covid19LabResult]: _labResultValidator.default
 };
 

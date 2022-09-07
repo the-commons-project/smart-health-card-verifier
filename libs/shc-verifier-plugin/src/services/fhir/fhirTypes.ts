@@ -2,7 +2,7 @@ import _ from 'lodash'
 import type {JWSPayload, BundleEntry } from './types'
 export const enum RecordType {
   'unknown'='unknown',
-  'covid19Immunization' = 'covid19-immunization',
+  'immunization' = 'immunization',
   'covid19LabResult'    = 'covid19-lab-result'
 }
 
@@ -14,13 +14,12 @@ export const enum ResourceType {
 }
 
 export const availableRecordTypes: RecordType[] = [ 
-  RecordType.covid19Immunization,
+  RecordType.immunization,
   RecordType.covid19LabResult
 ]
 export const acceptedVCType: Record<string, string[]> = {
-  [RecordType.covid19Immunization]: [  
+  [RecordType.immunization]: [  
     'https://smarthealth.cards#immunization',
-    'https://smarthealth.cards#covid19',
     'https://smarthealth.cards#health-card'],
   [RecordType.covid19LabResult]: [               
     'https://smarthealth.cards#laboratory',

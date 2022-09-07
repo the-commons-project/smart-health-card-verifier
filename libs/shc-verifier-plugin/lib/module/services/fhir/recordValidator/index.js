@@ -5,7 +5,7 @@ const validators = {
   [RecordType.unknown]: () => {
     return Promise.resolve(false);
   },
-  [RecordType.covid19Immunization]: immunizationValidator,
+  [RecordType.immunization]: immunizationValidator,
   [RecordType.covid19LabResult]: labResultValidator
 };
 export default async function validateBundleForRecordType(recordType, fireBundle) {

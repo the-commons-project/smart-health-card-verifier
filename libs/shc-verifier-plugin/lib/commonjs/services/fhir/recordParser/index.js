@@ -18,7 +18,7 @@ const recordParsers = {
     return null;
   },
   [_fhirTypes.RecordType.covid19LabResult]: _Covid19LabResultRecordParser.default,
-  [_fhirTypes.RecordType.covid19Immunization]: _ImmunizationRecordParser.default
+  [_fhirTypes.RecordType.immunization]: _ImmunizationRecordParser.default
 };
 
 async function getRecordData(recordType, jwsPayload) {

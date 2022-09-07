@@ -1,6 +1,6 @@
 import { ErrorCode } from 'verifier-sdk'
-import Ajv, { AnySchemaObject } from 'ajv'
-import type { AnyValidateFunction } from 'ajv/dist/core'
+import Ajv from 'ajv'
+import type { AnyValidateFunction, AnySchemaObject } from 'ajv/dist/core'
 import type { KeySet } from './keys'
 import fhirSchema from '../../schemas/fhir-schema.json'
 import type { JWS } from './types' 

@@ -5,7 +5,7 @@ import { RecordType } from '../fhirTypes'
 import type { ValidateFunction } from '../types'
 const validators: Record< RecordType, ValidateFunction> = {
   [RecordType.unknown]: ()=>{ return Promise.resolve(false) },
-  [RecordType.covid19Immunization]: immunizationValidator,
+  [RecordType.immunization]: immunizationValidator,
   [RecordType.covid19LabResult]: labResultValidator
 }
 

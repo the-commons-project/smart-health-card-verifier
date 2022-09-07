@@ -1,4 +1,4 @@
-import { AnySchemaObject } from 'ajv';
+import type { AnySchemaObject } from 'ajv/dist/core';
 import type { KeySet } from './keys';
 import type { JWS } from './types';
 import type { FhirBundle, JWSPayload, HealthCard, Resource } from '../fhir/types';

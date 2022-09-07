@@ -5,7 +5,7 @@ import { RecordType } from '../fhirTypes';
 import { getVerifierInitOption } from '../../../models/Config';
 
 const validate = async entries => {
-  const profileName = RecordType.covid19Immunization;
+  const profileName = RecordType.immunization;
   const immunizations = entries.filter(entry => entry.resource.resourceType === 'Immunization');
 
   if (immunizations.length === 0) {

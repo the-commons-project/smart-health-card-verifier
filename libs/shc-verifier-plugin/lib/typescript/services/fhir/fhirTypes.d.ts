@@ -1,7 +1,7 @@
 import type { JWSPayload, BundleEntry } from './types';
 export declare const enum RecordType {
     'unknown' = "unknown",
-    'covid19Immunization' = "covid19-immunization",
+    'immunization' = "immunization",
     'covid19LabResult' = "covid19-lab-result"
 }
 export declare const enum ResourceType {
