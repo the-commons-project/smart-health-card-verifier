@@ -26,7 +26,6 @@ export default class R4Observation implements ObservationParser {
         codableConseptCode  = codableSystem.code
         codeableShortDefault = codableSystem.codeableShortDefault ?? null
       }
-
       return {
         securityCode,
         status,

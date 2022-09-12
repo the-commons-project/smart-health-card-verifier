@@ -18,9 +18,9 @@ it('Verifies incorrectly', async () => {
 
 it('Verifies name correctly', async () => {
   expect.assertions(2)
-  let res = await fhirValidate(RecordType.covid19Immunization, fhirData)
+  let res = await fhirValidate(RecordType.immunization, fhirData)
   expect(res).toEqual(true)
-  res = await fhirValidate(RecordType.covid19Immunization, suffixImmumnization)
+  res = await fhirValidate(RecordType.immunization, suffixImmumnization)
   expect(res).toEqual(true)
 })
 
@@ -34,7 +34,7 @@ it('Shows name correctly', ()=>{
 it('Gets proper SHCRecord Type', ()=> {
   expect.assertions(3)
   let recordType = getRecordTypeFromPayload( immunizationSuffixData as JWSPayload );
-  expect(recordType).toEqual( RecordType.covid19Immunization)
+  expect(recordType).toEqual( RecordType.immunization)
   recordType = getRecordTypeFromPayload( covid19LabResult as JWSPayload );
   expect(recordType).toEqual( RecordType.covid19LabResult)
   recordType = getRecordTypeFromPayload( notCovid19LabResult as JWSPayload );

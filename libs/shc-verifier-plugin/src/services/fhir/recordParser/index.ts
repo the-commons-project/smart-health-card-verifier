@@ -12,6 +12,7 @@ const recordParsers: Record< RecordType, ParserFunction> = {
 
 export default async function getRecordData ( recordType: RecordType, jwsPayload: JWSPayload  ): Promise< RecordEntry[] | null >{
   let res = null
+  console.info("Getting Record data ------------------" + recordType )
   res = await recordParsers[recordType]?.call(undefined, jwsPayload) ?? null
   return res
 }

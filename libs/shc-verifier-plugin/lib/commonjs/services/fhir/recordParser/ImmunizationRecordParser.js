@@ -21,6 +21,7 @@ const parse = async jwsPayload => {
   const vaccinationData = [];
   const entries = jwsPayload === null || jwsPayload === void 0 ? void 0 : (_jwsPayload$vc = jwsPayload.vc) === null || _jwsPayload$vc === void 0 ? void 0 : (_jwsPayload$vc$creden = _jwsPayload$vc.credentialSubject) === null || _jwsPayload$vc$creden === void 0 ? void 0 : (_jwsPayload$vc$creden2 = _jwsPayload$vc$creden.fhirBundle) === null || _jwsPayload$vc$creden2 === void 0 ? void 0 : _jwsPayload$vc$creden2.entry;
   const immunizationEntries = entries === null || entries === void 0 ? void 0 : entries.filter(entry => {
+    console.info(JSON.stringify(entry));
     return (0, _fhirTypes.isResourceType)(entry, _fhirTypes.ResourceType.Immunization);
   }).map(entry => entry.resource);
   vaccineCodesHash = vaccineCodesHash || (0, _Config.getVerifierInitOption)().getVaccineCodesHash();
@@ -69,6 +70,7 @@ const parse = async jwsPayload => {
     }
   }
 
+  console.info("vaccine data ==== " + JSON.stringify(vaccinationData));
   (0, _utils.sortRecordByDateField)('vaccinationDate', vaccinationData);
   return vaccinationData;
 };

@@ -40,7 +40,6 @@ const VerificationResultPage = ({ route, navigation }: Props) => {
   const isIssuerRecognized = issuerRecognized( validationResult)
   const isCanToggleResult       = canShowResult( validationResult ) && !isIssuerRecognized 
   const isCanToggleBannerDetail = canToggleBannerDetail( validationResult )
-
   const [ showResult, setShowResult ] = useState(initiallyShowRecord( validationResult ) )
   const [ showBannerDetail, setShowBannerDetail ] = useState(initiallyShowBannerDetail(validationResult))
   const resultBannerClicked = ()=>{
