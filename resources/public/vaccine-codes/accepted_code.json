@@ -2,6 +2,11 @@
   "covid_19_vaccine_codes": [
     {
       "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "206",
+      "display": "JYNNEOS"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
       "code": "207",
       "display": "Moderna"
     },
@@ -54,6 +59,21 @@
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "228",
       "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "229",
+      "display": "Moderna"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "300",
+      "display": "Pfizer"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "301",
+      "display": "Pfizer"
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
