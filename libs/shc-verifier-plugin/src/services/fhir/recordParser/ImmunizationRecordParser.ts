@@ -14,7 +14,6 @@ const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEn
 
   const immunizationEntries = entries
     ?.filter((entry: any) => {
-      console.info(JSON.stringify( entry ))
       return isResourceType( entry, ResourceType.Immunization )
     })
     .map((entry: any) => entry.resource)

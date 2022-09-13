@@ -25,7 +25,6 @@ async function getRecordData(recordType, jwsPayload) {
   var _recordParsers$record;
 
   let res = null;
-  console.info("Getting Record data ------------------" + recordType);
   res = (await ((_recordParsers$record = recordParsers[recordType]) === null || _recordParsers$record === void 0 ? void 0 : _recordParsers$record.call(undefined, jwsPayload))) ?? null;
   return res;
 }

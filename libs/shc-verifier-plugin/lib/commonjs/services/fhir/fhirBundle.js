@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getRecord = getRecord;
+exports.getTagKeys = getTagKeys;
 exports.validate = validate;
 
 var _verifierSdk = require("verifier-sdk");
@@ -46,6 +47,7 @@ async function getRecord(payload) {
 
   const patientData = (0, _getPatiendDataFromFhir.getPatientDataFromFhir)(payload);
   const recordType = (0, _fhirTypes.getRecordTypeFromPayload)(payload);
+  const tagKeys = getTagKeys(payload);
   const recordEntries = await (0, _recordParser.default)(recordType, payload);
 
   if ((recordEntries === null || recordEntries === void 0 ? void 0 : recordEntries.length) === 0) {
@@ -56,9 +58,28 @@ async function getRecord(payload) {
     issuerData,
     patientData,
     recordType,
-    recordEntries
+    recordEntries,
+    tagKeys
   };
   return document;
+}
+
+function getTagKeys(payload) {
+  var _payload$vc;
+
+  let res = [];
+  let types = (payload === null || payload === void 0 ? void 0 : (_payload$vc = payload.vc) === null || _payload$vc === void 0 ? void 0 : _payload$vc.type) || [];
+  let tagMap = {
+    "https://smarthealth.cards#covid19": "Covid19"
+  };
+
+  for (const key in tagMap) {
+    if (types.indexOf(key) >= 0) {
+      res.push(tagMap[key]);
+    }
+  }
+
+  return res;
 }
 
 async function validate(recordType, fhirBundleJSON) {

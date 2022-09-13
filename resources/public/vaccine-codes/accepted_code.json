@@ -3,7 +3,7 @@
     {
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "206",
-      "display": "Vaccinas"
+      "display": "Vaccinia, smallpox monkeypox vaccine"
     },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
