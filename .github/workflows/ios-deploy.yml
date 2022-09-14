@@ -3,7 +3,7 @@ name: IOS Build
 on:
   push:
     tags:
-      - v-ios*
+      - ios-v*
 jobs:
   # iosDevRelease:
   #   name: 'Build and Publish VerifierDev'
@@ -49,6 +49,7 @@ jobs:
 
   iosRelease:
     name: 'Build and Publish Verifier'
+    if: contains(github.ref, 'release-dev')
     runs-on: macos-11
     env:
       DEV_APP_STORE_KEY: "${{ secrets.DEV_IOS_APP_STORE_KEY }}"

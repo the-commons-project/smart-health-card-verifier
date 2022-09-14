@@ -2,7 +2,7 @@ name: 'Smart Health Card Verifier Deployment'
 on:
   push:
     tags:
-      - v-android*
+      - android-v*
 
 # Environment variables that are common to
 # more than one deployment
