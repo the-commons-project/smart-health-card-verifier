@@ -27,6 +27,15 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     return t( `LabResult.${resultKey}`, resultStr )
   }
 
+  const getSubTag = ( data: BaseResponse ): string | null => {
+    let res = null
+    const tags = data.tagKeys ?? []
+    if( tags.length > 0 ) {
+      res = t(`LabResult.tag${tags[0]}`, tags[0]);
+    }
+    return res;
+  }
+
   const getTitle = ( responseData: BaseResponse ): string => {
     let resultStr = 'UNDEFINED'
     let resultKey = 'UNKNOWN'
@@ -37,7 +46,7 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     }
     return t( `LabResult.Title_${resultKey}`, resultStr )
   }
-
+  const subTag = getSubTag( responseData )
   const imageWidth = isSmallScreen ? ( windowWidth / 6 ) : ( windowWidth / 5 )
   const fieldTitle = (<View key="1" style={ styles.titleRow }> 
     <Text style={ isSmallScreen ? styles.testTitleSmlScreen : styles.testTitle } >{ getTitle( responseData) }</Text>
@@ -46,9 +55,9 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     <View key="1"  style={ styles.tag }>
       <Text style={ styles.tagContent }>{ getResultCode(responseData) }</Text>
     </View>
-    <View key="2"  style={ styles.tag }>
+    { ( subTag != null ) && ( <View key="2"  style={ styles.tag }>
       <Text  style={ styles.tagContent }>{ t('LabResult.tagCovid19', 'COVID-19') }</Text>
-    </View>
+    </View> ) }
   </View>)
   return ( <View style={ styles.topTitleContainer }>
     <View key="1" style={ isSmallScreen? styles.typeIconWrapperSmlScreen: styles.typeIconWrapper }>

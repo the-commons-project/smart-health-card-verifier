@@ -1,5 +1,10 @@
 {
-  "covid_19_vaccine_codes": [
+  "cdc_vaccine_codes": [
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "206",
+      "display": "Vaccinia, smallpox monkeypox vaccine"
+    },
     {
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "206",

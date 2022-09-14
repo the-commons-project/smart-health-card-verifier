@@ -3,7 +3,7 @@ export let RecordType;
 
 (function (RecordType) {
   RecordType["unknown"] = "unknown";
-  RecordType["covid19Immunization"] = "covid19-immunization";
+  RecordType["immunization"] = "immunization";
   RecordType["covid19LabResult"] = "covid19-lab-result";
 })(RecordType || (RecordType = {}));
 
@@ -16,9 +16,9 @@ export let ResourceType;
   ResourceType["Observation"] = "Observation";
 })(ResourceType || (ResourceType = {}));
 
-export const availableRecordTypes = [RecordType.covid19Immunization, RecordType.covid19LabResult];
+export const availableRecordTypes = [RecordType.immunization, RecordType.covid19LabResult];
 export const acceptedVCType = {
-  [RecordType.covid19Immunization]: ['https://smarthealth.cards#immunization', 'https://smarthealth.cards#covid19', 'https://smarthealth.cards#health-card'],
+  [RecordType.immunization]: ['https://smarthealth.cards#immunization', 'https://smarthealth.cards#health-card'],
   [RecordType.covid19LabResult]: ['https://smarthealth.cards#laboratory', 'https://smarthealth.cards#covid19', 'https://smarthealth.cards#health-card']
 };
 /* this will check if it's validatable types per payload. 

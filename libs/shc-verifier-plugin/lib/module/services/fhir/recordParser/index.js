@@ -6,7 +6,7 @@ const recordParsers = {
     return null;
   },
   [RecordType.covid19LabResult]: Covid19LabResultRecordParser,
-  [RecordType.covid19Immunization]: ImmunizationRecordParser
+  [RecordType.immunization]: ImmunizationRecordParser
 };
 export default async function getRecordData(recordType, jwsPayload) {
   var _recordParsers$record;

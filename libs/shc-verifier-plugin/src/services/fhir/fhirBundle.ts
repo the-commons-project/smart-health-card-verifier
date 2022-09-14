@@ -9,8 +9,20 @@ import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
 import { VerifierKey, getVerifierInitOption } from '../../models/Config'
 import type { JWSPayload, FhirBundle } from './types'
+import type { RecordEntry } from 'verifier-sdk'
 
-export async function getRecord (payload: JWSPayload): Promise<any>{
+interface ResultType {
+  issuerData:{
+    url: string | null
+    name?: string
+  };
+  isValid?: boolean;
+  recordType: RecordType;
+  tagKeys: string[];
+  recordEntries: RecordEntry[] | null;
+}
+
+export async function getRecord (payload: JWSPayload): Promise<ResultType>{
   const issuer = getIssuerFromFhir(payload)
   const notFoundIssuer = {
     message: 'Issuer not found'
@@ -26,6 +38,7 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
 
   const patientData = getPatientDataFromFhir(payload)
   const recordType  = getRecordTypeFromPayload(payload)
+  const tagKeys     = getTagKeys(payload)
   const recordEntries = await getRecordData(recordType, payload)
   if ( recordEntries?.length === 0 ) {
     throw new InvalidError(ErrorCode.NO_VALID_RECORD)
@@ -35,8 +48,23 @@ export async function getRecord (payload: JWSPayload): Promise<any>{
     patientData,
     recordType,
     recordEntries,
+    tagKeys
   }
   return document
+}
+
+export function getTagKeys( payload: JWSPayload ): string[] {
+  let res:string[] = []
+  let types = payload?.vc?.type || []
+  let tagMap = {
+    "https://smarthealth.cards#covid19":"Covid19",
+  }
+  for( const key in tagMap){
+    if( types.indexOf(key) >= 0 ) {
+      res.push(tagMap[key])
+    }
+  }
+  return res
 }
 
 export async function validate ( recordType: RecordType, fhirBundleJSON: object | undefined): Promise<boolean> {

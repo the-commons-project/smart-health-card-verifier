@@ -22,19 +22,28 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     return res
   }
 
+  const getSubTag = ( data: BaseResponse ): string | null => {
+    let res = null
+    const tags = data.tagKeys ?? []
+    if( tags.length > 0 ) {
+      res = t(`ImmunizationResult.tag${tags[0]}`, tags[0]);
+    }
+    return res;
+  }
+
   const imageWidth = isSmallScreen ? ( windowWidth / 6 ) : ( windowWidth / 5 )
   const fieldTitle = (<View style={ styles.titleRow }> 
     <Text style={ styles.labTitle } >{ t( 'ImmunizationResult.Title', 'Vaccination Record' ) }</Text>
   </View>)
   const resultCode = getResultCode(responseData)
-
+  const subTag = getSubTag( responseData )
   const fieldResult = ( <View style={ [styles.titleRow, styles.tagContainer] }>
     { ( resultCode !== null ) && ( <View key="1"  style={ styles.tag }>
       <Text style={ styles.tagContent }>{ resultCode }</Text>
     </View> ) }
-    <View key="2"  style={ styles.tag }>
-      <Text  style={ styles.tagContent }>{ t('ImmunizationResult.tagCovid19', 'COVID-19') }</Text>
-    </View>
+    { ( subTag != null ) && ( <View key="2"  style={ styles.tag }>
+      <Text  style={ styles.tagContent }>{ subTag }</Text>
+    </View>)}
   </View>)
   return ( <View style={ styles.topTitleContainer }>
     <View key="1" style={ isSmallScreen? styles.typeIconWrapperSmlScreen : styles.typeIconWrapper }>

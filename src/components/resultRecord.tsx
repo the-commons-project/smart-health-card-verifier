@@ -20,7 +20,6 @@ const images = {
 /* eslint  react-native/no-inline-styles: "off" */
 const ResultRecord = ({ data }: Data) => {
   const windowWidth = useWindowDimensions().width
-
   const { t } = useTranslation()
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
@@ -29,7 +28,7 @@ const ResultRecord = ({ data }: Data) => {
   const userFieldTitle = [t('Result.Name', 'Name')]
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
   const userDobValue = [insertImageToTable()]
-  const resultTitle  = ( recordType === RecordType.covid19Immunization )?
+  const resultTitle  = ( recordType === RecordType.immunization )?
     GetImmunizationResultTitle( windowWidth, validationResult) : (recordType === RecordType.covid19LabResult) ? 
       GetLabResultTitle( windowWidth, validationResult ) : null
   
@@ -91,7 +90,7 @@ const ResultRecord = ({ data }: Data) => {
           { t('Result.AlwaysVerify', 'Always verify identity with a government-issued I.D.') }
         </Text>
       </View>
-      { recordType === RecordType.covid19Immunization && 
+      { recordType === RecordType.immunization && 
         <ImmunizationRecordRow recordEntries={ recordEntries } />
       }
       { recordType === RecordType.covid19LabResult && 

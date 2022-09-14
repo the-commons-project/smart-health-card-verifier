@@ -28,6 +28,7 @@ export async function getRecord(payload) {
 
   const patientData = getPatientDataFromFhir(payload);
   const recordType = getRecordTypeFromPayload(payload);
+  const tagKeys = getTagKeys(payload);
   const recordEntries = await getRecordData(recordType, payload);
 
   if ((recordEntries === null || recordEntries === void 0 ? void 0 : recordEntries.length) === 0) {
@@ -38,9 +39,27 @@ export async function getRecord(payload) {
     issuerData,
     patientData,
     recordType,
-    recordEntries
+    recordEntries,
+    tagKeys
   };
   return document;
+}
+export function getTagKeys(payload) {
+  var _payload$vc;
+
+  let res = [];
+  let types = (payload === null || payload === void 0 ? void 0 : (_payload$vc = payload.vc) === null || _payload$vc === void 0 ? void 0 : _payload$vc.type) || [];
+  let tagMap = {
+    "https://smarthealth.cards#covid19": "Covid19"
+  };
+
+  for (const key in tagMap) {
+    if (types.indexOf(key) >= 0) {
+      res.push(tagMap[key]);
+    }
+  }
+
+  return res;
 }
 export async function validate(recordType, fhirBundleJSON) {
   let isFhirBundleValid = false;

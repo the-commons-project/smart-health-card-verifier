@@ -18,7 +18,7 @@ var _Config = require("../../../models/Config");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const validate = async entries => {
-  const profileName = _fhirTypes.RecordType.covid19Immunization;
+  const profileName = _fhirTypes.RecordType.immunization;
   const immunizations = entries.filter(entry => entry.resource.resourceType === 'Immunization');
 
   if (immunizations.length === 0) {

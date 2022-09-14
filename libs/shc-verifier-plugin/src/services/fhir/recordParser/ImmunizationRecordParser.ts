@@ -18,8 +18,7 @@ const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEn
     })
     .map((entry: any) => entry.resource)
 
-    vaccineCodesHash = vaccineCodesHash || getVerifierInitOption().getVaccineCodesHash()
-
+  vaccineCodesHash = vaccineCodesHash || getVerifierInitOption().getVaccineCodesHash()
   for (const [index, entry] of immunizationEntries.entries()) {
     const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry
     const { code } = vaccineCode?.coding[0]
@@ -54,7 +53,6 @@ const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEn
       })
     }
   }
-
   sortRecordByDateField('vaccinationDate', vaccinationData)
   return vaccinationData
 }
