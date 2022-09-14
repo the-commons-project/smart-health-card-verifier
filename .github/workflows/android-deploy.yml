@@ -1,4 +1,4 @@
-name: 'Smart Health Card Verifier Deployment'
+name: 'Android Verifier Deployment'
 on:
   push:
     tags:
