@@ -2,6 +2,11 @@
   "cdc_vaccine_codes": [
     {
       "system": "http://hl7.org/fhir/sid/cvx",
+      "code": "75",
+      "display": "Vaccinia, smallpox vaccine"
+    },
+    {
+      "system": "http://hl7.org/fhir/sid/cvx",
       "code": "206",
       "display": "Vaccinia, smallpox monkeypox vaccine"
     },
