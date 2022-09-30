@@ -15,7 +15,7 @@ in the list, please create the pull request. Thanks for your support!
 To do so, 
 Please create a pull request that changes "vaccine_codes" section of 
 ```
-resources/public/vaccine-codes/accepted_codee.json
+resources/public/vaccine-codes/accepted_code.json
 ```
 
 ## How to request to include a new system or observation code?
@@ -26,7 +26,7 @@ in the list, please create the pull request. Thanks for your support!
 To do so, 
 Please create a pull request that changes "lab_test_codes" section of 
 ```
-resources/public/vaccine-codes/accepted_codee.json
+resources/public/vaccine-codes/accepted_code.json
 ```
 
 
