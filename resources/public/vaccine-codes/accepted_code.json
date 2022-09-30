@@ -1,5 +1,5 @@
 {
-  "cdc_vaccine_codes": [
+  "vaccine_codes": [
     {
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "75",

@@ -19,11 +19,11 @@ interface SystemCodeItemType {
 } 
 
 interface VaccineCodesTypes {
-  cdc_19_vaccine_codes?: VaccineCodeItemType[]
+  vaccine_codes?: VaccineCodeItemType[]
   covid_19_lab_test_codes?: SystemCodeItemType[]
 } 
 
-let vaccineCodesData: VaccineCodeItemType[]  = defaultCodesData.cdc_vaccine_codes
+let vaccineCodesData: VaccineCodeItemType[]  = defaultCodesData.vaccine_codes
 let labResultCodesData: SystemCodeItemType[] = defaultCodesData.covid_19_lab_test_codes
 
 let vaccineCodesHash: { [key: string]: string } = {}
@@ -39,7 +39,7 @@ export const loadVaccineCodes = async (): Promise<boolean>=> {
   const url = `${vaccineCodesURl}?${appUuidParameter}`
   const res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
   if ( res != null ) {
-    vaccineCodesData   = res.cdc_vaccine_codes ?? vaccineCodesData
+    vaccineCodesData   = res.vaccine_codes ?? vaccineCodesData
     labResultCodesData = res.covid_19_lab_test_codes ?? labResultCodesData
     updateCodes()
   } else {
