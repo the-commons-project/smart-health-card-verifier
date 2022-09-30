@@ -131,7 +131,7 @@
       "display": "CanSino Biological Inc./Beijing Institute of Biotechnology"
     }
   ],
-  "covid_19_lab_test_codes": [
+  "lab_test_codes": [
     {
       "code": "50548-7",
       "shortDefault": "Molecular Test",
