@@ -1,5 +1,5 @@
 {
-  "cdc_vaccine_codes": [
+  "vaccine_codes": [
     {
       "system": "http://hl7.org/fhir/sid/cvx",
       "code": "75",
@@ -131,7 +131,7 @@
       "display": "CanSino Biological Inc./Beijing Institute of Biotechnology"
     }
   ],
-  "covid_19_lab_test_codes": [
+  "lab_test_codes": [
     {
       "code": "50548-7",
       "shortDefault": "Molecular Test",
