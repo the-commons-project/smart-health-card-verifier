@@ -7,6 +7,7 @@ import { loadVaccineCodes } from '~/helpers/getFHIRCodes'
 import { API_VERSION } from '../config/config'
 import { getDataService, DataKeys } from '../services/data/DataService'
 import remoteConfig from '~/models/RemoteConfig'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 /* day hr   min  sec  mil */
 const lastTimeUpdate = 1 * 24 * 60 * 60 * 1000
@@ -37,21 +38,22 @@ const resetDataIfNeeded = async (): Promise<boolean> => {
     console.log('resetting local data.')
     await dataService.resetData()
     return true
-  } else {
-    console.log('Skip resetting local data.')
-  }
+  } 
+  console.log('Skip resetting local data.')
   return false
 }
 
-const synchWithLocal = async (): Promise<boolean> => {
+const synchWithLocal = async ( isInternetReachable: boolean ): Promise<boolean> => {
   let res      = false
-  if ( remoteConfig.shouldUpdateFromRemote() ){
+  if ( isInternetReachable && remoteConfig.shouldUpdateFromRemote() ){
     await remoteConfig.updateRemoteConfig()
   }
   if ( remoteConfig.useLegacy() ) {
     res = true
   } else {
-    await resetDataIfNeeded()
+    if( isInternetReachable  ){
+      await resetDataIfNeeded() 
+    }
     /* 1: Load VaccineCods and issuers and attemp to store locally */
     try {
       await Promise.all( [loadIssuers(), loadVaccineCodes()] )
@@ -69,6 +71,7 @@ export const useRemoteDataSyncContext = ()=>{
 }
 
 export function getProvider () {
+  const { isInternetReachable } = useNetInfo()
   interface Props {
     children: React.ReactNode
   }
@@ -77,7 +80,7 @@ export function getProvider () {
     const [ state, setState ] = useState( defaultState )
 
     useEffect( ()=>{
-      synchWithLocal().then( ()=> {
+      synchWithLocal( isInternetReachable || false ).then( ()=> {
         setState({
           ...state,
           'dataInitialized': true,
