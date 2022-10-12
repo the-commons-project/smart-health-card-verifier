@@ -14,7 +14,7 @@ env:
   REGION: us-east-1
 jobs:
   deployToS3:
-    if: contains(github.ref, '-deploys3-')
+    if: contains(github.ref, '-deploy-s3-')
     name: 'Deploy locale file to S3'
     runs-on: ubuntu-latest
     steps:
