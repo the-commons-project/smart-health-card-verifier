@@ -1,4 +1,4 @@
-import type { VerifierInitOption } from 'verifier-sdk';
+import type { VerifierInitOption, VaccineCodeItemType } from 'verifier-sdk';
 declare type ValidateIssuerReturnType = any | null;
 export interface ValidateIssuerFunction<T = unknown> {
     (verifierKey: string, issuer: T): ValidateIssuerReturnType;
@@ -34,7 +34,7 @@ export interface getSystemCodeLabelFunction {
 }
 export interface getVaccineCodesHashFunction {
     (): {
-        [key: string]: string;
+        [key: string]: VaccineCodeItemType;
     };
 }
 export interface SHCverifierOption {

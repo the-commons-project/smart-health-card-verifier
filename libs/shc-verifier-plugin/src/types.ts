@@ -1,4 +1,4 @@
-import type { VerifierInitOption } from 'verifier-sdk'
+import type { VerifierInitOption, VaccineCodeItemType } from 'verifier-sdk'
 
 
 
@@ -51,7 +51,7 @@ export interface getSystemCodeLabelFunction {
 }
 
 export interface getVaccineCodesHashFunction{
-  (): { [key: string]: string }
+  (): { [key: string]: VaccineCodeItemType }
 }
 
 

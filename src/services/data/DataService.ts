@@ -33,7 +33,17 @@ class DataService {
     }
     return res
   };
-
+  async removeData( key: DataKeys ): Promise<boolean> {
+    try {
+        await this.storage.removeItem( key)
+        return true 
+      } catch (error) {
+        console.error( `Storing Error: ${String(error)}` )  
+      }
+      return false
+    
+  }
+  
   async storeData (key: DataKeys, value: string): Promise<boolean> {
     try {
       await this.storage.setData( key, value)
@@ -64,6 +74,11 @@ class DataService {
 
     }
     return true
+  }
+
+  async clearLatestUpdate (): Promise<boolean>{
+    const res = await this.removeData(DataKeys.LASTUPDATE);
+    return res
   }
 
   async setLatestUpdate (): Promise<boolean>{
@@ -103,8 +118,10 @@ export const getDataService = (): DataService=> {
 export const loadDataOrRetrieveLocally = async<T>( url: string, key: DataKeys): Promise<T> => {
   const dataService = getDataService()
   let response
+  let res = null
   const timer = new Timer()
   timer.start()
+
   try {
     console.debug(`loading ${key}: ${url}` )
     response = await fetchWithTimeout(url, {}, ApiTimeout, `ErrorLoading${key}` )
@@ -113,16 +130,16 @@ export const loadDataOrRetrieveLocally = async<T>( url: string, key: DataKeys): 
   }
   const loadingTime = timer.stop()
   console.log(`loading ${key} took:  ${loadingTime.toFixed(2)}sec`)
-  let res = null
 
   if ( response?.status === 200 ) {
     res = await response.json()
     if ( res != null ){
-      dataService.storeJSON( key, res )
+      await dataService.storeJSON( key, res )
     }
   } else {
-    console.log(`try loading local ${key}`)
-    res = dataService.getJSON( key )
+    
+    res = await dataService.getJSON( key )
   } 
+ 
   return res as T
 }

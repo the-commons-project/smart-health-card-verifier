@@ -4,6 +4,13 @@ export type VerifierInitOption = {[key: string]: any | undefined };
 
 export type IVerifierBaseCls = new ( options: VerifierInitOption ) => IVerifierBase
 
+export interface VaccineCodeItemType {
+  'system': string
+  'code': string
+  'display': string | null
+  'manufacturerName'?: string | null 
+  'groupDisplay'?: string | null
+} 
 
 export interface BaseResponse {
   isValid: boolean 
@@ -12,6 +19,7 @@ export interface BaseResponse {
   patientData: patientData
   recordType: string
   recordEntries?: RecordEntry[]
+  tagKeys?: string
 }
 
 export interface  IVerifierBase {
@@ -28,18 +36,21 @@ export interface Result {
 export interface RecordEntry {
   index?: unknown
   resourceType: string
+  systemKey?: string
+  systemCode?: string
   /* immunization */
   lotNumber?: unknown
   vaccinator?: unknown
   vaccineName?: unknown
+  manufacturerName?: unknown
+  groupName?: unknown
   vaccinationDate?: unknown
   /* labResult */
   securityCode?: string
   performer?: string
   effectiveDateTime?: string
   systemName?: string
-  systemKey?: string
-  systemCode?: string
+
   systemShortDefault?: string | null
   codableConseptLabel?: string
   codableConseptKey?: string

@@ -2,6 +2,13 @@ export declare type VerifierInitOption = {
     [key: string]: any | undefined;
 };
 export declare type IVerifierBaseCls = new (options: VerifierInitOption) => IVerifierBase;
+export interface VaccineCodeItemType {
+    'system': string;
+    'code': string;
+    'display': string | null;
+    'manufacturerName'?: string | null;
+    'groupDisplay'?: string | null;
+}
 export interface BaseResponse {
     isValid: boolean;
     errorCode: number;
@@ -20,16 +27,18 @@ export interface Result {
 export interface RecordEntry {
     index?: unknown;
     resourceType: string;
+    systemKey?: string;
+    systemCode?: string;
     lotNumber?: unknown;
     vaccinator?: unknown;
     vaccineName?: unknown;
+    manufacturerName?: unknown;
+    groupName?: unknown;
     vaccinationDate?: unknown;
     securityCode?: string;
     performer?: string;
     effectiveDateTime?: string;
     systemName?: string;
-    systemKey?: string;
-    systemCode?: string;
     systemShortDefault?: string | null;
     codableConseptLabel?: string;
     codableConseptKey?: string;

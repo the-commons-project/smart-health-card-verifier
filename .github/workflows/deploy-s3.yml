@@ -20,7 +20,8 @@ env:
   ROLE_SESSION_NAME: ${{secrets.AWS_SESSION_NAME}}
 
 jobs:
-  deployDevLocale:
+  deployS3:
+
     if: contains(github.ref, '-locale-dev')
     name: 'Deploy locale file to TCP dev'
     runs-on: ubuntu-latest

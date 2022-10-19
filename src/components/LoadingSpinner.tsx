@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { Animated, Easing, StyleSheet, View } from 'react-native'
 import { Props } from '../types'
@@ -13,12 +13,13 @@ interface LoadingProps {
 
 export default ( { enabled = true }: LoadingProps )=> {
   const [spinAnimation, setSpinAnimation] = useState(new Animated.Value(0))
+  const loadingElm = useRef(null)
   const spin = spinAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   })
   useEffect(()=>{
-    if ( enabled ) {
+    if ( enabled && loadingElm.current ) {
       Animated.loop(
         Animated.timing(spinAnimation, {
           toValue: 1,
@@ -30,7 +31,7 @@ export default ( { enabled = true }: LoadingProps )=> {
     }
   }, [] )
 
-  return ( <View style={ styles.container }>
+  return ( <View style={ styles.container } ref={loadingElm}>
     <Animated.Image style={ [styles.spinner, { transform: [{ rotate: spin }] }] }
       source={ images.loading }
     />

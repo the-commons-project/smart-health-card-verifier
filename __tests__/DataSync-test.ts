@@ -10,7 +10,7 @@ jest.mock('~/../resources/public/remote-config/remote_config.json', () => {
 
 jest.mock('~/services/data/DataService',() => {
   return {
-    loadDataOrRetrieveLocally: async ()=>{
+    loadDataOrRetrieveLocally: async ( url:string )=>{
       return currentConfig;
     },
     DataKeys: {
