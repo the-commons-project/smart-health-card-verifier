@@ -1,14 +1,9 @@
-import { ErrorCode } from 'verifier-sdk'
+import { ErrorCode, VaccineCodeItemType } from 'verifier-sdk'
 import { vaccineCodesURl, ApiTimeout } from '~/models/constants'
 import { getInstallationIdManually } from '~/utils/utils'
-import { DataKeys, loadDataOrRetrieveLocally } from '~/services/data/DataService'
+import { DataKeys, loadDataOrRetrieveLocally, getDataService } from '~/services/data/DataService'
 import defaultCodesData from '~/../resources/public/vaccine-codes/accepted_code.json'
 
-interface VaccineCodeItemType {
-  'system': string
-  'code': string
-  'display': string
-} 
 
 interface SystemCodeItemType {
   'shortDefault'?: string
@@ -26,25 +21,29 @@ interface VaccineCodesTypes {
 let vaccineCodesData: VaccineCodeItemType[]  = defaultCodesData.vaccine_codes
 let labResultCodesData: SystemCodeItemType[] = defaultCodesData.lab_test_codes
 
-let vaccineCodesHash: { [key: string]: string } = {}
+let vaccineCodesHash: { [key: string]: VaccineCodeItemType } = {}
 let acceptedVaccineCodes: string[] = []
 
 let labResultCodesHash: { [key: string]: SystemCodeItemType } = {}
 const acceptedSystemCodes: string[] = []
 const acceptedLabResultSystemCodes = []
 
-export const loadVaccineCodes = async (): Promise<boolean>=> {
-  const appUuid: string = await getInstallationIdManually()
-  const appUuidParameter = `appUUID=${appUuid}`
-  const url = `${vaccineCodesURl}?${appUuidParameter}`
-  const res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
+export const loadVaccineCodes = async ( forceReset: boolean ): Promise<boolean>=> {
+  var res = null;
+  if( !forceReset ) {
+    res = await getDataService().getJSON( DataKeys.VACCINECODE )
+  }
+  if( res == null ){
+    const appUuid: string = await getInstallationIdManually()
+    const appUuidParameter = `appUUID=${appUuid}`
+    const url = `${vaccineCodesURl}?${appUuidParameter}`
+    res = await loadDataOrRetrieveLocally<VaccineCodesTypes| null>( url, DataKeys.VACCINECODE )
+  }
   if ( res != null ) {
     vaccineCodesData   = res.vaccine_codes ?? vaccineCodesData
     labResultCodesData = res.lab_test_codes ?? labResultCodesData
     updateCodes()
-  } else {
-    console.log('using default vaccineCodes')
-  }
+  } 
   return ( res != null )
 }
 
@@ -57,9 +56,11 @@ const updateVaccineCode = ()=>{
   vaccineCodesHash = {}
   acceptedVaccineCodes = []
   for (const vaccineCode of vaccineCodesData) {
-    const { code, display } = vaccineCode
+    let { system, code, display, manufacturerName, groupDisplay } = vaccineCode
+    manufacturerName = manufacturerName || null
+    groupDisplay = groupDisplay || null
     acceptedVaccineCodes.push( code )
-    vaccineCodesHash[code] = display
+    vaccineCodesHash[code] = vaccineCode
 
   }
 }
@@ -84,7 +85,7 @@ const updateLabResultSystemCode = ()=>{
 
 updateCodes()
 
-export const getVaccineCodesHash = (): { [key: string]: string } => {
+export const getVaccineCodesHash = (): { [key: string]: VaccineCodeItemType } => {
   return vaccineCodesHash
 }
 

@@ -140,6 +140,13 @@ Install dependencies
   npm test
 ```
 
+if you want to test one file, you can test as below.
+```
+npm test __tests__/DataSync-test.ts
+```
+
+
+
 ## How to Contribute
 
 We welcome any contributions for bug fixes and improvements. Below explains how you can be a part of the open source communitiy.

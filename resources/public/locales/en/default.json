@@ -31,7 +31,8 @@
         "ScanRecord": "Start scanning",
         "HowTo": "How to verify SMART® Health Cards",
         "AboutUs":"About us",
-        "PrivacyPolicy":"Privacy policy"
+        "PrivacyPolicy":"Privacy policy",
+        "ResetData": "Reset Data"
       },
       "Scan":{
         "CameraPermission":"Camera Permission",

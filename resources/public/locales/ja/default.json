@@ -31,7 +31,8 @@
         "ScanRecord": "スキャンする",
         "HowTo": "SMART® Health Cardsの確認の仕方",
         "AboutUs":"組織概要",
-        "PrivacyPolicy":"プライバシーポリシー"
+        "PrivacyPolicy":"プライバシーポリシー",
+        "ResetData": "データをリセット"
       },
       "Scan":{
         "CameraPermission":"カメラ利用確認",

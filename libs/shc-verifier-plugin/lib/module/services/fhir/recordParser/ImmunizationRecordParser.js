@@ -2,7 +2,7 @@ import { sortRecordByDateField } from '../../../utils/utils';
 import { ResourceType, isResourceType } from '../fhirTypes';
 import { getVerifierInitOption, VerifierKey } from '../../../models/Config';
 var cvxCodes = null;
-var vaccineCodesHash = null;
+var vaccineCodesHash = {};
 
 const parse = async jwsPayload => {
   var _jwsPayload$vc, _jwsPayload$vc$creden, _jwsPayload$vc$creden2;
@@ -13,7 +13,7 @@ const parse = async jwsPayload => {
   const immunizationEntries = entries === null || entries === void 0 ? void 0 : entries.filter(entry => {
     return isResourceType(entry, ResourceType.Immunization);
   }).map(entry => entry.resource);
-  vaccineCodesHash = vaccineCodesHash || getVerifierInitOption().getVaccineCodesHash();
+  vaccineCodesHash = getVerifierInitOption().getVaccineCodesHash();
 
   for (const [index, entry] of immunizationEntries.entries()) {
     const {
@@ -37,7 +37,12 @@ const parse = async jwsPayload => {
       console.log(`Immunization.status should be "completed", but it is ${String(status)}`);
     }
 
-    const vaccineName = vaccineCodesHash[code];
+    const {
+      system,
+      display,
+      manufacturerName,
+      groupDisplay
+    } = vaccineCodesHash[code] || {};
     const vaccinationDate = occurrenceDateTime;
     let vaccinator = '';
 
@@ -50,10 +55,14 @@ const parse = async jwsPayload => {
     if (isVaccineShotDone && isValidVaccinationCode) {
       vaccinationData.push({
         index: index + 1,
+        systemKey: system,
+        systemCode: code,
         resourceType: ResourceType.Immunization,
         lotNumber,
         vaccinator,
-        vaccineName,
+        vaccineName: display,
+        manufacturerName: manufacturerName || null,
+        groupName: groupDisplay,
         vaccinationDate
       });
     }

@@ -7,15 +7,19 @@ import { loadVaccineCodes } from '~/helpers/getFHIRCodes'
 import { API_VERSION } from '../config/config'
 import { getDataService, DataKeys } from '../services/data/DataService'
 import remoteConfig from '~/models/RemoteConfig'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 /* day hr   min  sec  mil */
-const lastTimeUpdate = 1 * 24 * 60 * 60 * 1000
+const lastTimeUpdate = 1 * 24 * 60 * 60 * 1000;
 
 interface remoteDataType{
   dataInitialized: boolean
   updatedAt: null | Date
 }
 
+export interface RemoteDataActionType {
+  resetData: any
+}
 // Declaring the state object globally.
 
 const defaultState: remoteDataType = {
@@ -23,38 +27,71 @@ const defaultState: remoteDataType = {
   updatedAt: null,
 }
 
-const remoteDataSyncContext = React.createContext({
-  ...defaultState,
-})
+const defaultActions: RemoteDataActionType = {
+  resetData: ()=>{}
+}
 
-const resetDataIfNeeded = async (): Promise<boolean> => {
+const remoteDataSyncContext = React.createContext([ defaultState, defaultActions ])
+
+const shouldResetDataIfNeeded = async (): Promise<boolean> => {
   const dataService = getDataService()
   const lastUpdateThreshold = ( new Date() ).getTime() - lastTimeUpdate
   const lastUpdate = await dataService.getLastUpdate()
+  console.info("last update: " + lastUpdate)
   const lastApi    = await dataService.getLastAPIVersion()
-  if ( ( lastUpdate !== null && lastUpdate.getTime() < lastUpdateThreshold ) || 
+  if ( ( lastUpdate === null || lastUpdate.getTime() < lastUpdateThreshold ) || 
       ( lastApi !== null && lastApi !== API_VERSION  ) ) {
     console.log('resetting local data.')
-    await dataService.resetData()
+    //await dataService.resetData()
     return true
-  } else {
-    console.log('Skip resetting local data.')
-  }
+  } 
+  console.log('Skip resetting local data.')
   return false
 }
 
-const synchWithLocal = async (): Promise<boolean> => {
+const getActions = ( state:remoteDataType, setState: any ): RemoteDataActionType =>  {
+  return {
+    resetData: async ( isInternetReachable: boolean ) => {
+      if( isInternetReachable ) {
+        setState({
+          ...state,
+          ...defaultState
+        })
+        // update updated time so it will force update. 
+        const dataService = getDataService()
+        await dataService.clearLatestUpdate()
+
+        synchWithLocal( isInternetReachable || false ).then( ()=> {
+          setState({
+            ...state,
+            'dataInitialized': true,
+            'updatedAt': ( new Date() )
+          })
+        })
+
+      }
+    }
+  }
+}
+
+const synchWithLocal = async ( isInternetReachable: boolean ): Promise<boolean> => {
   let res      = false
-  if ( remoteConfig.shouldUpdateFromRemote() ){
+  const dataService = getDataService()
+
+  if ( isInternetReachable && remoteConfig.shouldUpdateFromRemote() ){
     await remoteConfig.updateRemoteConfig()
   }
   if ( remoteConfig.useLegacy() ) {
     res = true
   } else {
-    await resetDataIfNeeded()
+    let  forceReset = false
+    if( isInternetReachable  ){
+      forceReset = await shouldResetDataIfNeeded() 
+    }
     /* 1: Load VaccineCods and issuers and attemp to store locally */
     try {
-      await Promise.all( [loadIssuers(), loadVaccineCodes()] )
+      await Promise.all( [loadIssuers(forceReset), loadVaccineCodes(forceReset)] )
+      dataService.setLatestUpdate()
       res = true
     } catch ( error ) {
       console.info( `Loading initial data: ${String(error)}`)
@@ -69,6 +106,7 @@ export const useRemoteDataSyncContext = ()=>{
 }
 
 export function getProvider () {
+  const { isInternetReachable } = useNetInfo()
   interface Props {
     children: React.ReactNode
   }
@@ -76,8 +114,10 @@ export function getProvider () {
   const Provider = ({ children }: Props): JSX.Element =>  {
     const [ state, setState ] = useState( defaultState )
 
+    const actions = getActions( state, setState );
+    const _values = [state, actions]
     useEffect( ()=>{
-      synchWithLocal().then( ()=> {
+      synchWithLocal( isInternetReachable || false ).then( ()=> {
         setState({
           ...state,
           'dataInitialized': true,
@@ -90,7 +130,7 @@ export function getProvider () {
     return  (
       ( state.dataInitialized )? 
         (
-          <remoteDataSyncContext.Provider value={ { ...state } } >
+          <remoteDataSyncContext.Provider value={ _values } >
             { 
               ( state.dataInitialized ) && children
             }

@@ -15,7 +15,7 @@ import { Props } from '../types'
 import WelcomeDialog from '../components/WelcomeDialog'
 import { AppButton } from '../components/customButton'
 import FontStyle from '../utils/FontStyleHelper'
-import { version }  from '../../package.json'
+import SettingsModal from '../components/SettingsModal'
 import CompanyLogoSVG from '../../assets/img/main/companylogo.svg'
 import { useTranslation } from '../services/i18n/i18nUtils'
 import { usePreferenceContext } from '../contexts/PreferenceContext'
@@ -29,19 +29,21 @@ const images = {
 const imageHeight = ( dimension.height * .30 / PixelRatio.getFontScale() )
 
 const WelcomePage = ({ navigation }: Props) => {
-  const [showVersion, setShowVersion] = useState(false)
+  const [isShowSettings, setShowSettings] = useState(false)
   const prefState = usePreferenceContext()
   const [ dialogVisible, setDialogVisible ] = useState(false)
   const { t, i18n } = useTranslation()
   const deviceHeight = useWindowDimensions().height
   const minHeight = 800
-
-  const showAppVersion = () => {
-    setShowVersion(true)
-
-    setTimeout(() => {
-      setShowVersion(false)
-    }, 1000)
+  const closeSetting = ()=>{
+    setShowSettings( false )
+  }
+  const resetCache = () => {
+    alert('reset')
+  }
+  const showSetting = () => {
+    console.info("set show setting")
+    setShowSettings(true)
   }
   return (
     <View style={ styles.container }>
@@ -63,9 +65,8 @@ const WelcomePage = ({ navigation }: Props) => {
               </Text>
             </View>
 
-            <TouchableWithoutFeedback onLongPress={ showAppVersion }>
+            <TouchableWithoutFeedback onLongPress={ showSetting }>
               <View style={ ( deviceHeight > minHeight && PixelRatio.getFontScale() <= 1 ) ? { paddingTop: (40/PixelRatio.getFontScale()), paddingBottom:(40/PixelRatio.getFontScale()) }:{} }>
-                { showVersion && <Text style={ styles.appVersion }>{ version }</Text> }
                 <Image
                   style={ deviceHeight < minHeight ? styles.handPhoneImageMobile : styles.handPhoneImage }
                   source={ images.handPhone }
@@ -135,6 +136,7 @@ const WelcomePage = ({ navigation }: Props) => {
         </View>
       </ScrollView>
       { !prefState.isOnboarded && <WelcomeDialog /> }
+      { <SettingsModal show={isShowSettings} onClose={closeSetting}/>}
     </View>
   )
 }
@@ -192,15 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  appVersion: {
-    fontSize: 10,
-    color: '#255DCB',
-    left: '28%',
-    top: '40%',
-    position: 'absolute',
-    transform: [{ rotate: '-5deg' }],
-    zIndex: 10,
-  },
+
   handPhoneImage: {
     width: (dimension.width / 240) * 150,
     height: imageHeight,
@@ -213,10 +207,12 @@ const styles = StyleSheet.create({
   },
   smartLogoImage: {
     position: 'absolute',
+    backgroundColor:'#F3F6FF',
     width: 71,
     height: 37,
     right: 19,
     top: 20,
+    zIndex:2
   },
   welcomeText: {
     fontSize: 24,

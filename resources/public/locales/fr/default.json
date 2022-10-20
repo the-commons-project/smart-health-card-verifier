@@ -31,7 +31,8 @@
         "ScanRecord": "Enregistrement du scan",
         "HowTo": "Comment vérifier SMART Health Cards",
         "AboutUs":"à propos de nous",
-        "PrivacyPolicy":"Politique de confidentialité"
+        "PrivacyPolicy":"Politique de confidentialité",
+        "ResetData": "Données de réinitialisation"
       },
       "Scan":{
         "CameraPermission":"Camera Permission",

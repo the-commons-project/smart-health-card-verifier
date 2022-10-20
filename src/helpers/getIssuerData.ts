@@ -1,7 +1,7 @@
 import { ErrorCode, Timer} from 'verifier-sdk'
 import { issuerNameLookUpUrl, issuerStatus, issuersUrl, ApiTimeout } from '~/models/constants'
 import { getInstallationIdManually, fetchWithTimeout } from '~/utils/utils'
-import { DataKeys, loadDataOrRetrieveLocally } from '~/services/data/DataService'
+import { DataKeys, loadDataOrRetrieveLocally, getDataService } from '~/services/data/DataService'
 import remoteConfig from '~/models/RemoteConfig'
 
 let issuersMap: Record<string, any> | null = null
@@ -18,12 +18,21 @@ interface IssuerResponse {
   [key: string]: IssuerItemType
 } 
 
-export const loadIssuers = async (): Promise<boolean>=> {
-  const appUuid = await getInstallationIdManually()
-  const appUuidParameter = `appUUID=${String(appUuid)}`
-  const url = `${issuersUrl}?${appUuidParameter}`
-  const res = await loadDataOrRetrieveLocally<IssuerItemType|null>( url, DataKeys.ISSUERS )
-  issuersMap = res
+export const loadIssuers = async ( forceReset: boolean ): Promise<boolean>=> {
+
+  var res = null;
+  if( !forceReset ) {
+    res = await getDataService().getJSON( DataKeys.ISSUERS )
+  } 
+  if( res == null ){
+    const appUuid = await getInstallationIdManually()
+    const appUuidParameter = `appUUID=${String(appUuid)}`
+    const url = `${issuersUrl}?${appUuidParameter}`
+    const res = await loadDataOrRetrieveLocally<IssuerItemType|null>( url, DataKeys.ISSUERS )
+  }
+  if( res != null ){
+    issuersMap = res
+  } 
   return ( issuersMap != null )
 }
 

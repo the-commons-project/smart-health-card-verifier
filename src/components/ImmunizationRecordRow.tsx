@@ -21,11 +21,17 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
     }
     return res
   }
-
+  const getGroup = ( data: BaseResponse ): string | null => {
+    let res = data.recordEntries.map((item) => item.groupName )
+    return res.length > 0 ? res[0] : null
+  }
   const getSubTag = ( data: BaseResponse ): string | null => {
     let res = null
+    const group = getGroup( data );
     const tags = data.tagKeys ?? []
-    if( tags.length > 0 ) {
+    if( group != null ) {
+      res = t(`ImmunizationResult.tag${group}`, group );
+    } else if( tags.length > 0 ) {
       res = t(`ImmunizationResult.tag${tags[0]}`, tags[0]);
     }
     return res;
@@ -61,40 +67,57 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
 export default ( { recordEntries }: RecordEntry[] | any) => {
   const { t } = useTranslation()
 
-  function insertTextToTable (vaccineName: string, lotNumber: string) {
-    return (
-      <View style={ styles.recordEntries }>
+  function insertTextToTable (
+    vaccineName: string, lotNumber: string, vaccinationDate: string,  manufacturerName: string|null = null, groupName: string| null = null) {
+    return ( <View style={ styles.recordEntries }>
+        { ( manufacturerName != null ) && 
+            <Text
+              style={ [
+                styles.fieldValue,
+                styles.increaseFont,
+                FontStyle.OpenSans_700Bold, 
+                styles.recordEntriesTextField
+              ] }
+            >
+              { manufacturerName }
+            </Text>
+        }
         <Text
-          style={ [
+          style={ [ 
             styles.fieldValue,
             styles.increaseFont,
-            FontStyle.OpenSans_700Bold, 
+            FontStyle.OpenSans_400Regular, 
             styles.recordEntriesTextField
           ] }
         >
           { vaccineName }
         </Text>
-        <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>
-          Lot { lotNumber }
-        </Text>
+        <View style={[{ width:'100%', display:'flex', flexDirection:"row"}]} >
+          <Text style={ [ {
+            width: '50%',
+            textAlignVertical:'top' }, styles.lotFieldValue, FontStyle.OpenSans_400Regular] }>
+            Lot { lotNumber }
+          </Text>
+          <Text
+            style={ [ {
+              flex: 1,
+              textAlign: 'right',
+              textAlignVertical:'top',
+              },
+
+              styles.fieldTitle,
+              styles.increaseFont,
+              FontStyle.OpenSans_700Bold,
+            ] }
+          >
+            { formatFHIRRecordDate( vaccinationDate ) }
+          </Text>
+        </View>
       </View>
     )
   }
 
-  function dateParser (date: string) {
-    return (
-      <Text
-        style={ [
-          styles.fieldTitle,
-          styles.increaseFont,
-          styles.dosageTextAlign,
-          FontStyle.OpenSans_700Bold,
-        ] }
-      >
-        { formatFHIRRecordDate( date ) }
-      </Text>
-    )
-  }
+
 
   function vaccinatorParser (vaccinator: string) {
     let newText = '-'
@@ -126,10 +149,9 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
 
   return ( <View>
     { recordEntries.map((doseObject: any, key) => {
-      const { index, lotNumber, vaccineName, vaccinationDate, vaccinator } = doseObject
+      const { index, lotNumber, vaccineName, vaccinationDate, vaccinator, manufacturerName, groupName  } = doseObject
       const dosageFieldTitleRowOne = [
-        insertTextToTable(vaccineName, lotNumber),
-        dateParser(vaccinationDate),
+        insertTextToTable(vaccineName, lotNumber, vaccinationDate, manufacturerName, groupName  ),
       ]
       const dosageFieldValueRowOne = [vaccinatorParser(vaccinator), '']
       return (
@@ -216,6 +238,7 @@ const styles = StyleSheet.create({
   },
   recordEntries:{
     flexDirection: 'row', 
+    flexWrap: 'wrap',
     alignItems: 'center'
   },
   recordEntriesTextField: {
@@ -258,6 +281,10 @@ const styles = StyleSheet.create({
   },
   dosageTextAlign: {
     textAlign: 'right',
+  },
+  lotFieldValue: {
+    fontSize: 10,
+    color: '#484848',
   },
   subFieldValue: {
     paddingTop: 4,

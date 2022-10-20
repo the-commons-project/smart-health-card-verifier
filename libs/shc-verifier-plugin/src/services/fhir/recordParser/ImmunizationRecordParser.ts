@@ -1,11 +1,11 @@
 import { sortRecordByDateField } from '../../../utils/utils'
 import { ResourceType, isResourceType } from '../fhirTypes'
-import type { RecordEntry } from 'verifier-sdk'
+import type { RecordEntry, VaccineCodeItemType } from 'verifier-sdk'
 import  { getVerifierInitOption, VerifierKey } from '../../../models/Config'
 import type { JWSPayload, ParserFunction } from '../types'
 
 var cvxCodes: string[] | null  = null
-var vaccineCodesHash: { [key: string]: string } | null =  null
+var vaccineCodesHash: { [key: string]: VaccineCodeItemType } =  {}
 
 const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEntry[] | null > => {
   cvxCodes = cvxCodes || await getVerifierInitOption().getAcceptedVaccineCodes( VerifierKey )
@@ -18,7 +18,7 @@ const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEn
     })
     .map((entry: any) => entry.resource)
 
-  vaccineCodesHash = vaccineCodesHash || getVerifierInitOption().getVaccineCodesHash()
+  vaccineCodesHash = getVerifierInitOption().getVaccineCodesHash()
   for (const [index, entry] of immunizationEntries.entries()) {
     const { status, lotNumber, performer, vaccineCode, occurrenceDateTime } = entry
     const { code } = vaccineCode?.coding[0]
@@ -33,8 +33,7 @@ const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEn
     if (!isVaccineShotDone) {
       console.log(`Immunization.status should be "completed", but it is ${String(status)}`)
     }
-
-    const vaccineName = vaccineCodesHash[code]
+    const { system, display, manufacturerName, groupDisplay } = vaccineCodesHash[code] || {}
     const vaccinationDate = occurrenceDateTime
 
     let vaccinator = ''
@@ -45,10 +44,14 @@ const parse: ParserFunction  = async (jwsPayload: JWSPayload): Promise< RecordEn
     if (isVaccineShotDone && isValidVaccinationCode) {
       vaccinationData.push({
         index: ( index + 1),
+        systemKey: system,
+        systemCode: code,
         resourceType:ResourceType.Immunization,
         lotNumber,
         vaccinator,
-        vaccineName,
+        vaccineName: display,
+        manufacturerName: manufacturerName || null,
+        groupName: groupDisplay,
         vaccinationDate,
       })
     }
