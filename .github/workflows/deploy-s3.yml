@@ -3,14 +3,11 @@ name: Deploy files to S3
 on:
   push:
     tags:
-      - v*
+      - s3-v*
 
   workflow_dispatch:
 
 env:
-  S3_BUCKET_DEV: shc-verifier-services-dev
-  S3_BUCKET_TEST: shc-verifier-services-test
-  S3_BUCKET_PROD: shc-verifier-services-prod
   S3_LOCALE_DIR: locales
   S3_REMOTE_CONFIG_DIR: remote-config
   S3_VACCINE_CODES_DIR: vaccine-codes
@@ -21,13 +18,31 @@ env:
 
 jobs:
   deployS3:
-
-    if: contains(github.ref, '-locale-dev')
-    name: 'Deploy locale file to TCP dev'
+    if: contains(github.ref, '-locale')
+    name: 'Deploy locale file to TCP'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: actions/checkout@v2
+    - name: Set output
+      id: vars
+      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+    - name: Get Branch
+      run: |
+        raw=$(git branch --points-at ${{ github.ref }})
+        echo "RAW=${raw}"
+        branch=${raw/origin\/}
+        echo "BRANCH=${branch}" >> $GITHUB_ENV
+    - name: Check output
+      env:
+        RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ steps.vars.outputs.tag }}
+        echo ${{ env.BRANCH }}
+    - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
@@ -38,15 +53,15 @@ jobs:
         role-session-name: ${{ env.ROLE_SESSION_NAME }}
     - name: 'Sync locale files to S3'
       run: |
-        cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET_DEV }}/${{ env.S3_LOCALE_DIR }}' 
+        cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_LOCALE_DIR }}' 
 
-  deployDevRemoteConfig:
-    if: contains(github.ref, '-remote-config-dev')
+  deployRemoteConfig:
+    if: contains(github.ref, '-remote-config')
     name: 'Deploy remote config file to TCP dev'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
+    - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
@@ -57,16 +72,16 @@ jobs:
         role-session-name: ${{ env.ROLE_SESSION_NAME }}
     - name: 'Sync Remote Config files to S3'
       run: |
-        cd resources/public/remote-config; aws s3 sync . 's3://${{ env.S3_BUCKET_DEV }}/${{ env.S3_REMOTE_CONFIG_DIR }}' 
+        cd resources/public/remote-config; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_REMOTE_CONFIG_DIR }}' 
 
 
-  deployDevVaccineCodes:
-    if: contains(github.ref, '-vaccine-code-dev')
-    name: 'Deploy vaccine-code file to TCP dev'
+  deployVaccineCodes:
+    if: contains(github.ref, '-vaccine-code')
+    name: 'Deploy vaccine-code file to TCP'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
+    - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
@@ -77,43 +92,6 @@ jobs:
         role-session-name: ${{ env.ROLE_SESSION_NAME }}
     - name: 'Sync locale files to S3'
       run: |
-        cd resources/public/vaccine-codes; aws s3 sync . 's3://${{ env.S3_BUCKET_DEV }}/${{ env.S3_VACCINE_CODES_DIR }}' 
+        cd resources/public/vaccine-codes; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_VACCINE_CODES_DIR }}' 
 
   
-  deployTest:
-    if: contains(github.ref, '-locale-test')
-    name: 'Deploy locale file to TCP test'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
-        role-duration-seconds: 1200
-        role-session-name: ${{ env.ROLE_SESSION_NAME }}
-    - name: 'Sync locale files to S3'
-      run: |
-        cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET_TEST }}/${{ env.S3_LOCALE_DIR }}' 
-        
-  deployProd:
-    if: contains(github.ref, '-locale-prod')
-    name: 'Deploy locale file to TCP production'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
-        role-duration-seconds: 1200
-        role-session-name: ${{ env.ROLE_SESSION_NAME }}
-    - name: 'Sync issuers file to S3'
-      run: |
-        cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET_PROD }}/${{ env.S3_LOCALE_DIR }}' 
