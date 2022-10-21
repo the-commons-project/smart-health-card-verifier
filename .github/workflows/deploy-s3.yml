@@ -19,7 +19,6 @@ env:
   ROLE_SESSION_NAME: "smart-health-card-verifier-s3-deploy"
 jobs:
   deployS3:
-    environment: PROD
     if: contains(github.ref, '-locale')
     name: 'Deploy locale file to TCP'
     runs-on: ubuntu-latest
