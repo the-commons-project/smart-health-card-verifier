@@ -19,8 +19,16 @@ env:
   ROLE_TO_ASSUME: "${{ secrets.AWS_ROLE_TO_ASSUME }}"
   ROLE_SESSION_NAME: "smart-health-card-verifier-s3-deploy"
 jobs:
+  set_environment:
+    runs-on: ubuntu-latest
+    steps:
+    - id: setenv-prod
+      run: |
+        run: echo "curr_env=PROD" >> $GITHUB_OUTPUT
   deployS3:
-    environment: PROD
+    needs: set_environment
+    environment: 
+      name: ${{ needs.set_environment.outputs.curr_env }}
     if: contains(github.ref, '-locale')
     name: 'Deploy locale file to TCP'
     runs-on: ubuntu-latest
@@ -55,7 +63,9 @@ jobs:
         cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_LOCALE_DIR }}' 
 
   deployRemoteConfig:
-    environment: PROD
+    needs: set_environment
+    environment: 
+      name: ${{ needs.set_environment.outputs.curr_env }}
     if: contains(github.ref, '-remote-config')
     name: 'Deploy remote config file to TCP'
     runs-on: ubuntu-latest
@@ -76,7 +86,9 @@ jobs:
 
 
   deployVaccineCodes:
-    environment: PROD
+    needs: set_environment
+    environment: 
+      name: ${{ needs.set_environment.outputs.curr_env }}
     if: contains(github.ref, '-vaccine-code')
     name: 'Deploy vaccine-code file to TCP'
     runs-on: ubuntu-latest
