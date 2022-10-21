@@ -16,6 +16,7 @@ env:
   LOCAL_SOURCE_FILE: vci-issuers.json
   REGION: us-east-1
   S3_BUCKET: ${{secrets.S3_BUCKET}}
+  ROLE_TO_ASSUME: "${{ secrets.AWS_ROLE_TO_ASSUME }}"
   ROLE_SESSION_NAME: "smart-health-card-verifier-s3-deploy"
 jobs:
   deployS3:
