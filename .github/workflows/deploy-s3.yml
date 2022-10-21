@@ -93,6 +93,9 @@ jobs:
     name: 'Deploy vaccine-code file to TCP'
     runs-on: ubuntu-latest
     steps:
+    - name: confirmEnvironment
+      run: |
+        echo "ENV === ${{ needs.set_environment.outputs.curr_env }}"
     - uses: actions/checkout@master
     - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
