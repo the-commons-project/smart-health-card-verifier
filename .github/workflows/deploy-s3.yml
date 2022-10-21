@@ -16,24 +16,24 @@ env:
   S3_VACCINE_CODES_DIR: vaccine-codes
   LOCAL_SOURCE_FILE: vci-issuers.json
   REGION: us-east-1
-  ROLE_TO_ASSUME: ${{secrets.AWS_ROLE_TO_ASSUME}}
-  ROLE_SESSION_NAME: ${{secrets.AWS_SESSION_NAME}}
-
+  S3_BUCKET: ${{secrets.S3_BUCKET}}
+  AWS_ROLE_TO_ASSUME: "${{secrets.AWS_ROLE_TO_ASSUME}}"
+  ROLE_SESSION_NAME: "smart-health-card-verifier-s3-deploy"
 jobs:
   deployS3:
-
-    if: contains(github.ref, '-locale-dev')
-    name: 'Deploy locale file to TCP dev'
+    environment: PROD
+    if: contains(github.ref, '-locale')
+    name: 'Deploy locale file to TCP'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
+    - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+        role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: 1200
         role-session-name: ${{ env.ROLE_SESSION_NAME }}
     - name: 'Sync locale files to S3'
@@ -41,18 +41,18 @@ jobs:
         cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET_DEV }}/${{ env.S3_LOCALE_DIR }}' 
 
   deployDevRemoteConfig:
-    if: contains(github.ref, '-remote-config-dev')
-    name: 'Deploy remote config file to TCP dev'
+    if: contains(github.ref, '-remote-config')
+    name: 'Deploy remote config file to TCP'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: 'Configure Dev AWS Role'
+    - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+        role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: 1200
         role-session-name: ${{ env.ROLE_SESSION_NAME }}
     - name: 'Sync Remote Config files to S3'
