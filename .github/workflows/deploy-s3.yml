@@ -55,6 +55,7 @@ jobs:
         cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_LOCALE_DIR }}' 
 
   deployRemoteConfig:
+    environment: PROD
     if: contains(github.ref, '-remote-config')
     name: 'Deploy remote config file to TCP'
     runs-on: ubuntu-latest
