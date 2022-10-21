@@ -24,7 +24,7 @@ jobs:
     steps:
     - id: setenv-prod
       run: |
-        run: echo "curr_env=PROD" >> $GITHUB_OUTPUT
+        echo "curr_env=PROD" >> $GITHUB_OUTPUT
   deployS3:
     needs: set_environment
     environment: 
