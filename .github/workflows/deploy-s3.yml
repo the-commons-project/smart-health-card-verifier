@@ -4,7 +4,7 @@ on:
   push:
     branches:    
       - 'dev/**'
-      - 'preprod/**'
+      - 'qa/**'
       - 'prod/**'
 
   workflow_dispatch:
