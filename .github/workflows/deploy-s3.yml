@@ -25,6 +25,7 @@ jobs:
       curr_env: ${{ env.CURR_ENV }}
     steps:
     - id: setenv-prod
+      if: contains(github.ref, 'prod')
       run: |
         echo "CURR_ENV=PROD" >> $GITHUB_ENV
   deployS3:
