@@ -35,7 +35,7 @@ jobs:
     - id: setenv-qa
       if: contains(github.ref, 'qa')
       run: |
-        echo "CURR_ENV=DEV" >> $GITHUB_ENV
+        echo "CURR_ENV=TEST" >> $GITHUB_ENV
 
   deployLocaleToS3:
     needs: set_environment
