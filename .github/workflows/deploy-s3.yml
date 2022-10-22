@@ -28,7 +28,16 @@ jobs:
       if: contains(github.ref, 'prod')
       run: |
         echo "CURR_ENV=PROD" >> $GITHUB_ENV
-  deployS3:
+    - id: setenv-dev
+      if: contains(github.ref, 'dev')
+      run: |
+        echo "CURR_ENV=DEV" >> $GITHUB_ENV
+    - id: setenv-qa
+      if: contains(github.ref, 'qa')
+      run: |
+        echo "CURR_ENV=DEV" >> $GITHUB_ENV
+
+  deployLocaleToS3:
     needs: set_environment
     environment: 
       name: ${{ needs.set_environment.outputs.curr_env }}
@@ -65,7 +74,7 @@ jobs:
       run: |
         cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_LOCALE_DIR }}' 
 
-  deployRemoteConfig:
+  deployRemoteConfigToS3:
     needs: set_environment
     environment: 
       name: ${{ needs.set_environment.outputs.curr_env }}
@@ -88,7 +97,7 @@ jobs:
         cd resources/public/remote-config; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_REMOTE_CONFIG_DIR }}' 
 
 
-  deployVaccineCodes:
+  deployVaccineCodesToS3:
     needs: set_environment
     environment: 
       name: ${{ needs.set_environment.outputs.curr_env }}
