@@ -22,11 +22,11 @@ jobs:
   set_environment:
     runs-on: ubuntu-latest
     outputs:
-      curr_env: ${{ steps.setenv-prod.outputs.curr_env }}
+      curr_env: ${{ env.CURR_ENV }}
     steps:
     - id: setenv-prod
       run: |
-        echo "curr_env=PROD" >> $GITHUB_OUTPUT
+        echo "CURR_ENV=PROD" >> $GITHUB_ENV
   deployS3:
     needs: set_environment
     environment: 
