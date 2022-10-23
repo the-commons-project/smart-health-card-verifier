@@ -4,7 +4,8 @@ import { getInstallationIdManually, fetchWithTimeout } from '~/utils/utils'
 import { DataKeys, loadDataOrRetrieveLocally, getDataService } from '~/services/data/DataService'
 import remoteConfig from '~/models/RemoteConfig'
 
-let issuersMap: Record<string, any> | null = null
+
+var issuersMap: Record<string, any> | null = null
 
 export interface IssuerItemType {
   'iss': string
@@ -19,7 +20,6 @@ interface IssuerResponse {
 } 
 
 export const loadIssuers = async ( forceReset: boolean ): Promise<boolean>=> {
-
   var res = null;
   if( !forceReset ) {
     res = await getDataService().getJSON( DataKeys.ISSUERS )
@@ -28,11 +28,11 @@ export const loadIssuers = async ( forceReset: boolean ): Promise<boolean>=> {
     const appUuid = await getInstallationIdManually()
     const appUuidParameter = `appUUID=${String(appUuid)}`
     const url = `${issuersUrl}?${appUuidParameter}`
-    const res = await loadDataOrRetrieveLocally<IssuerItemType|null>( url, DataKeys.ISSUERS )
+    res = await loadDataOrRetrieveLocally<IssuerItemType|null>( url, DataKeys.ISSUERS )
   }
   if( res != null ){
     issuersMap = res
-  } 
+  }
   return ( issuersMap != null )
 }
 
@@ -40,7 +40,8 @@ export const getIssuerData = async ( verifierKey: string, issuer: string ):  Pro
   if ( remoteConfig.useLegacy() ) {
     return await _getIssuerDataLegacy( issuer )
   }
-  return await _getIssuerData( issuer )
+  const res =  await getIssuerIss( issuer )
+  return res;
 }
 
 /* this is used for non-Legacy code to refer to canonical_iss to look for iss */
@@ -48,10 +49,9 @@ export const getIssuerIss = async ( issuer: string ):  Promise<any> => {
   const _issuerMap = (issuersMap??{})
   var issuerItem = await _getIssuerData( issuer )
   if ( issuerItem && issuerItem.canonical_iss ) {
-    console.debug('using canonical_iss')
-    issuerItem = _issuerMap[issuerItem.canonical_iss] || issuerItem
+    issuerItem.iss = _issuerMap[issuerItem.canonical_iss].iss || null
   }
-  return ( issuerItem?.iss || null );
+  return ( ( issuerItem && issuerItem.iss != null ) ? issuerItem : null );
 }
 
 export const _getIssuerData = async (issuer: string): Promise<IssuerItemType|null> => {

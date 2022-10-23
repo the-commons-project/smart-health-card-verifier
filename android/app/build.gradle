@@ -87,6 +87,10 @@ project.ext.envConfigFiles = [
     prodrelease : ".env.production"
 ]
 
+
+
+
+
 project.ext.react = [
     enableHermes: false,
     bundleInDebug: false,

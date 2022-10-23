@@ -78,6 +78,7 @@ function getTagKeys(payload) {
       res.push(tagMap[key]);
     }
   }
+
   return res;
 }
 

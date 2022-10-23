@@ -41,22 +41,24 @@ export function getProvider () {
     const [ state, setState ] = useState( defaultState )
     const moduleService = ModuleService.getModuleService()
 
+    const shcOption  = {
+      useLegacy: remoteConfig.useLegacy,
+      getIssuer: async (verifierKey: string, issuer: string)=> {
+        return getIssuerData( verifierKey, issuer)
+      },
+      getAcceptedVaccineCodes: getAcceptedVaccineCodes,
+      getAcceptedSystemCode: getAcceptedSystemCode, 
+      isAcceptedLabResult: isAcceptedLabResult,
+      getSystemCodeLabel: getSystemCodeLabel,
+      getVaccineCodesHash: getVaccineCodesHash
+    } as SHCverifierOption
+
+    const option: SHCVerifierType = {
+      shc: shcOption
+          }
+
+
     useEffect( ()=>{
-
-      const shcOption  = {
-        useLegacy: remoteConfig.useLegacy,
-        getIssuer: getIssuerData,
-        getAcceptedVaccineCodes: getAcceptedVaccineCodes,
-        getAcceptedSystemCode: getAcceptedSystemCode, 
-        isAcceptedLabResult: isAcceptedLabResult,
-        getSystemCodeLabel: getSystemCodeLabel,
-        getVaccineCodesHash: getVaccineCodesHash
-      } as SHCverifierOption
-
-      let option: SHCVerifierType = {
-        shc: shcOption
-            }
-
       moduleService.initialize( option )
       .then( ()=> {
           setState({

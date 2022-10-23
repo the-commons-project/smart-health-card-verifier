@@ -41,7 +41,6 @@ const shouldResetDataIfNeeded = async (): Promise<boolean> => {
   const lastApi    = await dataService.getLastAPIVersion()
   if ( ( lastUpdate === null || lastUpdate.getTime() < lastUpdateThreshold ) || 
       ( lastApi !== null && lastApi !== API_VERSION  ) ) {
-    console.log('resetting local data.')
     //await dataService.resetData()
     return true
   } 
@@ -91,7 +90,9 @@ const synchWithLocal = async ( isInternetReachable: boolean ): Promise<boolean> 
     /* 1: Load VaccineCods and issuers and attemp to store locally */
     try {
       await Promise.all( [loadIssuers(forceReset), loadVaccineCodes(forceReset)] )
-      dataService.setLatestUpdate()
+      if( isInternetReachable ) {
+        dataService.setLatestUpdate()
+      }
       res = true
     } catch ( error ) {
       console.info( `Loading initial data: ${String(error)}`)
@@ -127,7 +128,7 @@ export function getProvider () {
           })
         }
       })
-      return (()=> mounted = true )
+      return (()=> mounted = false )
     }, [])
 
     return  (
