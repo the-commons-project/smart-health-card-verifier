@@ -116,15 +116,18 @@ export function getProvider () {
 
     const actions = getActions( state, setState );
     const _values = [state, actions]
-    useEffect( ()=>{
+    var mounted = true;
+    useEffect(()=>{
       synchWithLocal( isInternetReachable || false ).then( ()=> {
-        setState({
-          ...state,
-          'dataInitialized': true,
-          'updatedAt': ( new Date() )
-        })
+        if( mounted ) {
+          setState({
+            ...state,
+            'dataInitialized': true,
+            'updatedAt': ( new Date() )
+          })
+        }
       })
-
+      return (()=> mounted = true )
     }, [])
 
     return  (

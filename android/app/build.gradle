@@ -83,6 +83,7 @@ import com.android.build.OutputFile
 project.ext.envConfigFiles = [
     devdebug : ".env.development",
     devrelease: ".env.staging",
+    prodDebug : ".env.production",
     prodrelease : ".env.production"
 ]
 
