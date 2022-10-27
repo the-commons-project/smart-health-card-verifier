@@ -28,7 +28,9 @@ var _Config = require("../../models/Config");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* this entry needs to match with ValidationProfilesFunctions keys */
-async function getRecord(payload) {
+async function getRecord(payload, header) {
+  console.info("header ====\r\n" + JSON.stringify(header));
+  console.info("payload ====\r\n" + JSON.stringify(payload));
   const issuer = (0, _getIssuerFromFhir.getIssuerFromFhir)(payload);
   const notFoundIssuer = {
     message: 'Issuer not found'

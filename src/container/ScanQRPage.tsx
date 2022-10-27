@@ -149,6 +149,7 @@ const ScanQRPage = ({ navigation }: Props) => {
       isValid: false,
       recordType: RecordType.unknown,
       errorCode:0,
+      issuedDate: null,
       issuerData: {
         iss: '',
         logo_uri: '',

@@ -12,10 +12,12 @@ export interface VaccineCodeItemType {
 export interface BaseResponse {
     isValid: boolean;
     errorCode: number;
+    issuedDate: Date | null;
     issuerData: issuerData;
     patientData: patientData;
     recordType: string;
     recordEntries?: RecordEntry[];
+    tagKeys?: string[];
 }
 export interface IVerifierBase {
     canVerify: (payloads: string[]) => Promise<null | IVerifierBase>;

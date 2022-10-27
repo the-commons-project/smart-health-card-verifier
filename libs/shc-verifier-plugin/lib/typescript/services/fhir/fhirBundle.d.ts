@@ -11,7 +11,7 @@ interface ResultType {
     tagKeys: string[];
     recordEntries: RecordEntry[] | null;
 }
-export declare function getRecord(payload: JWSPayload): Promise<ResultType>;
+export declare function getRecord(payload: JWSPayload, header: any): Promise<ResultType>;
 export declare function getTagKeys(payload: JWSPayload): string[];
 export declare function validate(recordType: RecordType, fhirBundleJSON: object | undefined): Promise<boolean>;
 export {};

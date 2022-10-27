@@ -9,7 +9,9 @@ import { getIssuerFromFhir } from '../../helpers/getIssuerFromFhir';
 import { getRecordTypeFromPayload } from './fhirTypes';
 import validateBundleForRecordType from './recordValidator';
 import { VerifierKey, getVerifierInitOption } from '../../models/Config';
-export async function getRecord(payload) {
+export async function getRecord(payload, header) {
+  console.info("header ====\r\n" + JSON.stringify(header));
+  console.info("payload ====\r\n" + JSON.stringify(payload));
   const issuer = getIssuerFromFhir(payload);
   const notFoundIssuer = {
     message: 'Issuer not found'
