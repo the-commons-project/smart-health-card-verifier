@@ -64,7 +64,11 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
   </View> )
 }
 
-export default ( { recordEntries }: RecordEntry[] | any) => {
+interface ResultParam {
+  recordEntries: RecordEntry[] | any;
+  issuedDate: Date | null;
+} 
+export default ( { recordEntries, issuedDate }: ResultParam ) => {
   const { t } = useTranslation()
 
   function insertTextToTable (

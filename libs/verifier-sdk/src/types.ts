@@ -12,15 +12,20 @@ export interface VaccineCodeItemType {
   'groupDisplay'?: string | null
 } 
 
-export interface BaseResponse {
-  isValid: boolean 
-  errorCode: number
+export interface BaseResources {
+  issuedDate: number | null
   issuerData: issuerData
   patientData: patientData
   recordType: string
   recordEntries?: RecordEntry[]
-  tagKeys?: string
+  tagKeys?: string []
 }
+
+export interface BaseResponse extends BaseResources {
+  isValid: boolean 
+  errorCode: number
+}
+
 
 export interface  IVerifierBase {
   canVerify: ( payloads: string[] ) => Promise<null|IVerifierBase>

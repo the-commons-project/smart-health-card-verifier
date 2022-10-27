@@ -3,27 +3,30 @@ import { validateSchema, objPathToSchema } from '../jws/schema'
 import fhirSchema from '../../schemas/fhir-schema.json'
 import { getPatientDataFromFhir } from './getPatiendDataFromFhir'
 import getRecordData from './recordParser'
-import { getIssuerFromFhir } from '../../helpers/getIssuerFromFhir'
 /* this entry needs to match with ValidationProfilesFunctions keys */
 import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
 import { VerifierKey, getVerifierInitOption } from '../../models/Config'
 import type { JWSPayload, FhirBundle } from './types'
-import type { RecordEntry } from 'verifier-sdk'
+import type { BaseResources } from 'verifier-sdk'
 
-interface ResultType {
-  issuerData:{
-    url: string | null
-    name?: string
-  };
-  isValid?: boolean;
-  recordType: RecordType;
-  tagKeys: string[];
-  recordEntries: RecordEntry[] | null;
+const getIssuerFromFHIR = (payload: any): string => {
+  const { iss: issuer } = payload
+  return issuer
 }
 
-export async function getRecord (payload: JWSPayload): Promise<ResultType>{
-  const issuer = getIssuerFromFhir(payload)
+const getIssuedDateFromFHIR = ( payload: any  ): number | null => {
+  const { nbf: nbf } = payload
+  var res: number | null = null; 
+  if( !isNaN(nbf) ) {
+    res = nbf;
+  }
+  return res;
+}
+
+export async function getRecord (payload: JWSPayload ): Promise<BaseResources>{
+  const issuer = getIssuerFromFHIR(payload)
+  const issuedDate = getIssuedDateFromFHIR( payload );
   const notFoundIssuer = {
     message: 'Issuer not found'
   }
@@ -31,10 +34,12 @@ export async function getRecord (payload: JWSPayload): Promise<ResultType>{
   const issuerData = await verifierOption.getIssuer( VerifierKey, issuer) || notFoundIssuer
   const { message } = issuerData
   const isIssuerNotFound = message && message === 'Issuer not found'
+  
   if (isIssuerNotFound) {
     issuerData.url = issuer
     issuerData.name = undefined
   }
+
 
   const patientData = getPatientDataFromFhir(payload)
   const recordType  = getRecordTypeFromPayload(payload)
@@ -44,11 +49,16 @@ export async function getRecord (payload: JWSPayload): Promise<ResultType>{
     throw new InvalidError(ErrorCode.NO_VALID_RECORD)
   }
   const document = {
+    issuedDate,
     issuerData,
     patientData,
-    recordType,
-    recordEntries,
-    tagKeys
+    recordType
+  }
+  if( tagKeys ) {
+    document['tagKeys'] = tagKeys
+  }
+  if( recordEntries ) {
+    document['recordEntries'] = recordEntries
   }
   return document
 }

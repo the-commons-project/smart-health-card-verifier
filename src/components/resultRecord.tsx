@@ -23,7 +23,7 @@ const ResultRecord = ({ data }: Data) => {
   const { t } = useTranslation()
   const [boolBirthDate, setBoolBirthDate] = useState(false)
   const { validationResult } = data
-  const { issuerData, patientData, recordType, recordEntries } = validationResult
+  const { issuerData, patientData, recordType, recordEntries, issuedDate } = validationResult
   const { names, dateOfBirth } = patientData
   const userFieldTitle = [t('Result.Name', 'Name')]
   const userDobTitle = [t('Result.DOB', 'Date of Birth')]
@@ -91,10 +91,10 @@ const ResultRecord = ({ data }: Data) => {
         </Text>
       </View>
       { recordType === RecordType.immunization && 
-        <ImmunizationRecordRow recordEntries={ recordEntries } />
+        <ImmunizationRecordRow recordEntries={ recordEntries } issuedDate={issuedDate}  />
       }
       { recordType === RecordType.covid19LabResult && 
-        <LabResultRecordRow recordEntries={ recordEntries } />
+        <LabResultRecordRow recordEntries={ recordEntries } issuedDate={issuedDate} />
       }
       <View style={ styles.dividerContainerWithLine }>
         <Text style={ [styles.containerWithLineTitle, FontStyle.OpenSans_700Bold] }>

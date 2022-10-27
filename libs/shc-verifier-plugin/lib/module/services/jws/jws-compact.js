@@ -83,10 +83,7 @@ export async function validate(jws) {
 
   const isValid = await verifyJws(jws, headerJson.kid);
   let document = await getRecord(payload);
-  document = {
-    isValid,
-    ...document
-  };
+  document['isValid'] = isValid;
   return document;
 }
 
