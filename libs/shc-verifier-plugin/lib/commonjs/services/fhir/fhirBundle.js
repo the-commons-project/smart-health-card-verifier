@@ -17,8 +17,6 @@ var _getPatiendDataFromFhir = require("./getPatiendDataFromFhir");
 
 var _recordParser = _interopRequireDefault(require("./recordParser"));
 
-var _getIssuerFromFhir = require("../../helpers/getIssuerFromFhir");
-
 var _fhirTypes = require("./fhirTypes");
 
 var _recordValidator = _interopRequireDefault(require("./recordValidator"));
@@ -28,10 +26,29 @@ var _Config = require("../../models/Config");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* this entry needs to match with ValidationProfilesFunctions keys */
-async function getRecord(payload, header) {
-  console.info("header ====\r\n" + JSON.stringify(header));
-  console.info("payload ====\r\n" + JSON.stringify(payload));
-  const issuer = (0, _getIssuerFromFhir.getIssuerFromFhir)(payload);
+const getIssuerFromFHIR = payload => {
+  const {
+    iss: issuer
+  } = payload;
+  return issuer;
+};
+
+const getIssuedDateFromFHIR = payload => {
+  const {
+    nbf: nbf
+  } = payload;
+  var res = null;
+
+  if (!isNaN(nbf)) {
+    res = new Date(nbf);
+  }
+
+  return res;
+};
+
+async function getRecord(payload) {
+  const issuer = getIssuerFromFHIR(payload);
+  const issuedDate = getIssuedDateFromFHIR(payload);
   const notFoundIssuer = {
     message: 'Issuer not found'
   };
@@ -57,12 +74,20 @@ async function getRecord(payload, header) {
   }
 
   const document = {
+    issuedDate,
     issuerData,
     patientData,
-    recordType,
-    recordEntries,
-    tagKeys
+    recordType
   };
+
+  if (tagKeys) {
+    document['tagKeys'] = tagKeys;
+  }
+
+  if (recordEntries) {
+    document['recordEntries'] = recordEntries;
+  }
+
   return document;
 }
 

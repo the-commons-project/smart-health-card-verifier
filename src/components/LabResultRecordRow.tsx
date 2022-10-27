@@ -5,7 +5,7 @@ import { useTranslation } from '../services/i18n/i18nUtils'
 import { Table, TableWrapper, Cell, Row } from 'react-native-table-component'
 import FontStyle from '../utils/FontStyleHelper'
 import { toCamel, toUpper, getIsSmallScreen, isEmpty } from '../utils/utils'
-import { getLocalDateTimeStringData } from '../utils/timeUtils'
+import { getLocalDateTimeStringData, getLocalDateTimeStringDataFromDate } from '../utils/timeUtils'
 import LabTestSVG from '../../assets/img/verificationresult/labResultIcon.svg'
 import { useLocaleContext } from '../contexts/LocaleContext' 
 
@@ -72,10 +72,15 @@ export const GetResultTitle = ( windowWidth: number, responseData: BaseResponse 
   </View> )
 }
 
-export default ( { recordEntries }: RecordEntry[] | any) => {
+interface ResultParam {
+  recordEntries: RecordEntry[] | any;
+  issuedDate: number | null;
+} 
+export default ( { recordEntries, issuedDate }: ResultParam ) => {
   const { t } = useTranslation()
   const dimension  = useWindowDimensions()
   const { timeZone } = useLocaleContext()
+  var issuedDateData = null;
 
   const isSmallScreen = getIsSmallScreen( dimension.width )
 
@@ -121,6 +126,29 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
       }
     ]
 
+  const getIssuedDate = ( issuedDate: number | null ) => {
+    if( issuedDate  ) {
+      const dateData = getLocalDateTimeStringDataFromDate( new Date( issuedDate * 1000 ), timeZone, t );
+      return <View style={styles.cellFull}> 
+          <View key={1}>
+            <Text
+              style={ [
+                styles.fieldTitle,
+                FontStyle.OpenSans_400Regular
+              ] }>
+              {  t(`LabResult.Field_IssuedDate`, "Issued Date" ) }
+            </Text>
+          </View>
+          <View key={2}>
+            <Text key="1"
+              style={ [styles.fieldValue, styles.fieldValueInline ] }
+            >{ dateData.formattedDate }
+            </Text>
+          </View>
+        </View>
+    }
+    return <Text>No Data</Text>;
+  }
   const alertNoTimeInfo = ()=> {
     const msg = 'The QR code only provided a date of collection, not a time. In this case, we assume the time to be 00:00 GMT.'
     Alert.alert(
@@ -218,6 +246,7 @@ export default ( { recordEntries }: RecordEntry[] | any) => {
         </Text>
         <View style={ styles.containerWithLineDivider } />
       </View>
+      { getIssuedDate( issuedDate ) }
       { recordEntries.map((entry: any, key: any )=>{
         return recordAdapter( entry)
       }) }

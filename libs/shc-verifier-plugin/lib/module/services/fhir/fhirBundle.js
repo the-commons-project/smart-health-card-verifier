@@ -3,16 +3,35 @@ import { validateSchema, objPathToSchema } from '../jws/schema';
 import fhirSchema from '../../schemas/fhir-schema.json';
 import { getPatientDataFromFhir } from './getPatiendDataFromFhir';
 import getRecordData from './recordParser';
-import { getIssuerFromFhir } from '../../helpers/getIssuerFromFhir';
 /* this entry needs to match with ValidationProfilesFunctions keys */
 
 import { getRecordTypeFromPayload } from './fhirTypes';
 import validateBundleForRecordType from './recordValidator';
 import { VerifierKey, getVerifierInitOption } from '../../models/Config';
-export async function getRecord(payload, header) {
-  console.info("header ====\r\n" + JSON.stringify(header));
-  console.info("payload ====\r\n" + JSON.stringify(payload));
-  const issuer = getIssuerFromFhir(payload);
+
+const getIssuerFromFHIR = payload => {
+  const {
+    iss: issuer
+  } = payload;
+  return issuer;
+};
+
+const getIssuedDateFromFHIR = payload => {
+  const {
+    nbf: nbf
+  } = payload;
+  var res = null;
+
+  if (!isNaN(nbf)) {
+    res = new Date(nbf);
+  }
+
+  return res;
+};
+
+export async function getRecord(payload) {
+  const issuer = getIssuerFromFHIR(payload);
+  const issuedDate = getIssuedDateFromFHIR(payload);
   const notFoundIssuer = {
     message: 'Issuer not found'
   };
@@ -38,12 +57,20 @@ export async function getRecord(payload, header) {
   }
 
   const document = {
+    issuedDate,
     issuerData,
     patientData,
-    recordType,
-    recordEntries,
-    tagKeys
+    recordType
   };
+
+  if (tagKeys) {
+    document['tagKeys'] = tagKeys;
+  }
+
+  if (recordEntries) {
+    document['recordEntries'] = recordEntries;
+  }
+
   return document;
 }
 export function getTagKeys(payload) {

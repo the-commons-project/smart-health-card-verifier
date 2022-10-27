@@ -107,11 +107,8 @@ async function validate(jws) {
   }
 
   const isValid = await verifyJws(jws, headerJson.kid);
-  let document = await (0, _fhirBundle.getRecord)(payload, headerJson);
-  document = {
-    isValid,
-    ...document
-  };
+  let document = await (0, _fhirBundle.getRecord)(payload);
+  document['isValid'] = isValid;
   return document;
 }
 

@@ -22,7 +22,6 @@ const parse: ParserFunction  =(jwsPayload: JWSPayload): RecordEntry[] | null=> {
 
   for (const [index, entry] of observationEntries.entries()) {
     const resourceItem = parser.parse( entry )  
-    console.info("resoutceItem === \r\n " + JSON.stringify( resourceItem))
     labResultData.push({
       ...resourceItem,
       index: ( index + 1 ),

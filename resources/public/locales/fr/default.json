@@ -59,6 +59,7 @@
       "LabResult":{
         "title":"Résultat du test",
         "tagCovid19":"COVID-19",
+        "Field_IssuedDate": "Date d'émission",
         "Field_securityCode": " Sécurité",
         "Field_effectiveDateTimeData": "Spécimen collecté",
         "Field_performer": "Interprété par",

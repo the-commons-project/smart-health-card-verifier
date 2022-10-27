@@ -8,15 +8,25 @@ import { RecordType, getRecordTypeFromPayload } from './fhirTypes'
 import validateBundleForRecordType from './recordValidator'
 import { VerifierKey, getVerifierInitOption } from '../../models/Config'
 import type { JWSPayload, FhirBundle } from './types'
-import type { BaseResponse } from 'verifier-sdk'
+import type { BaseResources } from 'verifier-sdk'
 
-const getIssuerFromFhir = (credential: any): string => {
-  const { iss: issuer } = credential
+const getIssuerFromFHIR = (payload: any): string => {
+  const { iss: issuer } = payload
   return issuer
 }
 
-export async function getRecord (payload: JWSPayload, header: any): Promise<BaseResponse>{
-  const issuer = getIssuerFromFhir(payload)
+const getIssuedDateFromFHIR = ( payload: any  ): number | null => {
+  const { nbf: nbf } = payload
+  var res: number | null = null; 
+  if( !isNaN(nbf) ) {
+    res = nbf;
+  }
+  return res;
+}
+
+export async function getRecord (payload: JWSPayload ): Promise<BaseResources>{
+  const issuer = getIssuerFromFHIR(payload)
+  const issuedDate = getIssuedDateFromFHIR( payload );
   const notFoundIssuer = {
     message: 'Issuer not found'
   }
@@ -39,11 +49,16 @@ export async function getRecord (payload: JWSPayload, header: any): Promise<Base
     throw new InvalidError(ErrorCode.NO_VALID_RECORD)
   }
   const document = {
+    issuedDate,
     issuerData,
     patientData,
-    recordType,
-    recordEntries,
-    tagKeys
+    recordType
+  }
+  if( tagKeys ) {
+    document['tagKeys'] = tagKeys
+  }
+  if( recordEntries ) {
+    document['recordEntries'] = recordEntries
   }
   return document
 }

@@ -59,6 +59,7 @@
       "LabResult":{
         "title":"検査結果",
         "tagCovid19":"COVID-19",
+        "Field_IssuedDate": "発行日",
         "Field_securityCode": "セキュリティ",
         "Field_effectiveDateTimeData": "検体採取日",
         "Field_performer": "検査実行機関",
