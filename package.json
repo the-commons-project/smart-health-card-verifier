@@ -27,7 +27,7 @@
     "i18next": "^21.6.5",
     "ieee754": "^1.2.1",
     "lodash": "^4.17.21",
-    "moment-timezone": "^0.5.34",
+    "moment-timezone": "^0.5.35",
     "pako": "^2.0.4",
     "promise.any": "^2.0.4",
     "react": "17.0.2",
