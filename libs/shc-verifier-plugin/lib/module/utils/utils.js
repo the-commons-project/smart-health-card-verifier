@@ -7,8 +7,8 @@ export const formatDateOfBirth = birthDate => {
   return dateOfBirth;
 };
 export const sortRecordByDateField = (dateFieldName, records) => {
-  records.sort((a, b) => Date.parse(a[dateFieldName]) - Date.parse(b[dateFieldName])); // set correct dose number if dose objects are swapped
-
+  records.sort((a, b) => Date.parse(a[dateFieldName]) - Date.parse(b[dateFieldName]));
+  // set correct dose number if dose objects are swapped
   for (const [index, rec] of records.entries()) {
     rec.index = index + 1;
   }

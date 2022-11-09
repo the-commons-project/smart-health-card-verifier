@@ -11,7 +11,8 @@ const defaultOption = {
     return {};
   }
 };
-var _verifierInitOption = { ...defaultOption
+var _verifierInitOption = {
+  ...defaultOption
 };
 export function setVerifierInitOption(option) {
   _verifierInitOption = option;

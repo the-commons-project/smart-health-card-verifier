@@ -2,10 +2,8 @@ import { getVerifierInitOption } from '../../../../../models/Config';
 export default class R4Observation {
   parse(entry) {
     const verifierOption = getVerifierInitOption();
-
     try {
       var _meta$security$;
-
       const unknownSystem = null;
       const {
         status,
@@ -27,7 +25,6 @@ export default class R4Observation {
       let codableConseptLabel = null;
       let codableConseptCode = null;
       let codeableShortDefault = null;
-
       if (valueCodeableConcept !== null && valueCodeableConcept !== void 0 && valueCodeableConcept.coding[0]) {
         const codableCoding = valueCodeableConcept === null || valueCodeableConcept === void 0 ? void 0 : valueCodeableConcept.coding[0];
         const codableSystem = verifierOption.getAcceptedSystemCode(codableCoding.system, codableCoding.code);
@@ -36,7 +33,6 @@ export default class R4Observation {
         codableConseptCode = codableSystem.code;
         codeableShortDefault = codableSystem.codeableShortDefault ?? null;
       }
-
       return {
         securityCode,
         status,
@@ -55,16 +51,12 @@ export default class R4Observation {
       console.info(e);
     }
   }
-
   getPerformerLabel(performers) {
     let res = null;
-
     if (performers) {
       res = performers[0].display ? performers[0].display : null;
     }
-
     return res;
   }
-
 }
 //# sourceMappingURL=R4Observation.js.map

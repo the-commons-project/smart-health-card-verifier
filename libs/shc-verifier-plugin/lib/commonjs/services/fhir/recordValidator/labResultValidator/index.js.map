@@ -1,1 +1,1 @@
-{"version":3,"names":["validate"],"sources":["index.ts"],"sourcesContent":["import validate from './labResultValidator'\n\nexport default validate\n"],"mappings":";;;;;;;AAAA;;;;eAEeA,2B"}
+{"version":3,"names":["validate"],"sources":["index.ts"],"sourcesContent":["import validate from './labResultValidator'\n\nexport default validate\n"],"mappings":";;;;;;AAAA;AAA2C;AAAA,eAE5BA,2BAAQ;AAAA"}

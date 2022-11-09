@@ -10,7 +10,7 @@ export interface VaccineCodeItemType {
     'groupDisplay'?: string | null;
 }
 export interface BaseResources {
-    issuedDate: Date | null;
+    issuedDate: number | null;
     issuerData: issuerData;
     patientData: patientData;
     recordType: string;

@@ -169,15 +169,15 @@ export default ( { recordEntries, issuedDate }: ResultParam ) => {
           <Table borderStyle={ styles.tableStyle }>
             <Row
               data={ [rowAdapter(dosageFieldTitleRowOne)] }
-              textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
+              textStyle={ {...styles.fieldTitle, ...FontStyle.OpenSans_400Regular} }
             />
             <Row
               data={ dosageFieldValueRowOne }
-              textStyle={ [
-                styles.fieldValue,
-                styles.increaseFont,
-                FontStyle.OpenSans_700Bold,
-              ] }
+              textStyle={ {
+                ...styles.fieldValue,
+                ...styles.increaseFont,
+                ...FontStyle.OpenSans_700Bold,
+              } }
             />
           </Table>
         </View>

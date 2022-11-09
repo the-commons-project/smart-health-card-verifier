@@ -18,12 +18,12 @@ module.exports = ( async () => {
         getTransformOptions: async () => ({
           transform: {
             experimentalImportSupport: false,
-            inlineRequires: false
+            inlineRequires: true
           },
         }),
       },
       resolver: {
-        sourceExts: ['jsx', 'js', 'ts', 'tsx', 'svg'], //add here
+        sourceExts: ['jsx', 'js', 'ts', 'tsx', 'svg', 'json'], //add here
         assetExts: assetExts.filter(ext => ext !== 'svg')    
       },
       watchFolders: [
