@@ -39,7 +39,7 @@
     "pako": "^2.0.4"
   },
   "devDependencies": {
-    "@react-native-community/eslint-config": "^3.1.0",
+    "@react-native-community/eslint-config": "^2.0.0",
     "@release-it/conventional-changelog": "^2.0.0",
     "@types/jest": "^26.0.0",
     "@types/react": "^18.0.24",
@@ -56,7 +56,7 @@
     "jest": "^26.0.1",
     "npm": "^8.18.0",
     "prettier": "^2.0.5",
-    "react": "18.1.0",
+    "react": "^18.1.0",
     "react-native": "^0.70.4",
     "react-native-builder-bob": "^0.18.3",
     "release-it": "^14.2.2",
