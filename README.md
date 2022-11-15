@@ -103,7 +103,27 @@ install dependencies and run the metro server.
   npm start
 ```
 
+#### Fix for deprecated module 
+RNCamera that we rely on causes build error. Because it uses deprecated ViewPropTypes. 
+Until we fix this, we have to work around. 
+1. Go to node_modules/react-native-camera/src/RNCamera.js
+remove ViewPropTypes and add 'ViewPropTypes' from 'deprecated-react-native-prop-types'
 
+```
+import {
+  findNodeHandle,
+  Platform,
+  NativeModules,
+  requireNativeComponent,
+  View,
+  ActivityIndicator,
+  Text,
+  StyleSheet,
+  PermissionsAndroid,
+} from 'react-native';
+
+import {  ViewPropTypes } from 'deprecated-react-native-prop-types'
+```
 
 #### For Android
 Open another terminal
