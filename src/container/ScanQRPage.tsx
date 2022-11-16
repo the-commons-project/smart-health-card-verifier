@@ -271,7 +271,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   viewContainer: {
-    backgroundColor: '#0000FF',
     position: 'absolute',
     top: 0,
     left:0,
