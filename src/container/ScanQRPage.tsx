@@ -286,6 +286,7 @@ const styles = StyleSheet.create({
 
   scannerContainer: {
     flex: 1,
+    backgroundColor: '#000000',
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: '100%',
