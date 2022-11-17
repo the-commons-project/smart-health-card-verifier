@@ -1,6 +1,6 @@
 /* eslint no-catch-shadow: off, no-shadow: off */
 import pako from 'pako'
-import jose from 'react-native-jose'
+import jose from 'node-jose'
 
 import { InvalidError, Utils, Timer } from 'verifier-sdk'
 import type { JWSPayload } from '../fhir/types'

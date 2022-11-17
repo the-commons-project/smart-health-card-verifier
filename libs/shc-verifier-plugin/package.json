@@ -35,15 +35,15 @@
   "dependencies": {
     "ajv": "^8.7.1",
     "lodash": "^4.17.21",
-    "pako": "^2.0.4",
-    "react-native-jose": "github:hellojoko/react-native-jose"
+    "node-jose": "^2.1.1",
+    "pako": "^2.0.4"
   },
   "devDependencies": {
-    "@react-native-community/eslint-config": "^3.1.0",
+    "@react-native-community/eslint-config": "^2.0.0",
     "@release-it/conventional-changelog": "^2.0.0",
     "@types/jest": "^26.0.0",
-    "@types/react": "^16.9.19",
-    "@types/react-native": "0.62.13",
+    "@types/react": "^18.0.24",
+    "@types/react-native": "^0.70.6",
     "babel-plugin-module-resolver": "^4.1.0",
     "commitlint": "^11.0.0",
     "eslint": "^8.21.0",
@@ -56,8 +56,8 @@
     "jest": "^26.0.1",
     "npm": "^8.18.0",
     "prettier": "^2.0.5",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
+    "react": "^18.1.0",
+    "react-native": "^0.70.4",
     "react-native-builder-bob": "^0.18.3",
     "release-it": "^14.2.2",
     "typescript": "^4.7.4",

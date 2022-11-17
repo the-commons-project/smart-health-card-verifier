@@ -103,7 +103,27 @@ install dependencies and run the metro server.
   npm start
 ```
 
+#### Fix for deprecated module 
+RNCamera that we rely on causes build error. Because it uses deprecated ViewPropTypes. 
+Until we fix this, we have to work around. 
+1. Go to node_modules/react-native-camera/src/RNCamera.js
+remove ViewPropTypes and add 'ViewPropTypes' from 'deprecated-react-native-prop-types'
 
+```
+import {
+  findNodeHandle,
+  Platform,
+  NativeModules,
+  requireNativeComponent,
+  View,
+  ActivityIndicator,
+  Text,
+  StyleSheet,
+  PermissionsAndroid,
+} from 'react-native';
+
+import {  ViewPropTypes } from 'deprecated-react-native-prop-types'
+```
 
 #### For Android
 Open another terminal
@@ -125,11 +145,56 @@ Shake device -> see setting -> Change host to <ipaddress that node runs>:8081
 
 #### For IOS 
 
+1. Check Environment
+
+  ```
+  ruby --version
+  ```
+
+3. Download rbenv
+  if it's less than 2.7.5, install rbenv to use 2.7.5
+
+  ```
+  brew install rbenv ruby-build
+  ```
+
+2. Configure your shell to load rbenv:
+
+   * For **bash**:
+     
+     _Ubuntu Desktop_ users should configure `~/.bashrc`:
+     ```bash
+     echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
+     ```
+
+     On _other platforms_, bash is usually configured via `~/.bash_profile`:
+     ```bash
+     echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bash_profile
+     ```
+     
+   * For **Zsh**:
+     ```zsh
+     echo 'eval "$(~/.rbenv/bin/rbenv init - zsh)"' >> ~/.zshrc
+     ```
+   
+   * For **Fish shell**:
+     ```fish
+     echo 'status --is-interactive; and ~/.rbenv/bin/rbenv init - fish | source' >> ~/.config/fish/config.fish
+     ```
+
+   If you are curious, see here to [understand what `init` does](#how-rbenv-hooks-into-your-shell).
+
+3. Restart your shell so that these changes take effect. (Opening a new terminal tab will usually do it.)
+
+
 Install dependencies 
 
 ```bash
   npm run ios
   cd ios; pod install
+  arch -x86_64 pod install // for M1Chip 
+
+
 ```
 
   Open  Xcoe workspace by selecting Verifier.xcworkspace

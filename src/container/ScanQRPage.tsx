@@ -225,11 +225,11 @@ const ScanQRPage = ({ navigation }: Props) => {
         ) }
 
         { showCamera && (
-          <View>
+          <View style={ styles.viewContainer } >
             <BarCodeScanner
               onBarCodeScanned={ scanned ? undefined : handleBarCodeScanned }
               type={ cameraType }
-              styles={ styles.scannerContainer }
+              styles={ styles.qrScannerContainer }
             />
             <View style={ styles.markerLayerContaier }>
               { ( markerShift.left < 0 ) ?
@@ -270,6 +270,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  viewContainer: {
+    position: 'absolute',
+    top: 0,
+    left:0,
+    width: '100%',
+    height: '100%'
+  },
+  qrScannerContainer: {
+    flex:1,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   scannerContainer: {
     flex: 1,
     backgroundColor: '#000000',

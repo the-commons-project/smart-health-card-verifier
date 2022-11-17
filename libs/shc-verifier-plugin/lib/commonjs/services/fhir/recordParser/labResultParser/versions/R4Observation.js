@@ -4,16 +4,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _Config = require("../../../../../models/Config");
-
 class R4Observation {
   parse(entry) {
     const verifierOption = (0, _Config.getVerifierInitOption)();
-
     try {
       var _meta$security$;
-
       const unknownSystem = null;
       const {
         status,
@@ -35,7 +31,6 @@ class R4Observation {
       let codableConseptLabel = null;
       let codableConseptCode = null;
       let codeableShortDefault = null;
-
       if (valueCodeableConcept !== null && valueCodeableConcept !== void 0 && valueCodeableConcept.coding[0]) {
         const codableCoding = valueCodeableConcept === null || valueCodeableConcept === void 0 ? void 0 : valueCodeableConcept.coding[0];
         const codableSystem = verifierOption.getAcceptedSystemCode(codableCoding.system, codableCoding.code);
@@ -44,7 +39,6 @@ class R4Observation {
         codableConseptCode = codableSystem.code;
         codeableShortDefault = codableSystem.codeableShortDefault ?? null;
       }
-
       return {
         securityCode,
         status,
@@ -63,18 +57,13 @@ class R4Observation {
       console.info(e);
     }
   }
-
   getPerformerLabel(performers) {
     let res = null;
-
     if (performers) {
       res = performers[0].display ? performers[0].display : null;
     }
-
     return res;
   }
-
 }
-
 exports.default = R4Observation;
 //# sourceMappingURL=R4Observation.js.map

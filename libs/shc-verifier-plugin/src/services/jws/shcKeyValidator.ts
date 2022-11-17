@@ -1,4 +1,4 @@
-import jose, { JWK } from 'react-native-jose'
+import jose, { JWK } from 'node-jose'
 import { ErrorCode, InvalidError } from 'verifier-sdk'
 import { KeySet, KeysStore } from './keys'
 
@@ -61,7 +61,6 @@ const addIfKeyIsValidSHCFormat = async ( key: JWK.Key ): Promise< boolean > => {
     const jwkKey = await KeysStore.store.add(key)
     const tpDigest: any = await jwkKey.thumbprint('SHA-256')
     const thumbprint = jose.util.base64url.encode(tpDigest)
-    console.log("jwkThumbprint : " + thumbprint )
     if (key.kid !== thumbprint) {
       console.log(
         `${keyName}:'kid' does not match thumbprint in issuer key. expected: \
@@ -74,7 +73,7 @@ const addIfKeyIsValidSHCFormat = async ( key: JWK.Key ): Promise< boolean > => {
 
   } catch ( err: any ){
     console.log(
-      `${keyName}: Failed to calculate issuer key thumbprint : ${ String( err.message )}`,
+      `${keyName}: Failed to calculate issuer key thumbprint : ${ err }`,
       ErrorCode.INVALID_KEY_UNKNOWN,
     )
     return false

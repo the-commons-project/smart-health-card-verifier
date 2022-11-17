@@ -1,4 +1,4 @@
-import { JWK } from 'react-native-jose'
+import { JWK } from 'node-jose'
 
 export interface KeySet {
   keys: JWK.Key[]

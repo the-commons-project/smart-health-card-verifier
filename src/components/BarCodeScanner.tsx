@@ -19,7 +19,9 @@ const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
       showMarker={ false }
       cameraType={ type }
       cameraStyle={ cameraStyles.camerPreview }
+      cameraContainerStyle={ cameraStyles.cameraContainerStyle}
       cameraProps={ {
+        style: cameraStyles.camerPreview,
         autoFocus: RNCamera.Constants.AutoFocus.on, 
         barCodeTypes:[RNCamera.Constants.BarCodeType.qr]
       } }
@@ -44,12 +46,24 @@ BarCodeScanner.Constants = Constants
     
 const cameraStyles = StyleSheet.create({
   cameraContainer: {
-    flex: 1,
+    position:"absolute",
+    top: 0,
+    left: 0,
+    width:"100%",
+    height:"100%",
+  },
+  cameraContainerStyle: {
+    position:"absolute",
+    top: 0,
+    left: 0,
+    width:"100%",
+    height:"100%",
   },
   camerPreview: {
     flex: 1,
     alignItems: 'center',
-    minHeight:'100%'
+    minHeight:'100%',
+    width:'100%'
   }
 })
 

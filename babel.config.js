@@ -9,7 +9,7 @@ module.exports = {
     [
       'module-resolver',
       {
-        extensions: ['.tsx', '.ts', '.js', '.json', '.d.ts'],
+        extensions: ['.json','.tsx', '.ts', '.js', '.json', '.d.ts'],
         alias: {
           "~": "./src",
           [pak_sdk.name]: path.join(__dirname, 'libs', pak_sdk.name),

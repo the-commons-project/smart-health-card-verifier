@@ -20,13 +20,12 @@ const defaultOption = {
     return {};
   }
 };
-var _verifierInitOption = { ...defaultOption
+var _verifierInitOption = {
+  ...defaultOption
 };
-
 function setVerifierInitOption(option) {
   _verifierInitOption = option;
 }
-
 function getVerifierInitOption() {
   return _verifierInitOption;
 }

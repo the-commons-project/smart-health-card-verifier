@@ -66,24 +66,24 @@ const ResultRecord = ({ data }: Data) => {
         <Table borderStyle={ styles.tableStyle }>
           <Row
             data={ userFieldTitle }
-            textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
+            textStyle={ {...styles.fieldTitle, ...FontStyle.OpenSans_400Regular} }
           />
           {
             names.map( ( name: string, key  )=>{
               return (  <Row key={ key }
                 data={ [name] }
-                textStyle={ [styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold] }
+                textStyle={ {...styles.fieldValue, ...styles.increaseFont, ...FontStyle.OpenSans_700Bold} }
               /> )
 
             })
           }
           <Row
             data={ userDobTitle }
-            textStyle={ [styles.fieldTitle, FontStyle.OpenSans_400Regular] }
+            textStyle={ {...styles.fieldTitle, ...FontStyle.OpenSans_400Regular} }
           />
           <Row
             data={ userDobValue }
-            textStyle={ [styles.fieldValue, styles.increaseFont, FontStyle.OpenSans_700Bold] }
+            textStyle={ {...styles.fieldValue, ...styles.increaseFont, ...FontStyle.OpenSans_700Bold} }
           />
         </Table>
         <Text style={ [styles.subFieldValue, FontStyle.OpenSans_400Regular] }>
@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     height: 26.48,
   },
   tableStyle: {
+    width:"100%",
     borderWidth: 1,
     borderColor: 'transparent',
   },
