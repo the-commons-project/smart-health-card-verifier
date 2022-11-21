@@ -109,6 +109,11 @@ jobs:
       # - name: Install google play dependencies
       #   run: |
       #     npx tsc tools/deploy/android/publisher.ts 2>/dev/null
+      - name: Add RN Camera Work around 
+        run: |
+          rm -rf ./node_modules/react-native-camera/src/RNCamera.js
+          cp ./RNCameraWorkAround.js ./node_modules/react-native-camera/src/RNCamera.js
+          
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
