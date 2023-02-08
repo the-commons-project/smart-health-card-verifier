@@ -15,7 +15,6 @@ const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
 
   const handleScanner = ( data: OnScannedEvent ) => {
     if( data.results.length > 0 ){
-      console.info(" data : -------" + JSON.stringify( data ))
       onBarCodeScanned( { data: data.results[0].text } )
     } 
   }
