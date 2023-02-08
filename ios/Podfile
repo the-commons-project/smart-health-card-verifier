@@ -48,9 +48,6 @@ target 'Verifier' do
   # pod "Yoga", :path => "#{react_native_path}/ReactCommon/yoga", :module_headers => true
   pod 'RCT-Folly', :podspec => "#{react_native_path}/third-party-podspecs/RCT-Folly.podspec"
 
-
-  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
-
   pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
