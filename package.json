@@ -44,7 +44,7 @@
     "react-native-screens": "^3.18.2",
     "react-native-svg": "^12.1.1",
     "react-native-table-component": "^1.2.2",
-    "react-test-renderer": "^18.1.0",
+    "react-test-renderer": "18.1.0",
     "shc-verifier-plugin": "file:libs/shc-verifier-plugin",
     "uuid": "^8.3.2",
     "verifier-sdk": "file:libs/verifier-sdk",

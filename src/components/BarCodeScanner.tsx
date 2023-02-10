@@ -12,10 +12,13 @@ export interface BarcodeProps {
 }
 
 const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
+  const [isScanEnabled, setScanEnabled] = useState(true)
 
   const handleScanner = ( data: OnScannedEvent ) => {
     if( data.results.length > 0 ){
-      onBarCodeScanned( { data: data.results[0].text } )
+      if( isScanEnabled === true ) {
+        onBarCodeScanned( { data: data.results[0].text } )
+      }
     } 
   }
 
@@ -23,7 +26,7 @@ const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
     <QRCodeScanner
       cameraType={ type }
       flashEnabled={false}
-      scanEnabled={true}
+      scanEnabled={isScanEnabled}
       onScanned={handleScanner}
       isVibrateOnScan={true}
       style={ cameraStyles.camerPreview }
