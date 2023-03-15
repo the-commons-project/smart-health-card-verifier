@@ -48,7 +48,7 @@
     "shc-verifier-plugin": "file:libs/shc-verifier-plugin",
     "uuid": "^8.3.2",
     "verifier-sdk": "file:libs/verifier-sdk",
-    "webpack": "^5.66.0"
+    "webpack": "^5.76.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
