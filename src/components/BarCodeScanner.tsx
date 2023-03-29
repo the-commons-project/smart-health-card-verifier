@@ -17,6 +17,7 @@ const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
   const handleScanner = ( data: OnScannedEvent ) => {
     if( data.results.length > 0 ){
       if( isScanEnabled === true ) {
+        setScanEnabled( false )
         onBarCodeScanned( { data: data.results[0].text } )
       }
     } 
@@ -30,6 +31,7 @@ const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
       onScanned={handleScanner}
       isVibrateOnScan={true}
       style={ cameraStyles.camerPreview }
+      samplingRateInMS={1000}
     />
   </View>
 
