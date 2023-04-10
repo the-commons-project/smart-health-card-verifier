@@ -1,6 +1,6 @@
 {
   "name": "health-card-verifier-mobile",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "SMART Health Card Verifier",
   "scripts": {
     "android": "export ENVFILE=.env.development && react-native run-android",
@@ -39,7 +39,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-localize": "^2.1.7",
     "react-native-permissions": "^3.1.0",
-    "react-native-raw-qrcode-scanner": "github:airinterface/react-native-raw-qrcode-scanner#v0.0.2",
+    "react-native-raw-qrcode-scanner": "github:airinterface/react-native-raw-qrcode-scanner#v0.0.3",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.18.2",
     "react-native-svg": "^12.1.1",
