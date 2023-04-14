@@ -61,8 +61,7 @@ export async function validate ( jws: string ): Promise<any> {
       console.log('ERROR at jwsPayload.validate!')
     }
   }catch (err) {
-    console.log('ERROR at jwsPayload.validate!')
-    //#TODO throw error? 
+    throw err;
   }
   // try to parse JSON even if it failed validation above
   // if we did not get a payload back, it failed to be parsed and we cannot extract the key url
