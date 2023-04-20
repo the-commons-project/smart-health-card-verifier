@@ -10,114 +10,59 @@ on:
   workflow_dispatch:
 
 env:
-  S3_LOCALE_DIR: locales
-  S3_REMOTE_CONFIG_DIR: remote-config
-  S3_VACCINE_CODES_DIR: vaccine-codes
-  LOCAL_SOURCE_FILE: vci-issuers.json
+  S3_BUCKET_DEV: shc-verifier-services-dev
+  S3_BUCKET_TEST: shc-verifier-services-test
+  S3_BUCKET_PROD: shc-verifier-services-prod
   REGION: us-east-1
-  S3_BUCKET: ${{secrets.S3_BUCKET}}
-  ROLE_TO_ASSUME: "${{ secrets.AWS_ROLE_TO_ASSUME }}"
-  ROLE_SESSION_NAME: "smart-health-card-verifier-s3-deploy"
 jobs:
-  set_environment:
-    runs-on: ubuntu-latest
-    outputs:
-      curr_env: ${{ env.CURR_ENV }}
-    steps:
-    - id: setenv-prod
-      if: contains(github.ref, 'prod')
-      run: |
-        echo "CURR_ENV=PROD" >> $GITHUB_ENV
-    - id: setenv-dev
-      if: contains(github.ref, 'dev')
-      run: |
-        echo "CURR_ENV=DEV" >> $GITHUB_ENV
-    - id: setenv-qa
-      if: contains(github.ref, 'qa')
-      run: |
-        echo "CURR_ENV=TEST" >> $GITHUB_ENV
-
-  deployLocaleToS3:
-    needs: set_environment
-    environment: 
-      name: ${{ needs.set_environment.outputs.curr_env }}
-    if: contains(github.ref, '-locale')
-    name: 'Deploy locale file to TCP'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set output
-      id: vars
-      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-    - name: Get Branch
-      run: |
-        raw=$(git branch --points-at ${{ github.ref }})
-        echo "RAW=${raw}"
-        echo "BRANCH=${raw}" >> $GITHUB_ENV
-    - name: Check output
-      env:
-        RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-      run: |
-        echo $RELEASE_VERSION
-        echo ${{ steps.vars.outputs.tag }}
-        echo ${{ env.BRANCH }}
-    - name: 'Configure AWS Role'
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-        role-duration-seconds: 1200
-        role-session-name: ${{ env.ROLE_SESSION_NAME }}
-    - name: 'Sync locale files to S3'
-      run: |
-        cd resources/public/locales; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_LOCALE_DIR }}' 
-
-  deployRemoteConfigToS3:
-    needs: set_environment
-    environment: 
-      name: ${{ needs.set_environment.outputs.curr_env }}
-    if: contains(github.ref, '-remote-config')
-    name: 'Deploy remote config file to TCP'
+  deployToS3:
+    if: contains(github.ref, '-deploys3-')
+    name: 'Deploy locale file to S3'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: Set environment for locale update
+      if: contains(github.ref, 'locale') 
+      run: |
+        echo "SRC_DIR=resources/public/locales
+        TARGET_DIR=locales" >> $GITHUB_ENV
+    - name: Set environment for remote-config update
+      if: contains(github.ref, 'remote-config') 
+      run: |
+        echo "SRC_DIR=resources/public/remote-config
+        TARGET_DIR=remote-config" >> $GITHUB_ENV
+    - name: Set environment for vaccine-codes update
+      if: contains(github.ref, 'vaccine-codes') 
+      run: |
+        echo "SRC_DIR=resources/public/vaccine-codes
+        TARGET_DIR=vaccine-codes" >> $GITHUB_ENV
+    - name: Set environment varable dev
+      if: contains(github.ref, 'dev') 
+      run: |
+        echo "AWS_ROLE_TO_ASSUME=${{secrets.AWS_ROLE_TO_ASSUME_DEV}}
+        S3_BUCKET=${{env.S3_BUCKET_DEV}}
+        AWS_SESSION_NAME=${{secrets.AWS_SESSION_NAME_DEV}}" >> $GITHUB_ENV
+    - name: Set environment varable test
+      if: contains(github.ref, 'test')
+      run: |
+        echo "AWS_ROLE_TO_ASSUME=${{secrets.AWS_ROLE_TO_ASSUME_TEST}}
+        S3_BUCKET=${{env.S3_BUCKET_TEST}}
+        AWS_SESSION_NAME=${{secrets.AWS_SESSION_NAME_TEST}}" >> $GITHUB_ENV
+    - name: Set environment varable prod
+      if: contains(github.ref, 'prod') 
+      run: |
+        echo "AWS_ROLE_TO_ASSUME=${{secrets.AWS_ROLE_TO_ASSUME_PROD}}
+        S3_BUCKET=${{env.S3_BUCKET_PROD}}
+        AWS_SESSION_NAME=${{secrets.AWS_SESSION_NAME_PROD}}" >> $GITHUB_ENV
     - name: 'Configure AWS Role'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+        role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
         role-duration-seconds: 1200
-        role-session-name: ${{ env.ROLE_SESSION_NAME }}
-    - name: 'Sync Remote Config files to S3'
+        role-session-name: ${{ env.AWS_SESSION_NAME }}
+    - name: 'Sync files to S3'
       run: |
-        cd resources/public/remote-config; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_REMOTE_CONFIG_DIR }}' 
-
-
-  deployVaccineCodesToS3:
-    needs: set_environment
-    environment: 
-      name: ${{ needs.set_environment.outputs.curr_env }}
-    if: contains(github.ref, '-vaccine-code')
-    name: 'Deploy vaccine-code file to TCP'
-    runs-on: ubuntu-latest
-    steps:
-    - name: confirmEnvironment
-      run: |
-        echo "ENV === ${{ needs.set_environment.outputs.curr_env }}"
-    - uses: actions/checkout@master
-    - name: 'Configure AWS Role'
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.TERRAFORM_AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.TERRAFORM_AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.REGION }}
-        role-to-assume: ${{ env.ROLE_TO_ASSUME }}
-        role-duration-seconds: 1200
-        role-session-name: ${{ env.ROLE_SESSION_NAME }}
-    - name: 'Sync locale files to S3'
-      run: |
-        cd resources/public/vaccine-codes; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.S3_VACCINE_CODES_DIR }}' 
+        cd ${{ env.SRC_DIR }}; aws s3 sync . 's3://${{ env.S3_BUCKET }}/${{ env.TARGET_DIR }}' 
