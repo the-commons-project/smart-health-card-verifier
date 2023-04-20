@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     width: 71,
     height: 37,
     right: 19,
-    top: 20,
+    top: 40,
     zIndex:2
   },
   welcomeText: {

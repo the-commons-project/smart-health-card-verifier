@@ -49,7 +49,9 @@ jobs:
 
   iosRelease:
     name: 'Build and Publish Verifier'
-    if: contains(github.ref, 'release-dev')
+    if: |
+      contains(github.ref, 'release-dev') ||
+      contains(github.ref, 'release-prod')      
     runs-on: macos-11
     env:
       DEV_APP_STORE_KEY: "${{ secrets.DEV_IOS_APP_STORE_KEY }}"
@@ -84,7 +86,7 @@ jobs:
           echo "XCODE_SCHEME=VerifierDevReleaseBuild"  >> $GITHUB_ENV
           echo "CODE_SIGN_IDENTITY=${{ secrets.DEV_IOS_CODE_SIGN_IDENTITY }}" >> $GITHUB_ENV
         if: contains(github.ref, 'release-dev')
-      - name: Sets env vars for dev
+      - name: Sets env vars for prod
         run: |
           echo "APP_STORE_ISSUER_ID=\"${{ secrets.PROD_IOS_APP_STORE_ISSUER_ID }}\"" >> $GITHUB_ENV
           echo "APP_STORE_KEY<<EOF" >> $GITHUB_ENV
@@ -144,7 +146,7 @@ jobs:
       - name: Setup Ruby (bundle)
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: 2.7.5
           bundler-cache: true
       - name: Setup Build
         run: |
