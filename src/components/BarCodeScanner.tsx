@@ -1,6 +1,5 @@
 import React, { ReactChildren, useState, useEffect } from 'react'
-import QRCodeScanner from 'react-native-qrcode-scanner'
-import { RNCamera } from 'react-native-camera'
+import QRCodeScanner, { OnScannedEvent } from 'react-native-raw-qrcode-scanner'
 import { View, StyleSheet } from 'react-native'
 
 export type CameraType = 'back' | 'front' | undefined
@@ -13,20 +12,26 @@ export interface BarcodeProps {
 }
 
 const BarCodeScanner = ({ onBarCodeScanned, type, styles }: BarcodeProps) => {
+  const [isScanEnabled, setScanEnabled] = useState(true)
+
+  const handleScanner = ( data: OnScannedEvent ) => {
+    if( data.results.length > 0 ){
+      if( isScanEnabled === true ) {
+        setScanEnabled( false )
+        onBarCodeScanned( { data: data.results[0].text } )
+      }
+    } 
+  }
+
   return <View style={ styles }>
     <QRCodeScanner
-      reactivate={ true }
-      showMarker={ false }
       cameraType={ type }
-      cameraStyle={ cameraStyles.camerPreview }
-      cameraContainerStyle={ cameraStyles.cameraContainerStyle}
-      cameraProps={ {
-        style: cameraStyles.camerPreview,
-        autoFocus: RNCamera.Constants.AutoFocus.on, 
-        barCodeTypes:[RNCamera.Constants.BarCodeType.qr]
-      } }
-      containerStyle={ cameraStyles.cameraContainer }
-      onRead={ onBarCodeScanned }
+      flashEnabled={false}
+      scanEnabled={isScanEnabled}
+      onScanned={handleScanner}
+      isVibrateOnScan={true}
+      style={ cameraStyles.camerPreview }
+      samplingRateInMS={1000}
     />
   </View>
 
