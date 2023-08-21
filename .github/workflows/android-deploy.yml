@@ -141,7 +141,9 @@ jobs:
       - name: 'Build prodRelease'
         working-directory: ./android
         run: ./gradlew :app:bundleProdRelease  --no-daemon --info
-
+      - name: 'Install Tool'
+        run: |
+          npm install publish-aab-google-play
       - name: 'Publish to the store'
         run: >
           node tools/deploy/android/androidDeploy.js 
