@@ -35,7 +35,7 @@ npm run test
 
 ```
 
-- test: Test is run with [jest] (https://jestjs.io/docs) framework. 
+- test: Test is run with [jest] (https://jestjs.io/docs/getting-started) framework. 
 
 
 ### Prerequisites
